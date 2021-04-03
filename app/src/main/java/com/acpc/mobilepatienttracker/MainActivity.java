@@ -3,6 +3,7 @@ package com.acpc.mobilepatienttracker;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -36,6 +37,18 @@ public class MainActivity extends AppCompatActivity {
         Button remove = findViewById(R.id.remove);
         Button get = findViewById(R.id.get);
         Button getmultiple = findViewById(R.id.getmultiple);
+
+
+        Button registration = findViewById(R.id.registration);
+
+        registration.setOnClickListener(new View.OnClickListener() { //what happens when you click the register button
+            @Override
+            public void onClick(View v) {
+                Intent start = new Intent(MainActivity.this,PRegistration.class); //moving from main screen to reg screen
+                startActivity(start);
+
+            }
+        });
 
 
 
@@ -241,7 +254,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
             }
-    }
+}
+
 
     // Here is the custom class Patient that is being serialized to the database
 class Patient
@@ -280,3 +294,5 @@ class Patient
         return patients;
     }
 }
+
+
