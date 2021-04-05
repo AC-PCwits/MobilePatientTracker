@@ -38,13 +38,12 @@ public class MainActivity extends AppCompatActivity {
         Button get = findViewById(R.id.get);
         Button getmultiple = findViewById(R.id.getmultiple);
 
-
         Button registration = findViewById(R.id.registration);
 
         registration.setOnClickListener(new View.OnClickListener() { //what happens when you click the register button
             @Override
             public void onClick(View v) {
-                Intent start = new Intent(MainActivity.this,PRegistration.class); //moving from main screen to reg screen
+                Intent start = new Intent(MainActivity.this,PRegistration.class); //moving from main screen to reg screen when clicking register button on main screen
                 startActivity(start);
 
             }
@@ -253,6 +252,9 @@ public class MainActivity extends AppCompatActivity {
                         });
                     }
                 });
+
+
+
             }
 }
 
@@ -294,5 +296,7 @@ class Patient
         return patients;
     }
 }
+
+
 
 
