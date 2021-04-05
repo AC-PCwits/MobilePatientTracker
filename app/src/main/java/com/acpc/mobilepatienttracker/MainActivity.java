@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 illnesses.add("Bronchitis");
 
                 Patient patient = new Patient(1, "Ada", illnesses);
-////
+/////////
                 // Now we add it to a specified collection (table) in the database with database.collection().add()
                 // This way will give the new document an auto-generated unique ID as the file name. This can be used like a primary key
 
