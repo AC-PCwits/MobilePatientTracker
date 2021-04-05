@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         Button getmultiple = findViewById(R.id.getmultiple);
 
         Button registration = findViewById(R.id.registration);
+        Button add_doc = findViewById(R.id.add_doc);
 
         registration.setOnClickListener(new View.OnClickListener() { //what happens when you click the register button
             @Override
@@ -250,16 +251,56 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             }
                         });
-                    }
-                });
-
-
-
             }
+        });
+
+        add_doc.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                logbox.setText("executing...");
+
+                // ADDING A NEW ENTRY:
+                // The following code adds a new document with a unique ID as its name, and puts a bunch of patient data on it.
+
+                // Firestore lets you serialize custom objects to entry documents automatically. So I made an example custom class called Patient.
+                // So first, create a Patient:
+
+                Doctor doctor = new Doctor (8, "Tim", "Surgeon");
+
+
+                // Now we add it to a specified collection (table) in the database with database.collection().add()
+                // This way will give the new document an auto-generated unique ID as the file name. This can be used like a primary key
+
+                database.collection("doctor-data") // specify the collection name here
+                        .add(doctor)
+                        // Add a success listener so we can be notified if the operation was successfuly.
+                        // i think success/failure listeners are optional, but if you don't use them you won't know if entry was actually added
+                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                // If we are here, the app successfully connected to Firestore and added a new entry
+                                Log.d(TAG, "SUCCESS: Added new document with ID: " + documentReference.getId());
+                                logbox.setText("SUCCESS:\nAdded new document with ID: " + documentReference.getId());
+                            }
+                        })
+                        // Add a failure listener so we can be notified if something does wrong
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                // If we are here, the entry could not be added for some reason (e.g no internet connection)
+                                Log.w(TAG, "ERROR: Failed to add document", e);
+                                logbox.setText("ERROR:\nCould not add document. Here is what went wrong: \n" + e.getMessage());
+                            }
+                        });
+            }
+        });
+
+
+
+    }
 }
 
 
-    // Here is the custom class Patient that is being serialized to the database
+// Here is the custom class Patient that is being serialized to the database
 class Patient
 {
     public int ID;
@@ -295,6 +336,24 @@ class Patient
 
         return patients;
     }
+}
+
+class Doctor {
+    public int doc_ID;
+    public String name;
+    public String doc_type;
+
+    public Doctor(int doc_ID, String name, String doc_type) {
+        this.doc_ID = doc_ID;
+        this.name = name;
+        this.doc_type = doc_type;
+    }
+
+    // VERY IMPORTANT: Java JSON deserialization needs a no-argument constructor in order to deserialize custom objects.
+    // If you do not include one, your app will crash when you try to deserialize a custom class.
+    public Doctor() {
+    }
+
 }
 
 
