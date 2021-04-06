@@ -1,5 +1,9 @@
 package com.acpc.mobilepatienttracker;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
