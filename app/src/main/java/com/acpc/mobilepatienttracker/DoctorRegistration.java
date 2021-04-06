@@ -14,21 +14,14 @@ import android.os.Bundle;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.text.InputFilter;
-import android.text.Spanned;
-import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.app.DialogFragment;
-import android.app.Dialog;
 import android.app.AlertDialog;
 
 import java.util.Calendar;
-import java.util.regex.Pattern;
 
 public class DoctorRegistration extends AppCompatActivity {
 
