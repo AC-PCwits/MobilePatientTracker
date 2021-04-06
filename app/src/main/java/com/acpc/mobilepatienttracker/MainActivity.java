@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         Button registration = findViewById(R.id.registration);
         Button add_doc = findViewById(R.id.add_doc);
 
+
         registration.setOnClickListener(new View.OnClickListener() { //what happens when you click the register button
             @Override
             public void onClick(View v) {
