@@ -14,6 +14,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -40,6 +41,17 @@ public class MainActivity extends AppCompatActivity {
 
         Button registration = findViewById(R.id.registration);
         Button add_doc = findViewById(R.id.add_doc);
+
+        Button logout_btn = findViewById(R.id.btn_logout);
+
+        logout_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(MainActivity.this, LoginPatient.class);
+                startActivity(intent);
+            }
+        });
 
         registration.setOnClickListener(new View.OnClickListener() { //what happens when you click the register button
             @Override
@@ -318,6 +330,30 @@ class Patient
     // If you do not include one, your app will crash when you try to deserialize a custom class.
     public Patient()
     {
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public ArrayList<String> getIllnesses() {
+        return illnesses;
+    }
+
+    public void setIllnesses(ArrayList<String> illnesses) {
+        this.illnesses = illnesses;
     }
 
     // ALSO VERY IMPORTANT: Haven't tested it in Java, but I am aware that in C# your custom class's properties need to all be public in order for JSON to serialize them
