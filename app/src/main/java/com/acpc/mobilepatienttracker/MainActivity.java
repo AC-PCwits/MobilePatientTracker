@@ -14,6 +14,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -40,6 +41,17 @@ public class MainActivity extends AppCompatActivity {
 
         Button registration = findViewById(R.id.registration);
         Button add_doc = findViewById(R.id.add_doc);
+
+        Button logout_btn = findViewById(R.id.btn_logout);
+
+        logout_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(MainActivity.this, LoginPatient.class);
+                startActivity(intent);
+            }
+        });
 
         registration.setOnClickListener(new View.OnClickListener() { //what happens when you click the register button
             @Override
