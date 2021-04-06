@@ -17,6 +17,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".LoginPatient" />
         <activity android:name=".PRegistration" />
         <activity android:name=".MainActivity".
             <intent-filter>
