@@ -320,6 +320,30 @@ class Patient
     {
     }
 
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public ArrayList<String> getIllnesses() {
+        return illnesses;
+    }
+
+    public void setIllnesses(ArrayList<String> illnesses) {
+        this.illnesses = illnesses;
+    }
+
     // ALSO VERY IMPORTANT: Haven't tested it in Java, but I am aware that in C# your custom class's properties need to all be public in order for JSON to serialize them
     // and if they are not public, JSON will serialize blank properties and not throw any errors (leaving you wondering why your data isn't saving to the database).
     // So just to be safe, don't forget to make your custom class's members public
