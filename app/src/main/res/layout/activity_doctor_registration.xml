@@ -286,13 +286,13 @@
         android:layout_height="30dp"
         android:layout_marginStart="15dp"
         android:layout_marginLeft="15dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="120dp"
         android:layout_marginEnd="145dp"
         android:layout_marginRight="145dp"
         android:text="Agree privacy policy"
         app:buttonTint="#000000"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password"
         tools:targetApi="lollipop" />
@@ -301,15 +301,14 @@
         android:id="@+id/signUpButtonId"
         android:layout_width="100dp"
         android:layout_height="38dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="20dp"
         android:background="@color/gradStart"
         android:text="SignUp"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.469"
+        app:layout_constraintHorizontal_bias="0.414"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/policy" />
-
 
 
 

@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button registration = findViewById(R.id.registration);
         Button add_doc = findViewById(R.id.add_doc);
+        Button reg_doc = findViewById(R.id.reg_doc);
 
         Button logout_btn = findViewById(R.id.btn_logout);
 
@@ -56,11 +57,22 @@ public class MainActivity extends AppCompatActivity {
         registration.setOnClickListener(new View.OnClickListener() { //what happens when you click the register button
             @Override
             public void onClick(View v) {
-                Intent start = new Intent(MainActivity.this,DoctorRegistration.class); //moving from main screen to reg screen when clicking register button on main screen
+                Intent start = new Intent(MainActivity.this,PRegistration.class); //moving from main screen to reg screen when clicking register button on main screen
                 startActivity(start);
 
             }
         });
+
+        reg_doc.setOnClickListener(new View.OnClickListener() { //what happens when you click the register button
+            @Override
+            public void onClick(View v) {
+                Intent start = new Intent(MainActivity.this,DRegistration.class); //moving from main screen to reg screen when clicking register button on main screen
+                startActivity(start);
+
+            }
+        });
+
+
 
 //////////////////////////////////////////////////////////////
 
@@ -266,7 +278,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        add_doc.setOnClickListener(new View.OnClickListener() {
+       /* add_doc.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 logbox.setText("executing...");
 
@@ -276,7 +288,7 @@ public class MainActivity extends AppCompatActivity {
                 // Firestore lets you serialize custom objects to entry documents automatically. So I made an example custom class called Patient.
                 // So first, create a Patient:
 
-                Doctor doctor = new Doctor (8, "Tim", "Surgeon");
+               Doctor doctor = new Doctor (8, "Tim", "Bond", "1950/03/03", "Surgeon", "Male", "tim@gmail.com", "0838994586", "JOB12345",10,"Wits"  );
 
 
                 // Now we add it to a specified collection (table) in the database with database.collection().add()
@@ -304,7 +316,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
             }
-        });
+        });*/
 
 
 
@@ -375,19 +387,39 @@ class Patient
 }
 
 class Doctor {
-    public int doc_ID;
-    public String name;
-    public String doc_type;
+    public String ID;
+    public String fname;
+    public String lname;
+    public String dob;
+   // public String doc_type;
+    public String gender;
+    public String email;
+   // public String cell_no;
+   // public String p_no; //practicing number,unique to each doctor
+    public int p_length;
+    public String uni_name;
 
-    public Doctor(int doc_ID, String name, String doc_type) {
-        this.doc_ID = doc_ID;
-        this.name = name;
-        this.doc_type = doc_type;
+
+    public Doctor(String ID, String fname, String lname, String dob, String gender, String email, int p_length, String uni_name) {
+   // public Doctor(String ID, String fname, String lname, String dob, String doc_type, String gender, String email, String cell_no, String p_no, int p_length, String uni_name) {
+        this.ID = ID;
+        this.fname = fname;
+        this.lname = lname;
+        this.dob = dob;
+       // this.doc_type = doc_type;
+        this.gender = gender;
+        this.email = email;
+       // this.cell_no = cell_no;
+       // this.p_no = p_no;
+        this.p_length = p_length;
+        this.uni_name = uni_name;
+
     }
 
     // VERY IMPORTANT: Java JSON deserialization needs a no-argument constructor in order to deserialize custom objects.
     // If you do not include one, your app will crash when you try to deserialize a custom class.
-    public Doctor() {
+    public Doctor (){
+
     }
 
 }
