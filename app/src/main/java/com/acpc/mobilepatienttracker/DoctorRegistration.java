@@ -35,7 +35,7 @@ public class DoctorRegistration extends AppCompatActivity {
 
     //from line 37 to 43 we declare all variabls to be used in the following code below
 
-    private TextView date, first_name, last_name, email, password, date_of_birth,id_number,length_practice,institution;
+    private TextView date, first_name, last_name, email, password, date_of_birth,id_number,length_practice,institution,doctorSpec,cellNum,practicingNum;
     private CheckBox policy;
     private RadioGroup gender_group;
     private RadioButton gender_button;
@@ -59,6 +59,9 @@ public class DoctorRegistration extends AppCompatActivity {
         length_practice = findViewById(R.id.LengthOfPractice);
         institution=findViewById(R.id.Institution);
         password = findViewById(R.id.password);
+        doctorSpec = findViewById(R.id.Doctor_speciality);
+        cellNum = findViewById(R.id.Cellnu);
+        practicingNum = findViewById(R.id.practicingNum);
         policy = findViewById(R.id.policy);
 
         first_name.setFilters(new InputFilter[]{new InputFilter.LengthFilter(15)});
@@ -110,12 +113,12 @@ public class DoctorRegistration extends AppCompatActivity {
                 gender_button = findViewById(selected_gender);
 
                 String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-                String datePattern ="^\\d{4}/\\d{2}/\\d{2}$";
+                String datePattern = "^\\d{4}/\\d{2}/\\d{2}$";
 
 
                 if (first_name.getText().toString().equals("")) {
                     first_name.setError("Empty first name");
-                }  else if (last_name.getText().toString().equals("")) {
+                } else if (last_name.getText().toString().equals("")) {
                     last_name.setError("Empty last name");
                 } else if (email.getText().toString().equals("")) {
                     email.setError("Empty email address");
@@ -124,14 +127,20 @@ public class DoctorRegistration extends AppCompatActivity {
                 } else if (date_of_birth.getText().toString().equals("")) {
                     date_of_birth.setError("Select date of birth");
                 } else if (!date_of_birth.getText().toString().trim().matches(datePattern)) {
-                    date_of_birth.setError("Date format should be 'yyyy/mm/dd'");
+                    date_of_birth.setError("Date format should be 'yyyy/mm/dd");
                 } else if (id_number.getText().toString().equals("")) {
                     id_number.setError("Empty ID number");
                 } else if (length_practice.getText().toString().equals("")) {
                     length_practice.setError("Empty length of practice");
+                } else if (practicingNum.getText().toString().equals("")) {
+                    practicingNum.setError("Empty practice number");
                 } else if (institution.getText().toString().equals("")) {
                     institution.setError("Empty name of institution");
-                } else if (password.getText().toString().equals("")) {
+                } else if (doctorSpec.getText().toString().equals("")) {
+                    doctorSpec.setError("Empty Doctor speciality");
+                } else if (cellNum.getText().toString().equals("")) {
+                    cellNum.setError("Empty cell number");
+                }else if (password.getText().toString().equals("")) {
                     password.setError("Empty password");
                 } else if(!policy.isChecked()) {
                     policy.setError("Policy must be accepted");

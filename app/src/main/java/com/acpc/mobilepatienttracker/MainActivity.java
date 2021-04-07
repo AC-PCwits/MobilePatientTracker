@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         registration.setOnClickListener(new View.OnClickListener() { //what happens when you click the register button
             @Override
             public void onClick(View v) {
-                Intent start = new Intent(MainActivity.this,DoctorRegistration.class); //moving from main screen to reg screen when clicking register button on main screen
+                Intent start = new Intent(MainActivity.this,DoctorOrPatientt.class); //moving from main screen to reg screen when clicking register button on main screen
                 startActivity(start);
 
             }
