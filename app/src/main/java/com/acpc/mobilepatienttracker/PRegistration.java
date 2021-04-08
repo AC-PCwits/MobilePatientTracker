@@ -18,12 +18,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class PRegistration extends AppCompatActivity implements View.OnClickListener{
+
     private EditText inname, inemail, inpassword;
     private Button reg;
     private FirebaseAuth mAuth;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +116,6 @@ public class PRegistration extends AppCompatActivity implements View.OnClickList
                                     }
                                 }// endof onComplete
                             });
-
                         }
                         else{
                             Toast.makeText(PRegistration.this, "Registration Unsuccessful, Try Again", Toast.LENGTH_LONG).show();
