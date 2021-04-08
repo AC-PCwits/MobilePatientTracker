@@ -4,51 +4,32 @@ package com.acpc.mobilepatienttracker;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
-import android.text.TextUtils;
-
 import android.os.Bundle;
-import android.util.Log;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.os.Bundle;
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.text.InputFilter;
-import android.text.Spanned;
-import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.app.DialogFragment;
-import android.app.Dialog;
 import android.app.AlertDialog;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Calendar;
-import java.util.regex.Pattern;
 
 
 //This code should not be confused with DRegistration.java
 //This code is the doctor information form that will be filled out when a doctor registers for the first time.
 
 
-public class DoctorRegistration extends AppCompatActivity {
+public class DoctorForm extends AppCompatActivity {
 
 
     //from line 37 to 43 we declare all variabls to be used in the following code below
@@ -104,7 +85,7 @@ public class DoctorRegistration extends AppCompatActivity {
                 int month = c.get(Calendar.MONTH);
                 int year = c.get(Calendar.YEAR);
 
-                dpd = new DatePickerDialog(DoctorRegistration.this,AlertDialog.THEME_HOLO_LIGHT, new DatePickerDialog.OnDateSetListener() {
+                dpd = new DatePickerDialog(DoctorForm.this,AlertDialog.THEME_HOLO_LIGHT, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
@@ -199,7 +180,7 @@ public class DoctorRegistration extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(DocumentReference documentReference) {
                                         // If we are here, the app successfully connected to Firestore and added a new entry
-                                        Toast.makeText(DoctorRegistration.this,"Data successfully added", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(DoctorForm.this,"Data successfully added", Toast.LENGTH_LONG).show();
                                     }
                                 })
                                 // Add a failure listener so we can be notified if something does wrong
@@ -207,7 +188,7 @@ public class DoctorRegistration extends AppCompatActivity {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
                                         // If we are here, the entry could not be added for some reason (e.g no internet connection)
-                                        Toast.makeText(DoctorRegistration.this,"Data was unable to be added. Check connection", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(DoctorForm.this,"Data was unable to be added. Check connection", Toast.LENGTH_LONG).show();
                                     }
                                 });
                     }

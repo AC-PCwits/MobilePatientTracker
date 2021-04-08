@@ -10,11 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".DoctorRegistration"></activity>
+        <activity android:name=".DoctorForm"></activity>
         <activity android:name=".DRegistration"></activity>
         <activity android:name=".LoginPatient" />
+        <activity android:name=".LoginDoctor" />
         <activity android:name=".PatientForm" />
-        <activity android:name=".DoctorOrPatientt" />
+        <activity android:name=".DoctorOrPatient" />
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
