@@ -28,7 +28,7 @@ public class SplashActivity extends AppCompatActivity  {
             @Override
             public void run() {
                 //Do any action here. Now we are moving to next page
-                Intent mySuperIntent = new Intent(SplashActivity.this, LoginPatient.class);
+                Intent mySuperIntent = new Intent(SplashActivity.this, DoctorOrPatientt.class);
                 startActivity(mySuperIntent);
 
                 if (DatabaseManager.IsSignedIn())

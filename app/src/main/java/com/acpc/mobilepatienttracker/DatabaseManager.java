@@ -1,74 +1,58 @@
 package com.acpc.mobilepatienttracker;
 
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
 
 public class DatabaseManager {
 
-    FirebaseFirestore database;
+    public static String TAG = "DATABASE MANAGER";
 
     public DatabaseManager()
     {
-        database = FirebaseFirestore.getInstance();
+
     }
 
-    public static Boolean RegisterDoctor(String email, String password)
+    public static Boolean RegisterNewDoctor(Doctor doctor)
     {
-        mAuth.createUserWithEmailAndPassword(email,password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        final Boolean[] IsSuccessful = {false};
+
+        FirebaseFirestore database= FirebaseFirestore.getInstance();
+
+        database.collection("doctor-data")
+                .add(doctor)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-
-                        if(task.isSuccessful()){
-                            User user= new User(name,email);
-                            FirebaseDatabase.getInstance().getReference("Users")  //this adds all new users to a collection in the database called "Users"
-
-                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())  //inside brackets will return ID for registered user
-
-                                    .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() { //To check if data has been inserted into database
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-
-                                    if(task.isSuccessful()){
-                                        Toast.makeText(PRegistration.this, "User Has Successfully Been Registered", Toast.LENGTH_LONG).show(); //shows message to tell user registration has been successful
-
-
-                                        ///////Redirect to login now !
-
-                                        ///////OR redirect to patient form
-
-                                        Intent start = new Intent(PRegistration.this,PatientForm.class); //moving from main screen to reg screen when clicking register button on main screen
-                                        startActivity(start);
-
-
-                                    }// endif
-                                    else{
-                                        Toast.makeText(PRegistration.this, "Registration Unsuccessful, Try Again", Toast.LENGTH_LONG).show(); //unsuccessful registration message
-
-                                    }
-                                }// endof onComplete
-                            });
-
-                        }
-                        else{
-                            Toast.makeText(PRegistration.this, "Registration Unsuccessful, Try Again", Toast.LENGTH_LONG).show();
-
-                        }//else
+                    public void onSuccess(DocumentReference documentReference) {
+                        IsSuccessful[0] = true;
+                        Log.d(TAG, "SUCCESS: Added registered new doctor with ID: " + documentReference.getId());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "FAILURE: Failed to register new doctor", e);
                     }
                 });
 
-        return false;
+        return IsSuccessful[0];
     }
+
     public static Boolean RegisterPatient(String name, int ID)
     {
         // TODO...
