@@ -2,8 +2,10 @@ package com.acpc.mobilepatienttracker;
 
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -109,6 +111,7 @@ public class DoctorForm extends AppCompatActivity {
 
         Button b = findViewById(R.id.signUpButtonId);
         b.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
                 int selected_gender = gender_group.getCheckedRadioButtonId();
@@ -151,9 +154,6 @@ public class DoctorForm extends AppCompatActivity {
 
                 ////////ADDING A BRAND NEW ENTRY OF DOCTOR INFORMATION ONCE SIGN UP HAS BEEN SELECTED
 
-               //prac num
-               //doctype
-                // cell num
                 final String fname= first_name.getText().toString();
                 final String lname = last_name.getText().toString();
                 final String mail= email.getText().toString();
@@ -162,12 +162,14 @@ public class DoctorForm extends AppCompatActivity {
                 final String prac_years = length_practice.getText().toString(); /////dpuble check
                 final int prac_y = Integer.parseInt(prac_years);
                 final String uni = institution.getText().toString();
+                final String prac_num = practicingNum.getText().toString();
+                final String doc_type = doctorSpec.getText().toString();
+                final String cell = cellNum.getText().toString();
 
                 final String gen = getSelectedRadioButton(v); //calling function below to find selected button
 
+                Doctor doctor = new Doctor(id, fname, lname, dob, gen, mail, prac_y,uni, prac_num, doc_type,cell);
 
-                      //  Doctor doctor = new Doctor(id, fname, lname, doctype, gender, mail, dob, cell_no, p_no, prac_years, uni); //once UI has been fixed this will be the code to use
-                Doctor doctor = new Doctor(id, fname, lname, gen, mail, dob ,prac_y, uni);
 
                         // Now we add it to a specified collection (table) in the database with database.collection().add()
                         // This way will give the new document an auto-generated unique ID as the file name. This can be used like a primary key
