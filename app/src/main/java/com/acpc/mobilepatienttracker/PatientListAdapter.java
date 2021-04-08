@@ -10,10 +10,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class PatientListAdapter {//extends RecyclerView.Adapter<PatientListAdapter.PatientListViewHolder>{
+public class PatientListAdapter extends RecyclerView.Adapter<PatientListAdapter.PatientListViewHolder>{
 
 
-  /*  private ArrayList<Patient> mPatientList;
+    private ArrayList<Patient> mPatientList;
     private OnItemClickListener mListener;
 
     //Interface for handling when user clicks on list
@@ -39,7 +39,7 @@ public class PatientListAdapter {//extends RecyclerView.Adapter<PatientListAdapt
           OnItemClickListener is added to the parameters as a way to reference mListener from inside a static class
          */
 
-       /* public PatientListViewHolder(@NonNull View itemView, final OnItemClickListener listener)
+        public PatientListViewHolder(@NonNull View itemView, final OnItemClickListener listener)
         {
             super(itemView);
             nameText = itemView.findViewById(R.id.nameText);
@@ -55,7 +55,7 @@ public class PatientListAdapter {//extends RecyclerView.Adapter<PatientListAdapt
                     and if the position of the list is valid. Once that is done we then parse the
                     listener variable's position to the OnItemClick interface
                      */
-                      /*  if(listener != null)
+                        if(listener != null)
                         {
                             int position = getAdapterPosition();
                             if(position != RecyclerView.NO_POSITION)
@@ -91,8 +91,8 @@ public class PatientListAdapter {//extends RecyclerView.Adapter<PatientListAdapt
         Patient currentItem = mPatientList.get(position);
 
         //The holder variable allows the values of view to be set by Patient objects
-        holder.nameText.setText("Name: " + currentItem.getName());
-        holder.idText.setText("ID Number: " + String.valueOf(currentItem.getID()));
+        holder.nameText.setText("Name: " + currentItem.fname + " " + currentItem.fsurname);
+        holder.idText.setText("ID Number: " + String.valueOf(currentItem.idno));
     }
 
     //This function defines how many items are in the list
@@ -102,7 +102,7 @@ public class PatientListAdapter {//extends RecyclerView.Adapter<PatientListAdapt
         return mPatientList.size();
     }
 
-    */
+
 
 }
 

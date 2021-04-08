@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -183,6 +184,8 @@ public class DoctorForm extends AppCompatActivity {
                                     public void onSuccess(DocumentReference documentReference) {
                                         // If we are here, the app successfully connected to Firestore and added a new entry
                                         Toast.makeText(DoctorForm.this,"Data successfully added", Toast.LENGTH_LONG).show();
+                                        Intent intent = new Intent(DoctorForm.this, DHomePage.class);
+                                        startActivity(intent);
                                     }
                                 })
                                 // Add a failure listener so we can be notified if something does wrong
