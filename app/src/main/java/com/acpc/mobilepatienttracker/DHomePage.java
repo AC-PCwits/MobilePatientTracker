@@ -11,12 +11,12 @@ import java.util.ArrayList;
 
 public class DHomePage extends AppCompatActivity
 {
-    private RecyclerView mRecyclerView; //This variable will contain the recycler view created in the XML layout
+  /*  private RecyclerView mRecyclerView; //This variable will contain the recycler view created in the XML layout
     /*
     This is the bridge between our data and recycler view. We have to use the PatientListAdapter
     instead of RecylcerView.Adapter as the class contains custom functions for the Recycler View
      */
-    private PatientListAdapter mAdapter;
+  /*  private PatientListAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager; //This will allow single items in our list to alligned correctly
 
     private ArrayList<Patient> mPatientList;
@@ -71,7 +71,7 @@ public class DHomePage extends AppCompatActivity
         This makes sure that the recycler view will not change size no matter how many items are in the list, which
         also will increase the performance of the app
         */
-        mRecyclerView.setHasFixedSize(true);
+     /*   mRecyclerView.setHasFixedSize(true);
         //This sets the layout the user will view
         mLayoutManager = new LinearLayoutManager(this);
         //This line is where information about the patient will be parsed to create the list
@@ -100,5 +100,5 @@ public class DHomePage extends AppCompatActivity
     {
         mPatientList.get(position).setName(text);
         mAdapter.notifyItemChanged(position);
-    }
+    }*/
 }

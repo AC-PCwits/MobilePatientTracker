@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button registration = findViewById(R.id.registration);
         Button add_doc = findViewById(R.id.add_doc);
-
+        Button reg_doc = findViewById(R.id.reg_doc);
         Button logout_btn = findViewById(R.id.btn_logout);
 
         logout_btn.setOnClickListener(new View.OnClickListener() {
@@ -62,6 +62,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        reg_doc.setOnClickListener(new View.OnClickListener() { //what happens when you click the register button
+            @Override
+            public void onClick(View v) {
+                Intent start = new Intent(MainActivity.this,DRegistration.class); //moving from main screen to reg screen when clicking register button on main screen
+                startActivity(start);
+
+            }
+        });
 //////////////////////////////////////////////////////////////
 
         // All code below will run when the app is launched.
@@ -76,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         // In our case, every patient will have their own document which contains their ID, name, medical info etc
         // Also, firebase has a nice option to automatically name documents with a unique ID, so that should probably be used a primary key.
 
-        add.setOnClickListener(new View.OnClickListener() {
+        /*add.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 logbox.setText("executing...");
 
@@ -116,7 +125,8 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
             }
-        });
+        });*/
+
 
         update.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -179,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        get.setOnClickListener(new View.OnClickListener() {
+     /*   get.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 logbox.setText("executing...");
 
@@ -221,9 +231,9 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
             }
-        });
+        });*/
 
-        getmultiple.setOnClickListener(new View.OnClickListener() {
+      /*  getmultiple.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 logbox.setText("executing...");
 
@@ -265,8 +275,8 @@ public class MainActivity extends AppCompatActivity {
                         });
             }
         });
-
-        add_doc.setOnClickListener(new View.OnClickListener() {
+*/
+       /* add_doc.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 logbox.setText("executing...");
 
@@ -304,7 +314,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
             }
-        });
+        });*/
 
 
 
@@ -315,15 +325,43 @@ public class MainActivity extends AppCompatActivity {
 // Here is the custom class Patient that is being serialized to the database
 class Patient
 {
-    public int ID;
-    public String name;
-    public ArrayList<String> illnesses;
 
-    public Patient(int ID, String name, ArrayList<String> illnesses)
+
+    public String fname;
+    public String fsurname;
+    public String idno;
+    public String cellno;
+    public String nationality;
+    public String gender;
+    public String address;
+    public String ename;
+    public String econtact;
+    public String race;
+    public String mstatus;
+    public ArrayList<String> cissues;
+    public String medaid;
+    public String allergies;
+
+
+
+    // public Patient(String fname, String fsurname, String idno, String cellno, String nationality, String gender, String address, String ename, String econtact, String race, String mstatus, ArrayList cissues, String medaid, String allergies)
+    public Patient (String fname, String fsurname, String idno, String cellno, String nationality, String gender, String address, String ename, String econtact, String race, String mstatus, ArrayList<String> cissues, String medaid, String allergies)
     {
-        this.ID = ID;
-        this.name = name;
-        this.illnesses = illnesses;
+
+        this.fname= fname;
+        this.fsurname=  fsurname;
+        this.idno= idno;
+        this.cellno= cellno;
+        this.nationality= nationality;
+        this.gender= gender;
+        this.address= address;
+        this.ename=ename;
+        this.econtact= econtact;
+        this.race= race;
+        this.mstatus= mstatus;
+        this.cissues= cissues;
+        this.medaid= medaid;
+        this.allergies= allergies;
     }
 
     // VERY IMPORTANT: Java JSON deserialization needs a no-argument constructor in order to deserialize custom objects.
@@ -332,7 +370,7 @@ class Patient
     {
     }
 
-    public int getID() {
+   /* public int getID() {
         return ID;
     }
 
@@ -354,14 +392,14 @@ class Patient
 
     public void setIllnesses(ArrayList<String> illnesses) {
         this.illnesses = illnesses;
-    }
+    }*/
 
     // ALSO VERY IMPORTANT: Haven't tested it in Java, but I am aware that in C# your custom class's properties need to all be public in order for JSON to serialize them
     // and if they are not public, JSON will serialize blank properties and not throw any errors (leaving you wondering why your data isn't saving to the database).
     // So just to be safe, don't forget to make your custom class's members public
 
     // This method is just for converting a query task with multiple entries into a list a patients for easier use
-    public static ArrayList<Patient> GetPatientsFromQuery(Task<QuerySnapshot> task)
+  /*  public static ArrayList<Patient> GetPatientsFromQuery(Task<QuerySnapshot> task)
     {
         ArrayList patients = new ArrayList<Patient>();
 
@@ -371,26 +409,49 @@ class Patient
         }
 
         return patients;
-    }
+    }*/
 }
 
 class Doctor {
-    public int doc_ID;
-    public String name;
-    public String doc_type;
+    public String ID;
+    public String fname;
+    public String lname;
+    public String dob;
+    // public String doc_type;
+    public String gender;
+    public String email;
+    // public String cell_no;
+    // public String p_no; //practicing number,unique to each doctor
+    public int p_length;
+    public String uni_name;
 
-    public Doctor(int doc_ID, String name, String doc_type) {
-        this.doc_ID = doc_ID;
-        this.name = name;
-        this.doc_type = doc_type;
+
+    public Doctor(String ID, String fname, String lname, String dob, String gender, String email, int p_length, String uni_name) {
+        // public Doctor(String ID, String fname, String lname, String dob, String doc_type, String gender, String email, String cell_no, String p_no, int p_length, String uni_name) {
+        this.ID = ID;
+        this.fname = fname;
+        this.lname = lname;
+        this.dob = dob;
+        // this.doc_type = doc_type;
+        this.gender = gender;
+        this.email = email;
+        // this.cell_no = cell_no;
+        // this.p_no = p_no;
+        this.p_length = p_length;
+        this.uni_name = uni_name;
+
     }
 
     // VERY IMPORTANT: Java JSON deserialization needs a no-argument constructor in order to deserialize custom objects.
     // If you do not include one, your app will crash when you try to deserialize a custom class.
-    public Doctor() {
+    public Doctor (){
+
     }
 
 }
+
+
+
 
 
 
