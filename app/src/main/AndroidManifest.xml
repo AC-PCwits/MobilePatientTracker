@@ -12,8 +12,9 @@
 
         <activity android:name=".DoctorRegistration"></activity>
         <activity android:name=".DRegistration"></activity>
-        <activity android:name=".DoctorRegistration" />
+        <activity android:name=".LoginPatient" />
         <activity android:name=".PatientForm" />
+        <activity android:name=".DoctorOrPatientt" />
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

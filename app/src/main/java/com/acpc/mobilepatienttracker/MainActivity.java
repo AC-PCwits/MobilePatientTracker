@@ -325,8 +325,6 @@ public class MainActivity extends AppCompatActivity {
 // Here is the custom class Patient that is being serialized to the database
 class Patient
 {
-
-
     public String fname;
     public String fsurname;
     public String idno;
