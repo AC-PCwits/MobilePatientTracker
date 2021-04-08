@@ -11,7 +11,9 @@
         android:theme="@style/AppTheme">
 
         <activity android:name=".DoctorRegistration"></activity>
-        <activity android:name=".PatientForm"></activity>
+        <activity android:name=".DRegistration"></activity>
+        <activity android:name=".DoctorRegistration" />
+        <activity android:name=".PatientForm" />
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,7 +21,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginPatient" />
         <activity android:name=".PRegistration" />
         <activity android:name=".MainActivity">
             <intent-filter>
