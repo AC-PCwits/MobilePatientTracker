@@ -99,7 +99,6 @@ public class DoctorRegistration extends AppCompatActivity {
                 String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
                 String datePattern ="^\\d{4}/\\d{2}/\\d{2}$";
 
-
                 if (first_name.getText().toString().equals("")) {
                     first_name.setError("Empty first name");
                 }  else if (last_name.getText().toString().equals("")) {
@@ -125,6 +124,5 @@ public class DoctorRegistration extends AppCompatActivity {
                 }
             }
         });
-
     }
 }

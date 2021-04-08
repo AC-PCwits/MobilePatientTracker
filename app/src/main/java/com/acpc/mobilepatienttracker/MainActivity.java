@@ -304,9 +304,6 @@ public class MainActivity extends AppCompatActivity {
                         });
             }
         });
-
-
-
     }
 }
 
@@ -388,7 +385,6 @@ class Doctor {
     // If you do not include one, your app will crash when you try to deserialize a custom class.
     public Doctor() {
     }
-
 }
 
 

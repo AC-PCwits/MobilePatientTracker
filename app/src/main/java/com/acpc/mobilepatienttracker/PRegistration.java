@@ -22,9 +22,6 @@ public class PRegistration extends AppCompatActivity implements View.OnClickList
     private Button reg;
     private FirebaseAuth mAuth;
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

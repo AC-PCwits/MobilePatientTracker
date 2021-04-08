@@ -31,6 +31,18 @@ public class SplashActivity extends AppCompatActivity  {
                 Intent mySuperIntent = new Intent(SplashActivity.this, LoginPatient.class);
                 startActivity(mySuperIntent);
 
+                if (DatabaseManager.IsSignedIn())
+                {
+                    // go to main activty
+                }
+                else
+                {
+
+                }
+
+
+
+
                 //This 'finish()' is for exiting the app when back button pressed from Home page which is ActivityHome
                 finish();
 
