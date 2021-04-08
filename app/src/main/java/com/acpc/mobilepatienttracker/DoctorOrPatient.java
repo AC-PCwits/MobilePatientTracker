@@ -2,13 +2,12 @@ package com.acpc.mobilepatienttracker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class DoctorOrPatientt extends AppCompatActivity {
+public class DoctorOrPatient extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +20,7 @@ public class DoctorOrPatientt extends AppCompatActivity {
         doctor.setOnClickListener(new View.OnClickListener() { //what happens when you click the register button
             @Override
             public void onClick(View v) {
-                Intent start = new Intent( DoctorOrPatientt.this,DRegistration.class); //moving from main screen to reg screen when clicking register button on main screen
+                Intent start = new Intent( DoctorOrPatient.this,LoginDoctor.class); //moving from main screen to reg screen when clicking register button on main screen
                 startActivity(start);
 
             }
@@ -30,7 +29,7 @@ public class DoctorOrPatientt extends AppCompatActivity {
         patient.setOnClickListener(new View.OnClickListener() { //what happens when you click the register button
             @Override
             public void onClick(View v) {
-                Intent start = new Intent(DoctorOrPatientt.this,PRegistration.class); //moving from main screen to reg screen when clicking register button on main screen
+                Intent start = new Intent(DoctorOrPatient.this,LoginPatient.class); //moving from main screen to reg screen when clicking register button on main screen
                 startActivity(start);
 
             }

@@ -1,5 +1,8 @@
 package com.acpc.mobilepatienttracker;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,37 +11,33 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class LoginPatient extends AppCompatActivity {
+public class LoginDoctor extends AppCompatActivity {
 
     EditText email , password;
     Button btnLogin;
-    TextView p_signup , btnReset;
+    TextView d_signup , textViewReset;
     FirebaseAuth mAuth;
     EditText inputEmail;
-
 
     private FirebaseAuth.AuthStateListener mAuthStateListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.acitivity_plogin);
+        setContentView(R.layout.activity_login_doctor);
 
         mAuth = FirebaseAuth.getInstance();
-        email = findViewById(R.id.editTextEmail);
-        password = findViewById(R.id.editTextPassword);
-        btnLogin = findViewById(R.id.btn_login);
-        p_signup = findViewById(R.id.textView_signup);
-        btnReset = findViewById(R.id.btn_reset_password);
+        email = findViewById(R.id.editTextDocEmail);
+        password = findViewById(R.id.editTextDocPassword);
+        btnLogin = findViewById(R.id.btnDocLogin);
+        d_signup = findViewById(R.id.textViewDocSignUp);
+        textViewReset = findViewById(R.id.textViewResetDocPass);
 
 
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
@@ -47,13 +46,13 @@ public class LoginPatient extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser mFirebaseUser = mAuth.getCurrentUser();
                 if( mFirebaseUser != null) {
-                    Toast.makeText(LoginPatient.this, "You are logged in.",Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(LoginPatient.this, PatientForm.class);
+                    Toast.makeText(LoginDoctor.this, "You are logged in.",Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(LoginDoctor.this, DoctorForm.class);
                     startActivity(i);
                 }
 
                 else{
-                    Toast.makeText(LoginPatient.this, "Please log in.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginDoctor.this, "Please log in.",Toast.LENGTH_SHORT).show();
                 }
             }
         };
@@ -73,40 +72,40 @@ public class LoginPatient extends AppCompatActivity {
                     password.requestFocus();
                 }
                 else if(eml.isEmpty() && pswrd.isEmpty()){
-                    Toast.makeText(LoginPatient.this, "Please enter details.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginDoctor.this, "Please enter details.",Toast.LENGTH_SHORT).show();
                 }
                 else if(!(eml.isEmpty() && pswrd.isEmpty())){
-                    mAuth.signInWithEmailAndPassword(eml,pswrd).addOnCompleteListener(LoginPatient.this, new OnCompleteListener<AuthResult>() {
+                    mAuth.signInWithEmailAndPassword(eml,pswrd).addOnCompleteListener(LoginDoctor.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(!task.isSuccessful()){
-                                Toast.makeText(LoginPatient.this, "Login error, Please try again",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginDoctor.this, "Login error, Please try again",Toast.LENGTH_SHORT).show();
                             }
                             else{
-                                Intent intent = new Intent(LoginPatient.this , PatientForm.class);
+                                Intent intent = new Intent(LoginDoctor.this , DoctorForm.class);
                                 startActivity(intent);
                             }
                         }
                     });
                 }
                 else{
-                    Toast.makeText(LoginPatient.this, "Error occurred.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginDoctor.this, "Error occurred.",Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-        p_signup.setOnClickListener(new View.OnClickListener() {
+        d_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginPatient.this , PRegistration.class);
+                Intent intent = new Intent(LoginDoctor.this , DRegistration.class);
                 startActivity(intent);
             }
         });
 
-        inputEmail = (EditText) findViewById(R.id.editTextEmail);
-        btnReset = (TextView)findViewById(R.id.btn_reset_password);
+        inputEmail = (EditText) findViewById(R.id.editTextDocEmail);
+        textViewReset = (TextView)findViewById(R.id.textViewResetDocPass);
         mAuth = FirebaseAuth.getInstance();
-        btnReset.setOnClickListener(new View.OnClickListener() {
+        textViewReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String email = inputEmail.getText().toString();
@@ -121,9 +120,9 @@ public class LoginPatient extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(LoginPatient.this, "We have sent you instructions to reset your password!", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(LoginDoctor.this, "We have sent you instructions to reset your password!", Toast.LENGTH_LONG).show();
                                 } else {
-                                    Toast.makeText(LoginPatient.this, "Failed to send reset email!", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(LoginDoctor.this, "Failed to send reset email!", Toast.LENGTH_LONG).show();
                                 }
 
                             }
