@@ -42,7 +42,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.1"
+        app:layout_constraintVertical_bias="0.068"
         tools:ignore="MissingConstraints" />
 
     <EditText
@@ -171,7 +171,7 @@
         android:autofillHints=""
         android:backgroundTint="#FFA500"
         android:ems="10"
-        android:hint="DD/MM/YYYY"
+        android:hint="YYYY/MM/DD"
         android:inputType="date"
         android:textColor="#000000"
         android:textColorHighlight="@color/gradStop"
@@ -181,13 +181,24 @@
         app:layout_constraintTop_toBottomOf="@+id/genderGroup"
         tools:targetApi="o" />
 
+    <Button
+        android:id="@+id/select_dob"
+        android:layout_width="wrap_content"
+        android:layout_height="38dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="20dp"
+        android:text="Select Date of birth"
+        app:layout_constraintStart_toEndOf="@+id/date_of_birth"
+        app:layout_constraintTop_toBottomOf="@+id/genderGroup" />
+
     <EditText
         android:id="@+id/IDnu"
         android:layout_width="330dp"
         android:layout_height="43dp"
         android:layout_marginStart="15dp"
         android:layout_marginLeft="15dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="15dp"
         android:layout_marginRight="15dp"
         android:backgroundTint="#FFA500"
@@ -203,24 +214,13 @@
         app:layout_constraintTop_toBottomOf="@+id/date_of_birth"
         tools:targetApi="lollipop" />
 
-    <Button
-        android:id="@+id/select_dob"
-        android:layout_width="wrap_content"
-        android:layout_height="38dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="20dp"
-        android:text="Select Date of birth"
-        app:layout_constraintStart_toEndOf="@+id/date_of_birth"
-        app:layout_constraintTop_toBottomOf="@+id/genderGroup" />
-
     <EditText
         android:id="@+id/LengthOfPractice"
-        android:layout_width="330dp"
-        android:layout_height="43dp"
+        android:layout_width="195dp"
+        android:layout_height="40dp"
         android:layout_marginStart="15dp"
         android:layout_marginLeft="15dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="52dp"
         android:layout_marginEnd="15dp"
         android:layout_marginRight="15dp"
         android:backgroundTint="#FFA500"
@@ -231,7 +231,29 @@
         android:textColor="#000000"
         android:textColorHighlight="@color/gradStop"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintHorizontal_bias="0.005"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/date_of_birth"
+        tools:targetApi="lollipop" />
+
+    <EditText
+        android:id="@+id/practicingNum"
+        android:layout_width="162dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
+        android:backgroundTint="#FFA500"
+        android:digits="0123456789"
+        android:ems="10"
+        android:hint="Practicing Number"
+        android:importantForAutofill="no"
+        android:textColor="#000000"
+        android:textColorHighlight="@color/gradStop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.945"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/date_of_birth"
         tools:targetApi="lollipop" />
@@ -239,10 +261,10 @@
     <EditText
         android:id="@+id/Institution"
         android:layout_width="330dp"
-        android:layout_height="43dp"
+        android:layout_height="40dp"
         android:layout_marginStart="15dp"
         android:layout_marginLeft="15dp"
-        android:layout_marginTop="112dp"
+        android:layout_marginTop="92dp"
         android:layout_marginEnd="15dp"
         android:layout_marginRight="15dp"
         android:backgroundTint="#FFA500"
@@ -253,7 +275,51 @@
         android:textColor="#000000"
         android:textColorHighlight="@color/gradStop"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.098"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/date_of_birth"
+        tools:targetApi="lollipop" />
+
+    <EditText
+        android:id="@+id/Doctor_speciality"
+        android:layout_width="330dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="132dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
+        android:backgroundTint="#FFA500"
+        android:ems="10"
+        android:hint="Doctor Speciality"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:textColor="#000000"
+        android:textColorHighlight="@color/gradStop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.098"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/date_of_birth"
+        tools:targetApi="lollipop" />
+
+    <EditText
+        android:id="@+id/Cellnu"
+        android:layout_width="351dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="172dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
+        android:backgroundTint="#FFA500"
+        android:digits="0123456789"
+        android:ems="10"
+        android:hint="Enter Cell number"
+        android:importantForAutofill="no"
+        android:textColor="#000000"
+        android:textColorHighlight="@color/gradStop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.166"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/date_of_birth"
         tools:targetApi="lollipop" />
@@ -261,10 +327,10 @@
     <EditText
         android:id="@+id/password"
         android:layout_width="330dp"
-        android:layout_height="43dp"
+        android:layout_height="40dp"
         android:layout_marginStart="15dp"
         android:layout_marginLeft="15dp"
-        android:layout_marginTop="160dp"
+        android:layout_marginTop="212dp"
         android:layout_marginEnd="15dp"
         android:layout_marginRight="15dp"
         android:backgroundTint="#FFA500"
@@ -275,7 +341,7 @@
         android:textColor="#000000"
         android:textColorHighlight="@color/gradStop"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintHorizontal_bias="0.098"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/date_of_birth"
         tools:targetApi="lollipop" />
@@ -301,15 +367,16 @@
         android:id="@+id/signUpButtonId"
         android:layout_width="100dp"
         android:layout_height="38dp"
+
+        android:layout_marginTop="4dp"
         android:layout_marginTop="20dp"
+
         android:background="@color/gradStart"
         android:text="SignUp"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintHorizontal_bias="0.414"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/policy" />
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
