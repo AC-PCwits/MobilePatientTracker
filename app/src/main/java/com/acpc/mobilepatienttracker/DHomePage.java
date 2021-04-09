@@ -2,6 +2,8 @@ package com.acpc.mobilepatienttracker;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -30,10 +33,11 @@ public class DHomePage extends AppCompatActivity
 
     private ArrayList<Patient> mPatientList;
 
+    private Button logoutBut;
+
     private FirebaseFirestore database = FirebaseFirestore.getInstance();
     private Doctor doc = new Doctor();
     private TextView testView;
-    private BigInteger docID = new BigInteger("1111111111111");
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -42,6 +46,7 @@ public class DHomePage extends AppCompatActivity
         setContentView(R.layout.activity_d_home_page);
 
         testView = (TextView) findViewById(R.id.testView);
+        logoutBut = (Button) findViewById(R.id.logoutButton);
 
         mPatientList = new ArrayList<>();
         //getDocData();
@@ -49,6 +54,13 @@ public class DHomePage extends AppCompatActivity
         //buildPatientList()
         buildExampleList();
         buildRecyclerView();
+
+        logoutBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logoutActivity();
+            }
+        });
 
     }
 
@@ -162,5 +174,13 @@ public class DHomePage extends AppCompatActivity
                 startActivity(intent);
             }
         });
+    }
+
+    private void logoutActivity()
+    {
+        FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent(DHomePage.this, DoctorOrPatient.class);
+        startActivity(intent);
+        finish();
     }
 }

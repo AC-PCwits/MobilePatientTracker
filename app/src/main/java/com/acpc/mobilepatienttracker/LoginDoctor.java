@@ -49,6 +49,7 @@ public class LoginDoctor extends AppCompatActivity {
                     Toast.makeText(LoginDoctor.this, "You are logged in.",Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(LoginDoctor.this, DHomePage.class);
                     startActivity(i);
+                    finish();
                 }
 
                 else{
@@ -84,6 +85,7 @@ public class LoginDoctor extends AppCompatActivity {
                             else{
                                 Intent intent = new Intent(LoginDoctor.this , DHomePage.class);
                                 startActivity(intent);
+                                finish();
                             }
                         }
                     });
@@ -99,6 +101,7 @@ public class LoginDoctor extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(LoginDoctor.this , DRegistration.class);
                 startActivity(intent);
+                finish();
             }
         });
 

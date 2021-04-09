@@ -109,6 +109,7 @@ public class DRegistration extends AppCompatActivity implements View.OnClickList
 
                                         Intent start = new Intent(DRegistration.this, DoctorForm.class);
                                         startActivity(start);
+                                        finish();
 
                                     }
                                     else{

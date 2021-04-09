@@ -9,15 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".DoctorForm"></activity>
-        <activity android:name=".DRegistration"></activity>
-        <activity android:name=".LoginPatient"></activity>
-        <activity android:name=".LoginDoctor"></activity>
-        <activity android:name=".PatientForm"></activity>
-        <activity android:name=".DoctorOrPatient"></activity>
-        <activity android:name=".DHomePage"></activity>
-        <activity android:name=".DPatientDetails"></activity>
+        <activity android:name=".PatientDetails"></activity>
+        <activity android:name=".DoctorForm" />
+        <activity android:name=".DRegistration" />
+        <activity android:name=".LoginPatient" />
+        <activity android:name=".LoginDoctor" />
+        <activity android:name=".PatientForm" />
+        <activity android:name=".DoctorOrPatient" />
+        <activity android:name=".DHomePage" />
+        <activity android:name=".DPatientDetails" />
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -4,7 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -38,7 +45,6 @@ public class DPatientDetails extends AppCompatActivity {
     private TextView medaidText;
     private TextView allergiesText;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -54,16 +60,17 @@ public class DPatientDetails extends AppCompatActivity {
         genderText = (TextView)findViewById(R.id.genderText);
         addressText = (TextView)findViewById(R.id.addressText);
         enameText = (TextView)findViewById(R.id.enameText);
-        econtactText = (TextView)findViewById(R.id.ecellTitleText);
+        econtactText = (TextView)findViewById(R.id.ecellText);
         raceText = (TextView)findViewById(R.id.raceText);
         mstatusText = (TextView)findViewById(R.id.mstatusText);
         medaidText = (TextView)findViewById(R.id.medaidText);
         allergiesText = (TextView)findViewById(R.id.allergiesText);
 
+
         //Patient details from the list are sent with the intent used to send the user to this screen
         Intent intent = getIntent();
 
-        //Patient Details are set here
+//        Patient Details are set here
         if(intent.getExtras() != null) {
             name = intent.getExtras().getString("PATIENT_NAME");
             id = intent.getExtras().getString("PATIENT_ID");
@@ -107,4 +114,6 @@ public class DPatientDetails extends AppCompatActivity {
         medaidText.setText(medaid);
         allergiesText.setText(allergies);
     }
+
+
 }
