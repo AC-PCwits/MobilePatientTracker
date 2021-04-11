@@ -1,14 +1,20 @@
 package com.acpc.mobilepatienttracker;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -124,40 +130,66 @@ public class PatientDetails extends AppCompatActivity {
 
     public Doctor getUserData()
     {
-        database.collection("Users")//.whereEqualTo("id", "1111111111111")
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users");
+        reference.addValueEventListener(new ValueEventListener() {
+            String str = "";
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful())
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot dataSnapshot : snapshot.getChildren())
                 {
-                    ArrayList<User> user = new ArrayList<>();
-
-                    for(QueryDocumentSnapshot doc : task.getResult())
+                    if(dataSnapshot.child("email").getValue().toString().equals(user.getEmail()))
                     {
-                        user.add(doc.toObject(User.class));
+                        str = dataSnapshot.child("IDnum").getValue().toString();
                     }
-
-                    String s = "Users:\n";
-
-                    for(User user1 : user)
-                    {
-//                        if(doctor1.ID.equals("1111111111111"))
-//                        {
-//                            doc = doctor1;
-//                        }
-                        s = s + user1.fname + ";" +user1.email + "\n";
-                    }
-
-                    testView.setText(s);
-//                    testView.setText("Successful but list was empty");
-
-                }
-                else
-                {
-                    testView.setText("Error: could not get documents from query");
                 }
             }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
         });
+
+
+
+
+//        database.collection("Users")//.whereEqualTo("id", "1111111111111")
+//                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                if(task.isSuccessful())
+//                {
+//                    ArrayList<User> user = new ArrayList<>();
+//
+//                    for(QueryDocumentSnapshot doc : task.getResult())
+//                    {
+//                        user.add(doc.toObject(User.class));
+//                    }
+//
+//                    String s = "Users:\n";
+//
+//                    for(User user1 : user)
+//                    {
+////                        if(doctor1.ID.equals("1111111111111"))
+////                        {
+////                            doc = doctor1;
+////                        }
+//                        s = s + user1.fname + ";" +user1.email + "\n";
+//                    }
+//
+//                    testView.setText(s);
+////                    testView.setText("Successful but list was empty");
+//
+//                }
+//                else
+//                {
+//                    testView.setText("Error: could not get documents from query");
+//                }
+//            }
+//        });
 
         return null;
     }

@@ -14,11 +14,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 
 public class DHomePage extends AppCompatActivity
@@ -49,7 +54,7 @@ public class DHomePage extends AppCompatActivity
         logoutBut = (Button) findViewById(R.id.logoutButton);
 
         mPatientList = new ArrayList<>();
-        //getDocData();
+        getDocData();
         //To populate the list with actual data use the below function:
         //buildPatientList()
         buildExampleList();
@@ -67,31 +72,59 @@ public class DHomePage extends AppCompatActivity
 
     public Doctor getDocData()
     {
-        database.collection("doctor-data")//.whereEqualTo("id", "1111111111111")
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        final String[] str = {""};
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Doctors");
+        reference.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot dataSnapshot : snapshot.getChildren())
+                {
+                    if(dataSnapshot.child("email").getValue().toString().equals(user.getEmail()))
+                    {
+                            str[0] = dataSnapshot.child("IDnum").getValue().toString();
+                    }
+                }
+
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        final ArrayList<Doctor> doctor = new ArrayList<>();
+        database.collection("doctor-data")//.whereEqualTo("id", str[0])
         .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful())
                 {
-                    ArrayList<Doctor> doctor = new ArrayList<>();
+                    ArrayList<Doctor> doctor1 = new ArrayList<>();
 
                     for(QueryDocumentSnapshot doc : task.getResult())
                     {
-                        doctor.add(doc.toObject(Doctor.class));
+                        doctor1.add(doc.toObject(Doctor.class));
                     }
 
                     String s = "";
 
-                    for(Doctor doctor1 : doctor)
+                    for(Doctor doctor2 : doctor)
                     {
-                        if(doctor1.ID.equals("1111111111111"))
-                        {
-                            doc = doctor1;
-                        }
-                    }
+//                        if(doctor2.patient_ID.equals(str[0])) {
+//                            doc = doctor2;
+//                        }
+                        s = s + doctor2.ID + ";" + doctor2.fname + " " + doctor2.lname + "\n";
 
-                    testView.setText(doc.ID + ";" + doc.fname + " " + doc.lname);
-//                    testView.setText("Successful but list was empty");
+                    }
+//
+                    testView.setText(s);
+////                    testView.setText("Successful but list was empty");
+
 
                 }
                 else

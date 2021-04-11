@@ -50,6 +50,7 @@ public class LoginPatient extends AppCompatActivity {
                     Toast.makeText(LoginPatient.this, "You are logged in.",Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(LoginPatient.this, PHomePage.class);
                     startActivity(i);
+                    finish();
                 }
 
                 else{
@@ -61,7 +62,7 @@ public class LoginPatient extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String eml = email.getText().toString();
+                final String eml = email.getText().toString();
                 String pswrd = password.getText().toString();
 
                 if(eml.isEmpty()){
@@ -83,8 +84,12 @@ public class LoginPatient extends AppCompatActivity {
                                 Toast.makeText(LoginPatient.this, "Login error, Please try again",Toast.LENGTH_SHORT).show();
                             }
                             else{
-                                Intent intent = new Intent(LoginPatient.this , PatientForm.class);
+                                Intent intent = new Intent(LoginPatient.this , PHomePage.class);
                                 startActivity(intent);
+                                Bundle bundle = new Bundle();
+                                bundle.putString("USER_EMAIL", eml);
+                                intent.putExtras(bundle);
+                                finish();
                             }
                         }
                     });
@@ -100,6 +105,7 @@ public class LoginPatient extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(LoginPatient.this , PRegistration.class);
                 startActivity(intent);
+                finish();
             }
         });
 
