@@ -24,16 +24,20 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
+import static android.widget.Toast.*;
+
 public class PatientForm extends AppCompatActivity  {
     private EditText pname, psurname, pid, pcell, pNationality, pAddress, pemname, pemcell, Allergies;
     private RadioGroup radioRace;  //// race
     private RadioGroup radioMarital;  /// marital status
-    private CheckBox chkFemale, chkMale;
+    private RadioGroup radioGender; /// gender
+    private RadioButton gender_button;
     private CheckBox chkHIV;
     private CheckBox chkTB;
     private CheckBox chKDiabetes;
     private CheckBox chkHyp;
     private CheckBox chkMedaid;
+    private CheckBox chkNone;
   //  private Button btnSubmit;
     private Button submit;
 
@@ -48,6 +52,7 @@ public class PatientForm extends AppCompatActivity  {
 
         radioRace= findViewById(R.id.radioGroup);
         radioMarital= findViewById(R.id.radioGroup2);
+        radioGender= findViewById(R.id.rgpGender);
 
         pname= findViewById(R.id.pname);
         psurname= findViewById(R.id.psurname);
@@ -58,6 +63,14 @@ public class PatientForm extends AppCompatActivity  {
         pemname= findViewById(R.id.pemname);
         pemcell= findViewById(R.id.pemcell);
         Allergies= findViewById(R.id.Allergies);
+        chkMedaid= findViewById(R.id.chkMedaid);
+        chkHIV= findViewById(R.id.chkHIV);
+        chkTB= findViewById(R.id.chkTB);
+        chKDiabetes= findViewById(R.id.chkDiabetes);
+        chkHyp= findViewById(R.id.chkHyp);
+        chkNone= findViewById(R.id.chkNone);
+
+
 
         submit.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -66,6 +79,9 @@ public class PatientForm extends AppCompatActivity  {
         //submit.setOnClickListener(new View.OnClickListener() { //when you click the submit button it adds to the patients data in the database
           //  @Override
             //public void onClick(View v) {
+
+                int selected_gender = radioGender.getCheckedRadioButtonId();
+                gender_button= findViewById(selected_gender);
 
                 if (pname.getText().toString().equals("")) {
                     pname.setError("Empty first name");
@@ -91,7 +107,10 @@ public class PatientForm extends AppCompatActivity  {
                 } else if (pemcell.getText().toString().equals("")) {
                     pemcell.setError("Emergency Contact Number is required");
                     return;
-                }
+                } else if(chkHIV.isChecked()==false && chkTB.isChecked()==false && chkHyp.isChecked()==false && chKDiabetes.isChecked()==false && chkNone.isChecked()==false){
+                    Toast.makeText(PatientForm.this, "Select a Common Issue option!", LENGTH_LONG).show(); //error message for common issues
+                }//common issues validation
+
                 else {
 
                     final String p_name = pname.getText().toString();
@@ -106,7 +125,7 @@ public class PatientForm extends AppCompatActivity  {
                     final String m_status = getMarriage_Status(v);
                     final String p_race = getRace(v);
                     final ArrayList<String> cissues = ailments(v);
-                    final String gender = checkGender(v);
+                    final String gender = getGender(v); //changed to radiobuttons
                     final String medaid = checkAid(v);
 
                     Patient patient = new Patient(p_name, p_surname, p_id, p_cell, p_Nationality, gender, p_Address, p_emname, p_emcell, p_race, m_status, cissues, medaid, allergies);
@@ -119,7 +138,7 @@ public class PatientForm extends AppCompatActivity  {
                                 @Override
                                 public void onSuccess(DocumentReference documentReference) {
                                     // If we are here, the app successfully connected to Firestore and added a new entry
-                                    Toast.makeText(PatientForm.this, "Data successfully added", Toast.LENGTH_LONG).show();
+                                    makeText(PatientForm.this, "Data successfully added", LENGTH_LONG).show();
                                     Intent start = new Intent(PatientForm.this, LoginPatient.class);
                                     startActivity(start);
                                 }
@@ -129,7 +148,7 @@ public class PatientForm extends AppCompatActivity  {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
                                     // If we are here, the entry could not be added for some reason (e.g no internet connection)
-                                    Toast.makeText(PatientForm.this, "Data was unable added", Toast.LENGTH_LONG).show();
+                                    makeText(PatientForm.this, "Data was unable added", LENGTH_LONG).show();
                                 }
                             });
                 }
@@ -162,12 +181,20 @@ public class PatientForm extends AppCompatActivity  {
 
     }
 
+    public String getGender(View v) {      ///// function to help convert radiogroup selections to string, this allows us to store it as a string in the DBra
+
+        int radioID = radioGender.getCheckedRadioButtonId();
+
+        RadioButton singleButton = (RadioButton) findViewById(radioID);
+        String out = singleButton.getText().toString();
+        return out;
+
+    }
+
+
     public ArrayList<String> ailments(View v){         ////function to collect options selected from the check box, stores in a string arrayList, this is stored in the DB
         ArrayList<String> sickness= new ArrayList<String>();
-        chkHIV= findViewById(R.id.chkHIV);
-        chkTB= findViewById(R.id.chkTB);
-        chKDiabetes= findViewById(R.id.chkDiabetes);
-        chkHyp= findViewById(R.id.chkHyp);
+
         if(chkHIV.isChecked()){
             sickness.add("HIV/AIDS");
         }
@@ -183,23 +210,14 @@ public class PatientForm extends AppCompatActivity  {
             sickness.add("Hypertension");
         }
 
+        if(chkNone.isChecked()){
+            sickness.add("None");
+        }
+
         return sickness;
 
-
     }
 
-    public String checkGender(View v){      ///// function that checks check box, stores option as a string, this can be stored in the DB
-        String gen="";
-        chkFemale= findViewById(R.id.chkFemale);
-        chkMale= findViewById(R.id.chkMale);
-        if(chkFemale.isChecked()){
-            gen="Female";
-        }
-        else{
-            gen="Male";
-        }
-        return gen;
-    }
 
     public String checkAid(View v){    ///// function that checks check box, stores option as a string, this can be stored in the DB
         String aid= "";

@@ -102,19 +102,29 @@
             android:hint="Nationality"
             android:inputType="textPersonName" />
 
-        <CheckBox
-            android:id="@+id/chkFemale"
+        <RadioGroup
+            android:id="@+id/rgpGender"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Female"
-            android:layout_weight="1"/>
+            android:layout_height="match_parent"
+            android:layout_weight="0.66">
 
-        <CheckBox
-            android:id="@+id/chkMale"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Male"
-            android:layout_weight="1"/>
+            <RadioButton
+                android:id="@+id/radFemale"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="Female"
+                android:checked="true"
+                />
+
+            <RadioButton
+                android:id="@+id/radMale"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="Male" />
+        </RadioGroup>
+
     </LinearLayout>
 
             <EditText
@@ -196,7 +206,9 @@
                 android:id="@+id/radBlack"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Black" />
+                android:text="Black"
+                android:checked="true"
+                />
 
             <RadioButton
                 android:id="@+id/radCaucasian"
@@ -243,7 +255,9 @@
                 android:id="@+id/radSingle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Single" />
+                android:text="Single"
+                android:checked="true"
+                />
 
             <RadioButton
                 android:id="@+id/radMarried"
@@ -333,6 +347,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Hypertension" />
+
+            <CheckBox
+                android:id="@+id/chkNone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="None" />
         </RadioGroup>
 
         <RelativeLayout

@@ -222,7 +222,6 @@ public class DoctorForm extends AppCompatActivity {
             //checks radio group called gender_group to see what has been selected. Gets text of the gender type selected.
             //Converts the gender type to string and returns it
 
-
                 int radioID = gender_group.getCheckedRadioButtonId();
 
                 RadioButton singleButton = (RadioButton) findViewById(radioID);
