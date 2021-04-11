@@ -26,7 +26,7 @@ public class DRegistration extends AppCompatActivity implements View.OnClickList
 
     private Button reg;
 
-    private EditText inname, inemail, inpassword;
+    private EditText inname, inemail, inpassword, inprac_no;
     private FirebaseAuth authorization;
 
     @Override
@@ -38,6 +38,7 @@ public class DRegistration extends AppCompatActivity implements View.OnClickList
         inname= findViewById(R.id.inname);
         inemail= findViewById(R.id.inemail);
         inpassword= findViewById(R.id.inpassword);
+        inprac_no = findViewById(R.id.inprac_no);
         reg = findViewById(R.id.register_doc);
         reg.setOnClickListener(this);
     }
@@ -56,6 +57,7 @@ public class DRegistration extends AppCompatActivity implements View.OnClickList
 
         final String name= inname.getText().toString().trim();
         final String email= inemail.getText().toString().trim();
+        final String prac_no = inprac_no.getText().toString().trim();
         String password= inpassword.getText().toString().trim();
 
         if(name.isEmpty()){
@@ -76,6 +78,16 @@ public class DRegistration extends AppCompatActivity implements View.OnClickList
             return;
         }
 
+        if(prac_no.isEmpty()){
+            inprac_no.setError("Practicing Number is Required");
+            inprac_no.requestFocus();
+        }
+
+        if(prac_no.length()!=7){
+            inprac_no.setError("Practice Number must be 8 digits");
+            inprac_no.requestFocus();
+        }
+
         if(password.isEmpty()){
             inpassword.setError("Password is Required");
             inpassword.requestFocus();
@@ -94,8 +106,8 @@ public class DRegistration extends AppCompatActivity implements View.OnClickList
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
                         if(task.isSuccessful()){
-                            User user= new User(name,email);
-                            FirebaseDatabase.getInstance().getReference("Users")
+                            User user= new User(name,email,prac_no);
+                            FirebaseDatabase.getInstance().getReference("Doctors")
 
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
 

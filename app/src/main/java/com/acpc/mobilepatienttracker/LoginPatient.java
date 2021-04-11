@@ -48,7 +48,7 @@ public class LoginPatient extends AppCompatActivity {
                 FirebaseUser mFirebaseUser = mAuth.getCurrentUser();
                 if( mFirebaseUser != null) {
                     Toast.makeText(LoginPatient.this, "You are logged in.",Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(LoginPatient.this, PatientForm.class);
+                    Intent i = new Intent(LoginPatient.this, PHomePage.class);
                     startActivity(i);
                 }
 
@@ -137,6 +137,12 @@ public class LoginPatient extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthStateListener);
+    }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+        mAuth.removeAuthStateListener(mAuthStateListener);
     }
 
 }

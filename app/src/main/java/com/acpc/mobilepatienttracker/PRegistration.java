@@ -19,7 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class PRegistration extends AppCompatActivity implements View.OnClickListener{
 
-    private EditText inname, inemail, inpassword;
+    private EditText inname, inemail, inpassword, in_id;
     private Button reg;
     private FirebaseAuth mAuth;
 
@@ -31,6 +31,7 @@ public class PRegistration extends AppCompatActivity implements View.OnClickList
         inname= findViewById(R.id.inname);
         inemail= findViewById(R.id.inemail);
         inpassword= findViewById(R.id.inpassword);
+        in_id = findViewById(R.id.inid);
         reg = findViewById(R.id.reg);
         reg.setOnClickListener(this);
     }
@@ -47,6 +48,7 @@ public class PRegistration extends AppCompatActivity implements View.OnClickList
         //taking in input for email,name,password and converting to string for database to understand
         final String name= inname.getText().toString().trim();
         final String email= inemail.getText().toString().trim();
+        final String id = in_id.getText().toString().trim();
         String password= inpassword.getText().toString().trim();
 
         //these if statements ensure that none of the inputs fields(name,email,password) is left empty when registering
@@ -66,6 +68,16 @@ public class PRegistration extends AppCompatActivity implements View.OnClickList
             inemail.setError("Provide Valid Email");
             inemail.requestFocus();
             return;
+        }
+
+        if(id.isEmpty()){
+            in_id.setError("Practicing Number is Required");
+            in_id.requestFocus();
+        }
+
+        if(id.length()!=13){
+            in_id.setError("Practice Number must be 8 digits");
+            in_id.requestFocus();
         }
 
         if(password.isEmpty()){
@@ -88,7 +100,7 @@ public class PRegistration extends AppCompatActivity implements View.OnClickList
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
                         if(task.isSuccessful()){
-                            User user= new User(name,email);
+                            User user= new User(name,email,id);
                             FirebaseDatabase.getInstance().getReference("Users")  //this adds all new users to a collection in the database called "Users"
 
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())  //inside brackets will return ID for registered user

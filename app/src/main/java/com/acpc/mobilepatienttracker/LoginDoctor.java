@@ -141,4 +141,10 @@ public class LoginDoctor extends AppCompatActivity {
         mAuth.addAuthStateListener(mAuthStateListener);
     }
 
+    @Override
+    protected void onStop(){
+        super.onStop();
+        mAuth.removeAuthStateListener(mAuthStateListener);
+    }
+
 }

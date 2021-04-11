@@ -1,9 +1,10 @@
 package com.acpc.mobilepatienttracker;
-
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -33,7 +34,8 @@ public class PatientForm extends AppCompatActivity  {
     private CheckBox chKDiabetes;
     private CheckBox chkHyp;
     private CheckBox chkMedaid;
-    private Button btnSubmit;
+  //  private Button btnSubmit;
+    private Button submit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +43,8 @@ public class PatientForm extends AppCompatActivity  {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_form);
-        btnSubmit= findViewById(R.id.btnSubmit);
+       // btnSubmit= findViewById(R.id.btnSubmit);
+        submit = findViewById(R.id.submit);
 
         radioRace= findViewById(R.id.radioGroup);
         radioMarital= findViewById(R.id.radioGroup2);
@@ -56,46 +59,80 @@ public class PatientForm extends AppCompatActivity  {
         pemcell= findViewById(R.id.pemcell);
         Allergies= findViewById(R.id.Allergies);
 
-
-        btnSubmit.setOnClickListener(new View.OnClickListener() { //when you click the submit button it adds to the patients data in the database
+        submit.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
-                final String p_name= pname.getText().toString();
-                final String p_surname= psurname.getText().toString();
-                final String p_id= pid.getText().toString();
-                final String p_cell= pcell.getText().toString();
-                final String p_Nationality= pNationality.getText().toString();
-                final String p_Address= pAddress.getText().toString();
-                final String p_emname=pemname.getText().toString();
-                final String p_emcell= pemcell.getText().toString();
-                final String allergies= Allergies.getText().toString();
-                final String m_status= getMarriage_Status(v);
-                final String p_race= getRace(v);
-                final ArrayList<String> cissues= ailments(v);
-                final String gender= checkGender(v);
-                final String medaid= checkAid(v);
+        //submit.setOnClickListener(new View.OnClickListener() { //when you click the submit button it adds to the patients data in the database
+          //  @Override
+            //public void onClick(View v) {
 
-                Patient patient = new Patient(p_name, p_surname, p_id, p_cell, p_Nationality,gender, p_Address, p_emname, p_emcell, p_race, m_status, cissues, medaid,  allergies);
+                if (pname.getText().toString().equals("")) {
+                    pname.setError("Empty first name");
+                    return;
+                } else if (psurname.getText().toString().equals("")) {
+                    psurname.setError("Empty last name");
+                    return;
+                } else if (pid.getText().toString().equals("")) {
+                    pid.setError("Enter ID");
+                    return;
+                } else if (pcell.getText().toString().equals("")) {
+                    pcell.setError("Enter cell number");
+                    return;
+                } else if (pNationality.getText().toString().equals("")) {
+                    pNationality.setError("Enter Nationality");
+                    return;
+                } else if (pAddress.getText().toString().equals("")) {
+                    pAddress.setError("Enter Address");
+                    return;
+                } else if (pemname.getText().toString().equals("")) {
+                    pemname.setError("Emergency Contact is required");
+                    return;
+                } else if (pemcell.getText().toString().equals("")) {
+                    pemcell.setError("Emergency Contact Number is required");
+                    return;
+                }
+                else {
 
-                database.collection("patient-data") // data gets added to a collection called patient-data
-                        .add(patient)
-                        // Add a success listener so we can be notified if the operation was successfuly.
+                    final String p_name = pname.getText().toString();
+                    final String p_surname = psurname.getText().toString();
+                    final String p_id = pid.getText().toString();
+                    final String p_cell = pcell.getText().toString();
+                    final String p_Nationality = pNationality.getText().toString();
+                    final String p_Address = pAddress.getText().toString();
+                    final String p_emname = pemname.getText().toString();
+                    final String p_emcell = pemcell.getText().toString();
+                    final String allergies = Allergies.getText().toString();
+                    final String m_status = getMarriage_Status(v);
+                    final String p_race = getRace(v);
+                    final ArrayList<String> cissues = ailments(v);
+                    final String gender = checkGender(v);
+                    final String medaid = checkAid(v);
 
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                // If we are here, the app successfully connected to Firestore and added a new entry
-                                Toast.makeText(PatientForm.this,"Data successfully added", Toast.LENGTH_LONG).show();
-                            }
-                        })
-                        // Add a failure listener so we can be notified if something does wrong
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                // If we are here, the entry could not be added for some reason (e.g no internet connection)
-                                Toast.makeText(PatientForm.this,"Data was unable added", Toast.LENGTH_LONG).show();
-                            }
-                        });
+                    Patient patient = new Patient(p_name, p_surname, p_id, p_cell, p_Nationality, gender, p_Address, p_emname, p_emcell, p_race, m_status, cissues, medaid, allergies);
+
+                    database.collection("patient-data") // data gets added to a collection called patient-data
+                            .add(patient)
+                            // Add a success listener so we can be notified if the operation was successfuly.
+
+                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                @Override
+                                public void onSuccess(DocumentReference documentReference) {
+                                    // If we are here, the app successfully connected to Firestore and added a new entry
+                                    Toast.makeText(PatientForm.this, "Data successfully added", Toast.LENGTH_LONG).show();
+                                    Intent start = new Intent(PatientForm.this, LoginPatient.class);
+                                    startActivity(start);
+                                }
+                            })
+                            // Add a failure listener so we can be notified if something does wrong
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    // If we are here, the entry could not be added for some reason (e.g no internet connection)
+                                    Toast.makeText(PatientForm.this, "Data was unable added", Toast.LENGTH_LONG).show();
+                                }
+                            });
+                }
 
             }
         });
@@ -177,8 +214,5 @@ public class PatientForm extends AppCompatActivity  {
         return aid;
 
     }
-
-
-
 
 }

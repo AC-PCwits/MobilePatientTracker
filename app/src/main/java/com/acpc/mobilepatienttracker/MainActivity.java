@@ -323,6 +323,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 // Here is the custom class Patient that is being serialized to the database
+
 class Patient
 {
     public String fname;
@@ -364,9 +365,12 @@ class Patient
 
     // VERY IMPORTANT: Java JSON deserialization needs a no-argument constructor in order to deserialize custom objects.
     // If you do not include one, your app will crash when you try to deserialize a custom class.
+
     public Patient()
     {
     }
+
+
 
    /* public int getID() {
         return ID;

@@ -124,40 +124,55 @@ public class DoctorForm extends AppCompatActivity {
 
                 if (first_name.getText().toString().equals("")) {
                     first_name.setError("Empty first name");
+                    return;
                 } else if (last_name.getText().toString().equals("")) {
                     last_name.setError("Empty last name");
+                    return;
                 } else if (email.getText().toString().equals("")) {
                     email.setError("Empty email address");
+                    return;
                 } else if (!email.getText().toString().trim().matches(emailPattern)) {
                     email.setError("Invalid email address");
+                    return;
                 } else if (date_of_birth.getText().toString().equals("")) {
                     date_of_birth.setError("Select date of birth");
+                    return;
                 } else if (!date_of_birth.getText().toString().trim().matches(datePattern)) {
                     date_of_birth.setError("Date format should be 'yyyy/mm/dd");
+                    return;
                 } else if (id_number.getText().toString().equals("")) {
                     id_number.setError("Empty ID number");
+                    return;
                 } else if (length_practice.getText().toString().equals("")) {
                     length_practice.setError("Empty length of practice");
+                    return;
                 } else if (practicingNum.getText().toString().equals("")) {
                     practicingNum.setError("Empty practice number");
+                    return;
                 } else if (institution.getText().toString().equals("")) {
                     institution.setError("Empty name of institution");
+                    return;
                 } else if (doctorSpec.getText().toString().equals("")) {
                     doctorSpec.setError("Empty Doctor speciality");
+                    return;
                 } else if (cellNum.getText().toString().equals("")) {
                     cellNum.setError("Empty cell number");
-                }else if (password.getText().toString().equals("")) {
+                    return;
+                } else if (password.getText().toString().equals("")) {
                     password.setError("Empty password");
-                } else if(!policy.isChecked()) {
+                    return;
+                } else if (!policy.isChecked()) {
                     policy.setError("Policy must be accepted");
+                    return;
                 }
+                else{
 
 
                 ////////ADDING A BRAND NEW ENTRY OF DOCTOR INFORMATION ONCE SIGN UP HAS BEEN SELECTED
 
-                final String fname= first_name.getText().toString();
+                final String fname = first_name.getText().toString();
                 final String lname = last_name.getText().toString();
-                final String mail= email.getText().toString();
+                final String mail = email.getText().toString();
                 final String dob = date_of_birth.getText().toString();
                 final String id = id_number.getText().toString(); /////double check
                 final String prac_years = length_practice.getText().toString(); /////dpuble check
@@ -169,35 +184,37 @@ public class DoctorForm extends AppCompatActivity {
 
                 final String gen = getSelectedRadioButton(v); //calling function below to find selected button
 
-                Doctor doctor = new Doctor(id, fname, lname, dob, gen, mail, prac_y,uni, prac_num, doc_type,cell);
+                Doctor doctor = new Doctor(id, fname, lname, dob, gen, mail, prac_y, uni, prac_num, doc_type, cell);
 
 
-                        // Now we add it to a specified collection (table) in the database with database.collection().add()
-                        // This way will give the new document an auto-generated unique ID as the file name. This can be used like a primary key
+                // Now we add it to a specified collection (table) in the database with database.collection().add()
+                // This way will give the new document an auto-generated unique ID as the file name. This can be used like a primary key
 
-                        database.collection("doctor-data") // specify the collection name here
-                                .add(doctor)
-                                // Add a success listener so we can be notified if the operation was successfuly.
+                database.collection("doctor-data") // specify the collection name here
+                        .add(doctor)
+                        // Add a success listener so we can be notified if the operation was successfuly.
 
-                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                    @Override
-                                    public void onSuccess(DocumentReference documentReference) {
-                                        // If we are here, the app successfully connected to Firestore and added a new entry
-                                        Toast.makeText(DoctorForm.this,"Data successfully added", Toast.LENGTH_LONG).show();
-                                        Intent intent = new Intent(DoctorForm.this, DHomePage.class);
-                                        startActivity(intent);
-                                    }
-                                })
-                                // Add a failure listener so we can be notified if something does wrong
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        // If we are here, the entry could not be added for some reason (e.g no internet connection)
-                                        Toast.makeText(DoctorForm.this,"Data was unable to be added. Check connection", Toast.LENGTH_LONG).show();
-                                    }
-                                });
+                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                // If we are here, the app successfully connected to Firestore and added a new entry
+                                Toast.makeText(DoctorForm.this, "Data successfully added", Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(DoctorForm.this, DHomePage.class);
+                                startActivity(intent);
+                            }
+                        })
+                        // Add a failure listener so we can be notified if something does wrong
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                // If we are here, the entry could not be added for some reason (e.g no internet connection)
+                                Toast.makeText(DoctorForm.this, "Data was unable to be added. Check connection", Toast.LENGTH_LONG).show();
+                            }
+                        });
+            }
                     }
                 });
+
             }
 
             public String getSelectedRadioButton (View v){
