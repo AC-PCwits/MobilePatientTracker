@@ -2,24 +2,42 @@ package com.acpc.mobilepatienttracker;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.math.BigInteger;
 import java.util.ArrayList;
 
 public class DHomePage extends AppCompatActivity
 {
-  /*  private RecyclerView mRecyclerView; //This variable will contain the recycler view created in the XML layout
+    private RecyclerView mRecyclerView; //This variable will contain the recycler view created in the XML layout
     /*
     This is the bridge between our data and recycler view. We have to use the PatientListAdapter
     instead of RecylcerView.Adapter as the class contains custom functions for the Recycler View
      */
-  /*  private PatientListAdapter mAdapter;
+    private PatientListAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager; //This will allow single items in our list to alligned correctly
 
     private ArrayList<Patient> mPatientList;
+
+    private Button logoutBut;
+
+    private FirebaseFirestore database = FirebaseFirestore.getInstance();
+    private Doctor doc = new Doctor();
+    private TextView testView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -27,33 +45,63 @@ public class DHomePage extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_d_home_page);
 
+        testView = (TextView) findViewById(R.id.testView);
+        logoutBut = (Button) findViewById(R.id.logoutButton);
+
         mPatientList = new ArrayList<>();
-        //Creating an example list to test
-        buildExampleList();
+        //getDocData();
         //To populate the list with actual data use the below function:
         //buildPatientList()
+        buildExampleList();
         buildRecyclerView();
+
+        logoutBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logoutActivity();
+            }
+        });
 
     }
 
-    public void buildExampleList()
+
+    public Doctor getDocData()
     {
-        ArrayList<String> ill = new ArrayList<>();
-        ill.add("Flu");
-        ill.add("TB");
-        ill.add("High Blood Pressure");
-        mPatientList.add(new Patient(1234, "Patient 1", ill));
-        mPatientList.add(new Patient(1235, "Patient 2", ill));
-        mPatientList.add(new Patient(1236, "Patient 3", ill));
-        mPatientList.add(new Patient(1237, "Patient 4", ill));
-        mPatientList.add(new Patient(1238, "Patient 5", ill));
-        mPatientList.add(new Patient(1239, "Patient 6", ill));
-        mPatientList.add(new Patient(1240, "Patient 7", ill));
-        mPatientList.add(new Patient(1241, "Patient 8", ill));
-        mPatientList.add(new Patient(1242, "Patient 9", ill));
-        mPatientList.add(new Patient(1243, "Patient 10", ill));
-        mPatientList.add(new Patient(1244, "Patient 11", ill));
-        mPatientList.add(new Patient(1245, "Patient 12", ill));
+        database.collection("doctor-data")//.whereEqualTo("id", "1111111111111")
+        .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful())
+                {
+                    ArrayList<Doctor> doctor = new ArrayList<>();
+
+                    for(QueryDocumentSnapshot doc : task.getResult())
+                    {
+                        doctor.add(doc.toObject(Doctor.class));
+                    }
+
+                    String s = "";
+
+                    for(Doctor doctor1 : doctor)
+                    {
+                        if(doctor1.ID.equals("1111111111111"))
+                        {
+                            doc = doctor1;
+                        }
+                    }
+
+                    testView.setText(doc.ID + ";" + doc.fname + " " + doc.lname);
+//                    testView.setText("Successful but list was empty");
+
+                }
+                else
+                {
+                    testView.setText("Error: could not get documents from query");
+                }
+            }
+        });
+
+        return null;
     }
 
     //This function will populate the patient list from the database
@@ -61,6 +109,25 @@ public class DHomePage extends AppCompatActivity
     public void buildPatientList()
     {
 
+    }
+
+    public void buildExampleList()
+    {
+        ArrayList<String> illness = new ArrayList<>();
+        illness.add("TB");
+        mPatientList.add(new Patient("John", "Smith", "1001", "0600606600", "SA", "Male"
+                            ,"1234 street", "Emily Dow", "1110100001", "Caucasian", "Single", illness, "Yes", "None"));
+        illness.remove(0);
+        illness.add("Diabetes");
+        mPatientList.add(new Patient("Emily", "Smith", "1002", "0600606900", "SA", "Female"
+                ,"1334 street", "Emily Dow", "1110100001", "Coloured", "Married", illness, "Yes", "None"));
+        mPatientList.add(new Patient("Emile", "Jonah", "1003", "0303030253", "SA", "Male"
+                ,"1334 Str", "Bob Newman", "7878789226", "Other", "Married", illness, "Yes", "None"));
+        illness.add("HIV/AIDS");
+        mPatientList.add(new Patient("Dow", "Jones", "1004", "7856452673", "SA", "Male"
+                ,"13 Av Blueberry Hill", "Joe Willock", "5264831346", "Indian", "Other", illness, "Yes", "Sulfates"));
+        mPatientList.add(new Patient("Deena", "Schmidt", "1005", "6542156482", "SA", "Female"
+                ,"1 Victory Lane", "Emile Qura", "6248561279", "Black", "Married", illness, "Yes", "Peanuts"));
     }
 
     //This function creates the recylerview object
@@ -71,7 +138,7 @@ public class DHomePage extends AppCompatActivity
         This makes sure that the recycler view will not change size no matter how many items are in the list, which
         also will increase the performance of the app
         */
-     /*   mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setHasFixedSize(true);
         //This sets the layout the user will view
         mLayoutManager = new LinearLayoutManager(this);
         //This line is where information about the patient will be parsed to create the list
@@ -87,18 +154,33 @@ public class DHomePage extends AppCompatActivity
 //                changeItem(position, "Clicked");
                 Intent intent = new Intent(DHomePage.this, DPatientDetails.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("PATIENT_NAME", mPatientList.get(position).name);
-                bundle.putInt("PATIENT_ID", mPatientList.get(position).ID);
-                bundle.putStringArrayList("PATIENT_ILLNESS", mPatientList.get(position).illnesses);
+
+                bundle.putString("PATIENT_NAME", mPatientList.get(position).fname + " " +
+                        mPatientList.get(position).fsurname);
+                bundle.putString("PATIENT_ID", mPatientList.get(position).idno);
+                bundle.putString("PATIENT_CELL", mPatientList.get(position).cellno);
+                bundle.putString("PATIENT_NAT", mPatientList.get(position).nationality);
+                bundle.putString("PATIENT_GENDER", mPatientList.get(position).gender);
+                bundle.putString("PATIENT_ADDRESS", mPatientList.get(position).address);
+                bundle.putString("PATIENT_ENAME", mPatientList.get(position).ename);
+                bundle.putString("PATIENT_ECONT", mPatientList.get(position).econtact);
+                bundle.putString("PATIENT_RACE", mPatientList.get(position).race);
+                bundle.putString("PATIENT_MARRIED", mPatientList.get(position).mstatus);
+                bundle.putStringArrayList("PATIENT_ILLNESS", mPatientList.get(position).cissues);
+                bundle.putString("PATIENT_MEDAID", mPatientList.get(position).medaid);
+                bundle.putString("PATIENT_ALLERGIES", mPatientList.get(position).allergies);
+
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
     }
 
-    public void changeItem(int position, String text)
+    private void logoutActivity()
     {
-        mPatientList.get(position).setName(text);
-        mAdapter.notifyItemChanged(position);
-    }*/
+        FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent(DHomePage.this, DoctorOrPatient.class);
+        startActivity(intent);
+        finish();
+    }
 }

@@ -21,7 +21,8 @@
         android:layout_height="wrap_content"
         android:text="Please enter your details"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textAlignment="center"/>
+        android:textAlignment="center"
+        android:gravity="center_horizontal" /> //had to add line
 
     <LinearLayout
         android:id="@+id/firstLayout"
@@ -101,19 +102,29 @@
             android:hint="Nationality"
             android:inputType="textPersonName" />
 
-        <CheckBox
-            android:id="@+id/chkFemale"
+        <RadioGroup
+            android:id="@+id/rgpGender"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Female"
-            android:layout_weight="1"/>
+            android:layout_height="match_parent"
+            android:layout_weight="0.66">
 
-        <CheckBox
-            android:id="@+id/chkMale"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Male"
-            android:layout_weight="1"/>
+            <RadioButton
+                android:id="@+id/radFemale"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="Female"
+                android:checked="true"
+                />
+
+            <RadioButton
+                android:id="@+id/radMale"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="Male" />
+        </RadioGroup>
+
     </LinearLayout>
 
             <EditText
@@ -195,7 +206,9 @@
                 android:id="@+id/radBlack"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Black" />
+                android:text="Black"
+                android:checked="true"
+                />
 
             <RadioButton
                 android:id="@+id/radCaucasian"
@@ -242,7 +255,9 @@
                 android:id="@+id/radSingle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Single" />
+                android:text="Single"
+                android:checked="true"
+                />
 
             <RadioButton
                 android:id="@+id/radMarried"
@@ -332,6 +347,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Hypertension" />
+
+            <CheckBox
+                android:id="@+id/chkNone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="None" />
         </RadioGroup>
 
         <RelativeLayout
@@ -354,12 +375,33 @@
                 android:inputType="textPersonName" />
 
             <Button
-                android:id="@+id/btnSubmit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Submit"
+                android:id="@+id/submit"
+                android:layout_width="100dp"
+                android:layout_height="38dp"
+
+                android:layout_alignParentStart="true"
+
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"/>
+                android:layout_marginStart="39dp"
+                android:layout_marginLeft="39dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="47dp"
+                android:layout_marginRight="47dp"
+                android:layout_marginBottom="39dp"
+                android:background="@color/gradStart"
+                android:text="Submit"
+                android:textColor="#FFFFFF"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.533"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.912" />
+
+
         </RelativeLayout>
 
     </LinearLayout>

@@ -323,6 +323,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 // Here is the custom class Patient that is being serialized to the database
+
 class Patient
 {
     public String fname;
@@ -364,9 +365,12 @@ class Patient
 
     // VERY IMPORTANT: Java JSON deserialization needs a no-argument constructor in order to deserialize custom objects.
     // If you do not include one, your app will crash when you try to deserialize a custom class.
+
     public Patient()
     {
     }
+
+
 
    /* public int getID() {
         return ID;
@@ -415,28 +419,30 @@ class Doctor {
     public String fname;
     public String lname;
     public String dob;
-    // public String doc_type;
+    public String doc_type;
     public String gender;
     public String email;
-    // public String cell_no;
-    // public String p_no; //practicing number,unique to each doctor
+    public String cell_no;
+    public String p_no; //practicing number,unique to each doctor
     public int p_length;
     public String uni_name;
+    public ArrayList<String> patient_ID;
 
 
-    public Doctor(String ID, String fname, String lname, String dob, String gender, String email, int p_length, String uni_name) {
-        // public Doctor(String ID, String fname, String lname, String dob, String doc_type, String gender, String email, String cell_no, String p_no, int p_length, String uni_name) {
+    public Doctor(String ID, String fname, String lname, String dob, String gender, String email, int p_length, String uni_name, String p_no, String doc_type, String cell_no) {
+
         this.ID = ID;
         this.fname = fname;
         this.lname = lname;
         this.dob = dob;
-        // this.doc_type = doc_type;
+        this.doc_type = doc_type;
         this.gender = gender;
         this.email = email;
-        // this.cell_no = cell_no;
-        // this.p_no = p_no;
+        this.cell_no = cell_no;
+        this.p_no = p_no;
         this.p_length = p_length;
         this.uni_name = uni_name;
+        this.patient_ID = patient_ID;
 
     }
 
