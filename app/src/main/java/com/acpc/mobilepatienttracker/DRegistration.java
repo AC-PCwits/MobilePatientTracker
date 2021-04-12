@@ -89,7 +89,7 @@ public class DRegistration extends AppCompatActivity implements View.OnClickList
         }
 
         if(prac_no.length()!=7){
-            inprac_no.setError("Practice Number must be 8 digits");
+            inprac_no.setError("Practice Number must be 7 digits");
             inprac_no.requestFocus();
         }
 

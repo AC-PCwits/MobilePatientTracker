@@ -340,7 +340,8 @@ class Patient
     public ArrayList<String> cissues;
     public String medaid;
     public String allergies;
-
+    //TODO: Add lastVisited to DB once logic for retrieving info has been completed
+    public String lastVisited = "8/04/2021";
 
 
     // public Patient(String fname, String fsurname, String idno, String cellno, String nationality, String gender, String address, String ename, String econtact, String race, String mstatus, ArrayList cissues, String medaid, String allergies)
