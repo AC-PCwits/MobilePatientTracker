@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.app.DatePickerDialog;
 import android.text.InputFilter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -55,7 +56,7 @@ public class DoctorForm extends AppCompatActivity {
 
         gender_group = findViewById(R.id.genderGroup);
         date = findViewById(R.id.date_of_birth);
-        select_date = findViewById(R.id.select_dob);
+        //select_date = findViewById(R.id.select_dob);
         first_name = findViewById(R.id.first_name);
         last_name = findViewById(R.id.last_name);
         email = findViewById(R.id.email);
@@ -75,11 +76,13 @@ public class DoctorForm extends AppCompatActivity {
         institution.setFilters(new InputFilter[]{new InputFilter.LengthFilter(15)});
         password.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
         id_number.setFilters(new InputFilter[]{new InputFilter.LengthFilter(13)});
+        practicingNum.setFilters(new InputFilter[]{new InputFilter.LengthFilter(8)});
+        cellNum.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
 
 
 
 
-        select_date.setOnClickListener(new View.OnClickListener() {
+        date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -143,11 +146,17 @@ public class DoctorForm extends AppCompatActivity {
                 } else if (id_number.getText().toString().equals("")) {
                     id_number.setError("Empty ID number");
                     return;
+                } else if (id_number.getText().toString().length() < 13) {
+                    id_number.setError("Invalid ID number");
+                    return;
                 } else if (length_practice.getText().toString().equals("")) {
                     length_practice.setError("Empty length of practice");
                     return;
                 } else if (practicingNum.getText().toString().equals("")) {
                     practicingNum.setError("Empty practice number");
+                    return;
+                } else if (practicingNum.getText().toString().length()<8) {
+                    practicingNum.setError("Invalid practice number");
                     return;
                 } else if (institution.getText().toString().equals("")) {
                     institution.setError("Empty name of institution");
@@ -158,14 +167,28 @@ public class DoctorForm extends AppCompatActivity {
                 } else if (cellNum.getText().toString().equals("")) {
                     cellNum.setError("Empty cell number");
                     return;
+                } else if (cellNum.getText().toString().length()<10) {
+                    cellNum.setError("Invalid cell number");
+                    return;
                 } else if (password.getText().toString().equals("")) {
                     password.setError("Empty password");
                     return;
                 } else if (!policy.isChecked()) {
                     policy.setError("Policy must be accepted");
+                    policy.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+                        @Override
+                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                            if (policy.isChecked()) {
+                                Intent intent = new Intent(DoctorForm.this, PrivacyPolicy.class);
+                                startActivity(intent);
+                            }
+                        }
+                    });
                     return;
                 }
                 else{
+
 
 
                 ////////ADDING A BRAND NEW ENTRY OF DOCTOR INFORMATION ONCE SIGN UP HAS BEEN SELECTED
