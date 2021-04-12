@@ -110,7 +110,7 @@ public class PatientDetails extends AppCompatActivity {
 //            }
 //        }
 
-        getUserData();
+//        getUserData();
 //        getPatientData();
 
         nameText.setText(name);

@@ -54,7 +54,7 @@ public class DHomePage extends AppCompatActivity
         logoutBut = (Button) findViewById(R.id.logoutButton);
 
         mPatientList = new ArrayList<>();
-        getDocData();
+//        getDocData();
         //To populate the list with actual data use the below function:
         //buildPatientList()
         buildExampleList();
