@@ -1,14 +1,12 @@
 package com.acpc.mobilepatienttracker;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class PrivacyPolicy extends AppCompatActivity {
 
@@ -26,7 +24,7 @@ public class PrivacyPolicy extends AppCompatActivity {
         web =(WebView)findViewById(R.id.webView);
         web.loadUrl("file:///android_asset/Privacy.html");
 
-        checkBox = findViewById(R.id.check);
+        /*checkBox = findViewById(R.id.check);
 
 
 
@@ -42,7 +40,7 @@ public class PrivacyPolicy extends AppCompatActivity {
                     finish();
                 }
             }
-        });
+        });*/
 
     }
 }

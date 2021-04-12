@@ -1,11 +1,9 @@
 package com.acpc.mobilepatienttracker;
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -14,17 +12,19 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import java.util.*;
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
-import static android.widget.Toast.*;
+import static android.widget.Toast.LENGTH_LONG;
+import static android.widget.Toast.makeText;
 
 public class PatientForm extends AppCompatActivity  {
     private EditText pname, psurname, pid, pcell, pNationality, pAddress, pemname, pemcell, Allergies;
@@ -69,6 +69,10 @@ public class PatientForm extends AppCompatActivity  {
         chKDiabetes= findViewById(R.id.chkDiabetes);
         chkHyp= findViewById(R.id.chkHyp);
         chkNone= findViewById(R.id.chkNone);
+
+        pid.setFilters(new InputFilter[]{new InputFilter.LengthFilter(13)});
+        pcell.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
+        pemcell.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
 
 
 
@@ -139,7 +143,7 @@ public class PatientForm extends AppCompatActivity  {
                                 public void onSuccess(DocumentReference documentReference) {
                                     // If we are here, the app successfully connected to Firestore and added a new entry
                                     makeText(PatientForm.this, "Data successfully added", LENGTH_LONG).show();
-                                    Intent start = new Intent(PatientForm.this, LoginPatient.class);
+                                    Intent start = new Intent(PatientForm.this, PHomePage.class);
                                     startActivity(start);
                                 }
                             })

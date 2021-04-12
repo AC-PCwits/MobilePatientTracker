@@ -1,8 +1,5 @@
 package com.acpc.mobilepatienttracker;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,16 +7,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -56,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         registration.setOnClickListener(new View.OnClickListener() { //what happens when you click the register button
             @Override
             public void onClick(View v) {
-                Intent start = new Intent(MainActivity.this,PRegistration.class); //moving from main screen to reg screen when clicking register button on main screen
+                Intent start = new Intent(MainActivity.this, PRegistration.class); //moving from main screen to reg screen when clicking register button on main screen
                 startActivity(start);
 
             }
@@ -66,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         reg_doc.setOnClickListener(new View.OnClickListener() { //what happens when you click the register button
             @Override
             public void onClick(View v) {
-                Intent start = new Intent(MainActivity.this,DRegistration.class); //moving from main screen to reg screen when clicking register button on main screen
+                Intent start = new Intent(MainActivity.this, DRegistration.class); //moving from main screen to reg screen when clicking register button on main screen
                 startActivity(start);
 
             }
@@ -340,7 +335,8 @@ class Patient
     public ArrayList<String> cissues;
     public String medaid;
     public String allergies;
-
+    //TODO: Add lastVisited to DB once logic for retrieving info has been completed
+    public String lastVisited = "8/04/2021";
 
 
     // public Patient(String fname, String fsurname, String idno, String cellno, String nationality, String gender, String address, String ename, String econtact, String race, String mstatus, ArrayList cissues, String medaid, String allergies)

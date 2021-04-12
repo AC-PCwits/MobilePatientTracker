@@ -1,16 +1,17 @@
 package com.acpc.mobilepatienttracker;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -41,6 +42,8 @@ public class DRegistration extends AppCompatActivity implements View.OnClickList
         inprac_no = findViewById(R.id.inprac_no);
         reg = findViewById(R.id.register_doc);
         reg.setOnClickListener(this);
+
+        inprac_no.setFilters(new InputFilter[]{new InputFilter.LengthFilter(7)});
     }
 
     @Override
@@ -59,6 +62,8 @@ public class DRegistration extends AppCompatActivity implements View.OnClickList
         final String email= inemail.getText().toString().trim();
         final String prac_no = inprac_no.getText().toString().trim();
         String password= inpassword.getText().toString().trim();
+
+
 
         if(name.isEmpty()){
             inname.setError("Name is Required");
@@ -84,7 +89,7 @@ public class DRegistration extends AppCompatActivity implements View.OnClickList
         }
 
         if(prac_no.length()!=7){
-            inprac_no.setError("Practice Number must be 8 digits");
+            inprac_no.setError("Practice Number must be 7 digits");
             inprac_no.requestFocus();
         }
 

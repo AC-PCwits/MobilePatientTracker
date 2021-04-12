@@ -360,18 +360,18 @@
             tools:targetApi="lollipop" />
 
         <Button
-        android:id="@+id/signUpButtonId"
-        android:layout_width="100dp"
-        android:layout_height="38dp"
+            android:id="@+id/signUpButtonId"
+            android:layout_width="100dp"
+            android:layout_height="38dp"
 
-        android:layout_marginTop="4dp"
+            android:layout_marginTop="4dp"
 
-        android:background="@color/gradStart"
-        android:text="SignUp"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/policy" />
+            android:background="@color/gradStart"
+            android:text="SignUp"
+            android:textColor="#FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/policy" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

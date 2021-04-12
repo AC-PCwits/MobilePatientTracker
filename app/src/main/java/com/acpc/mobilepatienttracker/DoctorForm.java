@@ -1,17 +1,14 @@
 package com.acpc.mobilepatienttracker;
 
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.view.View;
 import android.widget.Button;
-import android.app.DatePickerDialog;
-import android.text.InputFilter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
@@ -19,7 +16,10 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.app.AlertDialog;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -80,7 +80,7 @@ public class DoctorForm extends AppCompatActivity {
 
 
 
-        date.setOnClickListener(new View.OnClickListener() {
+        select_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -165,7 +165,7 @@ public class DoctorForm extends AppCompatActivity {
                 } else if (!policy.isChecked()) {
                     policy.setError("Policy must be accepted");
 
-                    policy.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    /*policy.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
                         @Override
                         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -175,8 +175,8 @@ public class DoctorForm extends AppCompatActivity {
                                 startActivity(intent);
                             }
 
-                    }
-                });
+                        }
+                    });*/
 
                     return;
                 }
@@ -200,6 +200,12 @@ public class DoctorForm extends AppCompatActivity {
                 final String cell = cellNum.getText().toString();
 
                 final String gen = getSelectedRadioButton(v); //calling function below to find selected button
+
+                    if(policy.isChecked())
+                    {
+                        Intent intent = new Intent(DoctorForm.this, PrivacyPolicy.class);
+                        startActivity(intent);
+                    }
 
                 Doctor doctor = new Doctor(id, fname, lname, dob, gen, mail, prac_y, uni, prac_num, doc_type, cell);
 
