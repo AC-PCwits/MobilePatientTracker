@@ -22,7 +22,7 @@
             android:label = "Doctor Login"/>/>
         <activity android:name=".PatientForm" />
         <activity android:name=".DoctorOrPatient"
-            android:label = "Welcome"></activity>
+            android:label = "Welcome to Redbox"></activity>
         <activity android:name=".DHomePage"
             android:label = "Doctor Home Page"/>/>
         <activity android:name=".DPatientDetails" ></activity>
