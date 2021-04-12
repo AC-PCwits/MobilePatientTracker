@@ -44,7 +44,5 @@ public class PrivacyPolicy extends AppCompatActivity {
             }
         });
 
-
-
     }
 }

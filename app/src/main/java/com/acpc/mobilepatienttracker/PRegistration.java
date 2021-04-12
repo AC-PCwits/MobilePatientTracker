@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputFilter;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -35,8 +34,6 @@ public class PRegistration extends AppCompatActivity implements View.OnClickList
         in_id = findViewById(R.id.inid);
         reg = findViewById(R.id.reg);
         reg.setOnClickListener(this);
-
-        in_id.setFilters(new InputFilter[]{new InputFilter.LengthFilter(13)});
     }
 
     @Override
@@ -47,54 +44,63 @@ public class PRegistration extends AppCompatActivity implements View.OnClickList
                 break;
         }
     }
-    private void registerUser() {
+    private void registerUser(){
         //taking in input for email,name,password and converting to string for database to understand
-        final String name = inname.getText().toString().trim();
-        final String email = inemail.getText().toString().trim();
+        final String name= inname.getText().toString().trim();
+        final String email= inemail.getText().toString().trim();
         final String id = in_id.getText().toString().trim();
-        String password = inpassword.getText().toString().trim();
+        String password= inpassword.getText().toString().trim();
 
         //these if statements ensure that none of the inputs fields(name,email,password) is left empty when registering
-        if (name.isEmpty()) {
+        if(name.isEmpty()){
             inname.setError("Name is Required");
             inname.requestFocus(); //this allows the error message to be viewed for a long enough time to read
             return;
         }
 
-        if (email.isEmpty()) {
+        if(email.isEmpty()){
             inemail.setError("Email is Required");
             inemail.requestFocus();
             return;
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) { //ensures that authentic email is entered (with @ sign etc)
+        }
+
+        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){ //ensures that authentic email is entered (with @ sign etc)
             inemail.setError("Provide Valid Email");
             inemail.requestFocus();
             return;
-        } else if (id.isEmpty()) {
-            in_id.setError("ID Number is Required");
+        }
+
+        if(id.isEmpty()){
+            in_id.setError("Practicing Number is Required");
             in_id.requestFocus();
-        } else if (id.length() != 13) {
-            in_id.setError("ID Number must be 13 digits");
+        }
+
+        if(id.length()!=13){
+            in_id.setError("Practice Number must be 8 digits");
             in_id.requestFocus();
-        } else if (password.isEmpty()) {
+        }
+
+        if(password.isEmpty()){
             inpassword.setError("Password is Required");
             inpassword.requestFocus();
             return;
-        } else if (password.length() < 6) {  //firebase requires password with min 6 characters
-            inpassword.setError("Password must be at least 6 characters");
+        }
+
+        if(password.length()<6){  //firebase requires password with min 6 characters
+            inpassword.setError("Min Length = 6");
             inpassword.requestFocus();
             return;
         }
-        else{
 
         //code below allows us to add users with an email and password to the realtime database (not the cloud firestore database that we can view the more in depth data from )
         //this ensures that the log in credentials are stored safely and we can not view the sensitive password information that the users input
-        mAuth.createUserWithEmailAndPassword(email, password)
+        mAuth.createUserWithEmailAndPassword(email,password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
-                        if (task.isSuccessful()) {
-                            User user = new User(name, email, id);
+                        if(task.isSuccessful()){
+                            User user= new User(name,email,id);
                             FirebaseDatabase.getInstance().getReference("Users")  //this adds all new users to a collection in the database called "Users"
 
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())  //inside brackets will return ID for registered user
@@ -103,7 +109,7 @@ public class PRegistration extends AppCompatActivity implements View.OnClickList
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
 
-                                    if (task.isSuccessful()) {
+                                    if(task.isSuccessful()){
                                         Toast.makeText(PRegistration.this, "User Has Successfully Been Registered", Toast.LENGTH_LONG).show(); //shows message to tell user registration has been successful
 
 
@@ -111,23 +117,24 @@ public class PRegistration extends AppCompatActivity implements View.OnClickList
 
                                         ///////OR redirect to patient form
 
-                                        Intent start = new Intent(PRegistration.this, PatientForm.class); //moving from main screen to reg screen when clicking register button on main screen
-                                        startActivity(start);
+                                                Intent start = new Intent(PRegistration.this,PatientForm.class); //moving from main screen to reg screen when clicking register button on main screen
+                                                startActivity(start);
 
 
                                     }// endif
-                                    else {
+                                    else{
                                         Toast.makeText(PRegistration.this, "Registration Unsuccessful, Try Again", Toast.LENGTH_LONG).show(); //unsuccessful registration message
 
                                     }
                                 }// endof onComplete
                             });
-                        } else {
+                        }
+                        else{
                             Toast.makeText(PRegistration.this, "Registration Unsuccessful, Try Again", Toast.LENGTH_LONG).show();
 
                         }//else
                     }
                 });
-    }
+
     }
 }

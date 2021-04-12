@@ -20,7 +20,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -42,7 +41,6 @@ public class DHomePage extends AppCompatActivity
     private Button logoutBut;
 
     private FirebaseFirestore database = FirebaseFirestore.getInstance();
-    private DocumentReference noteRef = database.collection("doctor-data").document();
     private Doctor doc = new Doctor();
     private TextView testView;
 
@@ -56,10 +54,10 @@ public class DHomePage extends AppCompatActivity
         logoutBut = (Button) findViewById(R.id.logoutButton);
 
         mPatientList = new ArrayList<>();
-        getDocData();
+//        getDocData();
         //To populate the list with actual data use the below function:
         //buildPatientList()
-//        buildExampleList();
+        buildExampleList();
         buildRecyclerView();
 
         logoutBut.setOnClickListener(new View.OnClickListener() {
@@ -72,7 +70,7 @@ public class DHomePage extends AppCompatActivity
     }
 
 
-    public void getDocData()
+    public Doctor getDocData()
     {
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         final String[] str = {""};
@@ -99,7 +97,8 @@ public class DHomePage extends AppCompatActivity
             }
         });
 
-        database.collection("doctor-data").whereEqualTo("email", user.getEmail())
+        final ArrayList<Doctor> doctor = new ArrayList<>();
+        database.collection("doctor-data")//.whereEqualTo("id", str[0])
         .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -114,55 +113,13 @@ public class DHomePage extends AppCompatActivity
 
                     String s = "";
 
-                    for(Doctor doctor2 : doctor1)
+                    for(Doctor doctor2 : doctor)
                     {
-                        if(doctor2.email.equals(user.getEmail()))
-                        {
-                            doc = doctor2;
-                        }
+//                        if(doctor2.patient_ID.equals(str[0])) {
+//                            doc = doctor2;
+//                        }
+                        s = s + doctor2.ID + ";" + doctor2.fname + " " + doctor2.lname + "\n";
 
-                    }
-
-                    if(doc.patient_ID == null)
-                    { return;}
-                    else
-                    {
-                        buildPatientList(doc.patient_ID);
-                    }
-                }
-            }
-        });
-    }
-
-    //This function will populate the patient list from the database
-    public void buildPatientList(final ArrayList<String> pIDs)
-    {
-        database.collection("patient-data")
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful())
-                {
-                    ArrayList<Patient> patients = new ArrayList<>();
-
-                    for(QueryDocumentSnapshot doc : task.getResult())
-                    {
-                        patients.add(doc.toObject(Patient.class));
-                    }
-
-                    String s = "";
-
-                    for(Patient patient : patients)
-                    {
-//                        s = s + patient.fname + " " + patient.fsurname + " : " + patient.idno + "\n";
-                        for(String pID : pIDs)
-                        {
-                            if(pID.equals(patient.idno))
-                            {
-                                mPatientList.add(patient);
-                                s = s + patient.fname + " " + patient.fsurname + " : " + patient.idno + "\n";
-                            }
-                        }
                     }
 //
                     testView.setText(s);
@@ -176,6 +133,15 @@ public class DHomePage extends AppCompatActivity
                 }
             }
         });
+
+        return null;
+    }
+
+    //This function will populate the patient list from the database
+    //TODO: Populate patient list from database within this method
+    public void buildPatientList()
+    {
+
     }
 
     public void buildExampleList()

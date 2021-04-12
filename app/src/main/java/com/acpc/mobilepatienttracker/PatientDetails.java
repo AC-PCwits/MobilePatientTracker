@@ -50,9 +50,10 @@ public class PatientDetails extends AppCompatActivity {
     private TextView mstatusText;
     private TextView medaidText;
     private TextView allergiesText;
+    private TextView testView;
+    private TextView testView1;
 
     private FirebaseFirestore database = FirebaseFirestore.getInstance();
-    private Patient mPatient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,104 +74,45 @@ public class PatientDetails extends AppCompatActivity {
         mstatusText = (TextView)findViewById(R.id.mstatusText);
         medaidText = (TextView)findViewById(R.id.medaidText);
         allergiesText = (TextView)findViewById(R.id.allergiesText);
+        testView = (TextView)findViewById(R.id.testView);
+        testView1 = (TextView)findViewById(R.id.testView1);
 
-        //Patient details are pulled from databse and displayed using this method
-        getUserData();
+        //Patient details from the list are sent with the intent used to send the user to this screen
+//        Intent intent = getIntent();
 
-    }
-
-    public void getUserData()
-    {
-        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users");
-        reference.addValueEventListener(new ValueEventListener() {
-            String str = "";
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot dataSnapshot : snapshot.getChildren())
-                {
-                    if(dataSnapshot.child("email").getValue().toString().equalsIgnoreCase(user.getEmail()))
-                    {
-                        str = dataSnapshot.child("id").getValue().toString();
-                    }
-                }
-
-                getPatientData(str);
-
-            }
-
-
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-    public void getPatientData(final String id)
-    {
-        database.collection("patient-data").whereEqualTo("idno", id)
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful())
-                {
-                    ArrayList<Patient> patient = new ArrayList<>();
-
-                    for(QueryDocumentSnapshot doc : task.getResult())
-                    {
-                        patient.add(doc.toObject(Patient.class));
-                    }
-
-                    for(Patient patient1 : patient)
-                    {
-                        if(patient1.idno.equals(id))
-                        {
-                            mPatient = patient1;
-                        }
-                    }
-
-                    displayPatientData(mPatient);
-
-                }
-            }
-        });
-    }
-
-    public void displayPatientData(Patient patient)
-    {
         //Patient Details are set here
-        name = patient.fname + " " + patient.fsurname;
-        id = patient.idno;
-        cellno = patient.cellno;
-        nationality = patient.nationality;
-        gender = patient.gender;
-        address = patient.address;
-        ename = patient.ename;
-        econtact = patient.econtact;
-        race = patient.race;
-        mstatus = patient.mstatus;
-        illnesses = patient.cissues;
-        medaid = patient.medaid;
-        allergies = patient.allergies;
+//        if(intent.getExtras() != null) {
+//            name = intent.getExtras().getString("PATIENT_NAME");
+//            id = intent.getExtras().getString("PATIENT_ID");
+//            cellno = intent.getExtras().getString("PATIENT_CELL");
+//            nationality = intent.getExtras().getString("PATIENT_NAT");
+//            gender = intent.getExtras().getString("PATIENT_GENDER");
+//            address = intent.getExtras().getString("PATIENT_ADDRESS");
+//            ename = intent.getExtras().getString("PATIENT_ENAME");
+//            econtact = intent.getExtras().getString("PATIENT_ECONT");
+//            race = intent.getExtras().getString("PATIENT_RACE");
+//            mstatus = intent.getExtras().getString("PATIENT_MARRIED");
+//            illnesses = intent.getExtras().getStringArrayList("PATIENT_ILLNESS");
+//            medaid = intent.getExtras().getString("PATIENT_MEDAID");
+//            allergies = intent.getExtras().getString("PATIENT_ALLERGIES");
+//        }
 
         String ill = "";
 
-        for(String text: illnesses)
-        {
-            if(ill.equals(""))
-            {
-                ill = text;
-            }else
-            {
-                ill = ill + "\n" + text;
-            }
-        }
+//        for(String text: illnesses)
+//        {
+//            if(ill.equals(""))
+//            {
+//                ill = text;
+//            }else
+//            {
+//                ill = ill + "\n" + text;
+//            }
+//        }
 
-        //UI form text is set here
+//        getUserData();
+//        getPatientData();
+
         nameText.setText(name);
         idText.setText(id);
         cellText.setText(cellno);
@@ -184,5 +126,111 @@ public class PatientDetails extends AppCompatActivity {
         illText.setText(ill);
         medaidText.setText(medaid);
         allergiesText.setText(allergies);
+    }
+
+    public Doctor getUserData()
+    {
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users");
+        reference.addValueEventListener(new ValueEventListener() {
+            String str = "";
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot dataSnapshot : snapshot.getChildren())
+                {
+                    if(dataSnapshot.child("email").getValue().toString().equals(user.getEmail()))
+                    {
+                        str = dataSnapshot.child("IDnum").getValue().toString();
+                    }
+                }
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
+
+//        database.collection("Users")//.whereEqualTo("id", "1111111111111")
+//                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                if(task.isSuccessful())
+//                {
+//                    ArrayList<User> user = new ArrayList<>();
+//
+//                    for(QueryDocumentSnapshot doc : task.getResult())
+//                    {
+//                        user.add(doc.toObject(User.class));
+//                    }
+//
+//                    String s = "Users:\n";
+//
+//                    for(User user1 : user)
+//                    {
+////                        if(doctor1.ID.equals("1111111111111"))
+////                        {
+////                            doc = doctor1;
+////                        }
+//                        s = s + user1.fname + ";" +user1.email + "\n";
+//                    }
+//
+//                    testView.setText(s);
+////                    testView.setText("Successful but list was empty");
+//
+//                }
+//                else
+//                {
+//                    testView.setText("Error: could not get documents from query");
+//                }
+//            }
+//        });
+
+        return null;
+    }
+
+    public Doctor getPatientData()
+    {
+        database.collection("patient-data")//.whereEqualTo("id", "1111111111111")
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful())
+                {
+                    ArrayList<Patient> patient = new ArrayList<>();
+
+                    for(QueryDocumentSnapshot doc : task.getResult())
+                    {
+                        patient.add(doc.toObject(Patient.class));
+                    }
+
+                    String s = "Patients:\n";
+
+                    for(Patient patient1 : patient)
+                    {
+//                        if(doctor1.ID.equals("1111111111111"))
+//                        {
+//                            doc = doctor1;
+//                        }
+                        s = s + patient1.fname + " " + patient1.fsurname + "\n";
+                    }
+
+                    testView1.setText(s);
+//                    testView.setText("Successful but list was empty");
+
+                }
+                else
+                {
+                    testView1.setText("Error: could not get documents from query");
+                }
+            }
+        });
+
+        return null;
     }
 }

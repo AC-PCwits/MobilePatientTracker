@@ -113,7 +113,7 @@ public class LoginDoctor extends AppCompatActivity {
             public void onClick(View view) {
                 String email = inputEmail.getText().toString();
                 if(email.isEmpty()){
-                    inputEmail.setError("Email is Required");
+                    inputEmail.setError("Password is Required");
                     inputEmail.requestFocus();
                     return;
                 }

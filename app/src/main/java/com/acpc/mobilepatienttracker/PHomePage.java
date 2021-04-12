@@ -1,12 +1,12 @@
 package com.acpc.mobilepatienttracker;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -25,7 +25,7 @@ public class PHomePage extends AppCompatActivity {
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
                 Toast.makeText(PHomePage.this, "You have successfully logged out", Toast.LENGTH_LONG).show();
-                Intent start = new Intent( PHomePage.this, DoctorOrPatient.class); //moving from main screen to reg screen when clicking register button on main screen
+                Intent start = new Intent( PHomePage.this,DoctorOrPatient.class); //moving from main screen to reg screen when clicking register button on main screen
                 startActivity(start);
 
             }
@@ -34,8 +34,9 @@ public class PHomePage extends AppCompatActivity {
         p_details.setOnClickListener(new View.OnClickListener() { //what happens when you click the register button
             @Override
             public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
 
-                Intent start = new Intent( PHomePage.this, PatientDetails.class); //moving from main screen to reg screen when clicking register button on main screen
+                Intent start = new Intent( PHomePage.this,PatientDetails.class); //moving from main screen to reg screen when clicking register button on main screen
                 startActivity(start);
 
             }
