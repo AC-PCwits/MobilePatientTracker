@@ -9,29 +9,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PrivacyPolicy"></activity>
-        <activity
-            android:name=".PHomePage"
-            android:label="Patient Home Page" />
+        <activity android:name=".PHomePage"
+            android:label = "Patient Home Page"
+            ></activity>
         <activity android:name=".PatientDetails" />
         <activity android:name=".DoctorForm" />
-        <activity
-            android:name=".DRegistration"
-            android:label="Registration : Patient" />
-        <activity
-            android:name=".LoginPatient"
-            android:label="Patient Login" />
-        <activity
-            android:name=".LoginDoctor"
-            android:label="Doctor Login" />
+        <activity android:name=".DRegistration"
+            android:label = "Registration : Patient"/>/>
+        <activity android:name=".LoginPatient"
+            android:label = "Patient Login"/>
+        <activity android:name=".LoginDoctor"
+            android:label = "Doctor Login"/>/>
         <activity android:name=".PatientForm" />
-        <activity
-            android:name=".DoctorOrPatient"
-            android:label="Welcome" />
-        <activity
-            android:name=".DHomePage"
-            android:label="Doctor Home Page" />
-        <activity android:name=".DPatientDetails" />
+        <activity android:name=".DoctorOrPatient"
+            android:label = "Welcome"></activity>
+        <activity android:name=".DHomePage"
+            android:label = "Doctor Home Page"/>/>
+        <activity android:name=".DPatientDetails" ></activity>
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,9 +33,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".PRegistration"
-            android:label="Registration : Patient" />
+        <activity android:name=".PRegistration"
+            android:label = "Registration : Patient"/>/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

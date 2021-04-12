@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -69,6 +70,10 @@ public class PatientForm extends AppCompatActivity  {
         chKDiabetes= findViewById(R.id.chkDiabetes);
         chkHyp= findViewById(R.id.chkHyp);
         chkNone= findViewById(R.id.chkNone);
+
+        pid.setFilters(new InputFilter[]{new InputFilter.LengthFilter(13)});
+        pcell.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
+        pemcell.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
 
 
 
@@ -139,7 +144,7 @@ public class PatientForm extends AppCompatActivity  {
                                 public void onSuccess(DocumentReference documentReference) {
                                     // If we are here, the app successfully connected to Firestore and added a new entry
                                     makeText(PatientForm.this, "Data successfully added", LENGTH_LONG).show();
-                                    Intent start = new Intent(PatientForm.this, LoginPatient.class);
+                                    Intent start = new Intent(PatientForm.this, PHomePage.class);
                                     startActivity(start);
                                 }
                             })
