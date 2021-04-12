@@ -93,7 +93,7 @@ public class PatientListAdapter extends RecyclerView.Adapter<PatientListAdapter.
         //The holder variable allows the values of view to be set by Patient objects
         holder.nameText.setText(currentItem.fname + " " + currentItem.fsurname);
         //TODO: Change from .idno to .lastvisited
-        holder.idText.setText("Last Visited: " + currentItem.idno);
+        holder.idText.setText("Last Visited: " + currentItem.lastVisited);
     }
 
     //This function defines how many items are in the list
