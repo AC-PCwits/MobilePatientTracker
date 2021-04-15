@@ -15,6 +15,18 @@
             android:label="Patient Home Page" />
         <activity android:name=".PatientDetails" />
         <activity android:name=".DoctorForm" />
+        <activity android:name=".DRegistration"
+            android:label = "Registration : Doctor"/>/>
+        <activity android:name=".LoginPatient"
+            android:label = "Patient Login"/>
+        <activity android:name=".LoginDoctor"
+            android:label = "Doctor Login"/>/>
+        <activity android:name=".PatientForm" />
+        <activity android:name=".DoctorOrPatient"
+            android:label = "Welcome to Redbox"></activity>
+        <activity android:name=".DHomePage"
+            android:label = "Doctor Home Page"/>/>
+        <activity android:name=".DPatientDetails" ></activity>
         <activity
             android:name=".DRegistration"
             android:label="Registration : Patient" />
