@@ -1,7 +1,4 @@
 package com.acpc.mobilepatienttracker;
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Build;
@@ -15,17 +12,19 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import java.util.*;
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
-import static android.widget.Toast.*;
+import static android.widget.Toast.LENGTH_LONG;
+import static android.widget.Toast.makeText;
 
 public class PatientForm extends AppCompatActivity  {
     private EditText pname, psurname, pid, pcell, pNationality, pAddress, pemname, pemcell, Allergies;
