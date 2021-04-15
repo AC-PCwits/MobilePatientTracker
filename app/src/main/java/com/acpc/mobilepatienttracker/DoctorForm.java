@@ -123,6 +123,8 @@ public class DoctorForm extends AppCompatActivity {
                 String datePattern = "^\\d{4}/\\d{2}/\\d{2}$";
 
 
+
+
                 if (first_name.getText().toString().equals("")) {
                     first_name.setError("Empty first name");
                     return;
@@ -180,7 +182,6 @@ public class DoctorForm extends AppCompatActivity {
 
                     return;
                 }
-
 
                 else{
 
