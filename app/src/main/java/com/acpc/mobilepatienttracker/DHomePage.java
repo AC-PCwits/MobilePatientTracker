@@ -75,29 +75,32 @@ public class DHomePage extends AppCompatActivity
     public void getDocData()
     {
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        final String[] str = {""};
-
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Doctors");
-        reference.addValueEventListener(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot dataSnapshot : snapshot.getChildren())
-                {
-                    if(dataSnapshot.child("email").getValue().toString().equals(user.getEmail()))
-                    {
-                            str[0] = dataSnapshot.child("IDnum").getValue().toString();
-                    }
-                }
-
-            }
 
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+//        final String[] str = {""};
+//
+//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Doctors");
+//        reference.addValueEventListener(new ValueEventListener() {
+//
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                for(DataSnapshot dataSnapshot : snapshot.getChildren())
+//                {
+//                    if(dataSnapshot.child("email").getValue().toString().equalsIgnoreCase(user.getEmail()))
+//                    {
+////                            str[0] = dataSnapshot.child("IDnum").getValue().toString();
+//                        testView.setText(dataSnapshot.child("IDnum").getValue().toString());
+//                    }
+//                }
+//
+//            }
+//
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
 
         database.collection("doctor-data").whereEqualTo("email", user.getEmail())
         .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
