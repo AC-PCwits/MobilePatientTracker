@@ -1,23 +1,25 @@
 package com.acpc.mobilepatienttracker;
 
 
-import android.app.DatePickerDialog;
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.InputFilter;
 import android.view.View;
 import android.widget.Button;
+import android.app.DatePickerDialog;
+import android.text.InputFilter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
+import android.app.AlertDialog;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -40,7 +42,7 @@ public class DoctorForm extends AppCompatActivity {
     private CheckBox policy;
     private RadioGroup gender_group;
     private RadioButton gender_button;
-    //private Button select_date;
+    private Button select_date;
     private Calendar c;
     private DatePickerDialog dpd;
 
@@ -78,7 +80,7 @@ public class DoctorForm extends AppCompatActivity {
 
 
 
-       /* select_date.setOnClickListener(new View.OnClickListener() {
+        date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -106,7 +108,7 @@ public class DoctorForm extends AppCompatActivity {
                 }, year,month,day);
                 dpd.show();
             }
-        });*/
+        });
 
 
         Button b = findViewById(R.id.signUpButtonId);
@@ -184,71 +186,67 @@ public class DoctorForm extends AppCompatActivity {
                 else{
 
 
-                ////////ADDING A BRAND NEW ENTRY OF DOCTOR INFORMATION ONCE SIGN UP HAS BEEN SELECTED
+                    ////////ADDING A BRAND NEW ENTRY OF DOCTOR INFORMATION ONCE SIGN UP HAS BEEN SELECTED
 
-                final String fname = first_name.getText().toString();
-                final String lname = last_name.getText().toString();
-                final String mail = email.getText().toString();
-                final String dob = date_of_birth.getText().toString();
-                final String id = id_number.getText().toString(); /////double check
-                final String prac_years = length_practice.getText().toString(); /////dpuble check
-                final int prac_y = Integer.parseInt(prac_years);
-                final String uni = institution.getText().toString();
-                final String prac_num = practicingNum.getText().toString();
-                final String doc_type = doctorSpec.getText().toString();
-                final String cell = cellNum.getText().toString();
+                    final String fname = first_name.getText().toString();
+                    final String lname = last_name.getText().toString();
+                    final String mail = email.getText().toString();
+                    final String dob = date_of_birth.getText().toString();
+                    final String id = id_number.getText().toString(); /////double check
+                    final String prac_years = length_practice.getText().toString(); /////dpuble check
+                    final int prac_y = Integer.parseInt(prac_years);
+                    final String uni = institution.getText().toString();
+                    final String prac_num = practicingNum.getText().toString();
+                    final String doc_type = doctorSpec.getText().toString();
+                    final String cell = cellNum.getText().toString();
 
-                final String gen = getSelectedRadioButton(v); //calling function below to find selected button
+                    final String gen = getSelectedRadioButton(v); //calling function below to find selected button
+
+                    Doctor doctor = new Doctor(id, fname, lname, dob, gen, mail, prac_y, uni, prac_num, doc_type, cell);
 
 
-                Doctor doctor = new Doctor(id, fname, lname, dob, gen, mail, prac_y, uni, prac_num, doc_type, cell);
+                    // Now we add it to a specified collection (table) in the database with database.collection().add()
+                    // This way will give the new document an auto-generated unique ID as the file name. This can be used like a primary key
 
+                    database.collection("doctor-data") // specify the collection name here
+                            .add(doctor)
+                            // Add a success listener so we can be notified if the operation was successfuly.
 
-                // Now we add it to a specified collection (table) in the database with database.collection().add()
-                // This way will give the new document an auto-generated unique ID as the file name. This can be used like a primary key
-
-                database.collection("doctor-data") // specify the collection name here
-                        .add(doctor)
-                        // Add a success listener so we can be notified if the operation was successfuly.
-
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                // If we are here, the app successfully connected to Firestore and added a new entry
-                                Toast.makeText(DoctorForm.this, "Data successfully added", Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(DoctorForm.this, DHomePage.class);
-                                startActivity(intent);
-                            }
-                        })
-                        // Add a failure listener so we can be notified if something does wrong
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                // If we are here, the entry could not be added for some reason (e.g no internet connection)
-                                Toast.makeText(DoctorForm.this, "Data was unable to be added. Check connection", Toast.LENGTH_LONG).show();
-                            }
-                        });
+                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                @Override
+                                public void onSuccess(DocumentReference documentReference) {
+                                    // If we are here, the app successfully connected to Firestore and added a new entry
+                                    Toast.makeText(DoctorForm.this, "Data successfully added", Toast.LENGTH_LONG).show();
+                                    Intent intent = new Intent(DoctorForm.this, DHomePage.class);
+                                    startActivity(intent);
+                                }
+                            })
+                            // Add a failure listener so we can be notified if something does wrong
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    // If we are here, the entry could not be added for some reason (e.g no internet connection)
+                                    Toast.makeText(DoctorForm.this, "Data was unable to be added. Check connection", Toast.LENGTH_LONG).show();
+                                }
+                            });
+                }
             }
-                    }
-                });
+        });
 
-            }
+    }
 
-            public String getSelectedRadioButton (View v){
+    public String getSelectedRadioButton (View v){
 
-            //checks radio group called gender_group to see what has been selected. Gets text of the gender type selected.
-            //Converts the gender type to string and returns it
+        //checks radio group called gender_group to see what has been selected. Gets text of the gender type selected.
+        //Converts the gender type to string and returns it
 
-                int radioID = gender_group.getCheckedRadioButtonId();
+        int radioID = gender_group.getCheckedRadioButtonId();
 
-                RadioButton singleButton = (RadioButton) findViewById(radioID);
-                String gender = singleButton.getText().toString();
-                return gender;
-
-            }
-
+        RadioButton singleButton = (RadioButton) findViewById(radioID);
+        String gender = singleButton.getText().toString();
+        return gender;
 
     }
 
 
-
+}
