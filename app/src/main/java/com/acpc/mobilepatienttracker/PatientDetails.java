@@ -133,7 +133,12 @@ public class PatientDetails extends AppCompatActivity {
                         }
                     }
 
-                    displayPatientData(mPatient);
+                    if( mPatient != null){
+
+                        displayPatientData(mPatient);
+
+                    }
+
 
                 }
             }

@@ -16,34 +16,17 @@
         <activity android:name=".PatientDetails" />
         <activity android:name=".DoctorForm" />
         <activity android:name=".DRegistration"
-            android:label = "Registration : Doctor"/>/>
+            android:label = "Registration : Doctor"/>
         <activity android:name=".LoginPatient"
             android:label = "Patient Login"/>
         <activity android:name=".LoginDoctor"
-            android:label = "Doctor Login"/>/>
+            android:label = "Doctor Login"/>
         <activity android:name=".PatientForm" />
         <activity android:name=".DoctorOrPatient"
             android:label = "Welcome to Redbox"></activity>
         <activity android:name=".DHomePage"
-            android:label = "Doctor Home Page"/>/>
+            android:label = "Doctor Home Page"/>
         <activity android:name=".DPatientDetails" ></activity>
-        <activity
-            android:name=".DRegistration"
-            android:label="Registration : Patient" />
-        <activity
-            android:name=".LoginPatient"
-            android:label="Patient Login" />
-        <activity
-            android:name=".LoginDoctor"
-            android:label="Doctor Login" />
-        <activity android:name=".PatientForm" />
-        <activity
-            android:name=".DoctorOrPatient"
-            android:label="Welcome" />
-        <activity
-            android:name=".DHomePage"
-            android:label="Doctor Home Page" />
-        <activity android:name=".DPatientDetails" />
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

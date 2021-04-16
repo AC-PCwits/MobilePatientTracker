@@ -1,7 +1,6 @@
 package com.acpc.mobilepatienttracker;
 
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Build;
@@ -11,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.DatePicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -42,7 +40,7 @@ public class DoctorForm extends AppCompatActivity {
     private CheckBox policy;
     private RadioGroup gender_group;
     private RadioButton gender_button;
-    private Button select_date;
+    //private Button select_date;
     private Calendar c;
     private DatePickerDialog dpd;
 
@@ -52,7 +50,7 @@ public class DoctorForm extends AppCompatActivity {
         final FirebaseFirestore database = FirebaseFirestore.getInstance();
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_doctor_registration);
+        setContentView(R.layout.activity_doctor_form);
 
         gender_group = findViewById(R.id.genderGroup);
         date = findViewById(R.id.date_of_birth);
@@ -80,7 +78,7 @@ public class DoctorForm extends AppCompatActivity {
 
 
 
-        select_date.setOnClickListener(new View.OnClickListener() {
+       /* select_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -108,7 +106,7 @@ public class DoctorForm extends AppCompatActivity {
                 }, year,month,day);
                 dpd.show();
             }
-        });
+        });*/
 
 
         Button b = findViewById(R.id.signUpButtonId);
@@ -167,7 +165,7 @@ public class DoctorForm extends AppCompatActivity {
                 } else if (!policy.isChecked()) {
                     policy.setError("Policy must be accepted");
 
-                    /*policy.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    policy.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
                         @Override
                         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -178,7 +176,7 @@ public class DoctorForm extends AppCompatActivity {
                             }
 
                         }
-                    });*/
+                    });
 
                     return;
                 }
@@ -202,11 +200,6 @@ public class DoctorForm extends AppCompatActivity {
 
                 final String gen = getSelectedRadioButton(v); //calling function below to find selected button
 
-                    if(policy.isChecked())
-                    {
-                        Intent intent = new Intent(DoctorForm.this, PrivacyPolicy.class);
-                        startActivity(intent);
-                    }
 
                 Doctor doctor = new Doctor(id, fname, lname, dob, gen, mail, prac_y, uni, prac_num, doc_type, cell);
 
