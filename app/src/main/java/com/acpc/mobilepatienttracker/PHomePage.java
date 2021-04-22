@@ -2,12 +2,15 @@ package com.acpc.mobilepatienttracker;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class PHomePage extends AppCompatActivity {
@@ -16,6 +19,37 @@ public class PHomePage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_p_home_page);
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav_bar);
+
+        bottomNavigationView.setSelectedItemId(R.id.p_home);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+
+                    case R.id.p_home:
+                        return true;
+                    case R.id.p_details:
+                        startActivity(new Intent(getApplicationContext()
+                                ,PatientDetails.class));
+                        overridePendingTransition(0 , 0);
+                        return true;
+                    case R.id.bookings:
+                        startActivity(new Intent(getApplicationContext()
+                                , PatientBookings.class));
+                        overridePendingTransition(0 , 0);
+                        return true;
+                    case R.id.booking_history:
+                        startActivity(new Intent(getApplicationContext()
+                                , PatientBookingHistory.class));
+                        overridePendingTransition(0 , 0);
+                        return true;
+                }
+                return false;
+            }
+        });
 
         Button log_out = findViewById(R.id.log_out);
         Button p_details = findViewById(R.id.p_details);
