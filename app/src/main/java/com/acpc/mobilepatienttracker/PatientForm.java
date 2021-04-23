@@ -56,7 +56,7 @@ public class PatientForm extends AppCompatActivity  {
 
         pname= findViewById(R.id.pname);
         psurname= findViewById(R.id.psurname);
-        pid= findViewById(R.id.pid);
+//        pid= findViewById(R.id.pid);
         pcell= findViewById(R.id.pCell);
         pNationality= findViewById(R.id.pNationality);
         pAddress= findViewById(R.id.pAddress);
@@ -70,7 +70,7 @@ public class PatientForm extends AppCompatActivity  {
         chkHyp= findViewById(R.id.chkHyp);
         chkNone= findViewById(R.id.chkNone);
 
-        pid.setFilters(new InputFilter[]{new InputFilter.LengthFilter(13)});
+//        pid.setFilters(new InputFilter[]{new InputFilter.LengthFilter(13)});
         pcell.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
         pemcell.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
 
@@ -93,9 +93,9 @@ public class PatientForm extends AppCompatActivity  {
                 } else if (psurname.getText().toString().equals("")) {
                     psurname.setError("Empty last name");
                     return;
-                } else if (pid.getText().toString().equals("")) {
-                    pid.setError("Enter ID");
-                    return;
+//                } else if (pid.getText().toString().equals("")) {
+//                    pid.setError("Enter ID");
+//                    return;
                 } else if (pcell.getText().toString().equals("")) {
                     pcell.setError("Enter cell number");
                     return;
@@ -117,9 +117,11 @@ public class PatientForm extends AppCompatActivity  {
 
                 else {
 
+                    Bundle extras = getIntent().getExtras();
+
                     final String p_name = pname.getText().toString();
                     final String p_surname = psurname.getText().toString();
-                    final String p_id = pid.getText().toString();
+                    final String p_id = extras.getString("ID");
                     final String p_cell = pcell.getText().toString();
                     final String p_Nationality = pNationality.getText().toString();
                     final String p_Address = pAddress.getText().toString();

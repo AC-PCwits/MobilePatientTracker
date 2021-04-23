@@ -66,6 +66,24 @@ public class PatientDetails extends AppCompatActivity {
 
         bottomNavigationView.setSelectedItemId(R.id.p_details);
 
+        //Instantiation of View Components
+        nameText = (TextView)findViewById(R.id.nameText);
+        idText = (TextView)findViewById(R.id.idText);
+        illText = (TextView)findViewById(R.id.illnessText);
+        cellText = (TextView)findViewById(R.id.cellText);
+        nationalityText = (TextView)findViewById(R.id.natText);
+        genderText = (TextView)findViewById(R.id.genderText);
+        addressText = (TextView)findViewById(R.id.addressText);
+        enameText = (TextView)findViewById(R.id.enameText);
+        econtactText = (TextView)findViewById(R.id.ecellText);
+        raceText = (TextView)findViewById(R.id.raceText);
+        mstatusText = (TextView)findViewById(R.id.mstatusText);
+        medaidText = (TextView)findViewById(R.id.medaidText);
+        allergiesText = (TextView)findViewById(R.id.allergiesText);
+
+        //Patient details are pulled from databse and displayed using this method
+        getUserData();
+
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -92,24 +110,6 @@ public class PatientDetails extends AppCompatActivity {
                 return false;
             }
         });
-
-        //Instantiation of View Components
-        nameText = (TextView)findViewById(R.id.nameText);
-        idText = (TextView)findViewById(R.id.idText);
-        illText = (TextView)findViewById(R.id.illnessText);
-        cellText = (TextView)findViewById(R.id.cellText);
-        nationalityText = (TextView)findViewById(R.id.natText);
-        genderText = (TextView)findViewById(R.id.genderText);
-        addressText = (TextView)findViewById(R.id.addressText);
-        enameText = (TextView)findViewById(R.id.enameText);
-        econtactText = (TextView)findViewById(R.id.ecellText);
-        raceText = (TextView)findViewById(R.id.raceText);
-        mstatusText = (TextView)findViewById(R.id.mstatusText);
-        medaidText = (TextView)findViewById(R.id.medaidText);
-        allergiesText = (TextView)findViewById(R.id.allergiesText);
-
-        //Patient details are pulled from databse and displayed using this method
-        getUserData();
 
     }
 
