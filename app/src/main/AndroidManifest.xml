@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PatientBookings"></activity>
+        <activity android:name=".DoctorDetails"></activity>
+        <activity android:name=".PendingBookings" />
+        <activity android:name=".DHomePage" />
+        <activity android:name=".PatientBookings" />
         <activity android:name=".PatientBookingHistory" />
         <activity android:name=".DoctorConsultForm" />
         <activity android:name=".PrivacyPolicy" />
@@ -32,7 +35,7 @@
             android:name=".DoctorOrPatient"
             android:label="Welcome to Redbox" />
         <activity
-            android:name=".DHomePage"
+            android:name=".DoctorPatientList"
             android:label="Doctor Home Page" />
         <activity android:name=".DPatientDetails" />
         <activity android:name=".SplashActivity">

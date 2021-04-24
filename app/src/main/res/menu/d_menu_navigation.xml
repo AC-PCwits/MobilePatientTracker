@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/d_home"
+        android:title="Home"
+        android:icon="@drawable/ic_baseline_home_24"/>
+
+    <item
+        android:id="@+id/d_details"
+        android:title="Details"
+        android:icon="@drawable/ic_baseline_info_24"/>
+
+    <item
+        android:id="@+id/patient_list"
+        android:title="Patient List"
+        android:icon="@drawable/ic_baseline_list_24"/>
+
+    <item
+        android:id="@+id/pending_bookings"
+        android:title="Pending Bookings"
+        android:icon="@drawable/ic_baseline_pending_actions_24"/>
+
+
+</menu>

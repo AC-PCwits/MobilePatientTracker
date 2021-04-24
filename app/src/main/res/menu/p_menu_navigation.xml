@@ -19,7 +19,7 @@
 
     <item
         android:id="@+id/booking_history"
-        android:title="History"
+        android:title="Booking History"
         android:icon="@drawable/ic_baseline_history_24"/>
 
 </menu>
