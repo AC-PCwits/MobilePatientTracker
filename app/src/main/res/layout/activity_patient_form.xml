@@ -15,117 +15,117 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Please enter your details"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textAlignment="center"
-        android:gravity="center_horizontal" /> //had to add line
-
-    <LinearLayout
-        android:id="@+id/firstLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@+id/textView2"
-        android:layout_marginTop="20dp">
-
-        <EditText
-            android:id="@+id/pname"
-            android:layout_width="match_parent"
-            android:layout_height="46dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="6dp"
-            android:layout_weight="1"
-            android:hint="Name"
-            android:inputType="textPersonName" />
-
-        <EditText
-            android:id="@+id/psurname"
-            android:layout_width="match_parent"
-            android:layout_height="46dp"
-            android:layout_marginLeft="6dp"
-            android:layout_marginRight="12dp"
-            android:layout_weight="1"
-            android:hint="Surname"
-            android:inputType="textPersonName" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/secondLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@+id/firstLayout"
-        android:layout_marginTop="12dp">
-
-        <EditText
-            android:id="@+id/pid"
-            android:layout_width="match_parent"
-            android:layout_height="46dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="6dp"
-            android:layout_weight="1"
-            android:hint="ID number"
-            android:inputType="textPersonName" />
-
-        <EditText
-            android:id="@+id/pCell"
-            android:layout_width="match_parent"
-            android:layout_height="46dp"
-            android:layout_marginLeft="6dp"
-            android:layout_marginRight="12dp"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="Cell"
-            android:inputType="textPersonName" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/thirdLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@+id/secondLayout"
-        android:layout_marginTop="12dp">
-
-        <EditText
-            android:id="@+id/pNationality"
-            android:layout_width="match_parent"
-            android:layout_height="46dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="6dp"
-            android:layout_weight="0.66"
-            android:hint="Nationality"
-            android:inputType="textPersonName" />
-
-        <RadioGroup
-            android:id="@+id/rgpGender"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.66">
-
-            <RadioButton
-                android:id="@+id/radFemale"
+            <TextView
+                android:id="@+id/textView2"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="Female"
-                android:checked="true"
-                />
+                android:layout_height="wrap_content"
+                android:text="Please enter your details"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textAlignment="center"
+                android:gravity="center_horizontal" /> //had to add line
 
-            <RadioButton
-                android:id="@+id/radMale"
+            <LinearLayout
+                android:id="@+id/firstLayout"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="Male" />
-        </RadioGroup>
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@+id/textView2"
+                android:layout_marginTop="20dp">
 
-    </LinearLayout>
+                <EditText
+                    android:id="@+id/pname"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="6dp"
+                    android:layout_weight="1"
+                    android:hint="Name"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/psurname"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_weight="1"
+                    android:hint="Surname"
+                    android:inputType="textPersonName" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/secondLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@+id/firstLayout"
+                android:layout_marginTop="12dp">
+                <!--
+                        <EditText
+                            android:id="@+id/pid"
+                            android:layout_width="match_parent"
+                            android:layout_height="46dp"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginRight="6dp"
+                            android:layout_weight="1"
+                            android:hint="ID number"
+                            android:inputType="textPersonName" />-->
+
+                <EditText
+                    android:id="@+id/pCell"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Cell"
+                    android:inputType="textPersonName" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/thirdLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@+id/secondLayout"
+                android:layout_marginTop="12dp">
+
+                <EditText
+                    android:id="@+id/pNationality"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="6dp"
+                    android:layout_weight="0.66"
+                    android:hint="Nationality"
+                    android:inputType="textPersonName" />
+
+                <RadioGroup
+                    android:id="@+id/rgpGender"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.66">
+
+                    <RadioButton
+                        android:id="@+id/radFemale"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="Female"
+                        android:checked="true"
+                        />
+
+                    <RadioButton
+                        android:id="@+id/radMale"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="Male" />
+                </RadioGroup>
+
+            </LinearLayout>
 
             <EditText
                 android:id="@+id/pAddress"
@@ -138,273 +138,273 @@
                 android:hint="Address"
                 android:inputType="textPersonName" />
 
-    <TextView
-        android:id="@+id/pemcontact"
-        android:layout_width="match_parent"
-        android:layout_height="25dp"
-        android:layout_marginBottom="4dp"
-        android:text="Emergency Contact:"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:layout_below="@+id/pAddress"
-        android:layout_marginTop="12dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"/>
-
-    <LinearLayout
-        android:id="@+id/fourthLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@+id/pemcontact"
-        android:layout_marginTop="12dp">
-
-        <EditText
-            android:id="@+id/pemname"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="6dp"
-            android:layout_weight="1"
-            android:hint="Name"
-            android:inputType="textPersonName" />
-
-        <EditText
-            android:id="@+id/pemcell"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginLeft="6dp"
-            android:layout_marginRight="12dp"
-            android:layout_weight="1"
-            android:hint="Cell"
-            android:inputType="textPersonName" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/fifthLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@+id/fourthLayout"
-        android:layout_marginTop="12dp">
-
-        <RadioGroup
-            android:id="@+id/radioGroup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="6dp">
-
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/pemcontact"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Race/Ethnicity"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-
-            <RadioButton
-                android:id="@+id/radBlack"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Black"
-                android:checked="true"
-                />
-
-            <RadioButton
-                android:id="@+id/radCaucasian"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Caucasian" />
-
-            <RadioButton
-                android:id="@+id/radColoured"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Coloured" />
-
-            <RadioButton
-                android:id="@+id/radIndian"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Indian" />
-
-            <RadioButton
-                android:id="@+id/radOther"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Other" />
-
-        </RadioGroup>
-
-        <RadioGroup
-            android:id="@+id/radioGroup2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginLeft="6dp"
-            android:layout_marginRight="12dp">
-
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Marital Status"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-
-            <RadioButton
-                android:id="@+id/radSingle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Single"
-                android:checked="true"
-                />
-
-            <RadioButton
-                android:id="@+id/radMarried"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Married" />
-
-            <RadioButton
-                android:id="@+id/radOtherStatus"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Other" />
-
-        </RadioGroup>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/sixthLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@+id/fifthLayout">
-
-        <TextView
-            android:id="@+id/bufferTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="6dp"/>
-
-        <CheckBox
-            android:id="@+id/chkMedaid"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Medical Aid"
-            android:paddingRight="12dp"
-            android:layout_weight="1"
-            android:layout_marginLeft="6dp"
-            android:layout_marginRight="12dp"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/seventhLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@+id/sixthLayout"
-        android:layout_marginBottom="12dp">
-
-        <RadioGroup
-            android:id="@+id/radioGroup3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="6dp">
-
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Common Issues:"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-
-            <CheckBox
-                android:id="@+id/chkHIV"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="HIV/AIDS" />
-
-            <CheckBox
-                android:id="@+id/chkTB"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="TB" />
-
-            <CheckBox
-                android:id="@+id/chkDiabetes"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Diabetes" />
-
-            <CheckBox
-                android:id="@+id/chkHyp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Hypertension" />
-
-            <CheckBox
-                android:id="@+id/chkNone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="None" />
-        </RadioGroup>
-
-        <RelativeLayout
-            android:id="@+id/innerfirstLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_marginLeft="6dp"
-            android:layout_marginRight="12dp">
-
-            <EditText
-                android:id="@+id/Allergies"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginLeft="6dp"
+                android:layout_height="25dp"
+                android:layout_marginBottom="4dp"
+                android:text="Emergency Contact:"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:layout_below="@+id/pAddress"
                 android:layout_marginTop="12dp"
-                android:layout_marginRight="12dp"
-                android:layout_weight="1"
-                android:hint="Allergies"
-                android:inputType="textPersonName" />
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"/>
 
-            <Button
-                android:id="@+id/submit"
-                android:layout_width="100dp"
-                android:layout_height="38dp"
+            <LinearLayout
+                android:id="@+id/fourthLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@+id/pemcontact"
+                android:layout_marginTop="12dp">
 
-                android:layout_alignParentStart="true"
+                <EditText
+                    android:id="@+id/pemname"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="6dp"
+                    android:layout_weight="1"
+                    android:hint="Name"
+                    android:inputType="textPersonName" />
 
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="39dp"
-                android:layout_marginLeft="39dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="47dp"
-                android:layout_marginRight="47dp"
-                android:layout_marginBottom="39dp"
-                android:background="@color/gradStart"
-                android:text="Submit"
-                android:textColor="#FFFFFF"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.533"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.912" />
+                <EditText
+                    android:id="@+id/pemcell"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_weight="1"
+                    android:hint="Cell"
+                    android:inputType="textPersonName" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/fifthLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@+id/fourthLayout"
+                android:layout_marginTop="12dp">
+
+                <RadioGroup
+                    android:id="@+id/radioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="6dp">
+
+                    <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Race/Ethnicity"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                    <RadioButton
+                        android:id="@+id/radBlack"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Black"
+                        android:checked="true"
+                        />
+
+                    <RadioButton
+                        android:id="@+id/radCaucasian"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Caucasian" />
+
+                    <RadioButton
+                        android:id="@+id/radColoured"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Coloured" />
+
+                    <RadioButton
+                        android:id="@+id/radIndian"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Indian" />
+
+                    <RadioButton
+                        android:id="@+id/radOther"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Other" />
+
+                </RadioGroup>
+
+                <RadioGroup
+                    android:id="@+id/radioGroup2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="12dp">
+
+                    <TextView
+                        android:id="@+id/textView5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Marital Status"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                    <RadioButton
+                        android:id="@+id/radSingle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Single"
+                        android:checked="true"
+                        />
+
+                    <RadioButton
+                        android:id="@+id/radMarried"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Married" />
+
+                    <RadioButton
+                        android:id="@+id/radOtherStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Other" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/sixthLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@+id/fifthLayout">
+
+                <TextView
+                    android:id="@+id/bufferTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="6dp"/>
+
+                <CheckBox
+                    android:id="@+id/chkMedaid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Medical Aid"
+                    android:paddingRight="12dp"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="12dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/seventhLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@+id/sixthLayout"
+                android:layout_marginBottom="12dp">
+
+                <RadioGroup
+                    android:id="@+id/radioGroup3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="6dp">
+
+                    <TextView
+                        android:id="@+id/textView6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Common Issues:"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                    <CheckBox
+                        android:id="@+id/chkHIV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="HIV/AIDS" />
+
+                    <CheckBox
+                        android:id="@+id/chkTB"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="TB" />
+
+                    <CheckBox
+                        android:id="@+id/chkDiabetes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Diabetes" />
+
+                    <CheckBox
+                        android:id="@+id/chkHyp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Hypertension" />
+
+                    <CheckBox
+                        android:id="@+id/chkNone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="None" />
+                </RadioGroup>
+
+                <RelativeLayout
+                    android:id="@+id/innerfirstLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="12dp">
+
+                    <EditText
+                        android:id="@+id/Allergies"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginLeft="6dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginRight="12dp"
+                        android:layout_weight="1"
+                        android:hint="Allergies"
+                        android:inputType="textPersonName" />
+
+                    <Button
+                        android:id="@+id/submit"
+                        android:layout_width="100dp"
+                        android:layout_height="38dp"
+
+                        android:layout_alignParentStart="true"
+
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="39dp"
+                        android:layout_marginLeft="39dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="47dp"
+                        android:layout_marginRight="47dp"
+                        android:layout_marginBottom="39dp"
+                        android:background="@color/gradStart"
+                        android:text="Submit"
+                        android:textColor="#FFFFFF"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.533"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.912" />
 
 
-        </RelativeLayout>
+                </RelativeLayout>
 
-    </LinearLayout>
+            </LinearLayout>
 
         </RelativeLayout>
     </LinearLayout>
