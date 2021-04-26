@@ -125,6 +125,10 @@ public class DRegistration extends AppCompatActivity implements View.OnClickList
                                         Toast.makeText(DRegistration.this, "You have successfully been registered as a doctor.", Toast.LENGTH_LONG).show();
 
                                         Intent start = new Intent(DRegistration.this, DoctorForm.class);
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("PID", prac_no);
+                                        bundle.putString("EMAIL", email);
+                                        start.putExtras(bundle);
                                         startActivity(start);
                                         finish();
 
