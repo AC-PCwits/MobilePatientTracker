@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DoctorConsultForm"></activity>
+        <activity android:name=".PUpdateField"></activity>
+        <activity android:name=".DoctorConsultForm" />
         <activity android:name=".PrivacyPolicy" />
         <activity
             android:name=".PHomePage"

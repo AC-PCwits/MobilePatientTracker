@@ -27,7 +27,6 @@ public class PHomePage extends AppCompatActivity {
                 Toast.makeText(PHomePage.this, "You have successfully logged out", Toast.LENGTH_LONG).show();
                 Intent start = new Intent( PHomePage.this, DoctorOrPatient.class); //moving from main screen to reg screen when clicking register button on main screen
                 startActivity(start);
-
             }
         });
 

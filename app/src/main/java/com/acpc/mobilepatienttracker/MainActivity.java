@@ -2,6 +2,7 @@ package com.acpc.mobilepatienttracker;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -319,7 +321,7 @@ public class MainActivity extends AppCompatActivity {
 
 // Here is the custom class Patient that is being serialized to the database
 
-class Patient
+class Patient implements Serializable
 {
     public String fname;
     public String fsurname;
@@ -359,55 +361,93 @@ class Patient
         this.allergies= allergies;
     }
 
-    // VERY IMPORTANT: Java JSON deserialization needs a no-argument constructor in order to deserialize custom objects.
-    // If you do not include one, your app will crash when you try to deserialize a custom class.
-
     public Patient()
     {
     }
 
-
-
-   /* public int getID() {
-        return ID;
-    }
-
-    public void setID(int ID) {
-        this.ID = ID;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public ArrayList<String> getIllnesses() {
-        return illnesses;
-    }
-
-    public void setIllnesses(ArrayList<String> illnesses) {
-        this.illnesses = illnesses;
-    }*/
-
-    // ALSO VERY IMPORTANT: Haven't tested it in Java, but I am aware that in C# your custom class's properties need to all be public in order for JSON to serialize them
-    // and if they are not public, JSON will serialize blank properties and not throw any errors (leaving you wondering why your data isn't saving to the database).
-    // So just to be safe, don't forget to make your custom class's members public
-
-    // This method is just for converting a query task with multiple entries into a list a patients for easier use
-  /*  public static ArrayList<Patient> GetPatientsFromQuery(Task<QuerySnapshot> task)
+    public static String GetFieldName(PatientField field)
     {
-        ArrayList patients = new ArrayList<Patient>();
+        switch (field) {
+            case FIRST_NAME:
+                return "fname";
+            case LAST_NAME:
+                return "fsurname";
+            case ID:
+                return "idno";
+            case CELLPHONE:
+                return "cellno";
+            case NATIONALITY:
+                return "nationality";
+            case GENDER:
+                return "gender";
+            case RACE:
+                return "race";
+            case ADDRESS:
+                return "address";
+            case MARITAL_STATUS:
+                return "mstatus";
+            case ILLNESSES:
+                return "cissues";
+            case ALLERGIES:
+                return "allergies";
+            case MEDICAL_AID:
+                return "medaid";
+            case ECONTACT_NAME:
+                return "ename";
+            case ECONTACT_CELLPHONE:
+                return "econtact";
+        }
+        return "";
+    }
 
-        for (QueryDocumentSnapshot document : task.getResult())
+    public Object GetFieldValue(PatientField field)
+    {
+        switch (field) {
+            case FIRST_NAME:
+                return this.fname;
+            case LAST_NAME:
+                return this.fsurname;
+            case ID:
+                return this.idno;
+            case CELLPHONE:
+                return this.cellno;
+            case NATIONALITY:
+                return this.nationality;
+            case GENDER:
+                return this.gender;
+            case RACE:
+                return this.race;
+            case ADDRESS:
+                return this.address;
+            case MARITAL_STATUS:
+                return this.mstatus;
+            case ILLNESSES:
+                return this.cissues;
+            case ALLERGIES:
+                return this.allergies;
+            case MEDICAL_AID:
+                return this.medaid;
+            case ECONTACT_NAME:
+                return this.ename;
+            case ECONTACT_CELLPHONE:
+                return this.econtact;
+        }
+        return null;
+    }
+
+    public String GetIllnessesString()
+    {
+        String illnesses = "";
+        for (String illness : this.cissues)
         {
-            patients.add(document.toObject(Patient.class));
+            if (!illness.equals(""))
+            {
+                illnesses += illness;
+            }
         }
 
-        return patients;
-    }*/
+        return illnesses;
+    }
 }
 
 class Doctor {
@@ -448,6 +488,24 @@ class Doctor {
 
     }
 
+}
+
+enum PatientField
+{
+    FIRST_NAME,
+    LAST_NAME,
+    ID,
+    CELLPHONE,
+    NATIONALITY,
+    GENDER,
+    RACE,
+    ADDRESS,
+    MARITAL_STATUS,
+    ILLNESSES,
+    ALLERGIES,
+    MEDICAL_AID,
+    ECONTACT_NAME,
+    ECONTACT_CELLPHONE
 }
 
 
