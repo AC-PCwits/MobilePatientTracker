@@ -7,8 +7,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class DHomePage extends AppCompatActivity {
 
@@ -48,6 +52,19 @@ public class DHomePage extends AppCompatActivity {
                 }
 
                 return false;
+            }
+        });
+
+        Button btn_logout = findViewById(R.id.btn_logout_doc);
+
+
+        btn_logout.setOnClickListener(new View.OnClickListener() { //what happens when you click the register button
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Toast.makeText(DHomePage.this, "You have successfully logged out", Toast.LENGTH_LONG).show();
+                Intent start = new Intent( DHomePage.this, DoctorOrPatient.class); //moving from main screen to reg screen when clicking register button on main screen
+                startActivity(start);
             }
         });
     }

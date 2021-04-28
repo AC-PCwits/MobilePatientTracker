@@ -34,9 +34,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -77,9 +75,6 @@ public class PatientDetails extends AppCompatActivity {
         setContentView(R.layout.activity_patient_details);
         context = getApplicationContext();
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav_bar);
-
-        bottomNavigationView.setSelectedItemId(R.id.p_details);
 
         //Instantiation of View Components
         background = findViewById(R.id.pd_background);
@@ -143,6 +138,11 @@ public class PatientDetails extends AppCompatActivity {
         });
 
         GetUserData();
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav_bar);
+
+        bottomNavigationView.setSelectedItemId(R.id.p_details);
+
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -160,9 +160,9 @@ public class PatientDetails extends AppCompatActivity {
                                 , PatientBookings.class));
                         overridePendingTransition(0 , 0);
                         return true;
-                    case R.id.booking_history:
+                    case R.id.consultation_history:
                         startActivity(new Intent(getApplicationContext()
-                                , PatientBookingHistory.class));
+                                , PatientConsultationHistory.class));
                         overridePendingTransition(0 , 0);
                         return true;
                 }

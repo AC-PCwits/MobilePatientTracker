@@ -83,7 +83,7 @@ public class LoginDoctor extends AppCompatActivity {
                                 Toast.makeText(LoginDoctor.this, "Login error, Please try again",Toast.LENGTH_SHORT).show();
                             }
                             else{
-                                Intent intent = new Intent(LoginDoctor.this , DoctorPatientList.class);
+                                Intent intent = new Intent(LoginDoctor.this , DHomePage.class);
                                 startActivity(intent);
                                 finish();
                             }
