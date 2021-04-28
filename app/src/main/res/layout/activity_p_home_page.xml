@@ -35,23 +35,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.84" />
 
-    <Button
-        android:id="@+id/p_details"
-        android:layout_width="151dp"
-        android:layout_height="46dp"
-
-        android:layout_marginTop="4dp"
-
-        android:background="@color/gradStart"
-        android:text="View Personal Details"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.557"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.609" />
-
     <TextView
         android:id="@+id/textView3"
         android:layout_width="186dp"

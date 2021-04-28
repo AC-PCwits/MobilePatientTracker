@@ -9,16 +9,16 @@ import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class PatientBookingHistory extends AppCompatActivity {
+public class PatientConsultationHistory extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_patient_booking_history);
+        setContentView(R.layout.activity_patient_consultation_history);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav_bar);
 
-        bottomNavigationView.setSelectedItemId(R.id.booking_history);
+        bottomNavigationView.setSelectedItemId(R.id.consultation_history);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -40,7 +40,7 @@ public class PatientBookingHistory extends AppCompatActivity {
                                 , PatientBookings.class));
                         overridePendingTransition(0 , 0);
                         return true;
-                    case R.id.booking_history:
+                    case R.id.consultation_history:
                         return true;
                 }
                 return false;

@@ -41,9 +41,9 @@ public class PHomePage extends AppCompatActivity {
                                 , PatientBookings.class));
                         overridePendingTransition(0 , 0);
                         return true;
-                    case R.id.booking_history:
+                    case R.id.consultation_history:
                         startActivity(new Intent(getApplicationContext()
-                                , PatientBookingHistory.class));
+                                , PatientConsultationHistory.class));
                         overridePendingTransition(0 , 0);
                         return true;
                 }
@@ -52,7 +52,7 @@ public class PHomePage extends AppCompatActivity {
         });
 
         Button log_out = findViewById(R.id.log_out);
-        Button p_details = findViewById(R.id.p_details);
+
 
         log_out.setOnClickListener(new View.OnClickListener() { //what happens when you click the register button
             @Override
@@ -64,14 +64,5 @@ public class PHomePage extends AppCompatActivity {
             }
         });
 
-        p_details.setOnClickListener(new View.OnClickListener() { //what happens when you click the register button
-            @Override
-            public void onClick(View v) {
-
-                Intent start = new Intent( PHomePage.this, PatientDetails.class); //moving from main screen to reg screen when clicking register button on main screen
-                startActivity(start);
-
-            }
-        });
     }
 }
