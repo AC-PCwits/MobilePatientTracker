@@ -56,7 +56,17 @@ public class DHomePage extends AppCompatActivity {
         });
 
         Button btn_logout = findViewById(R.id.btn_logout_doc);
+        Button testbutton=findViewById(R.id.testbutton);
 
+        testbutton.setOnClickListener(new View.OnClickListener() { //what happens when you click the register button
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Toast.makeText(DHomePage.this, "You have successfully proceeded", Toast.LENGTH_LONG).show();
+                Intent start = new Intent( DHomePage.this, DoctorConsultForm.class); //moving from main screen to reg screen when clicking register button on main screen
+                startActivity(start);
+            }
+        });
 
         btn_logout.setOnClickListener(new View.OnClickListener() { //what happens when you click the register button
             @Override
