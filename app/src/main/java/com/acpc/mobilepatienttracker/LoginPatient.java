@@ -48,7 +48,7 @@ public class LoginPatient extends AppCompatActivity {
                 FirebaseUser mFirebaseUser = mAuth.getCurrentUser();
                 if( mFirebaseUser != null) {
                     Toast.makeText(LoginPatient.this, "You are logged in.",Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(LoginPatient.this, PHomePage.class);
+                    Intent i = new Intent(LoginPatient.this, PatientFragActivity.class);
                     startActivity(i);
                     finish();
                 }
@@ -84,7 +84,7 @@ public class LoginPatient extends AppCompatActivity {
                                 Toast.makeText(LoginPatient.this, "Login error, Please try again",Toast.LENGTH_SHORT).show();
                             }
                             else{
-                                Intent intent = new Intent(LoginPatient.this , PHomePage.class);
+                                Intent intent = new Intent(LoginPatient.this , PatientFragActivity.class);
                                 startActivity(intent);
                                 Bundle bundle = new Bundle();
                                 bundle.putString("USER_EMAIL", eml);

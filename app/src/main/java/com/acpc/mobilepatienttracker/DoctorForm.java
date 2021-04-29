@@ -219,7 +219,7 @@ public class DoctorForm extends AppCompatActivity {
                                 public void onSuccess(DocumentReference documentReference) {
                                     // If we are here, the app successfully connected to Firestore and added a new entry
                                     Toast.makeText(DoctorForm.this, "Data successfully added", Toast.LENGTH_LONG).show();
-                                    Intent intent = new Intent(DoctorForm.this, DHomePage.class);
+                                    Intent intent = new Intent(DoctorForm.this, DoctorFragActivity.class);
                                     startActivity(intent);
                                 }
                             })

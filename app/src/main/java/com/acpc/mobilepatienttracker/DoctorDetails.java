@@ -2,11 +2,16 @@ package com.acpc.mobilepatienttracker;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -19,7 +24,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-public class DoctorDetails extends AppCompatActivity {
+public class DoctorDetails extends Fragment {
 
     private String name;
     private String id;
@@ -46,95 +51,103 @@ public class DoctorDetails extends AppCompatActivity {
     private FirebaseFirestore database = FirebaseFirestore.getInstance();
     private Doctor doc = new Doctor();
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_doctor_details);
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
 
-        nameText = (TextView)findViewById(R.id.nameText);
-        idText = (TextView)findViewById(R.id.idText);
-        dobText = (TextView)findViewById(R.id.dobText);
-        cellText = (TextView)findViewById(R.id.cellText);
-        emailText = (TextView)findViewById(R.id.emailText);
-        genderText = (TextView)findViewById(R.id.genderText);
-        pracLengthText = (TextView)findViewById(R.id.pLengthText);
-        pracNumText = (TextView)findViewById(R.id.pNumText);
-        uniText = (TextView)findViewById(R.id.uniText);
-        specText = (TextView)findViewById(R.id.specText);
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
 
-
-        Bundle bundle = getIntent().getExtras();
-
-//        if(bundle != null)
-//        {
-//            name = bundle.getString("DOC_NAME");
-//            id = bundle.getString("DOC_ID");
-//            dob = bundle.getString("DOC_DOB");
-//            gender = bundle.getString("DOC_GENDER");
-//            email = bundle.getString("DOC_EMAIL");
-//            prac_length = bundle.getString("DOC_PRACYEARS");
-//            prac_num = bundle.getString("DOC_PRACNUM");
-//            uni = bundle.getString("DOC_UNI");
-//            spec = bundle.getString("DOC_SPEC");
-//            cellno = bundle.getString("DOC_CELL");
-//
-//            nameText.setText(name);
-//            idText.setText(id);
-//            dobText.setText(dob);
-//            genderText.setText(gender);
-//            emailText.setText(email);
-//            pracLengthText.setText(prac_length);
-//            pracNumText.setText(prac_num);
-//            uniText.setText(uni);
-//            specText.setText(spec);
-//            cellText.setText(cellno);
-//        }
-//        else
-//        {
-//            nameText.setText("ERROR: NULL VALUE PASSED");
-//        }
-
-        getDocDet();
-
-        BottomNavigationView bottomNavigationView = findViewById(R.id.d_nav_bar);
-
-        bottomNavigationView.setSelectedItemId(R.id.d_details);
-
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                switch (item.getItemId()){
-
-                    case R.id.d_home:
-                        startActivity(new Intent(getApplicationContext()
-                                ,DHomePage.class));
-                        overridePendingTransition(0 , 0);
-                        return true;
-                    case R.id.d_details:
-                        return true;
-                    case R.id.patient_list:
-                        startActivity(new Intent(getApplicationContext()
-                                ,DoctorPatientList.class));
-                        overridePendingTransition(0 , 0);
-                        return true;
-                    case R.id.pending_bookings:
-                        startActivity(new Intent(getApplicationContext()
-                                ,PendingBookings.class));
-                        overridePendingTransition(0 , 0);
-                        return true;
-
-                }
-
-                return false;
-            }
-        });
-
-
-
+    public DoctorDetails() {
+        // Required empty public constructor
     }
 
-    public void getDocDet()
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment ChildFragment1.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static DoctorDetails newInstance(String param1, String param2) {
+        DoctorDetails fragment = new DoctorDetails();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        View rootView = inflater.inflate(R.layout.activity_doctor_details, container, false);
+
+        nameText = (TextView)rootView.findViewById(R.id.nameText);
+        idText = (TextView)rootView.findViewById(R.id.idText);
+        dobText = (TextView)rootView.findViewById(R.id.dobText);
+        cellText = (TextView)rootView.findViewById(R.id.cellText);
+        emailText = (TextView)rootView.findViewById(R.id.emailText);
+        genderText = (TextView)rootView.findViewById(R.id.genderText);
+        pracLengthText = (TextView)rootView.findViewById(R.id.pLengthText);
+        pracNumText = (TextView)rootView.findViewById(R.id.pNumText);
+        uniText = (TextView)rootView.findViewById(R.id.uniText);
+        specText = (TextView)rootView.findViewById(R.id.specText);
+
+        getDocDet(rootView);
+
+//        BottomNavigationView bottomNavigationView = findViewById(R.id.d_nav_bar);
+//
+//        bottomNavigationView.setSelectedItemId(R.id.d_details);
+//
+//        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//
+//                switch (item.getItemId()){
+//
+//                    case R.id.d_home:
+//                        startActivity(new Intent(getApplicationContext()
+//                                ,DHomePage.class));
+//                        overridePendingTransition(0 , 0);
+//                        return true;
+//                    case R.id.d_details:
+//                        return true;
+//                    case R.id.patient_list:
+//                        startActivity(new Intent(getApplicationContext()
+//                                ,DoctorPatientList.class));
+//                        overridePendingTransition(0 , 0);
+//                        return true;
+//                    case R.id.pending_bookings:
+//                        startActivity(new Intent(getApplicationContext()
+//                                ,PendingBookings.class));
+//                        overridePendingTransition(0 , 0);
+//                        return true;
+//
+//                }
+//
+//                return false;
+//            }
+//        });
+
+        return rootView;
+    }
+
+    public void getDocDet(final View rootView)
     {
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 

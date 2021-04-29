@@ -145,7 +145,7 @@ public class PatientForm extends AppCompatActivity  {
                                 public void onSuccess(DocumentReference documentReference) {
                                     // If we are here, the app successfully connected to Firestore and added a new entry
                                     makeText(PatientForm.this, "Data successfully added", LENGTH_LONG).show();
-                                    Intent start = new Intent(PatientForm.this, PHomePage.class);
+                                    Intent start = new Intent(PatientForm.this, PatientFragActivity.class);
                                     startActivity(start);
                                 }
                             })
