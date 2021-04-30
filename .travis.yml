@@ -3,6 +3,9 @@ jdk: oraclejdk8
 dist: trusty
 
 android:
+env:
+  global:
+    - CODECOV_TOKEN=:uuid-repo-token
   components:
     # Uncomment the lines below if you want to
     # use the latest revision of Android SDK Tools
