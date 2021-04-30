@@ -39,15 +39,5 @@
         android:layout_below="@+id/recyclerView"
         android:textSize="16sp"/>
 
-    <Button
-        android:id="@+id/logoutButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Logout"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="12dp"
-        android:layout_marginBottom="12dp"
-        android:layout_alignParentBottom="true"/>
-
     </RelativeLayout>
 </FrameLayout>

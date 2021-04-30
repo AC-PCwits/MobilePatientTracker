@@ -66,7 +66,6 @@ public class PHomePage extends Fragment {
         View rootView = inflater.inflate(R.layout.activity_p_home_page, container, false);
 
         Button log_out = rootView.findViewById(R.id.log_out);
-        Button p_details = rootView.findViewById(R.id.p_details);
 
         log_out.setOnClickListener(new View.OnClickListener() { //what happens when you click the register button
             @Override
@@ -79,51 +78,7 @@ public class PHomePage extends Fragment {
             }
         });
 
-        p_details.setOnClickListener(new View.OnClickListener() { //what happens when you click the register button
-            @Override
-            public void onClick(View v) {
-
-                Intent start = new Intent( getContext(), PatientDetails.class); //moving from main screen to reg screen when clicking register button on main screen
-                startActivity(start);
-
-            }
-        });
-
         return rootView;
-
-//        BottomNavigationView bottomNavigationView = findViewById(R.id.d_nav_bar);
-//
-//        bottomNavigationView.setSelectedItemId(R.id.d_home);
-//
-//        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//
-//                switch (item.getItemId()){
-//
-//                    case R.id.d_home:
-//                        return true;
-//                    case R.id.d_details:
-//                        startActivity(new Intent(getApplicationContext()
-//                                ,DoctorDetails.class));
-//                        overridePendingTransition(0 , 0);
-//                        return true;
-//                    case R.id.patient_list:
-//                        startActivity(new Intent(getApplicationContext()
-//                                ,DoctorPatientList.class));
-//                        overridePendingTransition(0 , 0);
-//                        return true;
-//                    case R.id.pending_bookings:
-//                        startActivity(new Intent(getApplicationContext()
-//                                ,PendingBookings.class));
-//                        overridePendingTransition(0 , 0);
-//                        return true;
-//
-//                }
-//
-//                return false;
-//            }
-//        });
 
     }
 }

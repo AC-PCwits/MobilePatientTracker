@@ -17,7 +17,9 @@
         app:tabIndicatorColor="@color/cardview_light_background"
         app:tabIconTint="#FFFFFF"
         app:tabPaddingStart="0dp"
-        app:tabPaddingEnd="0dp"/>
+        app:tabPaddingEnd="0dp"
+        app:tabMode="fixed"
+        app:tabInlineLabel="false"/>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"

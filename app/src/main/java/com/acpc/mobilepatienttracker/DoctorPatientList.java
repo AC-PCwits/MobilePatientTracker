@@ -94,55 +94,12 @@ public class DoctorPatientList extends Fragment
         View rootView = inflater.inflate(R.layout.activity_d_patient_list, container, false);
 
         testView = (TextView) rootView.findViewById(R.id.testView);
-        logoutBut = (Button) rootView.findViewById(R.id.logoutButton);
 
         mPatientList = new ArrayList<>();
-//        getDocData();
+        getDocData();
         //To populate the list with actual data use the below function:
-        //buildPatientList()
 //        buildExampleList();
-//        buildRecyclerView(rootView);
-
-        logoutBut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                logoutActivity();
-            }
-        });
-
-//        BottomNavigationView bottomNavigationView = findViewById(R.id.d_nav_bar);
-//
-//        bottomNavigationView.setSelectedItemId(R.id.patient_list);
-//
-//        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//
-//                switch (item.getItemId()){
-//
-//                    case R.id.d_home:
-//                        startActivity(new Intent(getApplicationContext()
-//                                ,DHomePage.class));
-//                        overridePendingTransition(0 , 0);
-//                        return true;
-//                    case R.id.d_details:
-//                        startActivity(new Intent(getApplicationContext()
-//                                ,DoctorDetails.class));
-//                        overridePendingTransition(0 , 0);
-//                        return true;
-//                    case R.id.patient_list:
-//                        return true;
-//                    case R.id.pending_bookings:
-//                        startActivity(new Intent(getApplicationContext()
-//                                ,PendingBookings.class));
-//                        overridePendingTransition(0 , 0);
-//                        return true;
-//
-//                }
-//
-//                return false;
-//            }
-//        });
+        buildRecyclerView(rootView);
 
         return rootView;
     }
@@ -320,12 +277,5 @@ public class DoctorPatientList extends Fragment
                 startActivity(intent);
             }
         });
-    }
-
-    private void logoutActivity()
-    {
-        FirebaseAuth.getInstance().signOut();
-        Intent intent = new Intent(getContext(), DoctorOrPatient.class);
-        startActivity(intent);
     }
 }

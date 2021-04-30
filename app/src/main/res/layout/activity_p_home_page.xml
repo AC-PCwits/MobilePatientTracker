@@ -31,19 +31,8 @@
         android:background="@color/gradStart"
         android:text="Log Out"
         android:textColor="#FFFFFF"
-        android:layout_below="@+id/p_details"
+        android:layout_below="@+id/textView3"
         android:layout_centerHorizontal="true"/>
-
-    <Button
-        android:id="@+id/p_details"
-        android:layout_width="wrap_content"
-        android:layout_height="46dp"
-        android:layout_marginTop="48dp"
-        android:layout_centerHorizontal="true"
-        android:background="@color/gradStart"
-        android:text="View Personal Details"
-        android:textColor="#FFFFFF"
-        android:layout_below="@+id/textView3"/>
 
     <TextView
         android:id="@+id/textView3"
