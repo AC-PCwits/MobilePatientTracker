@@ -112,6 +112,9 @@ public class PRegistration extends AppCompatActivity implements View.OnClickList
                                         ///////OR redirect to patient form
 
                                         Intent start = new Intent(PRegistration.this, PatientForm.class); //moving from main screen to reg screen when clicking register button on main screen
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("ID", id);
+                                        start.putExtras(bundle);
                                         startActivity(start);
 
 
