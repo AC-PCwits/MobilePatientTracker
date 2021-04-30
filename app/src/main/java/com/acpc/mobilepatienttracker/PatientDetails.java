@@ -127,6 +127,13 @@ public class PatientDetails extends AppCompatActivity {
                     if (view.isEditting)
                     {
                         UpdateField(activeUser.idno, view.type, view.content.getText().toString());
+                        view.isEditting = false;
+
+                        view.edit.setImageResource(R.drawable.ic_baseline_edit_24);
+                        view.content.setEnabled(false);
+                        view.content.setBackgroundColor(Color.TRANSPARENT);
+
+                        save.setVisibility(View.INVISIBLE);
                         save.setEnabled(false);
                         break;
                     }

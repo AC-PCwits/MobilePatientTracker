@@ -344,7 +344,6 @@ class Patient implements Serializable
     // public Patient(String fname, String fsurname, String idno, String cellno, String nationality, String gender, String address, String ename, String econtact, String race, String mstatus, ArrayList cissues, String medaid, String allergies)
     public Patient (String fname, String fsurname, String idno, String cellno, String nationality, String gender, String address, String ename, String econtact, String race, String mstatus, ArrayList<String> cissues, String medaid, String allergies)
     {
-
         this.fname= fname;
         this.fsurname=  fsurname;
         this.idno= idno;
@@ -507,7 +506,6 @@ enum PatientField
     ECONTACT_NAME,
     ECONTACT_CELLPHONE
 }
-
 
 
 
