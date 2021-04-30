@@ -23,3 +23,5 @@ script:
   - ./gradlew connectedCheck
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+codecov:
+  token: ad7d6b95-2094-455b-97b0-93da447b8c2b
