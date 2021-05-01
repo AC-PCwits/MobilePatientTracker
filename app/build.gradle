@@ -3,11 +3,41 @@ apply plugin: 'com.google.gms.google-services'  // Google Services plugin
 apply plugin: 'jacoco'
 
 jacoco {
-    toolVersion = "0.8.4"
+    version "0.8.4"
 }
 
-tasks.withType(Test) {
-    jacoco.includeNoLocationClasses = true
+
+jacoco {
+    toolVersion "0.8.4"
+}
+
+def coverageSourceDirs = [
+        'src/main/java',
+]
+
+task jacocoTestReport(type: JacocoReport, dependsOn: "testFreeDebugUnitTest") {
+    group = "Reporting"
+    description = "Generate Jacoco coverage reports after running tests."
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+    classDirectories.from fileTree(
+            dir: './build/intermediates/classes/debug',
+            excludes: ['**/R*.class',
+                       '**/*$InjectAdapter.class',
+                       '**/*$ModuleAdapter.class',
+                       '**/*$ViewInjector*.class'
+            ])
+    sourceDirectories.from files(coverageSourceDirs)
+    executionData.from files("$buildDir/jacoco/testDebug.exec")
+    doFirst {
+        new File("$buildDir/intermediates/classes/").eachFileRecurse { file ->
+            if (file.name.contains('$$')) {
+                file.renameTo(file.path.replace('$$', '$'))
+            }
+        }
+    }
 }
 
 android {
@@ -27,11 +57,22 @@ android {
 
     buildTypes {
         debug{
-            testCoverageEnabled = true
+            debuggable true
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            testCoverageEnabled.is(true)
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            testCoverageEnabled.is(true)
+        }
+    }
+    testOptions {
+        animationsDisabled true
+
+        unitTests {
+            includeAndroidResources = true
         }
     }
 
