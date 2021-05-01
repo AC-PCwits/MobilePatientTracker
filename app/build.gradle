@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'  // Google Services plugin
+apply plugin: 'jacoco'
 
 android {
     compileSdkVersion 29
@@ -17,12 +18,19 @@ android {
     }
 
     buildTypes {
+        debug{
+            testCoverageEnabled = true
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 
+}
+
+repositories {
+    jcenter()
 }
 
 dependencies {
@@ -48,6 +56,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore'
 
     implementation 'androidx.multidex:multidex:2.0.1'
+
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
 
     
 }
