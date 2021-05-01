@@ -35,6 +35,7 @@ android {
         }
     }
 
+    flavorDimensions "versionCode"
     productFlavors {
         free {}
         paid {}
