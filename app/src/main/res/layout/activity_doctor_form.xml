@@ -8,8 +8,8 @@
     tools:context=".DoctorForm">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/textView"
@@ -25,9 +25,9 @@
             android:paddingRight="15dp"
             android:paddingBottom="3dp"
             android:text="Create New Account"
-            android:textColorHighlight="#000000"
-            android:textColor="#000000"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="#000000"
+            android:textColorHighlight="#000000"
 
             android:visibility="visible"
             app:autoSizeTextType="none"
@@ -36,6 +36,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:visibility="visible" />
+
         <View
             android:id="@+id/view"
             android:layout_width="match_parent"
@@ -64,7 +65,7 @@
             android:hint="First Name"
             android:inputType="textPersonName"
             android:textColor="#000000"
-            android:textColorHint = "@color/cardview_shadow_start_color"
+            android:textColorHint="@color/cardview_shadow_start_color"
             app:layout_constraintEnd_toStartOf="@+id/last_name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view"
@@ -85,7 +86,7 @@
             android:importantForAutofill="no"
             android:inputType="textPersonName"
             android:textColor="#000000"
-            android:textColorHint = "@color/cardview_shadow_start_color"
+            android:textColorHint="@color/cardview_shadow_start_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.542"
             app:layout_constraintStart_toEndOf="@+id/first_name"
@@ -172,15 +173,15 @@
             android:layout_marginTop="24dp"
             android:layout_marginEnd="128dp"
             android:layout_marginRight="128dp"
+            android:backgroundTint="@color/cardview_shadow_start_color"
+            android:editable="false"
             android:ems="10"
+            android:focusable="false"
             android:hint="YYYY/MM/DD"
             android:inputType="none"
-            android:focusable="false"
-            android:editable="false"
-            android:textColor="#000000"
 
-            android:textColorHint = "@color/cardview_shadow_start_color"
-            android:backgroundTint="@color/cardview_shadow_start_color"
+            android:textColor="#000000"
+            android:textColorHint="@color/cardview_shadow_start_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -197,13 +198,13 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="15dp"
             android:layout_marginRight="15dp"
-            android:textColorHint = "@color/cardview_shadow_start_color"
+            android:backgroundTint="@color/cardview_shadow_start_color"
             android:digits="0123456789"
             android:ems="10"
             android:hint="Enter ID number"
             android:importantForAutofill="no"
             android:textColor="#000000"
-            android:backgroundTint="@color/cardview_shadow_start_color"
+            android:textColorHint="@color/cardview_shadow_start_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.019"
             app:layout_constraintStart_toStartOf="parent"
@@ -225,7 +226,7 @@
             android:hint="Length of Practice(yrs)"
             android:importantForAutofill="no"
             android:textColor="#000000"
-            android:textColorHint = "@color/cardview_shadow_start_color"
+            android:textColorHint="@color/cardview_shadow_start_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -270,7 +271,7 @@
             android:importantForAutofill="no"
             android:inputType="text"
             android:textColor="#000000"
-            android:textColorHint = "@color/cardview_shadow_start_color"
+            android:textColorHint="@color/cardview_shadow_start_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.019"
             app:layout_constraintStart_toStartOf="parent"
@@ -292,7 +293,7 @@
             android:importantForAutofill="no"
             android:inputType="text"
             android:textColor="#000000"
-            android:textColorHint = "@color/cardview_shadow_start_color"
+            android:textColorHint="@color/cardview_shadow_start_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.176"
             app:layout_constraintStart_toStartOf="parent"
@@ -314,7 +315,7 @@
             android:hint="Enter Cell number"
             android:importantForAutofill="no"
             android:textColor="#000000"
-            android:textColorHint = "@color/cardview_shadow_start_color"
+            android:textColorHint="@color/cardview_shadow_start_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.866"
             app:layout_constraintStart_toStartOf="parent"
@@ -322,36 +323,19 @@
             tools:targetApi="lollipop" />
 
 
-        <CheckBox
-            android:id="@+id/policy"
-            android:layout_width="200dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="145dp"
-            android:layout_marginRight="145dp"
-            android:text="Agree privacy policy"
-            app:buttonTint="#000000"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.137"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Cellnu"
-            tools:targetApi="lollipop" />
-
         <Button
             android:id="@+id/signUpButtonId"
             android:layout_width="100dp"
             android:layout_height="38dp"
 
-            android:layout_marginTop="4dp"
-
+            android:layout_marginTop="12dp"
             android:background="@color/gradStart"
             android:text="SignUp"
             android:textColor="#FFFFFF"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/policy" />
+            app:layout_constraintTop_toBottomOf="@+id/Cellnu" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

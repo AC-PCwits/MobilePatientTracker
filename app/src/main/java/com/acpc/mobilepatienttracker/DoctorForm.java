@@ -39,7 +39,6 @@ public class DoctorForm extends AppCompatActivity {
     //from line 37 to 43 we declare all variabls to be used in the following code below
 
     private TextView date, first_name, last_name, email, password, date_of_birth,id_number,length_practice,institution,doctorSpec,cellNum,practicingNum;
-    private CheckBox policy;
     private RadioGroup gender_group;
     private RadioButton gender_button;
     private Button select_date;
@@ -68,7 +67,6 @@ public class DoctorForm extends AppCompatActivity {
         doctorSpec = findViewById(R.id.Doctor_speciality);
         cellNum = findViewById(R.id.Cellnu);
 //        practicingNum = findViewById(R.id.practicingNum);
-        policy = findViewById(R.id.policy);
 
         first_name.setFilters(new InputFilter[]{new InputFilter.LengthFilter(15)});
         last_name.setFilters(new InputFilter[]{new InputFilter.LengthFilter(15)});
@@ -164,25 +162,7 @@ public class DoctorForm extends AppCompatActivity {
 //                } else if (password.getText().toString().equals("")) {
 //                    password.setError("Empty password");
 //                    return;
-                } else if (!policy.isChecked()) {
-                    policy.setError("Policy must be accepted");
-
-                    policy.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
-                        @Override
-                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                            if (policy.isChecked()) {
-
-                                Intent intent = new Intent(DoctorForm.this, PrivacyPolicy.class);
-                                startActivity(intent);
-                            }
-
-                        }
-                    });
-
-                    return;
                 }
-
                 else{
 
 
