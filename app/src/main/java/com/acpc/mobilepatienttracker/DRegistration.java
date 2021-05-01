@@ -35,6 +35,10 @@ public class DRegistration extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_d_registration);
 
+        //privacy policy code which opens up the policy immediately and users are forced to accept in order to continue
+                Intent intent = new Intent(DRegistration.this, PrivacyPolicy.class);
+                startActivity(intent);
+
         authorization = FirebaseAuth.getInstance();
         inname= findViewById(R.id.inname);
         inemail= findViewById(R.id.inemail);
@@ -44,6 +48,7 @@ public class DRegistration extends AppCompatActivity implements View.OnClickList
         reg.setOnClickListener(this);
 
         inprac_no.setFilters(new InputFilter[]{new InputFilter.LengthFilter(7)});
+
     }
 
     @Override
