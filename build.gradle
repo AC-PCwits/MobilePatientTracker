@@ -19,10 +19,17 @@ buildscript {
 }
 
 allprojects {
+
+    apply plugin: 'maven'
+    apply plugin: 'jacoco'
+
     repositories {
+        mavenLocal()
+        mavenCentral()
         google()
         jcenter()
-        
+
+        maven{ url "http://repo1.maven.org/maven2/"}
     }
 
     gradle.projectsEvaluated {
@@ -32,6 +39,13 @@ allprojects {
     }
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+task codeCoverageReport(type: JacocoReport) {
+    executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
+
+    reports {
+        xml.enabled true
+        xml.destination file("build/reports/jacoco/report.xml")
+        html.enabled false
+        csv.enabled false
+    }
 }
