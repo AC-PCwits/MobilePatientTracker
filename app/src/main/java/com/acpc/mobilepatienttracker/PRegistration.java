@@ -1,10 +1,14 @@
 package com.acpc.mobilepatienttracker;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -29,10 +33,6 @@ public class PRegistration extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_p_registration);
 
-        //privacy policy code which opens up the policy immediately and users are forced to accept in order to continue
-        Intent intent = new Intent(PRegistration.this, PrivacyPolicy.class);
-        startActivity(intent);
-
         mAuth = FirebaseAuth.getInstance();
         inname= findViewById(R.id.inname);
         inemail= findViewById(R.id.inemail);
@@ -56,7 +56,7 @@ public class PRegistration extends AppCompatActivity implements View.OnClickList
         //taking in input for email,name,password and converting to string for database to understand
         final String name = inname.getText().toString().trim();
         final String email = inemail.getText().toString().trim();
-        final String id = in_id.getText().toString().trim();
+        final String id_no = in_id.getText().toString().trim();
         String password = inpassword.getText().toString().trim();
 
         //these if statements ensure that none of the inputs fields(name,email,password) is left empty when registering
@@ -74,10 +74,10 @@ public class PRegistration extends AppCompatActivity implements View.OnClickList
             inemail.setError("Provide Valid Email");
             inemail.requestFocus();
             return;
-        } else if (id.isEmpty()) {
+        } else if (id_no.isEmpty()) {
             in_id.setError("ID Number is Required");
             in_id.requestFocus();
-        } else if (id.length() != 13) {
+        } else if (id_no.length() != 13) {
             in_id.setError("ID Number must be 13 digits");
             in_id.requestFocus();
         } else if (password.isEmpty()) {
@@ -89,53 +89,88 @@ public class PRegistration extends AppCompatActivity implements View.OnClickList
             inpassword.requestFocus();
             return;
         }
-        else{
+        openDialog(new User(name,email,id_no), password);
 
-        //code below allows us to add users with an email and password to the realtime database (not the cloud firestore database that we can view the more in depth data from )
-        //this ensures that the log in credentials are stored safely and we can not view the sensitive password information that the users input
-        mAuth.createUserWithEmailAndPassword(email, password)
+    }//end of register user
+
+    public void openDialog(final User user, final String password)
+    {
+        WebView webView = new WebView(this);
+        webView.loadUrl("file:///android_asset/Privacy.html");
+        webView.setWebViewClient(new WebViewClient()
+        {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+
+                return true;
+            }
+        });
+
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this);
+        builder.setTitle("Privacy Policy")
+                .setView(webView)
+                .setPositiveButton("Agree", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        uploadUserData(user, password);
+                    }
+                });
+        builder.show();
+    }
+
+    public void uploadUserData(User user, String password)
+    {
+        final String name = user.fname;
+        final String email = user.email;
+        final String id_no = user.id;
+
+        mAuth.createUserWithEmailAndPassword(email,password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
-                        if (task.isSuccessful()) {
-                            User user = new User(name, email, id);
-                            FirebaseDatabase.getInstance().getReference("Users")  //this adds all new users to a collection in the database called "Users"
+                        if(task.isSuccessful()){
+                            User user= new User(name,email,id_no);
+                            FirebaseDatabase.getInstance().getReference("Patient")
 
-                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())  //inside brackets will return ID for registered user
+                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
 
-                                    .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() { //To check if data has been inserted into database
+                                    .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
 
-                                    if (task.isSuccessful()) {
-                                        Toast.makeText(PRegistration.this, "User Has Successfully Been Registered", Toast.LENGTH_LONG).show(); //shows message to tell user registration has been successful
+                                    if(task.isSuccessful()){
 
+                                        Toast.makeText(PRegistration.this, "You have successfully been registered as a patient.", Toast.LENGTH_LONG).show();
 
-                                        ///////Redirect to login now !
-
-                                        ///////OR redirect to patient form
-
-                                        Intent start = new Intent(PRegistration.this, PatientForm.class); //moving from main screen to reg screen when clicking register button on main screen
+                                        Intent start = new Intent(PRegistration.this, PatientForm.class);
                                         Bundle bundle = new Bundle();
-                                        bundle.putString("ID", id);
+                                        bundle.putString("PID", id_no);
+                                        bundle.putString("EMAIL", email);
                                         start.putExtras(bundle);
                                         startActivity(start);
-
-
-                                    }// endif
-                                    else {
-                                        Toast.makeText(PRegistration.this, "Registration Unsuccessful, Try Again", Toast.LENGTH_LONG).show(); //unsuccessful registration message
+                                        finish();
 
                                     }
-                                }// endof onComplete
-                            });
-                        } else {
-                            Toast.makeText(PRegistration.this, "Registration Unsuccessful, Try Again", Toast.LENGTH_LONG).show();
+                                    else{
+                                        Toast.makeText(PRegistration.this, "Patient Registration Unsuccessful, Try Again", Toast.LENGTH_LONG).show();
+                                        Log.d("PATIENT", task.getException().getMessage());
 
-                        }//else
+                                    }
+                                }
+                            });
+
+                        }
+                        else{
+                            Toast.makeText(PRegistration.this, "Patient Registration Unsuccessful, Try Again", Toast.LENGTH_LONG).show();
+                            Log.d("PATIENT", task.getException().getMessage());
+                        }
                     }
                 });
     }
-    }
+
+
+
 }
