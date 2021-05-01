@@ -39,13 +39,37 @@ allprojects {
     }
 }
 
-task codeCoverageReport(type: JacocoReport) {
-    executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
+task codeCoverageReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'connectedDebugCoverageReport']) {
+
+    group = "Reporting"
+    description = "Generate Jacoco coverage report for the jacoco build"
 
     reports {
         xml.enabled true
         xml.destination file("build/reports/jacoco/report.xml")
-        html.enabled false
+        html.enabled true
+        html.destination file("build/reports/jacoco/report.html")
         csv.enabled false
     }
+
+    def fileFilter = ['**/R.class',
+                      '**/R$*.class',
+                      '**/BuildConfig.*',
+                      '**/Manifest*.*',
+                      '**/*Test*.*',
+                      'android/**/*.*',
+                      '**/data/models/*']
+
+    //java compiled classes
+    def javaTree = fileTree(dir:  "${buildDir}/intermediates/classes/debug", excludes: fileFilter)
+//kotlin compiled classes
+    def kotlinTree = fileTree(dir: "${buildDir}/tmp/kotlin-classes/debug", excludes: fileFilter)
+    def mainSrc = "${project.projectDir}/src/main/java"
+
+    sourceDirectories.from ([mainSrc])
+    classDirectories.from {[javaTree,kotlinTree]}
+    executionData.from fileTree(dir: "$buildDir", includes: [
+            "jacoco/testDebugUnitTest.exec",
+            "outputs/code-coverage/connected/*coverage.ec"
+    ])
 }
