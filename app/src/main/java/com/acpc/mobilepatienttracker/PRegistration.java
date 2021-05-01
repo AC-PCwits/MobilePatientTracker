@@ -28,6 +28,11 @@ public class PRegistration extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_p_registration);
+
+        //privacy policy code which opens up the policy immediately and users are forced to accept in order to continue
+        Intent intent = new Intent(PRegistration.this, PrivacyPolicy.class);
+        startActivity(intent);
+
         mAuth = FirebaseAuth.getInstance();
         inname= findViewById(R.id.inname);
         inemail= findViewById(R.id.inemail);

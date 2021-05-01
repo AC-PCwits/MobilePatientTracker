@@ -529,7 +529,27 @@ class Bookings {
     }
 }
 
+class Consultation{
+    public String pcase;
+    public String psymptoms;
+    public String pdiagnosis;
+    public String pdate;
+    public String ppatientID;
+    public String pdoctorID;
 
+    public Consultation(String pcase,String psymptoms, String pdiagnosis, String pdate, String ppatientID,String pdoctorID){
+       this.pcase=pcase;
+        this.psymptoms=psymptoms;
+        this.pdiagnosis=pdiagnosis;
+        this.pdate=pdate;
+        this.ppatientID=ppatientID;
+        this.pdoctorID=pdoctorID;
+    }
+
+    public Consultation (){
+
+    }
+}
 
 
 
