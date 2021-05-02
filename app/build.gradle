@@ -88,8 +88,15 @@ project.afterEvaluate {
         // Create coverage task ex: 'jacocoTestReport<Flavor>' depending on
         // 'testFlavorDebugUnitTest - unit tests' & connectedFlavorDebugAndroidTest - integration tests.
         task "jacocoTestReport${productFlavorName.capitalize()}"(type: JacocoReport, dependsOn: [unitTestsTaskName, uiTestsTaskName]) {
-            group = "Reporting$pathNameWithFlavor"
+            group = "Reporting$project.buildDir"
             description = "Generate Jacoco coverage reports on the ${taskNameWithFlavor.capitalize()} build."
+
+            reports {
+                xml.enabled = true
+                xml.destination file("$project.buildDir/reports/jacoco/report.xml")
+                html.enabled = true
+                html.destination file("$project.buildDir/reports/jacoco/report.html")
+            }
 
             classDirectories.from fileTree(
                     dir: "${project.buildDir}/intermediates/app_classes/${pathNameWithFlavor}",
@@ -117,13 +124,6 @@ project.afterEvaluate {
             additionalSourceDirs.from files(coverageSourceDirs)
             sourceDirectories.from files(coverageSourceDirs)
             executionData.from fileTree(dir: project.buildDir, includes: ["**/*.exec", "**/*.ec"])
-
-            reports {
-                xml.enabled = true
-                xml.destination file("build/reports/jacoco/report.xml")
-                html.enabled = true
-                html.destination file("build/reports/jacoco/report.html")
-            }
         }
     }
 }
