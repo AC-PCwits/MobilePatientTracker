@@ -508,6 +508,27 @@ enum PatientField
     ECONTACT_CELLPHONE
 }
 
+class Bookings {
+
+    public String pname;
+    public String bookingdate;
+    public String time;
+    public String id; //need this for linking to patient
+    private String doc_id;
+
+    public Bookings(String pname, String id, String bookingdate, String time, String doc_id){
+        this.pname = pname;
+        this.bookingdate = bookingdate;
+        this.id = id;
+        this.doc_id = doc_id;
+        this.time = time;
+    }
+
+    public Bookings(){
+
+    }
+}
+
 class Consultation{
     public String pcase;
     public String psymptoms;
