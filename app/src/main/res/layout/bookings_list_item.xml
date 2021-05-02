@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:ignore="MissingClass">
 
     <RelativeLayout
@@ -25,7 +26,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ID Number"
+            android:text="Date of Appointment"
             android:textSize="18sp"
             android:layout_below="@id/nameText"
             android:layout_marginStart="8dp"

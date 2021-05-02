@@ -7,7 +7,12 @@
 
     tools:context=".DoctorForm">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/conLay"
         android:layout_height="match_parent"
         android:layout_width="match_parent">
 
@@ -322,7 +327,7 @@
             tools:targetApi="lollipop" />
 
 
-        <CheckBox
+        <!--<CheckBox
             android:id="@+id/policy"
             android:layout_width="200dp"
             android:layout_height="30dp"
@@ -337,7 +342,7 @@
             app:layout_constraintHorizontal_bias="0.137"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Cellnu"
-            tools:targetApi="lollipop" />
+            tools:targetApi="lollipop" />-->
 
         <Button
             android:id="@+id/signUpButtonId"
@@ -352,6 +357,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/policy" />
+            app:layout_constraintTop_toBottomOf="@+id/Cellnu" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/privText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/conLay"/>
+
+    </RelativeLayout>
 </ScrollView>

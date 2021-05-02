@@ -1,11 +1,14 @@
 package com.acpc.mobilepatienttracker;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -105,6 +108,43 @@ public class DRegistration extends AppCompatActivity implements View.OnClickList
             return;
         }
 
+        openDialog(new User(name,email,prac_no), password);
+
+    }
+
+    public void openDialog(final User user, final String password)
+    {
+        WebView webView = new WebView(this);
+        webView.loadUrl("file:///android_asset/Privacy.html");
+        webView.setWebViewClient(new WebViewClient()
+        {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+
+                return true;
+            }
+        });
+
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this);
+        builder.setTitle("Privacy Policy")
+                .setView(webView)
+                .setPositiveButton("Agree", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        uploadUserData(user, password);
+                    }
+                });
+        builder.show();
+    }
+
+    public void uploadUserData(User user, String password)
+    {
+        final String name = user.fname;
+        final String email = user.email;
+        final String prac_no = user.id;
+
         authorization.createUserWithEmailAndPassword(email,password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -148,7 +188,6 @@ public class DRegistration extends AppCompatActivity implements View.OnClickList
                         }
                     }
                 });
-
     }
 
 

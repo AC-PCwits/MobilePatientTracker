@@ -5,10 +5,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.app.DatePickerDialog;
 import android.text.InputFilter;
@@ -46,10 +49,10 @@ public class DoctorForm extends AppCompatActivity {
     private Calendar c;
     private DatePickerDialog dpd;
 
+    private final FirebaseFirestore database = FirebaseFirestore.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        final FirebaseFirestore database = FirebaseFirestore.getInstance();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_form);
@@ -68,7 +71,7 @@ public class DoctorForm extends AppCompatActivity {
         doctorSpec = findViewById(R.id.Doctor_speciality);
         cellNum = findViewById(R.id.Cellnu);
 //        practicingNum = findViewById(R.id.practicingNum);
-        policy = findViewById(R.id.policy);
+//        policy = findViewById(R.id.policy);
 
         first_name.setFilters(new InputFilter[]{new InputFilter.LengthFilter(15)});
         last_name.setFilters(new InputFilter[]{new InputFilter.LengthFilter(15)});
@@ -76,7 +79,6 @@ public class DoctorForm extends AppCompatActivity {
         institution.setFilters(new InputFilter[]{new InputFilter.LengthFilter(15)});
 //        password.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
         id_number.setFilters(new InputFilter[]{new InputFilter.LengthFilter(13)});
-
 
 
 
@@ -164,48 +166,46 @@ public class DoctorForm extends AppCompatActivity {
 //                } else if (password.getText().toString().equals("")) {
 //                    password.setError("Empty password");
 //                    return;
-                } else if (!policy.isChecked()) {
-                    policy.setError("Policy must be accepted");
-
-                    policy.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
-                        @Override
-                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                            if (policy.isChecked()) {
-
-                                Intent intent = new Intent(DoctorForm.this, PrivacyPolicy.class);
-                                startActivity(intent);
-                            }
-
-                        }
-                    });
-
-                    return;
                 }
+//                else if (!policy.isChecked()) {
+//                    policy.setError("Policy must be accepted");
+//
+//                    policy.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//
+//                        @Override
+//                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                            if (policy.isChecked()) {
+//
+//                                Intent intent = new Intent(DoctorForm.this, PrivacyPolicy.class);
+//                                startActivity(intent);
+//                            }
+//
+//                        }
+//                    });
+//
+//                    return;
+//                }
 
                 else{
+                        ////////ADDING A BRAND NEW ENTRY OF DOCTOR INFORMATION ONCE SIGN UP HAS BEEN SELECTED
 
+                        Bundle extras = getIntent().getExtras();
 
-                    ////////ADDING A BRAND NEW ENTRY OF DOCTOR INFORMATION ONCE SIGN UP HAS BEEN SELECTED
+                        final String fname = first_name.getText().toString();
+                        final String lname = last_name.getText().toString();
+                        final String mail = extras.getString("EMAIL");
+                        final String dob = date_of_birth.getText().toString();
+                        final String id = id_number.getText().toString(); /////double check
+                        final String prac_years = length_practice.getText().toString(); /////dpuble check
+                        final int prac_y = Integer.parseInt(prac_years);
+                        final String uni = institution.getText().toString();
+                        final String prac_num = extras.getString("PID");
+                        final String doc_type = doctorSpec.getText().toString();
+                        final String cell = cellNum.getText().toString();
 
-                    Bundle extras = getIntent().getExtras();
+                        final String gen = getSelectedRadioButton(v); //calling function below to find selected button
 
-                    final String fname = first_name.getText().toString();
-                    final String lname = last_name.getText().toString();
-                    final String mail = extras.getString("EMAIL");
-                    final String dob = date_of_birth.getText().toString();
-                    final String id = id_number.getText().toString(); /////double check
-                    final String prac_years = length_practice.getText().toString(); /////dpuble check
-                    final int prac_y = Integer.parseInt(prac_years);
-                    final String uni = institution.getText().toString();
-                    final String prac_num = extras.getString("PID");
-                    final String doc_type = doctorSpec.getText().toString();
-                    final String cell = cellNum.getText().toString();
-
-                    final String gen = getSelectedRadioButton(v); //calling function below to find selected button
-
-                    Doctor doctor = new Doctor(id, fname, lname, dob, gen, mail, prac_y, uni, prac_num, doc_type, cell);
-
+                        Doctor doctor = new Doctor(id, fname, lname, dob, gen, mail, prac_y, uni, prac_num, doc_type, cell);
 
                     // Now we add it to a specified collection (table) in the database with database.collection().add()
                     // This way will give the new document an auto-generated unique ID as the file name. This can be used like a primary key
@@ -249,6 +249,5 @@ public class DoctorForm extends AppCompatActivity {
         return gender;
 
     }
-
 
 }
