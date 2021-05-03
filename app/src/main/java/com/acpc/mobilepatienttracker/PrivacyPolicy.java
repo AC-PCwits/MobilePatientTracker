@@ -4,13 +4,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
-import android.widget.CheckBox;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class PrivacyPolicy extends AppCompatActivity {
 
-    private CheckBox checkBox;
+   // private CheckBox acceptpolicy;
+    private Button accept;
 
 
     WebView web;
@@ -24,6 +24,37 @@ public class PrivacyPolicy extends AppCompatActivity {
         web =(WebView)findViewById(R.id.webView);
         web.loadUrl("file:///android_asset/Privacy.html");
 
+      //  acceptpolicy = findViewById(R.id.chkAcceptPolicy);
+        accept = findViewById(R.id.accept);
+
+        /////working code for privacy policy with accept checkbox //////
+     /*   done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (acceptpolicy.isChecked()==true){
+                   // setContentView(R.layout.activity_doctor_form);
+                    finish();
+
+                }//if
+                else {
+                    acceptpolicy.setError("Policy must be accepted");
+                }//else
+
+            }
+        });*/
+
+        accept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                finish();
+
+            }
+        });
+
+
+        ////////old code////////////////
         /*checkBox = findViewById(R.id.check);
 
 
@@ -43,4 +74,5 @@ public class PrivacyPolicy extends AppCompatActivity {
         });*/
 
     }
+
 }

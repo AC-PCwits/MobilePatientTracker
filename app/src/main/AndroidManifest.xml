@@ -9,18 +9,31 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PUpdateField"></activity>
-        <activity android:name=".DoctorDetails"></activity>
-        <activity android:name=".PendingBookings" />
-        <activity android:name=".DHomePage" />
-        <activity android:name=".PatientBookings" />
-        <activity android:name=".PatientBookingHistory" />
+        <activity android:name=".DBookingDetails"></activity>
+        <activity android:name=".PUpdateField" />
+        <activity
+            android:name=".DoctorDetails"
+            android:label="Doctor Details" />
+        <activity
+            android:name=".PendingBookings"
+            android:label="Pending Bookings" />
+        <activity
+            android:name=".DHomePage"
+            android:label="Doctor Home Page" />
+        <activity
+            android:name=".PatientBookings"
+            android:label="Make a new Booking" />
+        <activity
+            android:name=".PatientConsultationHistory"
+            android:label="Consultation History" />
         <activity android:name=".DoctorConsultForm" />
         <activity android:name=".PrivacyPolicy" />
         <activity
             android:name=".PHomePage"
             android:label="Patient Home Page" />
-        <activity android:name=".PatientDetails" />
+        <activity
+            android:name=".PatientDetails"
+            android:label="Patient Details" />
         <activity android:name=".DoctorForm" />
         <activity
             android:name=".DRegistration"
@@ -37,7 +50,7 @@
             android:label="Welcome to Redbox" />
         <activity
             android:name=".DoctorPatientList"
-            android:label="Doctor Home Page" />
+            android:label="Patient List" />
         <activity android:name=".DPatientDetails" />
         <activity android:name=".SplashActivity">
             <intent-filter>

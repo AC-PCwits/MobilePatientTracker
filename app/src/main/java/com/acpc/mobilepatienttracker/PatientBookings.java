@@ -37,9 +37,9 @@ public class PatientBookings extends AppCompatActivity {
                         return true;
                     case R.id.bookings:
                         return true;
-                    case R.id.booking_history:
+                    case R.id.consultation_history:
                         startActivity(new Intent(getApplicationContext()
-                                , PatientBookingHistory.class));
+                                , PatientConsultationHistory.class));
                         overridePendingTransition(0 , 0);
                         return true;
                 }
