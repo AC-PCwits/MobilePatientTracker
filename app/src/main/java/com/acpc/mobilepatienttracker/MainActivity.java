@@ -549,6 +549,20 @@ class Consultation{
     }
 }
 
+class DType {
+    public String type;
+
+    public DType(String type) {
+
+        this.type = type;
+    }
+
+    public DType() {
+
+    }
+
+}
+
 
 
 

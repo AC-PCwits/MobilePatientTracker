@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:ignore="MissingClass">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="0dp"
+        android:background="@drawable/border_set_patient_list">
+
+        <!-- This is where the Patient name will be -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:textColor="@android:color/black"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:layout_alignParentTop="true"
+            android:id="@+id/nameText"/>
+
+        <!--  <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Date of Appointment"
+              android:textSize="18sp"
+              android:layout_below="@id/nameText"
+              android:layout_marginStart="8dp"
+              android:layout_marginLeft="8dp"
+              android:id="@+id/idText"/> -->
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
