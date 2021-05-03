@@ -1,26 +1,30 @@
-
 {
-    "name": "codecov/codecov-php",
-    "type": "library",
+    "name": "onwwward/laravel-bugherd",
+    "description": "Laravel 5 wrapper for Bugherd API",
     "license": "MIT",
-    "homepage": "https://github.com/codecov/codecov-php",
-    "description": "demo repo",
-    "keywords": ["code coverage", "codecov", "coverage reports"],
+    "keywords": ["laravel", "lumen", "bugherd", "bug tracking"],
     "authors": [
-        {
-            "name": "codecov.io",
-            "email": "hello@codecov.io"
-        }
+      {
+        "name": "Roland Kalocsaven",
+        "email": "roland@onwwward.com"
+      }
     ],
     "require": {
-        "php": ">=5.0.0"
+        "beleneglorion/php-bugherd-api": "^1.0",
+        "illuminate/support": "^5.2"
     },
     "require-dev": {
-        "phpunit/phpunit": "~4.0"
+        "graham-campbell/testbench": "^3.2",
+        "phpunit/phpunit": "^4.8"
     },
     "autoload": {
-        "psr-0": { 
-            "Example": "src/"
-        }
+      "psr-4": {
+        "Onwwward\\Bugherd\\": "src/Onwwward/Bugherd/"
+      }
+    },
+    "autoload-dev": {
+      "psr-4": {
+        "Onwwward\\Bugherd\\Tests\\": "tests/"
+      }
     }
 }
