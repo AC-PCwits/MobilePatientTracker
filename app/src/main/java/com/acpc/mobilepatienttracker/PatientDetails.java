@@ -289,6 +289,7 @@ public class PatientDetails extends AppCompatActivity {
                         save.setEnabled(false);
                         save.setVisibility(View.INVISIBLE);
 
+
                         for (DetailView view : allDetails)
                         {
                             if (view.content.isFocused())
@@ -297,6 +298,7 @@ public class PatientDetails extends AppCompatActivity {
                                 view.content.setBackgroundColor(Color.TRANSPARENT);
                             }
                             view.content.setEnabled(false);
+                            view.originalText = view.content.getText().toString();
                         }
                     }
                     else
