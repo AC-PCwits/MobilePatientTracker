@@ -114,10 +114,10 @@ public class PatientDetails extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View rootView = inflater.inflate(R.layout.activity_d_patient_details, container, false);
+        View rootView = inflater.inflate(R.layout.activity_patient_details, container, false);
         context = getContext();
-      
-        background = rootView.findViewById(R.id.pd_background);
+
+        background = (LinearLayout) rootView.findViewById(R.id.pd_background);
         save = rootView.findViewById(R.id.pd_save);
         info = rootView.findViewById(R.id.pd_header);
         info.setText("Fetching user data...");
@@ -153,8 +153,7 @@ public class PatientDetails extends Fragment {
         allDetails.add(econtact);
         allDetails.add(econtactno);
 
-        for (DetailView view : allDetails)
-        {
+        for (DetailView view : allDetails) {
             background.addView(view);
         }
 
@@ -164,10 +163,8 @@ public class PatientDetails extends Fragment {
             @Override
             public void onClick(View v) {
 
-                for (DetailView view : allDetails)
-                {
-                    if (view.isEditting)
-                    {
+                for (DetailView view : allDetails) {
+                    if (view.isEditting) {
                         UpdateField(activeUser.idno, view.type, view.content.getText().toString());
                         view.isEditting = false;
 
@@ -190,7 +187,7 @@ public class PatientDetails extends Fragment {
         return rootView;
     }
 
-    public void GetUserData() {
+    public void getUserData() {
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users");
@@ -232,8 +229,7 @@ public class PatientDetails extends Fragment {
 
                                             activeUser = patient;
 
-                                            for (DetailView view : allDetails)
-                                            {
+                                            for (DetailView view : allDetails) {
                                                 view.edit.setVisibility(View.VISIBLE);
                                                 view.originalText = view.content.getText().toString();
                                             }
@@ -253,83 +249,73 @@ public class PatientDetails extends Fragment {
         });
     }
 
-    public void UpdateField(final String IDnumber, PatientField field, final Object newValue)
-    {
+    public void UpdateField(final String IDnumber, PatientField field, final Object newValue) {
         final String fieldName = Patient.GetFieldName(field);
 
         database.collection("patient-data")
                 .whereEqualTo("idno", IDnumber)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful())
-                {
-                    String documentID = "";
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        documentID = document.getId();
-                    }
-                    final String finalDocumentID = documentID;
-
-                    if (documentID != "")
-                    {
-                        DocumentReference patient  = database.collection("patient-data").document(documentID);
-
-                        for (DetailView view : allDetails)
-                        {
-                            if (view.content.getText().toString() != activeUser.GetFieldValue(view.type))
-
-                            patient.update(fieldName, newValue)
-
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            Log.d("PD", "SUCCESS: Updated field: " + fieldName + " for document ID: " + finalDocumentID);
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            // failed to update the given field for some reason
-                                            Log.w("PD", "ERROR: Could not update field: " + fieldName + "for document ID: " + finalDocumentID + ": ", e);
-                                            Toast.makeText(PatientDetails.this, "Could not save: failed to update details", Toast.LENGTH_LONG).show();
-                                        }
-                                    });
-                        }
-
-                        Toast.makeText(PatientDetails.this, "Successfully saved details :)", Toast.LENGTH_LONG).show();
-                        save.setEnabled(false);
-                        save.setVisibility(View.INVISIBLE);
-
-
-                        for (DetailView view : allDetails)
-                        {
-                            if (view.content.isFocused())
-                            {
-                                view.content.clearFocus();
-                                view.content.setBackgroundColor(Color.TRANSPARENT);
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            String documentID = "";
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                documentID = document.getId();
                             }
-                            view.content.setEnabled(false);
-                            view.originalText = view.content.getText().toString();
+                            final String finalDocumentID = documentID;
+
+                            if (documentID != "") {
+                                DocumentReference patient = database.collection("patient-data").document(documentID);
+
+                                for (DetailView view : allDetails) {
+                                    if (view.content.getText().toString() != activeUser.GetFieldValue(view.type))
+
+                                        patient.update(fieldName, newValue)
+
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Log.d("PD", "SUCCESS: Updated field: " + fieldName + " for document ID: " + finalDocumentID);
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        // failed to update the given field for some reason
+                                                        Log.w("PD", "ERROR: Could not update field: " + fieldName + "for document ID: " + finalDocumentID + ": ", e);
+                                                        Toast.makeText(getContext(), "Could not save: failed to update details", Toast.LENGTH_LONG).show();
+                                                    }
+                                                });
+                                }
+
+                                Toast.makeText(getContext(), "Successfully saved details :)", Toast.LENGTH_LONG).show();
+                                save.setEnabled(false);
+                                save.setVisibility(View.INVISIBLE);
+
+
+                                for (DetailView view : allDetails) {
+                                    if (view.content.isFocused()) {
+                                        view.content.clearFocus();
+                                        view.content.setBackgroundColor(Color.TRANSPARENT);
+                                    }
+                                    view.content.setEnabled(false);
+                                    view.originalText = view.content.getText().toString();
+                                }
+                            } else {
+                                // do document was found with the given field
+                                Log.w("PD", "QUERY ERROR: No document found with ID number: " + IDnumber);
+                                Toast.makeText(getContext(), "Could not save: document not found with that ID number???", Toast.LENGTH_LONG).show();
+                            }
+
+
+                        } else {
+                            // query did not complete
+                            Log.w("PD", "QUERY ERROR: query did not complete: " + task.getException().getMessage());
+                            Toast.makeText(getContext(), "Could not save: query do not complete", Toast.LENGTH_LONG).show();
                         }
                     }
-                    else
-                    {
-                        // do document was found with the given field
-                        Log.w("PD", "QUERY ERROR: No document found with ID number: " + IDnumber);
-                        Toast.makeText(PatientDetails.this, "Could not save: document not found with that ID number???", Toast.LENGTH_LONG).show();
-                    }
-
-
-                }
-                else
-                {
-                    // query did not complete
-                    Log.w("PD", "QUERY ERROR: query did not complete: " + task.getException().getMessage());
-                    Toast.makeText(PatientDetails.this, "Could not save: query do not complete", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
+                });
     }
 
     private class DetailView extends LinearLayout {
@@ -356,10 +342,10 @@ public class PatientDetails extends Fragment {
             this.addView(content);
             this.addView(edit);
 
-            info.setTextSize(24);
+            info.setTextSize(16);
             info.setGravity(Gravity.CENTER);
 
-            content.setTextSize(24);
+            content.setTextSize(20);
             content.setTextColor(Color.parseColor("#565c5c"));
             final Drawable originalContentBackground = content.getBackground();
             content.setBackgroundColor(Color.TRANSPARENT);

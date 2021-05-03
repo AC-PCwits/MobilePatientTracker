@@ -38,7 +38,7 @@ public class PatientFragActivity extends AppCompatActivity {
         adapter.addFrag(new PHomePage(), "Home");
         adapter.addFrag(new PatientDetails(), "Details");
         adapter.addFrag(new PatientBookings(), "Bookings");
-        adapter.addFrag(new PatientBookingHistory(), "History");
+        adapter.addFrag(new PatientConsultationHistory(), "History");
         viewPager.setAdapter(adapter);
     }
 }

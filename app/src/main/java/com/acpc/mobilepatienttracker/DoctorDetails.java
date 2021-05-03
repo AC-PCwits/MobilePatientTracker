@@ -26,17 +26,6 @@ import java.util.ArrayList;
 
 public class DoctorDetails extends Fragment {
 
-    private String name;
-    private String id;
-    private String cellno;
-    private String dob;
-    private String gender;
-    private String email;
-    private String prac_length;
-    private String prac_num;
-    private String uni;
-    private String spec;
-
     private TextView nameText;
     private TextView idText;
     private TextView dobText;
@@ -108,46 +97,12 @@ public class DoctorDetails extends Fragment {
         uniText = (TextView)rootView.findViewById(R.id.uniText);
         specText = (TextView)rootView.findViewById(R.id.specText);
 
-        getDocDet(rootView);
-
-//        BottomNavigationView bottomNavigationView = findViewById(R.id.d_nav_bar);
-//
-//        bottomNavigationView.setSelectedItemId(R.id.d_details);
-//
-//        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//
-//                switch (item.getItemId()){
-//
-//                    case R.id.d_home:
-//                        startActivity(new Intent(getApplicationContext()
-//                                ,DHomePage.class));
-//                        overridePendingTransition(0 , 0);
-//                        return true;
-//                    case R.id.d_details:
-//                        return true;
-//                    case R.id.patient_list:
-//                        startActivity(new Intent(getApplicationContext()
-//                                ,DoctorPatientList.class));
-//                        overridePendingTransition(0 , 0);
-//                        return true;
-//                    case R.id.pending_bookings:
-//                        startActivity(new Intent(getApplicationContext()
-//                                ,PendingBookings.class));
-//                        overridePendingTransition(0 , 0);
-//                        return true;
-//
-//                }
-//
-//                return false;
-//            }
-//        });
+        getDocDet();
 
         return rootView;
     }
 
-    public void getDocDet(final View rootView)
+    public void getDocDet()
     {
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 

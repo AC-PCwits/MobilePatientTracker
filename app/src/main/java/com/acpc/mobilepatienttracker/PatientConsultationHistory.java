@@ -1,19 +1,13 @@
 package com.acpc.mobilepatienttracker;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-public class PatientBookingHistory extends Fragment {
+public class PatientConsultationHistory extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +18,7 @@ public class PatientBookingHistory extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public PatientBookingHistory() {
+    public PatientConsultationHistory() {
         // Required empty public constructor
     }
 
@@ -37,8 +31,8 @@ public class PatientBookingHistory extends Fragment {
      * @return A new instance of fragment ChildFragment1.
      */
     // TODO: Rename and change types and number of parameters
-    public static PatientBookingHistory newInstance(String param1, String param2) {
-        PatientBookingHistory fragment = new PatientBookingHistory();
+    public static PatientConsultationHistory newInstance(String param1, String param2) {
+        PatientConsultationHistory fragment = new PatientConsultationHistory();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -60,7 +54,7 @@ public class PatientBookingHistory extends Fragment {
         super.onCreate(savedInstanceState);
 
         super.onCreateView(inflater, container, savedInstanceState);
-        View rootView = inflater.inflate(R.layout.activity_patient_booking_history, container, false);
+        View rootView = inflater.inflate(R.layout.activity_patient_consultation_history, container, false);
 
         return rootView;
 

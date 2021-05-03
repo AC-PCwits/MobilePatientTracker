@@ -536,67 +536,6 @@ class Consultation{
     public String pdoctorID;
 
     public Consultation(String pcase,String psymptoms, String pdiagnosis, String pdate, String ppatientID,String pdoctorID){
-        this.pcase=pcase;
-        this.psymptoms=psymptoms;
-        this.pdiagnosis=pdiagnosis;
-        this.pdate=pdate;
-        this.ppatientID=ppatientID;
-        this.pdoctorID=pdoctorID;
-    }
-
-    public Consultation (){
-
-    }
-}
-
-enum PatientField
-{
-    FIRST_NAME,
-    LAST_NAME,
-    ID,
-    CELLPHONE,
-    NATIONALITY,
-    GENDER,
-    RACE,
-    ADDRESS,
-    MARITAL_STATUS,
-    ILLNESSES,
-    ALLERGIES,
-    MEDICAL_AID,
-    ECONTACT_NAME,
-    ECONTACT_CELLPHONE
-}
-
-class Bookings {
-
-    public String pname;
-    public String bookingdate;
-    public String time;
-    public String id; //need this for linking to patient
-    private String doc_id;
-
-    public Bookings(String pname, String id, String bookingdate, String time, String doc_id){
-        this.pname = pname;
-        this.bookingdate = bookingdate;
-        this.id = id;
-        this.doc_id = doc_id;
-        this.time = time;
-    }
-
-    public Bookings(){
-
-    }
-}
-
-class Consultation{
-    public String pcase;
-    public String psymptoms;
-    public String pdiagnosis;
-    public String pdate;
-    public String ppatientID;
-    public String pdoctorID;
-
-    public Consultation(String pcase,String psymptoms, String pdiagnosis, String pdate, String ppatientID,String pdoctorID){
        this.pcase=pcase;
         this.psymptoms=psymptoms;
         this.pdiagnosis=pdiagnosis;
