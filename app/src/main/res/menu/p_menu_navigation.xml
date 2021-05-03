@@ -18,8 +18,8 @@
         android:icon="@drawable/ic_baseline_add_box_24"/>
 
     <item
-        android:id="@+id/booking_history"
-        android:title="Booking History"
+        android:id="@+id/consultation_history"
+        android:title="Consultation History"
         android:icon="@drawable/ic_baseline_history_24"/>
 
 </menu>

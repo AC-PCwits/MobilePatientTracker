@@ -192,4 +192,3 @@ public class DRegistration extends AppCompatActivity implements View.OnClickList
 
 
 }
-

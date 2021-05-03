@@ -7,12 +7,12 @@
     tools:context=".PrivacyPolicy">
 
     <Button
-        android:id="@+id/done"
+        android:id="@+id/accept"
         android:layout_width="72dp"
         android:layout_height="38dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:text="Done"
+        android:text="Accept"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
