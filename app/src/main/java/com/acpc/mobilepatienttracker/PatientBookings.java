@@ -3,6 +3,8 @@ package com.acpc.mobilepatienttracker;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,12 +13,34 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
 
 public class PatientBookings extends Fragment {
+
+    private RecyclerView mRecyclerView; //This variable will contain the recycler view created in the XML layout
+    /*
+    This is the bridge between our data and recycler view. We have to use the PatientListAdapter
+    instead of RecylcerView.Adapter as the class contains custom functions for the Recycler View
+     */
+    private DocTypeAdapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager; //This will allow single items in our list to alligned correctly
+
+    private ArrayList<DType> mDocTypeList;
+
+    private Button logoutBut;
+
+    private FirebaseFirestore database = FirebaseFirestore.getInstance();
+    private DocumentReference noteRef = database.collection("doctor-data").document();
+    private DType dtype = new DType();
+    private TextView testView;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -49,6 +73,7 @@ public class PatientBookings extends Fragment {
         return fragment;
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +81,13 @@ public class PatientBookings extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+      //  testView = (TextView) findViewById(R.id.testView);
+      //  mDocTypeList = new ArrayList<>();
+      //  buildExampleList();
+      //  buildRecyclerView();
+
+
     }
 
     @Override
@@ -64,6 +96,14 @@ public class PatientBookings extends Fragment {
 
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.activity_patient_bookings, container, false);
+
+        testView = (TextView) rootView.findViewById(R.id.testView);
+
+        mDocTypeList = new ArrayList<>();
+       // getDocData();
+        //To populate the list with actual data use the below function:
+        buildExampleList();
+        buildRecyclerView(rootView);
 
         return rootView;
 
@@ -102,4 +142,59 @@ public class PatientBookings extends Fragment {
 //        });
 
     }
+
+    public void buildExampleList()
+    {
+        mDocTypeList.add(new DType("Oncologist"));
+        mDocTypeList.add(new DType("General Surgeon"));
+        mDocTypeList.add(new DType("GP"));
+        mDocTypeList.add(new DType("Neurologist"));
+        mDocTypeList.add(new DType("Pediatrician"));
+        mDocTypeList.add(new DType("Gynaecologist"));
+
+
+
+    }
+
+    //This function creates the recylerview object
+    public void buildRecyclerView(View rootView)
+    {
+        mRecyclerView = rootView.findViewById(R.id.recyclerView);
+        /*
+        This makes sure that the recycler view will not change size no matter how many items are in the list, which
+        also will increase the performance of the app
+        */
+        mRecyclerView.setHasFixedSize(true); /////////////
+        //This sets the layout the user will view
+        mLayoutManager = new LinearLayoutManager(getContext());
+        //This line is where information about the patient will be parsed to create the list
+        mAdapter = new DocTypeAdapter(mDocTypeList);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(mAdapter);
+
+        //This function will allow click events to be referenced to the interface in the adapter class
+        mAdapter.setOnItemClickListener(new DocTypeAdapter.OnItemClickListener(){
+            @Override
+            public void onItemClick(int position)
+            {
+//                changeItem(position, "Clicked");
+                Intent intent = new Intent(getContext(), DocTypeList.class);
+                Bundle bundle = new Bundle();
+
+                //bundle.putString("PATIENT_NAME", mBookingsList.get(position).pname);
+                //bundle.putString("PATIENT_ID", mBookingsList.get(position).id);
+                //bundle.putString("BOOKING_DATE", mBookingsList.get(position).bookingdate);
+                //bundle.putString("BOOKING_TIME", mBookingsList.get(position).time);
+                bundle.putString("DOC_TYPE", mDocTypeList.get(position).type);
+                bundle.putString("DOC_TYPE", mDocTypeList.get(position).type);
+
+
+
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+    }
+
+
 }
