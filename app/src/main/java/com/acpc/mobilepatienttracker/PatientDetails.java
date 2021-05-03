@@ -129,6 +129,13 @@ public class PatientDetails extends AppCompatActivity {
                     if (view.isEditting)
                     {
                         UpdateField(activeUser.idno, view.type, view.content.getText().toString());
+                        view.isEditting = false;
+
+                        view.edit.setImageResource(R.drawable.ic_baseline_edit_24);
+                        view.content.setEnabled(false);
+                        view.content.setBackgroundColor(Color.TRANSPARENT);
+
+                        save.setVisibility(View.INVISIBLE);
                         save.setEnabled(false);
                         break;
                     }
@@ -282,6 +289,7 @@ public class PatientDetails extends AppCompatActivity {
                         save.setEnabled(false);
                         save.setVisibility(View.INVISIBLE);
 
+
                         for (DetailView view : allDetails)
                         {
                             if (view.content.isFocused())
@@ -290,6 +298,7 @@ public class PatientDetails extends AppCompatActivity {
                                 view.content.setBackgroundColor(Color.TRANSPARENT);
                             }
                             view.content.setEnabled(false);
+                            view.originalText = view.content.getText().toString();
                         }
                     }
                     else
