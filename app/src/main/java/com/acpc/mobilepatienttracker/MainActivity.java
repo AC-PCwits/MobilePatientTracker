@@ -563,6 +563,25 @@ class DType {
 
 }
 
+class DInfo{
+    public String fname;
+    public String sname;
+    public String exp;
+    //public String qual;
+
+    public DInfo(String fname, String sname, String exp){
+        this.fname=fname;
+        this.sname=sname;
+        this.exp=exp;
+
+    }
+
+    public DInfo(){
+
+    }
+
+}
+
 
 
 
