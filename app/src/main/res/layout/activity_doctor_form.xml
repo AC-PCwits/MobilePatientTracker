@@ -4,96 +4,101 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:fillViewport="true"
     tools:context=".DoctorForm">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="360dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginLeft="24dp"
-            android:layout_marginTop="16dp"
-
-            android:gravity="center_horizontal|center_vertical"
-            android:paddingLeft="15dp"
-            android:paddingTop="3dp"
-            android:paddingRight="15dp"
-            android:paddingBottom="3dp"
-            android:text="Create New Account"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="#000000"
-            android:textColorHighlight="#000000"
-
-            android:visibility="visible"
-            app:autoSizeTextType="none"
-            app:fontFamily="serif"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="visible" />
-
-        <View
-            android:id="@+id/view"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/conLay"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="match_parent">
 
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView"
-            app:layout_constraintVertical_bias="0.068"
-            tools:ignore="MissingConstraints" />
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="360dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="16dp"
 
-        <EditText
-            android:id="@+id/first_name"
-            android:layout_width="150dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginRight="15dp"
-            android:autofillHints=""
-            android:backgroundTint="@color/cardview_shadow_start_color"
-            android:ems="10"
-            android:hint="First Name"
-            android:inputType="textPersonName"
-            android:textColor="#000000"
-            android:textColorHint="@color/cardview_shadow_start_color"
-            app:layout_constraintEnd_toStartOf="@+id/last_name"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view"
-            tools:targetApi="lollipop" />
+                android:gravity="center_horizontal|center_vertical"
+                android:paddingLeft="15dp"
+                android:paddingTop="3dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="3dp"
+                android:text="Create New Account"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="#000000"
+                android:textColorHighlight="#000000"
 
-        <EditText
-            android:id="@+id/last_name"
-            android:layout_width="150dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginRight="15dp"
-            android:backgroundTint="@color/cardview_shadow_start_color"
-            android:ems="10"
-            android:hint="Last Name"
-            android:importantForAutofill="no"
-            android:inputType="textPersonName"
-            android:textColor="#000000"
-            android:textColorHint="@color/cardview_shadow_start_color"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.542"
-            app:layout_constraintStart_toEndOf="@+id/first_name"
-            app:layout_constraintTop_toBottomOf="@+id/view"
-            tools:targetApi="lollipop" />
+                android:visibility="visible"
+                app:autoSizeTextType="none"
+                app:fontFamily="serif"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible" />
 
-        <!--
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView"
+                app:layout_constraintVertical_bias="0.068"
+                tools:ignore="MissingConstraints" />
+
+            <EditText
+                android:id="@+id/first_name"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginRight="15dp"
+                android:autofillHints=""
+                android:backgroundTint="@color/cardview_shadow_start_color"
+                android:ems="10"
+                android:hint="First Name"
+                android:inputType="textPersonName"
+                android:textColor="#000000"
+                android:textColorHint="@color/cardview_shadow_start_color"
+                app:layout_constraintEnd_toStartOf="@+id/last_name"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view"
+                tools:targetApi="lollipop" />
+
+            <EditText
+                android:id="@+id/last_name"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginRight="15dp"
+                android:backgroundTint="@color/cardview_shadow_start_color"
+                android:ems="10"
+                android:hint="Last Name"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName"
+                android:textColor="#000000"
+                android:textColorHint="@color/cardview_shadow_start_color"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.542"
+                app:layout_constraintStart_toEndOf="@+id/first_name"
+                app:layout_constraintTop_toBottomOf="@+id/view"
+                tools:targetApi="lollipop" />
+
+            <!--
         <EditText
             android:id="@+id/email"
             android:layout_width="330dp"
@@ -116,124 +121,136 @@
             app:layout_constraintTop_toBottomOf="@+id/first_name"
             tools:targetApi="lollipop" />-->
 
-        <RadioGroup
-            android:id="@+id/genderGroup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="65dp"
-            android:layout_marginLeft="65dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="65dp"
-            android:layout_marginRight="65dp"
-            android:orientation="horizontal"
-
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/first_name">
-
-            <RadioButton
-                android:id="@+id/radioMaleButton"
+            <RadioGroup
+                android:id="@+id/genderGroup"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:buttonTint="#B71C1C"
-                android:checked="true"
-                android:text="Male"
-                android:textColor="#000000"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="65dp"
+                android:layout_marginLeft="65dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="65dp"
+                android:layout_marginRight="65dp"
+                android:orientation="horizontal"
 
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/first_name">
+
+                <RadioButton
+                    android:id="@+id/radioMaleButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:buttonTint="#B71C1C"
+                    android:checked="true"
+                    android:text="Male"
+                    android:textColor="#000000"
+
+                    tools:targetApi="lollipop" />
+
+                <RadioButton
+                    android:id="@+id/radioFemaleButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:buttonTint="#B71C1C"
+                    android:text="Female"
+                    android:textColor="#000000"
+                    tools:layout_editor_absoluteX="116dp"
+                    tools:layout_editor_absoluteY="610dp"
+                    tools:targetApi="lollipop" />
+
+                <RadioButton
+                    android:id="@+id/radioOtherButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:buttonTint="#B71C1C"
+                    android:text="Other"
+                    android:textColor="#000000"
+                    tools:targetApi="lollipop" />
+
+            </RadioGroup>
+
+            <EditText
+                android:id="@+id/date_of_birth"
+                android:layout_width="160dp"
+                android:layout_height="43dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="128dp"
+                android:layout_marginRight="128dp"
+                android:backgroundTint="@color/cardview_shadow_start_color"
+                android:editable="false"
+                android:ems="10"
+                android:focusable="false"
+                android:hint="YYYY/MM/DD"
+                android:inputType="none"
+
+                android:textColor="#000000"
+                android:textColorHint="@color/cardview_shadow_start_color"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/genderGroup"
+                tools:targetApi="o" />
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_marginRight="24dp"
+                android:text="Date of Birth"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toRightOf="@+id/date_of_birth"
+                app:layout_constraintTop_toBottomOf="@+id/genderGroup"
+                android:layout_marginTop="32dp"/>
+
+
+            <EditText
+                android:id="@+id/IDnu"
+                android:layout_width="330dp"
+                android:layout_height="43dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginRight="15dp"
+                android:backgroundTint="@color/cardview_shadow_start_color"
+                android:digits="0123456789"
+                android:ems="10"
+                android:hint="Enter ID number"
+                android:importantForAutofill="no"
+                android:textColor="#000000"
+                android:textColorHint="@color/cardview_shadow_start_color"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.019"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/date_of_birth"
                 tools:targetApi="lollipop" />
 
-            <RadioButton
-                android:id="@+id/radioFemaleButton"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:buttonTint="#B71C1C"
-                android:text="Female"
+            <EditText
+                android:id="@+id/LengthOfPractice"
+                android:layout_width="330dp"
+                android:layout_height="47dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="76dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginRight="15dp"
+                android:backgroundTint="@color/cardview_shadow_start_color"
+                android:digits="0123456789"
+                android:ems="10"
+                android:hint="Length of Practice(yrs)"
+                android:importantForAutofill="no"
                 android:textColor="#000000"
-                tools:layout_editor_absoluteX="116dp"
-                tools:layout_editor_absoluteY="610dp"
+                android:textColorHint="@color/cardview_shadow_start_color"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/date_of_birth"
                 tools:targetApi="lollipop" />
 
-            <RadioButton
-                android:id="@+id/radioOtherButton"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:buttonTint="#B71C1C"
-                android:text="Other"
-                android:textColor="#000000"
-                tools:targetApi="lollipop" />
-
-        </RadioGroup>
-
-        <EditText
-            android:id="@+id/date_of_birth"
-            android:layout_width="160dp"
-            android:layout_height="43dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="128dp"
-            android:layout_marginRight="128dp"
-            android:backgroundTint="@color/cardview_shadow_start_color"
-            android:editable="false"
-            android:ems="10"
-            android:focusable="false"
-            android:hint="YYYY/MM/DD"
-            android:inputType="none"
-
-            android:textColor="#000000"
-            android:textColorHint="@color/cardview_shadow_start_color"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/genderGroup"
-            tools:targetApi="o" />
-
-
-        <EditText
-            android:id="@+id/IDnu"
-            android:layout_width="330dp"
-            android:layout_height="43dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginRight="15dp"
-            android:backgroundTint="@color/cardview_shadow_start_color"
-            android:digits="0123456789"
-            android:ems="10"
-            android:hint="Enter ID number"
-            android:importantForAutofill="no"
-            android:textColor="#000000"
-            android:textColorHint="@color/cardview_shadow_start_color"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.019"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/date_of_birth"
-            tools:targetApi="lollipop" />
-
-        <EditText
-            android:id="@+id/LengthOfPractice"
-            android:layout_width="330dp"
-            android:layout_height="47dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="76dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginRight="15dp"
-            android:backgroundTint="@color/cardview_shadow_start_color"
-            android:digits="0123456789"
-            android:ems="10"
-            android:hint="Length of Practice(yrs)"
-            android:importantForAutofill="no"
-            android:textColor="#000000"
-            android:textColorHint="@color/cardview_shadow_start_color"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/date_of_birth"
-            tools:targetApi="lollipop" />
-
-        <!--
+            <!--
                 <EditText
                     android:id="@+id/practicingNum"
                     android:layout_width="162dp"
@@ -256,86 +273,111 @@
                     app:layout_constraintTop_toBottomOf="@id/date_of_birth"
                     tools:targetApi="lollipop" />-->
 
-        <EditText
-            android:id="@+id/Institution"
-            android:layout_width="330dp"
-            android:layout_height="47dp"
+            <EditText
+                android:id="@+id/Institution"
+                android:layout_width="330dp"
+                android:layout_height="47dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="136dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginRight="15dp"
+                android:backgroundTint="@color/cardview_shadow_start_color"
+                android:ems="10"
+                android:hint="Name of Institution Degree obtained"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:textColor="#000000"
+                android:textColorHint="@color/cardview_shadow_start_color"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.019"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/date_of_birth"
+                tools:targetApi="lollipop" />
+
+            <EditText
+                android:id="@+id/Doctor_speciality"
+                android:layout_width="330dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="188dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginRight="15dp"
+                android:backgroundTint="@color/cardview_shadow_start_color"
+                android:ems="10"
+                android:hint="Doctor Speciality"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:textColor="#000000"
+                android:textColorHint="@color/cardview_shadow_start_color"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.176"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/date_of_birth"
+                tools:targetApi="lollipop" />
+
+            <EditText
+                android:id="@+id/Cellnu"
+                android:layout_width="351dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="236dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginRight="15dp"
+                android:backgroundTint="@color/cardview_shadow_start_color"
+                android:digits="0123456789"
+                android:ems="10"
+                android:hint="Enter Cell number"
+                android:importantForAutofill="no"
+                android:textColor="#000000"
+                android:textColorHint="@color/cardview_shadow_start_color"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.866"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/date_of_birth"
+                tools:targetApi="lollipop" />
+
+
+            <!--<CheckBox
+            android:id="@+id/policy"
+            android:layout_width="200dp"
+            android:layout_height="30dp"
             android:layout_marginStart="15dp"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="136dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginRight="15dp"
-            android:backgroundTint="@color/cardview_shadow_start_color"
-            android:ems="10"
-            android:hint="Name of Institution Degree obtained"
-            android:importantForAutofill="no"
-            android:inputType="text"
-            android:textColor="#000000"
-            android:textColorHint="@color/cardview_shadow_start_color"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="145dp"
+            android:layout_marginRight="145dp"
+            android:text="Agree privacy policy"
+            app:buttonTint="#000000"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.019"
+            app:layout_constraintHorizontal_bias="0.137"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/date_of_birth"
-            tools:targetApi="lollipop" />
+            app:layout_constraintTop_toBottomOf="@+id/Cellnu"
+            tools:targetApi="lollipop" />-->
 
-        <EditText
-            android:id="@+id/Doctor_speciality"
-            android:layout_width="330dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="188dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginRight="15dp"
-            android:backgroundTint="@color/cardview_shadow_start_color"
-            android:ems="10"
-            android:hint="Doctor Speciality"
-            android:importantForAutofill="no"
-            android:inputType="text"
-            android:textColor="#000000"
-            android:textColorHint="@color/cardview_shadow_start_color"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.176"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/date_of_birth"
-            tools:targetApi="lollipop" />
+            <Button
+                android:id="@+id/signUpButtonId"
+                android:layout_width="100dp"
+                android:layout_height="38dp"
 
-        <EditText
-            android:id="@+id/Cellnu"
-            android:layout_width="351dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="236dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginRight="15dp"
-            android:backgroundTint="@color/cardview_shadow_start_color"
-            android:digits="0123456789"
-            android:ems="10"
-            android:hint="Enter Cell number"
-            android:importantForAutofill="no"
-            android:textColor="#000000"
-            android:textColorHint="@color/cardview_shadow_start_color"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.866"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/date_of_birth"
-            tools:targetApi="lollipop" />
+                android:layout_marginTop="4dp"
 
+                android:background="@color/gradStart"
+                android:text="SignUp"
+                android:textColor="#FFFFFF"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Cellnu" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <Button
-            android:id="@+id/signUpButtonId"
-            android:layout_width="100dp"
-            android:layout_height="38dp"
+    <TextView
+        android:id="@+id/privText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/conLay"/>
 
-            android:layout_marginTop="12dp"
-            android:background="@color/gradStart"
-            android:text="SignUp"
-            android:textColor="#FFFFFF"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Cellnu" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
 </ScrollView>

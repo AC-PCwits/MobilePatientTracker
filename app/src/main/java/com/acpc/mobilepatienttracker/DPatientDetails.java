@@ -38,6 +38,8 @@ public class DPatientDetails extends AppCompatActivity {
     private TextView medaidText;
     private TextView allergiesText;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {

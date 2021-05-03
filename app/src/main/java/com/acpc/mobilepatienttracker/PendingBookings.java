@@ -2,34 +2,27 @@ package com.acpc.mobilepatienttracker;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-public class PendingBookings extends AppCompatActivity {
+public class PendingBookings extends Fragment {
+
     private RecyclerView mRecyclerView; //This variable will contain the recycler view created in the XML layout
     /*
     This is the bridge between our data and recycler view. We have to use the PatientListAdapter
@@ -41,9 +34,9 @@ public class PendingBookings extends AppCompatActivity {
     private ArrayList<Bookings> mBookingsList;
 
 
-  //  DatabaseReference mRef; // requestRef, bookingRef;
-  //  private FirebaseAuth mAuth; //using Realtime db
-  //  FirebaseUser mUser;
+    //  DatabaseReference mRef; // requestRef, bookingRef;
+    //  private FirebaseAuth mAuth; //using Realtime db
+    //  FirebaseUser mUser;
 
     private FirebaseFirestore database = FirebaseFirestore.getInstance();
 
@@ -51,175 +44,71 @@ public class PendingBookings extends AppCompatActivity {
     private Bookings booking = new Bookings();
     private TextView testView;
 
+
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
+
+    public PendingBookings() {
+        // Required empty public constructor
+    }
+
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment ChildFragment1.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static PendingBookings newInstance(String param1, String param2) {
+        PendingBookings fragment = new PendingBookings();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pending_bookings);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+    }
 
-        testView = (TextView) findViewById(R.id.testView);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        View rootView = inflater.inflate(R.layout.activity_pending_bookings, container, false);
 
-       // mAuth = FirebaseAuth.getInstance();
-       // mUser = mAuth.getCurrentUser();
-       // mRef = FirebaseDatabase.getInstance().getReference().child("Bookings");
+        testView = (TextView) rootView.findViewById(R.id.testView);
+
+        // mAuth = FirebaseAuth.getInstance();
+        // mUser = mAuth.getCurrentUser();
+        // mRef = FirebaseDatabase.getInstance().getReference().child("Bookings");
 
         mBookingsList = new ArrayList<>();
-       // getDocData();
+        // getDocData();
         buildExampleList();
 
 
         //To populate the list with actual data use the below function:
         //buildPatientList()
 //        buildExampleList();
-        buildRecyclerView();
+        buildRecyclerView(rootView);
 
-
-
-        BottomNavigationView bottomNavigationView = findViewById(R.id.d_nav_bar);
-
-        bottomNavigationView.setSelectedItemId(R.id.pending_bookings);
-
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                switch (item.getItemId()){
-
-                    case R.id.d_home:
-                        startActivity(new Intent(getApplicationContext()
-                                ,DHomePage.class));
-                        overridePendingTransition(0 , 0);
-                        return true;
-                    case R.id.d_details:
-                        startActivity(new Intent(getApplicationContext()
-                                ,DoctorDetails.class));
-                        overridePendingTransition(0 , 0);
-                        return true;
-                    case R.id.patient_list:
-                        startActivity(new Intent(getApplicationContext()
-                                ,DoctorPatientList.class));
-                        overridePendingTransition(0 , 0);
-                        return true;
-                    case R.id.pending_bookings:
-                        return true;
-
-                }
-
-                return false;
-            }
-        });
+        return rootView;
     }
-
-
-
-   /* public void getDocData()
-    {
-        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-
-//        final String[] str = {""};
-//
-//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Doctors");
-//        reference.addValueEventListener(new ValueEventListener() {
-//
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                for(DataSnapshot dataSnapshot : snapshot.getChildren())
-//                {
-//                    if(dataSnapshot.child("email").getValue().toString().equalsIgnoreCase(user.getEmail()))
-//                    {
-////                            str[0] = dataSnapshot.child("IDnum").getValue().toString();
-//                        testView.setText(dataSnapshot.child("IDnum").getValue().toString());
-//                    }
-//                }
-//
-//            }
-//
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-
-        database.collection("doctor-data").whereEqualTo("email", user.getEmail())
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful())
-                {
-                    ArrayList<Doctor> doctor1 = new ArrayList<>();
-
-                    for(QueryDocumentSnapshot doc : task.getResult())
-                    {
-                        doctor1.add(doc.toObject(Doctor.class));
-                    }
-
-                    String s = "";
-
-                    for(Doctor doctor2 : doctor1)
-                    {
-                        if(doctor2.email.equals(user.getEmail()))
-                        {
-                            doc = doctor2;
-                        }
-
-                    }
-
-                    if(doc.patient_ID == null)
-                    { return;}
-                    else
-                    {
-                        buildPatientList(doc.patient_ID);
-                    }
-                }
-            }
-        });
-    } */
-
-    //This function will populate the patient list from the database
-  /*  public void buildPatientList(final ArrayList<String> pIDs)
-    {
-        database.collection("patient-data")
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful())
-                {
-                    ArrayList<Patient> patients = new ArrayList<>();
-
-                    for(QueryDocumentSnapshot doc : task.getResult())
-                    {
-                        patients.add(doc.toObject(Patient.class));
-                    }
-
-                    String s = "";
-
-                    for(Patient patient : patients)
-                    {
-//                        s = s + patient.fname + " " + patient.fsurname + " : " + patient.idno + "\n";
-                        for(String pID : pIDs)
-                        {
-                            if(pID.equals(patient.idno))
-                            {
-                                mPatientList.add(patient);
-                                s = s + patient.fname + " " + patient.fsurname + " : " + patient.idno + "\n";
-                            }
-                        }
-                    }
-//
-                    testView.setText(s);
-////                    testView.setText("Successful but list was empty");
-
-
-                }
-                else
-                {
-                    testView.setText("Error: could not get documents from query");
-                }
-            }
-        });
-    }*/
 
     public void buildExampleList()
     {
@@ -232,17 +121,16 @@ public class PendingBookings extends AppCompatActivity {
 
     }
 
-    //This function creates the recylerview object
-    public void buildRecyclerView()
+    public void buildRecyclerView(View rootView)
     {
-        mRecyclerView = findViewById(R.id.recyclerView);
+        mRecyclerView = rootView.findViewById(R.id.recyclerView);
         /*
         This makes sure that the recycler view will not change size no matter how many items are in the list, which
         also will increase the performance of the app
         */
         mRecyclerView.setHasFixedSize(true);
         //This sets the layout the user will view
-        mLayoutManager = new LinearLayoutManager(this);
+        mLayoutManager = new LinearLayoutManager(getContext());
         //This line is where information about the patient will be parsed to create the list
         mAdapter = new BookingsAdapter(mBookingsList);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -254,13 +142,13 @@ public class PendingBookings extends AppCompatActivity {
             public void onItemClick(int position)
             {
 //                changeItem(position, "Clicked");
-                Intent intent = new Intent(PendingBookings.this, DBookingDetails.class);
+                Intent intent = new Intent(getContext(), DBookingDetails.class);
                 Bundle bundle = new Bundle();
 
-               bundle.putString("PATIENT_NAME", mBookingsList.get(position).pname);
-               bundle.putString("PATIENT_ID", mBookingsList.get(position).id);
-               bundle.putString("BOOKING_DATE", mBookingsList.get(position).bookingdate);
-               bundle.putString("BOOKING_TIME", mBookingsList.get(position).time);
+                bundle.putString("PATIENT_NAME", mBookingsList.get(position).pname);
+                bundle.putString("PATIENT_ID", mBookingsList.get(position).id);
+                bundle.putString("BOOKING_DATE", mBookingsList.get(position).bookingdate);
+                bundle.putString("BOOKING_TIME", mBookingsList.get(position).time);
 
 
                 intent.putExtras(bundle);
@@ -268,6 +156,4 @@ public class PendingBookings extends AppCompatActivity {
             }
         });
     }
-
-
 }

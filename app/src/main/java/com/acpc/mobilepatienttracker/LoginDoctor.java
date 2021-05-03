@@ -47,7 +47,7 @@ public class LoginDoctor extends AppCompatActivity {
                 FirebaseUser mFirebaseUser = mAuth.getCurrentUser();
                 if( mFirebaseUser != null) {
                     Toast.makeText(LoginDoctor.this, "You are logged in.",Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(LoginDoctor.this, DoctorPatientList.class);
+                    Intent i = new Intent(LoginDoctor.this, DoctorFragActivity.class);
                     startActivity(i);
                     finish();
                 }
@@ -83,7 +83,7 @@ public class LoginDoctor extends AppCompatActivity {
                                 Toast.makeText(LoginDoctor.this, "Login error, Please try again",Toast.LENGTH_SHORT).show();
                             }
                             else{
-                                Intent intent = new Intent(LoginDoctor.this , DHomePage.class);
+                                Intent intent = new Intent(LoginDoctor.this , DoctorFragActivity.class);
                                 startActivity(intent);
                                 finish();
                             }

@@ -1,24 +1,26 @@
 package com.acpc.mobilepatienttracker;
 
 import android.content.Intent;
-import android.view.MenuItem;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.text.InputType;
-import android.util.Log;
-import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import android.widget.Toast;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.text.InputType;
+import android.util.Log;
+import android.view.Gravity;
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -40,7 +42,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-public class PatientDetails extends AppCompatActivity {
+public class PatientDetails extends Fragment {
 
     private LinearLayout background;
     private TextView info;
@@ -69,17 +71,55 @@ public class PatientDetails extends AppCompatActivity {
 
     private Patient activeUser;
 
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
+
+    public PatientDetails() {
+        // Required empty public constructor
+    }
+
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment ChildFragment1.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static PatientDetails newInstance(String param1, String param2) {
+        PatientDetails fragment = new PatientDetails();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_patient_details);
-        context = getApplicationContext();
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+    }
 
-
-        //Instantiation of View Components
-        background = findViewById(R.id.pd_background);
-        save = findViewById(R.id.pd_save);
-        info = findViewById(R.id.pd_header);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        View rootView = inflater.inflate(R.layout.activity_d_patient_details, container, false);
+        context = getContext();
+      
+        background = rootView.findViewById(R.id.pd_background);
+        save = rootView.findViewById(R.id.pd_save);
+        info = rootView.findViewById(R.id.pd_header);
         info.setText("Fetching user data...");
 
         firstname = new DetailView(PatientField.FIRST_NAME, context);
@@ -144,38 +184,10 @@ public class PatientDetails extends AppCompatActivity {
             }
         });
 
-        GetUserData();
+        //Patient details are pulled from databse and displayed using this method
+        getUserData();
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav_bar);
-
-        bottomNavigationView.setSelectedItemId(R.id.p_details);
-
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-
-                    case R.id.p_home:
-                        startActivity(new Intent(getApplicationContext()
-                                ,PHomePage.class));
-                        overridePendingTransition(0 , 0);
-                        return true;
-                    case R.id.p_details:
-                        return true;
-                    case R.id.bookings:
-                        startActivity(new Intent(getApplicationContext()
-                                , PatientBookings.class));
-                        overridePendingTransition(0 , 0);
-                        return true;
-                    case R.id.consultation_history:
-                        startActivity(new Intent(getApplicationContext()
-                                , PatientConsultationHistory.class));
-                        overridePendingTransition(0 , 0);
-                        return true;
-                }
-                return false;
-            }
-        });
+        return rootView;
     }
 
     public void GetUserData() {
