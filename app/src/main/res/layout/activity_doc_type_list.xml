@@ -6,21 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".DocTypeList">
 
+    <!-- Recycler view Object, this will allow for the user to scroll through a list of items -->
     <TextView
         android:id="@+id/dt"
-        android:layout_width="318dp"
-        android:layout_height="114dp"
-        android:gravity="center"
-        android:textColor="#000000"
-        android:textSize="24sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.376"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.009" />
-    <!-- Recycler view Object, this will allow for the user to scroll through a list of items -->
+        android:textAlignment="center"
+        android:gravity="center_horizontal"
+        android:textSize="36dp"
+        android:textColor="@android:color/black"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
