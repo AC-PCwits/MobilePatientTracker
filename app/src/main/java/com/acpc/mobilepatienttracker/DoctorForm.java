@@ -197,7 +197,7 @@ public class DoctorForm extends AppCompatActivity {
                         final String dob = date_of_birth.getText().toString();
                         final String id = id_number.getText().toString(); /////double check
                         final String prac_years = length_practice.getText().toString(); /////dpuble check
-                        final int prac_y = Integer.parseInt(prac_years);
+                        //final int prac_y = Integer.parseInt(prac_years);
                         final String uni = institution.getText().toString();
                         final String prac_num = extras.getString("PID");
                         final String doc_type = doctorSpec.getText().toString();
@@ -205,7 +205,7 @@ public class DoctorForm extends AppCompatActivity {
 
                         final String gen = getSelectedRadioButton(v); //calling function below to find selected button
 
-                        Doctor doctor = new Doctor(id, fname, lname, dob, gen, mail, prac_y, uni, prac_num, doc_type, cell);
+                        Doctor doctor = new Doctor(id, fname, lname, dob, gen, mail, prac_years, uni, prac_num, doc_type, cell);
 
                     // Now we add it to a specified collection (table) in the database with database.collection().add()
                     // This way will give the new document an auto-generated unique ID as the file name. This can be used like a primary key
