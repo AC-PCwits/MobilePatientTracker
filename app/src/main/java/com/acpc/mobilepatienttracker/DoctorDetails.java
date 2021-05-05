@@ -318,7 +318,7 @@ public class DoctorDetails extends Fragment {
 
                     background = (LinearLayout) getView().findViewById(R.id.lenp);
                     background.addView(PracLengthText);
-                    PracLengthText.content.setText(doc.p_no);
+                    PracLengthText.content.setText(doc.p_length);
                     PracLengthText.edit.setVisibility(View.VISIBLE);
                     PracLengthText.originalText = PracLengthText.content.getText().toString();
 
