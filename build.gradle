@@ -19,22 +19,10 @@ buildscript {
 }
 
 allprojects {
-
-    apply plugin: 'maven'
     apply plugin: 'jacoco'
 
     repositories {
-        mavenLocal()
-        mavenCentral()
         google()
         jcenter()
-
-        maven{ url "http://repo1.maven.org/maven2/"}
-    }
-
-    gradle.projectsEvaluated {
-        tasks.withType(JavaCompile) {
-            options.compilerArgs << "-Xlint:deprecation"
-        }
     }
 }
