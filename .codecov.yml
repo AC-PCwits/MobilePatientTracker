@@ -11,14 +11,6 @@ coverage:
     patch: yes
     changes: no
 
-parsers:
-  gcov:
-    branch_detection:
-      conditional: yes
-      loop: yes
-      method: yes
-      macro: no
-
 comment:
   layout: "reach,diff,flags,tree"
   behavior: default
