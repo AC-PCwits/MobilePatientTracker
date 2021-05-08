@@ -1,5 +1,9 @@
+group 'org.jacoco'
+version '1.0-SNAPSHOT'
+
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'  // Google Services plugin
+apply plugin: 'jacoco'
 
 android {
     compileSdkVersion 29
@@ -21,21 +25,28 @@ android {
             debuggable true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            testCoverageEnabled.is(true)
+            testCoverageEnabled = (true)
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            testCoverageEnabled.is(true)
+            testCoverageEnabled = (true)
         }
     }
     testOptions {
         animationsDisabled true
 
-        unitTests {
-            includeAndroidResources = true
+        unitTests.all {
+            jacoco{
+                includeNoLocationClasses = true
+            }
         }
+        unitTests.returnDefaultValues = true
     }
+}
+
+repositories {
+    mavenCentral()
 }
 
 dependencies {
@@ -66,82 +77,26 @@ dependencies {
     
 }
 
-task codeCoverageReport(type: JacocoReport, dependsOn: ['testDebugUnitTest']) {
-
-    group = "Reporting"
-    description = "Generate Jacoco coverage report for the jacoco build"
-
-    reports {
-        xml.enabled true
-        xml.destination file("build/reports/jacoco/report.xml")
-        html.enabled true
-        html.destination file("build/reports/jacoco/report.html")
-        csv.enabled false
-    }
-
-    def fileFilter = ['**/R.class',
-                      '**/R$*.class',
-                      '**/BuildConfig.*',
-                      '**/Manifest*.*',
-                      '**/*Test*.*',
-                      'android/**/*.*',
-                      '**/data/models/*']
-
-    //java compiled classes
-    def javaTree = fileTree(dir:  "${buildDir}/intermediates/classes/debug", excludes: fileFilter)
-//kotlin compiled classes
-    def kotlinTree = fileTree(dir: "${buildDir}/tmp/kotlin-classes/debug", excludes: fileFilter)
-    def mainSrc = "${project.projectDir}/src/main/java"
-
-    sourceDirectories.from ("${project.rootDir}/app/src/main/java/com/acpc/mobilepatienttracker")
-    classDirectories.from {[javaTree,kotlinTree]}
-    executionData.from fileTree(dir: "$buildDir", includes: [
-            "jacoco/testDebugUnitTest.exec",
-            "outputs/code-coverage/connected/*coverage.ec"
-    ])
-}
-
 project.afterEvaluate {
-    def flavors = android.productFlavors.collect { flavor -> flavor.name }
 
-    // If there are no flavors defined, add empty flavor.
-    if (!flavors) flavors.add('')
+    task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'connectedDebugAndroidTest']) {
+        group = "Report"
+        description = "Generates a Jacoco HTML and XML report based on JUnit 4 coverage debug"
 
-    def buildType = "Debug"
-    flavors.each { productFlavorName ->
-        def taskNameWithFlavor, pathNameWithFlavor
-        if (!productFlavorName) {
-            //empty flavors
-            taskNameWithFlavor = pathNameWithFlavor = "${buildType}"
-        } else {
-            taskNameWithFlavor = "${productFlavorName}${buildType}"
-            pathNameWithFlavor = "${productFlavorName}/${buildType}"
-        }
-        def unitTestsTaskName = "test${taskNameWithFlavor.capitalize()}UnitTest"
-        def uiTestsTaskName = "connected${taskNameWithFlavor.capitalize()}AndroidTest"
+        def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
+        def debugTree = fileTree(dir: "${project.buildDir}/intermediates/javac/debug/classes", excludes: fileFilter)
 
-        // Create coverage task ex: 'jacocoTestReport<Flavor>' depending on
-        // 'testFlavorDebugUnitTest - unit tests' & connectedFlavorDebugAndroidTest - integration tests.
-        task "jacocoTestReport${productFlavorName.capitalize()}"(type: JacocoReport, dependsOn: [unitTestsTaskName, uiTestsTaskName]) {
-            group = "Reporting$project.rootDir"
-            description = "Generate Jacoco coverage reports on the ${taskNameWithFlavor.capitalize()} build."
+        def coverageSourceDirs = [
+                "${project.projectDir}/src/main/java"
+        ]
+        classDirectories.from(files([debugTree]))
+        additionalSourceDirs.from files(coverageSourceDirs)
+        sourceDirectories.from files(coverageSourceDirs)
+        executionData.from fileTree(dir: project.buildDir, includes: ["**/*.exec", "**/*.ec"])
 
-            reports {
-                xml.enabled = true
-                xml.destination file("$project.buildDir/reports/jacoco/report.xml")
-                html.enabled = true
-                html.destination file("$project.buildDir/reports/jacoco/report.html")
-            }
-
-            classDirectories.from fileTree(
-                    dir: "${project.buildDir}/intermediates/app_classes/${pathNameWithFlavor}",
-                    excludes : ['**/R$*.class', '**/R*.class', '**/R.*.class'])
-            def coverageSourceDirs = [
-                    "src/main/java"
-            ]
-            additionalSourceDirs.from files(coverageSourceDirs)
-            sourceDirectories.from files(coverageSourceDirs)
-            executionData.from fileTree(dir: project.buildDir, includes: ["**/*.exec", "**/*.ec"])
+        reports {
+            xml.enabled = true
+            html.enabled = true
         }
     }
 }
