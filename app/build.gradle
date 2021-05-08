@@ -1,5 +1,9 @@
+group 'org.jacoco'
+version '1.0-SNAPSHOT'
+
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'  // Google Services plugin
+apply plugin: 'jacoco'
 
 android {
     compileSdkVersion 29
@@ -17,12 +21,32 @@ android {
     }
 
     buildTypes {
+        debug{
+            debuggable true
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            testCoverageEnabled = (true)
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            testCoverageEnabled = (true)
         }
     }
+    testOptions {
+        animationsDisabled true
 
+        unitTests.all {
+            jacoco{
+                includeNoLocationClasses = true
+            }
+        }
+        unitTests.returnDefaultValues = true
+    }
+}
+
+repositories {
+    mavenCentral()
 }
 
 dependencies {
@@ -49,5 +73,30 @@ dependencies {
 
     implementation 'androidx.multidex:multidex:2.0.1'
 
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
     
+}
+
+project.afterEvaluate {
+
+    task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'connectedDebugAndroidTest']) {
+        group = "Report"
+        description = "Generates a Jacoco HTML and XML report based on JUnit 4 coverage debug"
+
+        def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
+        def debugTree = fileTree(dir: "${project.buildDir}/intermediates/javac/debug/classes", excludes: fileFilter)
+
+        def coverageSourceDirs = [
+                "${project.projectDir}/src/main/java"
+        ]
+        classDirectories.from(files([debugTree]))
+        additionalSourceDirs.from files(coverageSourceDirs)
+        sourceDirectories.from files(coverageSourceDirs)
+        executionData.from fileTree(dir: project.buildDir, includes: ["**/*.exec", "**/*.ec"])
+
+        reports {
+            xml.enabled = true
+            html.enabled = true
+        }
+    }
 }
