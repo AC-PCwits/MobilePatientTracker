@@ -459,12 +459,12 @@ class Doctor {
     public String email;
     public String cell_no;
     public String p_no; //practicing number,unique to each doctor
-    public int p_length;
+    public String p_length;
     public String uni_name;
     public ArrayList<String> patient_ID;
 
 
-    public Doctor(String ID, String fname, String lname, String dob, String gender, String email, int p_length, String uni_name, String p_no, String doc_type, String cell_no) {
+    public Doctor(String ID, String fname, String lname, String dob, String gender, String email, String p_length, String uni_name, String p_no, String doc_type, String cell_no) {
 
         this.ID = ID;
         this.fname = fname;
@@ -486,6 +486,63 @@ class Doctor {
     public Doctor (){
 
     }
+    public static String GetfieldName(DoctorField field)
+    {
+        switch (field) {
+            case FIRST_NAME:
+                return "fname";
+            case LAST_NAME:
+                return "lname";
+            case ID:
+                return "ID";
+            case DOB_TEXT:
+                return "dob";
+            case GENDER:
+                return "gender";
+            case Email:
+                return "email";
+            case CELL_TEXT:
+                return "cell_no";
+            case PRAC_NUM:
+                return "p_no";
+            case PRAC_LENGTH:
+                return "p_length";
+            case UNI_TEXT:
+                return "uni_name";
+            case SPEC_TEXT:
+                return "doc_type";
+        }
+        return "";
+    }
+
+    public Object GetfieldValue(DoctorField field)
+    {
+        switch (field) {
+            case FIRST_NAME:
+                return this.fname;
+            case LAST_NAME:
+                return this .lname;
+            case ID:
+                return this.ID;
+            case DOB_TEXT:
+                return this.dob;
+            case GENDER:
+                return this.gender;
+            case Email:
+                return this.email;
+            case CELL_TEXT:
+                return this.cell_no;
+            case PRAC_NUM:
+                return this.p_no;
+            case PRAC_LENGTH:
+                return this.p_length;
+            case UNI_TEXT:
+                return this.uni_name;
+            case SPEC_TEXT:
+                return this.doc_type;
+        }
+        return null;
+    }
 }
 
 enum PatientField
@@ -504,6 +561,19 @@ enum PatientField
     MEDICAL_AID,
     ECONTACT_NAME,
     ECONTACT_CELLPHONE
+}
+enum DoctorField{
+    FIRST_NAME,
+    LAST_NAME,
+    ID,
+    DOB_TEXT,
+    GENDER,
+    Email,
+    CELL_TEXT,
+    PRAC_NUM,
+    PRAC_LENGTH,
+    UNI_TEXT,
+    SPEC_TEXT
 }
 
 class Bookings {
