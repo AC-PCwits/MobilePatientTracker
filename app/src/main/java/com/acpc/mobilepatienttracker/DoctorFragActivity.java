@@ -42,4 +42,5 @@ public class DoctorFragActivity extends AppCompatActivity {
         adapter.addFrag(new PendingBookings(), "Bookings");
         viewPager.setAdapter(adapter);
     }
+
 }

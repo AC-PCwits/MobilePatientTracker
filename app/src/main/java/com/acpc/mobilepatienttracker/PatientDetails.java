@@ -184,6 +184,7 @@ public class PatientDetails extends Fragment {
         //Patient details are pulled from databse and displayed using this method
         getUserData();
 
+
         return rootView;
     }
 

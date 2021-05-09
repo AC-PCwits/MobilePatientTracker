@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -62,6 +63,12 @@ public class DBookingDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                Toast.makeText(DBookingDetails.this, "Booking Accepted",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(DBookingDetails.this , DoctorFragActivity.class);
+                startActivity(intent);
+                finish();
+
+
 //must add patient-ID to to doctor's list of patients associated with them
 //patients must receive some sort of booking confirmation ?notification maybe
 
@@ -71,6 +78,12 @@ public class DBookingDetails extends AppCompatActivity {
         reject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Toast.makeText(DBookingDetails.this, "Booking Rejected",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(DBookingDetails.this , DoctorFragActivity.class);
+                startActivity(intent);
+                finish();
+
 
 //patients must receive some sort of notice that booking must be rescheduled ?notification maybe
 

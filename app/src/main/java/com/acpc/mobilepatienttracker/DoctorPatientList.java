@@ -101,6 +101,7 @@ public class DoctorPatientList extends Fragment
 //        buildExampleList();
         buildRecyclerView(rootView);
 
+
         return rootView;
     }
 

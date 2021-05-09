@@ -156,6 +156,7 @@ public class DoctorDetails extends Fragment {
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.activity_doctor_details, container, false);
+
         context = getContext();
 
         save = rootView.findViewById(R.id.dd_save);
@@ -214,6 +215,7 @@ public class DoctorDetails extends Fragment {
         });
 
         getDocDet();
+
 
         return rootView;
     }
@@ -504,4 +506,5 @@ public class DoctorDetails extends Fragment {
                     }
                 });
     }
+
 }

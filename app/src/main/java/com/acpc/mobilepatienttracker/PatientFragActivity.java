@@ -1,6 +1,8 @@
 package com.acpc.mobilepatienttracker;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
@@ -41,4 +43,5 @@ public class PatientFragActivity extends AppCompatActivity {
         adapter.addFrag(new PatientConsultationHistory(), "History");
         viewPager.setAdapter(adapter);
     }
+
 }
