@@ -105,6 +105,7 @@ public class PatientBookings extends Fragment {
         buildExampleList();
         buildRecyclerView(rootView);
 
+
         return rootView;
 
 //        BottomNavigationView bottomNavigationView = findViewById(R.id.d_nav_bar);

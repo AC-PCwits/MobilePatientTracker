@@ -68,6 +68,7 @@ public class DHomePage extends Fragment {
 
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.activity_d_home_page, container, false);
+
         Button log_out = rootView.findViewById(R.id.log_out);
         Button testbutton=rootView.findViewById(R.id.testbutton);
 
@@ -91,6 +92,7 @@ public class DHomePage extends Fragment {
                 startActivity(start);
             }
         });
+
 
         return rootView;
 
