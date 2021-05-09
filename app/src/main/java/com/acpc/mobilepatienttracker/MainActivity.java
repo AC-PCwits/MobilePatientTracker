@@ -582,7 +582,7 @@ class Bookings {
     public String bookingdate;
     public String time;
     public String id; //need this for linking to patient
-    private String doc_id;
+    public String doc_id;
 
     public Bookings(String pname, String id, String bookingdate, String time, String doc_id){
         this.pname = pname;
