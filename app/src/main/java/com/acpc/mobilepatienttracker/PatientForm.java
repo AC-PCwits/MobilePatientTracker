@@ -121,7 +121,7 @@ public class PatientForm extends AppCompatActivity  {
 
                     final String p_name = pname.getText().toString();
                     final String p_surname = psurname.getText().toString();
-                    final String p_id = extras.getString("ID");
+                    final String p_id = extras.getString("PID");
                     final String p_cell = pcell.getText().toString();
                     final String p_Nationality = pNationality.getText().toString();
                     final String p_Address = pAddress.getText().toString();

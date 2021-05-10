@@ -191,7 +191,7 @@ public class PatientDetails extends Fragment {
     public void getUserData() {
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Patient");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
