@@ -23,17 +23,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.128" />
 
-    <Button
-        android:id="@+id/log_out"
-        android:layout_width="wrap_content"
-        android:layout_height="38dp"
-        android:layout_marginTop="48dp"
-        android:background="@color/gradStart"
-        android:text="Log Out"
-        android:textColor="#FFFFFF"
-        android:layout_below="@+id/textView3"
-        android:layout_centerHorizontal="true"/>
-
     <TextView
         android:id="@+id/textView3"
         android:layout_width="match_parent"

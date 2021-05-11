@@ -2,9 +2,14 @@ package com.acpc.mobilepatienttracker;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
@@ -108,6 +113,28 @@ public class DPatientDetails extends AppCompatActivity {
         illText.setText(ill);
         medaidText.setText(medaid);
         allergiesText.setText(allergies);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.log_consult, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        int id = item.getItemId();
+
+        if(id == R.id.action_logout)
+        {
+            Toast.makeText(getApplicationContext(), "New Consult Form Created", Toast.LENGTH_LONG).show();
+            Intent start = new Intent( getApplicationContext(), DoctorConsultForm.class); //moving from main screen to reg screen when clicking register button on main screen
+            startActivity(start);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 
