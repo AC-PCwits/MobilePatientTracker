@@ -69,31 +69,6 @@ public class DHomePage extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.activity_d_home_page, container, false);
 
-        Button log_out = rootView.findViewById(R.id.log_out);
-        Button testbutton=rootView.findViewById(R.id.testbutton);
-
-        log_out.setOnClickListener(new View.OnClickListener() { //what happens when you click the register button
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                Toast.makeText(getContext(), "You have successfully logged out", Toast.LENGTH_LONG).show();
-                Intent start = new Intent( getContext(), DoctorOrPatient.class); //moving from main screen to reg screen when clicking register button on main screen
-                startActivity(start);
-                getActivity().finish();
-
-            }
-        });
-
-        testbutton.setOnClickListener(new View.OnClickListener() { //what happens when you click the register button
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), "You have successfully proceeded", Toast.LENGTH_LONG).show();
-                Intent start = new Intent( getContext(), DoctorConsultForm.class); //moving from main screen to reg screen when clicking register button on main screen
-                startActivity(start);
-            }
-        });
-
-
         return rootView;
 
     }
