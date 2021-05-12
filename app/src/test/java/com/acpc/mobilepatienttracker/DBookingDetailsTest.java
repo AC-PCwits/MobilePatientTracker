@@ -2,6 +2,7 @@ package com.acpc.mobilepatienttracker;
 
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.widget.Button;
 
 import org.junit.Before;
@@ -9,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.Shadows;
 import org.robolectric.annotation.Config;
 
@@ -26,7 +28,17 @@ public class DBookingDetailsTest {
     @Before
     public void setUp() throws Exception
     {
-        activity = Robolectric.setupActivity(DBookingDetails.class);
+        Intent intent = new Intent(RuntimeEnvironment.application, DBookingDetails.class);
+        Bundle bundle = new Bundle();
+
+        bundle.putString("PATIENT_NAME", "Bob");
+        bundle.putString("PATIENT_ID", "1");
+        bundle.putString("BOOKING_DATE", "1");
+        bundle.putString("BOOKING_TIME", "1");
+
+        intent.putExtras(bundle);
+
+        activity = Robolectric.buildActivity(DBookingDetails.class, intent).create().resume().get();
     }
 
     @Test
