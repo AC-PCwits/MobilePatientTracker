@@ -35,7 +35,7 @@ public class DBookingDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_d_booking_details);
 
-        final FirebaseFirestore database = FirebaseFirestore.getInstance();
+//        final FirebaseFirestore database = FirebaseFirestore.getInstance();
 
         nameT = (TextView)findViewById(R.id.name);
         dateT = (TextView)findViewById(R.id.date);
