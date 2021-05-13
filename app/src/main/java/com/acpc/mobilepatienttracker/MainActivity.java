@@ -637,12 +637,14 @@ class DInfo{
     public String fname;
     public String sname;
     public String exp;
+    public String pid;
     //public String qual;
 
-    public DInfo(String fname, String sname, String exp){
+    public DInfo(String fname, String sname, String exp, String pid){
         this.fname=fname;
         this.sname=sname;
         this.exp=exp;
+        this.pid=pid;
 
     }
 
@@ -650,6 +652,28 @@ class DInfo{
 
     }
 
+}
+
+class PendingBooking{
+    public String bookingDate;
+    public String doc_id;
+    public String id;
+    public String pname;
+    public String time;
+
+    public PendingBooking(String bookingDate, String doc_id, String id, String pname, String time)
+    {
+        this.bookingDate = bookingDate;
+        this.doc_id = doc_id;
+        this.id = id;
+        this.pname = pname;
+        this.time = time;
+    }
+
+    public PendingBooking()
+    {
+
+    }
 }
 
 
