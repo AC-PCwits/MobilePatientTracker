@@ -50,15 +50,16 @@ public class PatientDateTimeBooking extends AppCompatActivity {
     private Calendar c;
     private TextView tvTimer1;
     int t1Hour, t1Minute;
-    String f;
+    private String f;
     private TextView name;
-    String s;
+    private String s;
    // private TextView sname;
-    String e;
+    private String e;
     private TextView exp;
-    Button confirm;
-     String patientname;
-     String patientID;
+    private String id;
+    private Button confirm;
+    private String patientname;
+    private String patientID;
     private FirebaseFirestore database = FirebaseFirestore.getInstance();
     //String docID;/////
 ///
@@ -81,7 +82,7 @@ public class PatientDateTimeBooking extends AppCompatActivity {
             f = intent.getExtras().getString("DOCTOR_FNAME");
             s = intent.getExtras().getString("DOCTOR_SNAME");
             e = intent.getExtras().getString("EXPERIENCE");
-
+            id = intent.getExtras().getString("PID");
         }
 
         name.setText(f+" "+s);
@@ -190,9 +191,8 @@ public class PatientDateTimeBooking extends AppCompatActivity {
                     if (dataSnapshot.child("email").getValue().toString().equalsIgnoreCase(user.getEmail())) {
 
                         final String ID = dataSnapshot.child("id").getValue().toString();
-                        final String patName= dataSnapshot.child("fname").getValue().toString();
-
-                        final String docID="6";
+                        final String patName= dataSnapshot.child("fname").getValue().toString() + " "
+                                + dataSnapshot.child("fsurname").getValue().toString();
 
                         // final Bookings b= new Bookings(patName, ID,patDate,patTime,docID);
 
@@ -204,7 +204,7 @@ public class PatientDateTimeBooking extends AppCompatActivity {
 
                                 final String patDate= date.getText().toString();
                                 final String patTime= tvTimer1.getText().toString();
-                                 Bookings b= new Bookings(patName, ID,patDate,patTime,docID);
+                                 Bookings b= new Bookings(patName, ID,patDate,patTime,id);
 
 
                                 //////////////////////////////

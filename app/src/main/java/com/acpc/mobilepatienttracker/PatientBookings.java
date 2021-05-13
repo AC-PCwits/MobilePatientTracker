@@ -16,10 +16,14 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -82,10 +86,10 @@ public class PatientBookings extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-      //  testView = (TextView) findViewById(R.id.testView);
-      //  mDocTypeList = new ArrayList<>();
-      //  buildExampleList();
-      //  buildRecyclerView();
+        //  testView = (TextView) findViewById(R.id.testView);
+        //  mDocTypeList = new ArrayList<>();
+        //  buildExampleList();
+        //  buildRecyclerView();
 
 
     }
@@ -100,48 +104,46 @@ public class PatientBookings extends Fragment {
         testView = (TextView) rootView.findViewById(R.id.testView);
 
         mDocTypeList = new ArrayList<>();
-       // getDocData();
+        // getDocData();
         //To populate the list with actual data use the below function:
-        buildExampleList();
-        buildRecyclerView(rootView);
+//        buildExampleList();
+//        buildRecyclerView(rootView);
+
+        getDocTypes(rootView);
 
 
         return rootView;
+    }
 
-//        BottomNavigationView bottomNavigationView = findViewById(R.id.d_nav_bar);
-//
-//        bottomNavigationView.setSelectedItemId(R.id.d_home);
-//
-//        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//
-//                switch (item.getItemId()){
-//
-//                    case R.id.d_home:
-//                        return true;
-//                    case R.id.d_details:
-//                        startActivity(new Intent(getApplicationContext()
-//                                ,DoctorDetails.class));
-//                        overridePendingTransition(0 , 0);
-//                        return true;
-//                    case R.id.patient_list:
-//                        startActivity(new Intent(getApplicationContext()
-//                                ,DoctorPatientList.class));
-//                        overridePendingTransition(0 , 0);
-//                        return true;
-//                    case R.id.pending_bookings:
-//                        startActivity(new Intent(getApplicationContext()
-//                                ,PendingBookings.class));
-//                        overridePendingTransition(0 , 0);
-//                        return true;
-//
-//                }
-//
-//                return false;
-//            }
-//        });
+    public void getDocTypes(final View view)
+    {
+        database.collection("doctor-data").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task)
+            {
+                if(task.isSuccessful())
+                {
+                    ArrayList<Doctor> doctor = new ArrayList<>();
+                    ArrayList<String> list = new ArrayList<>();
 
+                    for(QueryDocumentSnapshot doc : task.getResult())
+                    {
+                        doctor.add(doc.toObject(Doctor.class));
+                    }
+
+                    for(Doctor doc : doctor)
+                    {
+                        if(!mDocTypeList.contains(doc.doc_type))
+                        {
+                            mDocTypeList.add(new DType(doc.doc_type));
+                        }
+                    }
+
+                    buildRecyclerView(view);
+
+                }
+            }
+        });
     }
 
     public void buildExampleList()
@@ -186,7 +188,6 @@ public class PatientBookings extends Fragment {
                 //bundle.putString("PATIENT_ID", mBookingsList.get(position).id);
                 //bundle.putString("BOOKING_DATE", mBookingsList.get(position).bookingdate);
                 //bundle.putString("BOOKING_TIME", mBookingsList.get(position).time);
-                bundle.putString("DOC_TYPE", mDocTypeList.get(position).type);
                 bundle.putString("DOC_TYPE", mDocTypeList.get(position).type);
 
 
