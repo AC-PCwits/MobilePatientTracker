@@ -191,8 +191,7 @@ public class PatientDateTimeBooking extends AppCompatActivity {
                     if (dataSnapshot.child("email").getValue().toString().equalsIgnoreCase(user.getEmail())) {
 
                         final String ID = dataSnapshot.child("id").getValue().toString();
-                        final String patName= dataSnapshot.child("fname").getValue().toString() + " "
-                                + dataSnapshot.child("fsurname").getValue().toString();
+                        final String patName= dataSnapshot.child("fname").getValue().toString();
 
                         // final Bookings b= new Bookings(patName, ID,patDate,patTime,docID);
 
