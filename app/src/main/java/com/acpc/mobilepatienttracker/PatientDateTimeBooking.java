@@ -1,5 +1,6 @@
 package com.acpc.mobilepatienttracker;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
@@ -16,20 +17,39 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+
+import static android.widget.Toast.LENGTH_LONG;
+import static android.widget.Toast.makeText;
 
 public class PatientDateTimeBooking extends AppCompatActivity {
 
     private DatePickerDialog dpd;
     private TextView date;
     private Calendar c;
-    TextView tvTimer1;
+    private TextView tvTimer1;
     int t1Hour, t1Minute;
-
     String f;
     private TextView name;
     String s;
@@ -37,6 +57,11 @@ public class PatientDateTimeBooking extends AppCompatActivity {
     String e;
     private TextView exp;
     Button confirm;
+     String patientname;
+     String patientID;
+    private FirebaseFirestore database = FirebaseFirestore.getInstance();
+    //String docID;
+
 
 
 
@@ -66,6 +91,8 @@ public class PatientDateTimeBooking extends AppCompatActivity {
         date = findViewById(R.id.date_of_birth);
         tvTimer1 = findViewById(R.id.tv_timer1);
 
+
+
         tvTimer1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,6 +107,8 @@ public class PatientDateTimeBooking extends AppCompatActivity {
 
                                 //Store hour and min in string
                                 String time = t1Hour + ":" + t1Minute;
+
+
 
                                 //initialize 24 hour time format
                                 SimpleDateFormat f24Hours = new SimpleDateFormat(
@@ -115,6 +144,7 @@ public class PatientDateTimeBooking extends AppCompatActivity {
             }
         });
 
+
         date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -145,16 +175,84 @@ public class PatientDateTimeBooking extends AppCompatActivity {
             }
         });
 
-        confirm.setOnClickListener(new View.OnClickListener() {
+
+
+
+
+
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Patient");
+        reference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onClick(View view) {
-                Intent start = new Intent(PatientDateTimeBooking.this, PatientFragActivity.class);
-                Toast.makeText(PatientDateTimeBooking.this, "Your Booking Has Been Confirmed", Toast.LENGTH_LONG).show();
-                startActivity(start);
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    if (dataSnapshot.child("email").getValue().toString().equalsIgnoreCase(user.getEmail())) {
+
+                        final String ID = dataSnapshot.child("id").getValue().toString();
+                        final String patName= dataSnapshot.child("fname").getValue().toString();
+
+                        final String docID="6";
+
+                        // final Bookings b= new Bookings(patName, ID,patDate,patTime,docID);
+
+                        /////////
+                        confirm.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+
+
+                                final String patDate= date.getText().toString();
+                                final String patTime= tvTimer1.getText().toString();
+                                 Bookings b= new Bookings(patName, ID,patDate,patTime,docID);
+
+
+                                //////////////////////////////
+                                database.collection("pending-booking-data") // data gets added to a collection called patient-data
+                                        .add(b)
+                                        // Add a success listener so we can be notified if the operation was successfuly.
+
+                                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                            @Override
+                                            public void onSuccess(DocumentReference documentReference) {
+
+                                                Intent start = new Intent(PatientDateTimeBooking.this, PatientFragActivity.class);
+
+                                                Toast.makeText(PatientDateTimeBooking.this, "Your Booking Has Been Confirmed", Toast.LENGTH_LONG).show();
+                                                startActivity(start);
+
+
+                                            }
+                                        })
+                                        // Add a failure listener so we can be notified if something does wrong
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                // If we are here, the entry could not be added for some reason (e.g no internet connection)
+                                                makeText(PatientDateTimeBooking.this, "Error Try Again", LENGTH_LONG).show();
+                                            }
+                                        });
+
+
+                            }
+                        });
+
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
+    }
+
 
 
 
     }
-}
+
+
+
