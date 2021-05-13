@@ -60,7 +60,7 @@ public class PatientDateTimeBooking extends AppCompatActivity {
      String patientname;
      String patientID;
     private FirebaseFirestore database = FirebaseFirestore.getInstance();
-    //String docID;
+    //String docID;/////
 
 
 
