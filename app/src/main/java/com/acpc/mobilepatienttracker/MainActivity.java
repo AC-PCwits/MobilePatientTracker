@@ -634,15 +634,18 @@ class DType {
 }
 
 class DInfo{
+
     public String fname;
     public String sname;
     public String exp;
+    public String doc_ID;
     //public String qual;
 
-    public DInfo(String fname, String sname, String exp){
+    public DInfo(String fname, String sname, String exp, String doc_ID){
         this.fname=fname;
         this.sname=sname;
         this.exp=exp;
+        this.doc_ID = doc_ID;
 
     }
 

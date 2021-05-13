@@ -68,13 +68,13 @@ public class DocTypeList extends AppCompatActivity {
 
         mdinfoList = new ArrayList<>();
         // getDocData();
-        buildExampleList();
+//        buildExampleList();
 
 
         //To populate the list with actual data use the below function:
         //buildPatientList()
 //        buildExampleList();
-        buildRecyclerView();
+//        buildRecyclerView();
 
         dt=findViewById(R.id.dt);
         Intent intent = getIntent();
@@ -85,17 +85,43 @@ public class DocTypeList extends AppCompatActivity {
         }
 
         dt.setText(t);
+        getDocData(t);
+    }
+
+    public void getDocData(String type)
+    {
+        database.collection("doctor-data").whereEqualTo("doc_type", t).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful())
+                {
+                    ArrayList<Doctor> doctors = new ArrayList<>();
+
+                    for(QueryDocumentSnapshot doc : task.getResult())
+                    {
+                        doctors.add(doc.toObject(Doctor.class));
+                    }
+
+                    for(Doctor doc: doctors)
+                    {
+                        mdinfoList.add(new DInfo(doc.fname, doc.lname, doc.p_length, doc.p_no));
+                    }
+
+                    buildRecyclerView();
+                }
+            }
+        });
     }
 
     ///////////////////
 
     public void buildExampleList()
     {
-        mdinfoList.add(new DInfo("Sally","Parker","12 Years"));
-        mdinfoList.add(new DInfo("Paul","Parker","2 Years"));
-        mdinfoList.add(new DInfo("Alex","Ferguson","27 Years"));
-        mdinfoList.add(new DInfo("Eric","Cantona","7 Years"));
-        mdinfoList.add(new DInfo("Krithi","Pillay","30 Years"));
+        mdinfoList.add(new DInfo("Sally","Parker","12 Years","12"));
+        mdinfoList.add(new DInfo("Paul","Parker","2 Years", "123"));
+        mdinfoList.add(new DInfo("Alex","Ferguson","27 Years", "123"));
+        mdinfoList.add(new DInfo("Eric","Cantona","7 Years", "1234"));
+        mdinfoList.add(new DInfo("Krithi","Pillay","30 Years", "2"));
 
     }
 
@@ -128,6 +154,7 @@ public class DocTypeList extends AppCompatActivity {
                 bundle.putString("DOCTOR_FNAME", mdinfoList.get(position).fname);
                 bundle.putString("DOCTOR_SNAME", mdinfoList.get(position).sname);
                 bundle.putString("EXPERIENCE", mdinfoList.get(position).exp);
+                bundle.putString("PID", mdinfoList.get(position).doc_ID);
 
 
 
