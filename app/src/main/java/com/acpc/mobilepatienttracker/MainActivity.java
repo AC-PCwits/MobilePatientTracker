@@ -652,6 +652,21 @@ class DInfo{
 
 }
 
+class AcceptReject{
+    public Bookings booking;
+    public String accOrRej;
+
+    public AcceptReject(Bookings booking, String accOrRej) {
+        this.booking = booking;
+        this.accOrRej = accOrRej;
+
+    }
+
+    public AcceptReject(){
+
+    }
+}
+
 
 
 
