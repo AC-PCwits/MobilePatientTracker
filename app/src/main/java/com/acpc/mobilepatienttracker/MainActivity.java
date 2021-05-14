@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         logout_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
+//                FirebaseAuth.getInstance().signOut();
                 Intent intent = new Intent(MainActivity.this, LoginPatient.class);
                 startActivity(intent);
             }
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         // These are just instructions on how to use code to code
         // For all Cloud Firestore related stuff, we start of by getting our database (it works off our package name, so no login or authentication is required for now)
 
-        final FirebaseFirestore database = FirebaseFirestore.getInstance();
+//        final FirebaseFirestore database = FirebaseFirestore.getInstance();
 
         // In Cloud Firestore, data is stored in collections. A collection is like a table. 'Collections' are really just folders on the firestore server.
         // Inside a collection there will be multiple documents.
@@ -125,66 +125,66 @@ public class MainActivity extends AppCompatActivity {
         });*/
 
 
-        update.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                logbox.setText("executing...");
-
-                // UPDATING AN ENTRY
-                // The following code tries to find a document called 'patient-1' inside the collection 'patient-data' and sets it ID to 10.
-
-                // Updating works in the same way as adding
-                // The following code updates the ID of the patient with document name 'patient-1' to 10
-
-                // Create a DocumentReference so that we can specify which document we want to update.
-                // Again, 'patient-data' is the collection name, and 'patient-1' is the document name
-                DocumentReference patient_1  = database.collection("patient-data").document("patient-1");
-
-
-                patient_1.update("ID", 10)
-
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Log.d(TAG, "SUCCESS: Updated document.");
-                                logbox.setText("SUCCESS:\nUpdated document.");
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w(TAG, "ERROR:Could not update document: ", e);
-                                logbox.setText("ERROR:\nCould not update document. Here is what went wrong: \n" + e.getMessage());
-                            }
-                        });
-            }
-        });
-
-        remove.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                logbox.setText("executing...");
-
-                // REMOVING AN ENTRY
-                // The following code removes the document named 'patient-2' from the database
-                // Also works in the same way as adding and updating
-
-                database.collection("patient-data").document("patient-2")
-                        .delete()
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Log.d(TAG, "SUCCESS: Deleted document.");
-                                logbox.setText("SUCCESS:\nDeleted document, or document did not exist in the first place.");
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w(TAG, "ERROR: Could not delete document. Here is what went wrong: \n", e);
-                                logbox.setText("ERROR:\nCould not delete document. Here is what went wrong: \n" + e.getMessage());
-                            }
-                        });
-            }
-        });
+//        update.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                logbox.setText("executing...");
+//
+//                // UPDATING AN ENTRY
+//                // The following code tries to find a document called 'patient-1' inside the collection 'patient-data' and sets it ID to 10.
+//
+//                // Updating works in the same way as adding
+//                // The following code updates the ID of the patient with document name 'patient-1' to 10
+//
+//                // Create a DocumentReference so that we can specify which document we want to update.
+//                // Again, 'patient-data' is the collection name, and 'patient-1' is the document name
+//                DocumentReference patient_1  = database.collection("patient-data").document("patient-1");
+//
+//
+//                patient_1.update("ID", 10)
+//
+//                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                            @Override
+//                            public void onSuccess(Void aVoid) {
+//                                Log.d(TAG, "SUCCESS: Updated document.");
+//                                logbox.setText("SUCCESS:\nUpdated document.");
+//                            }
+//                        })
+//                        .addOnFailureListener(new OnFailureListener() {
+//                            @Override
+//                            public void onFailure(@NonNull Exception e) {
+//                                Log.w(TAG, "ERROR:Could not update document: ", e);
+//                                logbox.setText("ERROR:\nCould not update document. Here is what went wrong: \n" + e.getMessage());
+//                            }
+//                        });
+//            }
+//        });
+//
+//        remove.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                logbox.setText("executing...");
+//
+//                // REMOVING AN ENTRY
+//                // The following code removes the document named 'patient-2' from the database
+//                // Also works in the same way as adding and updating
+//
+//                database.collection("patient-data").document("patient-2")
+//                        .delete()
+//                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                            @Override
+//                            public void onSuccess(Void aVoid) {
+//                                Log.d(TAG, "SUCCESS: Deleted document.");
+//                                logbox.setText("SUCCESS:\nDeleted document, or document did not exist in the first place.");
+//                            }
+//                        })
+//                        .addOnFailureListener(new OnFailureListener() {
+//                            @Override
+//                            public void onFailure(@NonNull Exception e) {
+//                                Log.w(TAG, "ERROR: Could not delete document. Here is what went wrong: \n", e);
+//                                logbox.setText("ERROR:\nCould not delete document. Here is what went wrong: \n" + e.getMessage());
+//                            }
+//                        });
+//            }
+//        });
 
      /*   get.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
