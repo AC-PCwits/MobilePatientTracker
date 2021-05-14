@@ -36,7 +36,7 @@ public class DocTypeAdapter extends RecyclerView.Adapter<DocTypeAdapter.DTypeLis
 
         public DTypeListViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
-            DocTypeText = itemView.findViewById(R.id.nameText);
+            DocTypeText = itemView.findViewById(R.id.dateText);
             // bookingDateText = itemView.findViewById(R.id.idText);
 
             //We handle the click on the cards using the itemView variable

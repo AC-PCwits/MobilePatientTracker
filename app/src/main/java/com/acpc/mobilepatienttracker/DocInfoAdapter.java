@@ -36,8 +36,8 @@ public class DocInfoAdapter extends RecyclerView.Adapter<DocInfoAdapter.DInfoLis
 
         public DInfoListViewHolder(@NonNull View itemView, final DocInfoAdapter.OnItemClickListener listener) {
             super(itemView);
-            nameText = itemView.findViewById(R.id.nameText);
-            ExperienceText = itemView.findViewById(R.id.idText);
+            nameText = itemView.findViewById(R.id.dateText);
+            ExperienceText = itemView.findViewById(R.id.statusText);
 
             //We handle the click on the cards using the itemView variable
             itemView.setOnClickListener(new View.OnClickListener() {

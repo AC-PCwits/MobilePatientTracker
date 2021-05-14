@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:ignore="MissingClass">
 
     <RelativeLayout
@@ -12,26 +11,26 @@
         android:layout_margin="0dp"
         android:background="@drawable/border_set_patient_list">
 
-        <!-- This is where the Patient name will be -->
+        <!-- This is where the Appointment date and status will be -->
         <TextView
+            android:id="@+id/dateText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Name"
+            android:layout_alignParentTop="true"
+            android:text="Date"
             android:textColor="@android:color/black"
             android:textSize="26sp"
-            android:textStyle="bold"
-            android:layout_alignParentTop="true"
-            android:id="@+id/dateText"/>
+            android:textStyle="bold" />
 
-        <!--  <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="Date of Appointment"
-              android:textSize="18sp"
-              android:layout_below="@id/nameText"
-              android:layout_marginStart="8dp"
-              android:layout_marginLeft="8dp"
-              android:id="@+id/idText"/> -->
+        <TextView
+            android:id="@+id/statusText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/dateText"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:text="Status"
+            android:textSize="18sp" />
 
     </RelativeLayout>
 

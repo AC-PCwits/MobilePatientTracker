@@ -42,8 +42,8 @@ public class PatientListAdapter extends RecyclerView.Adapter<PatientListAdapter.
         public PatientListViewHolder(@NonNull View itemView, final OnItemClickListener listener)
         {
             super(itemView);
-            nameText = itemView.findViewById(R.id.nameText);
-            idText = itemView.findViewById(R.id.idText);
+            nameText = itemView.findViewById(R.id.dateText);
+            idText = itemView.findViewById(R.id.statusText);
 
             //We handle the click on the cards using the itemView variable
             itemView.setOnClickListener(new View.OnClickListener() {
