@@ -308,8 +308,6 @@ public class PatientDetails extends Fragment {
                                 Log.w("PD", "QUERY ERROR: No document found with ID number: " + IDnumber);
                                 Toast.makeText(getContext(), "Could not save: document not found with that ID number???", Toast.LENGTH_LONG).show();
                             }
-
-
                         } else {
                             // query did not complete
                             Log.w("PD", "QUERY ERROR: query did not complete: " + task.getException().getMessage());
