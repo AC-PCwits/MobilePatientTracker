@@ -115,7 +115,7 @@ public class DoctorPatientList extends Fragment
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
             {
-                String selector = charSequence.toString();
+                String selector = charSequence.toString().toLowerCase();
                 if (selector == "")
                 {
                     RebuildRecyclerView(mPatientList);
