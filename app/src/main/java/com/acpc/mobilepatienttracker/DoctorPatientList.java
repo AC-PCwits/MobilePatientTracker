@@ -278,5 +278,5 @@ public class DoctorPatientList extends Fragment
                 startActivity(intent);
             }
         });
-    }
+    }/////////////
 }

@@ -10,11 +10,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class PatientListAdapter extends RecyclerView.Adapter<PatientListAdapter.PatientListViewHolder>{
+public class ConsultationHistoryAdapter extends RecyclerView.Adapter<ConsultationHistoryAdapter.ConsultationHistoryViewHolder>{
 
-
-    private ArrayList<Patient> mPatientList;
-    private OnItemClickListener mListener;
+    private ArrayList<Appointment> mAppointmentList;
+    private ConsultationHistoryAdapter.OnItemClickListener mListener;
 
     //Interface for handling when user clicks on list
     public interface OnItemClickListener
@@ -23,27 +22,29 @@ public class PatientListAdapter extends RecyclerView.Adapter<PatientListAdapter.
     }
 
     //Sets local Listener to main Listener
-    public void setOnItemClickListener(OnItemClickListener listener)
+    public void setOnItemClickListener(ConsultationHistoryAdapter.OnItemClickListener listener)
     {
         mListener = listener;
     }
 
     //For the Adapter to work, we need a viewholder which will hold all items on the activity seen by the user
-    public static class PatientListViewHolder extends RecyclerView.ViewHolder
+    public static class ConsultationHistoryViewHolder extends RecyclerView.ViewHolder
     {
         //These are the variables which will be displayed on the list
         public TextView nameText;
-        public TextView idText;
+        public TextView dateText;
+        public TextView timeText;
 
         /*This is the Constructor for the variables to be displayed, this provides references to our values.
           OnItemClickListener is added to the parameters as a way to reference mListener from inside a static class
          */
 
-        public PatientListViewHolder(@NonNull View itemView, final OnItemClickListener listener)
+        public ConsultationHistoryViewHolder(@NonNull View itemView, final ConsultationHistoryAdapter.OnItemClickListener listener)
         {
             super(itemView);
-            nameText = itemView.findViewById(R.id.dateText);
-            idText = itemView.findViewById(R.id.statusText);
+            nameText = itemView.findViewById(R.id.nameText);
+            dateText = itemView.findViewById(R.id.dateText);
+            timeText = itemView.findViewById(R.id.timeText);
 
             //We handle the click on the cards using the itemView variable
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -55,55 +56,57 @@ public class PatientListAdapter extends RecyclerView.Adapter<PatientListAdapter.
                     and if the position of the list is valid. Once that is done we then parse the
                     listener variable's position to the OnItemClick interface
                      */
-                        if(listener != null)
+                    if(listener != null)
+                    {
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION)
                         {
-                            int position = getAdapterPosition();
-                            if(position != RecyclerView.NO_POSITION)
-                            {
-                                listener.onItemClick(position);
-                            }
+                            listener.onItemClick(position);
                         }
+                    }
                 }
             });
         }
     }
 
     //This function allows data from the Patient class to be parsed to the Adapter
-    public PatientListAdapter(ArrayList<Patient> patientList)
+    public ConsultationHistoryAdapter(ArrayList<Appointment> appointmentList)
     {
-        mPatientList = patientList;
+        mAppointmentList = appointmentList;
     }
 
     //We pass the layout from the XML file to the variables using this function
     @NonNull
     @Override
-    public PatientListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.doc_list_item, parent, false);
-        PatientListViewHolder plvh = new PatientListViewHolder(v, mListener);
+    public ConsultationHistoryAdapter.ConsultationHistoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.appt_item, parent, false);
+        ConsultationHistoryAdapter.ConsultationHistoryViewHolder plvh = new ConsultationHistoryAdapter.ConsultationHistoryViewHolder(v, mListener);
 
         return plvh;
     }
 
     //We pass values to the referenced variables here
     @Override
-    public void onBindViewHolder(@NonNull PatientListViewHolder holder, int position)
+    public void onBindViewHolder(@NonNull ConsultationHistoryAdapter.ConsultationHistoryViewHolder holder, int position)
     {
-        Patient currentItem = mPatientList.get(position);
+        Appointment currentItem = mAppointmentList.get(position);
 
         //The holder variable allows the values of view to be set by Patient objects
-        holder.nameText.setText(currentItem.fname + " " + currentItem.fsurname);
+        holder.nameText.setText("Doctor Name: " +currentItem.docName);
         //TODO: Change from .idno to .lastvisited
-        holder.idText.setText("Last Visited: " + currentItem.lastVisited);
+        holder.dateText.setText("Date: " + currentItem.date);
+        holder.timeText.setText("Time: " + currentItem.time);
     }
 
     //This function defines how many items are in the list
     @Override
     public int getItemCount()
     {
-        return mPatientList.size();
+        return mAppointmentList.size();
     }
 
 
 
-}
 
+
+}// end of consult hist adapt

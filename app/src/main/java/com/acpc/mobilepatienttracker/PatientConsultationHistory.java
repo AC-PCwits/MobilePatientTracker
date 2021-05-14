@@ -1,19 +1,36 @@
 package com.acpc.mobilepatienttracker;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class PatientConsultationHistory extends Fragment {
+
+
+    private RecyclerView mRecyclerView; //This variable will contain the recycler view created in the XML layout
+    /*
+    This is the bridge between our data and recycler view. We have to use the PatientListAdapter
+    instead of RecylcerView.Adapter as the class contains custom functions for the Recycler View
+     */
+    private ConsultationHistoryAdapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    private TextView testView;
+    private ArrayList<Appointment> mAppointmentList;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -56,7 +73,18 @@ public class PatientConsultationHistory extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.activity_patient_consultation_history, container, false);
 
+        testView = (TextView) rootView.findViewById(R.id.testView);
+
+        mAppointmentList = new ArrayList<>();
+       // getBookingData();
+        //To populate the list with dummy data use the below function:
+          buildExampleList();
+        buildRecyclerView(rootView);
+
+
         return rootView;
+
+
 
 //        BottomNavigationView bottomNavigationView = findViewById(R.id.d_nav_bar);
 //
@@ -93,4 +121,48 @@ public class PatientConsultationHistory extends Fragment {
 //        });
 
     }
+
+    public void buildExampleList()
+    {
+        mAppointmentList.add(new Appointment("Helen Joseph","12/05/2021","13:00"));
+        mAppointmentList.add(new Appointment("Mark James","16/05/2021","14:00"));
+        mAppointmentList.add(new Appointment("Helen Joseph","19/05/2021","13:00"));
+        mAppointmentList.add(new Appointment("Krithi Pillay","25/05/2021","12:00"));
+
+    } // end of build example
+
+    public void buildRecyclerView(View rootView)
+    {
+        mRecyclerView = rootView.findViewById(R.id.recyclerView);
+        /*
+        This makes sure that the recycler view will not change size no matter how many items are in the list, which
+        also will increase the performance of the app
+        */
+        mRecyclerView.setHasFixedSize(true);
+        //This sets the layout the user will view
+        mLayoutManager = new LinearLayoutManager(getContext());
+        //This line is where information about the patient will be parsed to create the list
+        mAdapter = new ConsultationHistoryAdapter(mAppointmentList);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(mAdapter);
+
+        //This function will allow click events to be referenced to the interface in the adapter class
+        mAdapter.setOnItemClickListener(new ConsultationHistoryAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position)
+            {
+//                changeItem(position, "Clicked");
+                Intent intent = new Intent(getContext(), ConsultationHistoryDetailed.class);
+                Bundle bundle = new Bundle();
+
+                bundle.putString("doc_name", mAppointmentList.get(position).docName);
+                bundle.putString("date", mAppointmentList.get(position).date);
+                bundle.putString("time", mAppointmentList.get(position).time);
+
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+    }/////////////
+
 }
