@@ -634,17 +634,18 @@ class DType {
 }
 
 class DInfo{
+
     public String fname;
     public String sname;
     public String exp;
-    public String pid;
+    public String doc_ID;
     //public String qual;
 
-    public DInfo(String fname, String sname, String exp, String pid){
+    public DInfo(String fname, String sname, String exp, String doc_ID){
         this.fname=fname;
         this.sname=sname;
         this.exp=exp;
-        this.pid=pid;
+        this.doc_ID = doc_ID;
 
     }
 
@@ -654,24 +655,17 @@ class DInfo{
 
 }
 
-class PendingBooking{
-    public String bookingDate;
-    public String doc_id;
-    public String id;
-    public String pname;
-    public String time;
+class AcceptReject{
+    public Bookings booking;
+    public String accOrRej;
 
-    public PendingBooking(String bookingDate, String doc_id, String id, String pname, String time)
-    {
-        this.bookingDate = bookingDate;
-        this.doc_id = doc_id;
-        this.id = id;
-        this.pname = pname;
-        this.time = time;
+    public AcceptReject(Bookings booking, String accOrRej) {
+        this.booking = booking;
+        this.accOrRej = accOrRej;
+
     }
 
-    public PendingBooking()
-    {
+    public AcceptReject(){
 
     }
 }

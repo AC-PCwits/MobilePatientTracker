@@ -86,10 +86,10 @@ public class PatientBookings extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-      //  testView = (TextView) findViewById(R.id.testView);
-      //  mDocTypeList = new ArrayList<>();
-      //  buildExampleList();
-      //  buildRecyclerView();
+        //  testView = (TextView) findViewById(R.id.testView);
+        //  mDocTypeList = new ArrayList<>();
+        //  buildExampleList();
+        //  buildRecyclerView();
 
 
     }
@@ -104,7 +104,7 @@ public class PatientBookings extends Fragment {
         testView = (TextView) rootView.findViewById(R.id.testView);
 
         mDocTypeList = new ArrayList<>();
-       // getDocData();
+        // getDocData();
         //To populate the list with actual data use the below function:
 //        buildExampleList();
 //        buildRecyclerView(rootView);

@@ -19,7 +19,7 @@ public class DInfoTest
         assertEquals(fname, dInfo.fname);
         assertEquals(sname, dInfo.sname);
         assertEquals(exp, dInfo.exp);
-        assertEquals(id, dInfo.pid);
+        assertEquals(id, dInfo.doc_ID);
         assertNotNull(new DInfo());
     }
 }

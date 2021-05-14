@@ -154,7 +154,7 @@ public class DocTypeList extends AppCompatActivity {
                 bundle.putString("DOCTOR_FNAME", mdinfoList.get(position).fname);
                 bundle.putString("DOCTOR_SNAME", mdinfoList.get(position).sname);
                 bundle.putString("EXPERIENCE", mdinfoList.get(position).exp);
-                bundle.putString("PID", mdinfoList.get(position).pid);
+                bundle.putString("PID", mdinfoList.get(position).doc_ID);
 
 
 

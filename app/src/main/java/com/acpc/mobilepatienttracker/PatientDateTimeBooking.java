@@ -48,19 +48,23 @@ public class PatientDateTimeBooking extends AppCompatActivity {
     private DatePickerDialog dpd;
     private TextView date;
     private Calendar c;
-    TextView tvTimer1;
+    private TextView tvTimer1;
     int t1Hour, t1Minute;
-
     private String f;
     private TextView name;
     private String s;
    // private TextView sname;
     private String e;
-    private String id;
     private TextView exp;
-    Button confirm;
-
+    private String id;
+    private Button confirm;
+    private String patientname;
+    private String patientID;
     private FirebaseFirestore database = FirebaseFirestore.getInstance();
+    //String docID;/////
+///
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +83,6 @@ public class PatientDateTimeBooking extends AppCompatActivity {
             s = intent.getExtras().getString("DOCTOR_SNAME");
             e = intent.getExtras().getString("EXPERIENCE");
             id = intent.getExtras().getString("PID");
-
         }
 
         name.setText(f+" "+s);
@@ -88,6 +91,8 @@ public class PatientDateTimeBooking extends AppCompatActivity {
 
         date = findViewById(R.id.date_of_birth);
         tvTimer1 = findViewById(R.id.tv_timer1);
+
+
 
         tvTimer1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,6 +108,8 @@ public class PatientDateTimeBooking extends AppCompatActivity {
 
                                 //Store hour and min in string
                                 String time = t1Hour + ":" + t1Minute;
+
+
 
                                 //initialize 24 hour time format
                                 SimpleDateFormat f24Hours = new SimpleDateFormat(
@@ -138,6 +145,7 @@ public class PatientDateTimeBooking extends AppCompatActivity {
             }
         });
 
+
         date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -168,19 +176,11 @@ public class PatientDateTimeBooking extends AppCompatActivity {
             }
         });
 
-        confirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setupData(id, date.getText().toString(), tvTimer1.getText().toString());
-            }
-        });
 
 
 
-    }
 
-    public void setupData(final String docID, final String date, final String time)
-    {
+
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Patient");
@@ -189,30 +189,54 @@ public class PatientDateTimeBooking extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     if (dataSnapshot.child("email").getValue().toString().equalsIgnoreCase(user.getEmail())) {
+
                         final String ID = dataSnapshot.child("id").getValue().toString();
+                        final String patName= dataSnapshot.child("fname").getValue().toString();
 
-                        database.collection("patient-data").whereEqualTo("idno", ID)
-                                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        // final Bookings b= new Bookings(patName, ID,patDate,patTime,docID);
+
+                        /////////
+                        confirm.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if (task.isSuccessful()) {
-                                    ArrayList<Patient> patients = new ArrayList<>();
+                            public void onClick(View view) {
 
-                                    for (QueryDocumentSnapshot doc : task.getResult())
-                                    {
-                                        patients.add(doc.toObject(Patient.class));
-                                    }
 
-                                    for(Patient patient: patients)
-                                    {
-                                        if(patient.idno.equals(ID))
-                                        {
-                                            uploadData(new PendingBooking( date, docID, patient.idno,patient.fname + " " + patient.fsurname, time));
-                                        }
-                                    }
-                                }
+                                final String patDate= date.getText().toString();
+                                final String patTime= tvTimer1.getText().toString();
+                                 Bookings b= new Bookings(patName, ID,patDate,patTime,id);
+
+
+                                //////////////////////////////
+                                database.collection("pending-booking-data") // data gets added to a collection called patient-data
+                                        .add(b)
+                                        // Add a success listener so we can be notified if the operation was successfuly.
+
+                                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                            @Override
+                                            public void onSuccess(DocumentReference documentReference) {
+
+                                                Intent start = new Intent(PatientDateTimeBooking.this, PatientFragActivity.class);
+
+                                                Toast.makeText(PatientDateTimeBooking.this, "Your Booking Has Been Confirmed", Toast.LENGTH_LONG).show();
+                                                startActivity(start);
+
+
+                                            }
+                                        })
+                                        // Add a failure listener so we can be notified if something does wrong
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                // If we are here, the entry could not be added for some reason (e.g no internet connection)
+                                                makeText(PatientDateTimeBooking.this, "Error Try Again", LENGTH_LONG).show();
+                                            }
+                                        });
+
+
                             }
                         });
+
+
                     }
                 }
             }
@@ -224,28 +248,10 @@ public class PatientDateTimeBooking extends AppCompatActivity {
         });
     }
 
-    public void uploadData(PendingBooking pendingBooking)
-    {
-        database.collection("pending-booking-data") // data gets added to a collection called patient-data
-                .add(pendingBooking)
-                // Add a success listener so we can be notified if the operation was successfuly.
 
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        // If we are here, the app successfully connected to Firestore and added a new entry
-                        makeText(getApplicationContext(), "Your Booking Has Been Confirmed", LENGTH_LONG).show();
-                        Intent start = new Intent(getApplicationContext(), PatientFragActivity.class);
-                        startActivity(start);
-                    }
-                })
-                // Add a failure listener so we can be notified if something does wrong
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // If we are here, the entry could not be added for some reason (e.g no internet connection)
-                        makeText(getApplicationContext(), "Booking Was Unsuccessful", LENGTH_LONG).show();
-                    }
-                });
+
+
     }
-}
+
+
+
