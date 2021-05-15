@@ -42,14 +42,7 @@ public class PendingBookings extends Fragment {
     private ArrayList<Bookings> mBookingsList;
 
 
-    //  DatabaseReference mRef; // requestRef, bookingRef;
-    //  private FirebaseAuth mAuth; //using Realtime db
-    //  FirebaseUser mUser;
-
     private FirebaseFirestore database = FirebaseFirestore.getInstance();
-
-    private DocumentReference noteRef = database.collection("booking-data").document();
-    private Bookings booking = new Bookings();
     private TextView testView;
 
     private Doctor doc = new Doctor();
