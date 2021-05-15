@@ -42,6 +42,7 @@ import java.util.Date;
 
 import static android.widget.Toast.LENGTH_LONG;
 import static android.widget.Toast.makeText;
+import static com.acpc.mobilepatienttracker.DoctorField.ID;
 
 public class PatientDateTimeBooking extends AppCompatActivity {
 
@@ -54,12 +55,14 @@ public class PatientDateTimeBooking extends AppCompatActivity {
     private TextView name;
     private String s;
    // private TextView sname;
+    private TextView qual;
     private String e;
     private TextView exp;
     private String id;
     private Button confirm;
     private String patientname;
     private String patientID;
+    private String q;
     private FirebaseFirestore database = FirebaseFirestore.getInstance();
     //String docID;/////
 ///
@@ -75,6 +78,7 @@ public class PatientDateTimeBooking extends AppCompatActivity {
         //sname=findViewById(R.id.sname);
         exp=findViewById(R.id.exp);
         confirm=findViewById(R.id.confirmbtn);
+        qual= findViewById(R.id.textView10);
 
         Intent intent = getIntent();
 
@@ -83,14 +87,44 @@ public class PatientDateTimeBooking extends AppCompatActivity {
             s = intent.getExtras().getString("DOCTOR_SNAME");
             e = intent.getExtras().getString("EXPERIENCE");
             id = intent.getExtras().getString("PID");
+
         }
 
         name.setText(f+" "+s);
       //  sname.setText(s);
         exp.setText(e);
 
+
+
         date = findViewById(R.id.date_of_birth);
         tvTimer1 = findViewById(R.id.tv_timer1);
+
+        //////
+        database.collection("doctor-data").whereEqualTo("p_no", id)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    ArrayList<Doctor> d = new ArrayList<>();
+
+                    for (QueryDocumentSnapshot doc : task.getResult()) {
+                        d.add(doc.toObject(Doctor.class) );
+                    }
+                    for (Doctor dt : d) {
+                        if (dt.p_no.equals(id)) {
+                            String uniQ= dt.uni_name;
+                            qual.setText(uniQ);
+
+                        }
+                    }
+                }
+            }
+        });
+/////
+
+
+
+
 
 
 
@@ -175,12 +209,40 @@ public class PatientDateTimeBooking extends AppCompatActivity {
                 dpd.show();
             }
         });
+        /////////////////////////////////////////
+
+
+
+
+       /* database.collection("doctor-data").whereEqualTo("p_no", id)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    ArrayList<Doctor> d = new ArrayList<>();
+
+                    for (QueryDocumentSnapshot doc : task.getResult()) {
+                        d.add(doc.toObject(Doctor.class) );
+                    }
+                    for (Doctor dt : d) {
+                        if (dt.ID.equals(id)) {
+                            String uniQ= dt.uni_name;
+                            qual.setText(uniQ);
+
+                        }
+                    }
+                }
+            }
+        });
+
+
+*/
 
 
 
 
 
-
+/////////////////////////
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Patient");
@@ -195,6 +257,7 @@ public class PatientDateTimeBooking extends AppCompatActivity {
 
                         // final Bookings b= new Bookings(patName, ID,patDate,patTime,docID);
 
+
                         /////////
                         confirm.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -204,6 +267,9 @@ public class PatientDateTimeBooking extends AppCompatActivity {
                                 final String patDate= date.getText().toString();
                                 final String patTime= tvTimer1.getText().toString();
                                  Bookings b= new Bookings(patName, ID,patDate,patTime,id);
+
+
+                                 ///////////////
 
 
                                 //////////////////////////////

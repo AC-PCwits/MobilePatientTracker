@@ -668,8 +668,22 @@ class AcceptReject{
     public AcceptReject(){
 
     }
+
 }
 
 
+class Appointment{
 
+    public String docName;
+    public String date;
+    public  String time;
+
+    public Appointment(String docName, String date, String time) {
+        this.docName = docName;
+        this.date = date;
+        this.time = time;
+    }
+
+    public Appointment(){}
+}
 
