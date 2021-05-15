@@ -15,9 +15,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -28,6 +34,8 @@ public class PendingBookings extends Fragment {
     This is the bridge between our data and recycler view. We have to use the PatientListAdapter
     instead of RecylcerView.Adapter as the class contains custom functions for the Recycler View
      */
+    private View rootView;
+
     private BookingsAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager; //This will allow single items in our list to alligned correctly
 
@@ -43,6 +51,8 @@ public class PendingBookings extends Fragment {
     private DocumentReference noteRef = database.collection("booking-data").document();
     private Bookings booking = new Bookings();
     private TextView testView;
+
+    private Doctor doc = new Doctor();
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -89,7 +99,7 @@ public class PendingBookings extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View rootView = inflater.inflate(R.layout.activity_pending_bookings, container, false);
+        rootView = inflater.inflate(R.layout.activity_pending_bookings, container, false);
 
         testView = (TextView) rootView.findViewById(R.id.testView);
 
@@ -99,16 +109,89 @@ public class PendingBookings extends Fragment {
 
         mBookingsList = new ArrayList<>();
         // getDocData();
-        buildExampleList();
+        BuildBookingsList();
 
 
         //To populate the list with actual data use the below function:
         //buildPatientList()
 //        buildExampleList();
-        buildRecyclerView(rootView);
-
 
         return rootView;
+    }
+
+    public void BuildBookingsList()
+    {
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        database.collection("doctor-data").whereEqualTo("email", user.getEmail())
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task1) {
+                if(task1.isSuccessful())
+                {
+                    ArrayList<Doctor> doctor1 = new ArrayList<>();
+
+                    for(QueryDocumentSnapshot doc : task1.getResult())
+                    {
+                        doctor1.add(doc.toObject(Doctor.class));
+                    }
+
+                    String s = "";
+
+                    for(Doctor d : doctor1)
+                    {
+                        if(d.email.equals(user.getEmail()))
+                        {
+                            doc = d;
+                        }
+                    }
+
+                    if(doc.patient_ID == null)
+                    {
+                        testView.setText("Error: doctor has no patients?");
+                        return;
+                    }
+                    else
+                    {
+                        database.collection("pending-booking-data")
+                                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if(task.isSuccessful())
+                                {
+                                    ArrayList<Bookings> bookings = new ArrayList<>();
+
+                                    for(QueryDocumentSnapshot booking : task.getResult())
+                                    {
+                                        bookings.add(booking.toObject(Bookings.class));
+                                    }
+
+                                    if (bookings.isEmpty())
+                                    {
+                                        testView.setText("You have no pending bookings.");
+                                    }
+
+                                    for(Bookings booking : bookings)
+                                    {
+                                        mBookingsList.add(booking);
+                                    }
+
+                                    buildRecyclerView(rootView);
+                                }
+                                else
+                                {
+                                    testView.setText("Error: get bookings was not successful: " + task.getException().getMessage());
+                                }
+                            }
+                        });
+                    }
+                }
+                else
+                {
+                    testView.setText("Error: get doctor was not successful: " + task1.getException().getMessage());
+                }
+            }
+        });
     }
 
     public void buildExampleList()
@@ -122,6 +205,7 @@ public class PendingBookings extends Fragment {
 
     }
 
+
     public void buildRecyclerView(View rootView)
     {
         mRecyclerView = rootView.findViewById(R.id.recyclerView);
@@ -133,6 +217,7 @@ public class PendingBookings extends Fragment {
         //This sets the layout the user will view
         mLayoutManager = new LinearLayoutManager(getContext());
         //This line is where information about the patient will be parsed to create the list
+
         mAdapter = new BookingsAdapter(mBookingsList);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);

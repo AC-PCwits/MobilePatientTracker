@@ -210,7 +210,6 @@ public class DoctorPatientList extends Fragment
 
                     for(Patient patient : patients)
                     {
-//                        s = s + patient.fname + " " + patient.fsurname + " : " + patient.idno + "\n";
                         for(String pID : pIDs)
                         {
                             if(pID.equals(patient.idno))
@@ -220,7 +219,6 @@ public class DoctorPatientList extends Fragment
                             }
                         }
                     }
-//
                     testView.setText(s);
 ////                    testView.setText("Successful but list was empty");
                 }
