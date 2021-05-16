@@ -65,6 +65,7 @@ public class PatientDateTimeBooking extends AppCompatActivity {
     private String q;
     private FirebaseFirestore database = FirebaseFirestore.getInstance();
     //String docID;/////
+
 ///
 
 
@@ -79,6 +80,7 @@ public class PatientDateTimeBooking extends AppCompatActivity {
         exp=findViewById(R.id.exp);
         confirm=findViewById(R.id.confirmbtn);
         qual= findViewById(R.id.textView10);
+
 
         Intent intent = getIntent();
 
@@ -120,11 +122,6 @@ public class PatientDateTimeBooking extends AppCompatActivity {
                 }
             }
         });
-/////
-
-
-
-
 
 
 
@@ -176,6 +173,7 @@ public class PatientDateTimeBooking extends AppCompatActivity {
                 timePickerDialog.show();
 
 
+
             }
         });
 
@@ -209,40 +207,9 @@ public class PatientDateTimeBooking extends AppCompatActivity {
                 dpd.show();
             }
         });
-        /////////////////////////////////////////
 
 
 
-
-       /* database.collection("doctor-data").whereEqualTo("p_no", id)
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    ArrayList<Doctor> d = new ArrayList<>();
-
-                    for (QueryDocumentSnapshot doc : task.getResult()) {
-                        d.add(doc.toObject(Doctor.class) );
-                    }
-                    for (Doctor dt : d) {
-                        if (dt.ID.equals(id)) {
-                            String uniQ= dt.uni_name;
-                            qual.setText(uniQ);
-
-                        }
-                    }
-                }
-            }
-        });
-
-
-*/
-
-
-
-
-
-/////////////////////////
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Patient");
@@ -255,48 +222,17 @@ public class PatientDateTimeBooking extends AppCompatActivity {
                         final String ID = dataSnapshot.child("id").getValue().toString();
                         final String patName= dataSnapshot.child("fname").getValue().toString();
 
-                        // final Bookings b= new Bookings(patName, ID,patDate,patTime,docID);
 
+                                confirm.setOnClickListener(new View.OnClickListener() {
 
-                        /////////
-                        confirm.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
+                                    @Override
+                                    public void onClick(View view) {
 
+                                        final String patDate = date.getText().toString();
+                                        final String patTime = tvTimer1.getText().toString();
+                                        Bookings b = new Bookings(patName, ID, patDate, patTime, id);
 
-                                final String patDate= date.getText().toString();
-                                final String patTime= tvTimer1.getText().toString();
-                                 Bookings b= new Bookings(patName, ID,patDate,patTime,id);
-
-
-                                 ///////////////
-
-
-                                //////////////////////////////
-                                database.collection("pending-booking-data") // data gets added to a collection called patient-data
-                                        .add(b)
-                                        // Add a success listener so we can be notified if the operation was successfuly.
-
-                                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                            @Override
-                                            public void onSuccess(DocumentReference documentReference) {
-
-                                                Intent start = new Intent(PatientDateTimeBooking.this, PatientFragActivity.class);
-
-                                                Toast.makeText(PatientDateTimeBooking.this, "Your Booking Has Been Confirmed", Toast.LENGTH_LONG).show();
-                                                startActivity(start);
-
-
-                                            }
-                                        })
-                                        // Add a failure listener so we can be notified if something does wrong
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                // If we are here, the entry could not be added for some reason (e.g no internet connection)
-                                                makeText(PatientDateTimeBooking.this, "Error Try Again", LENGTH_LONG).show();
-                                            }
-                                        });
+                                        checkPending(b);
 
 
                             }
@@ -316,8 +252,131 @@ public class PatientDateTimeBooking extends AppCompatActivity {
 
 
 
+    public void checkPending(final Bookings book){
+
+        database.collection("pending-booking-data").whereEqualTo("doc_id", id)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    ArrayList<Bookings> b = new ArrayList<>();
+
+                    for (QueryDocumentSnapshot bk : task.getResult()) {
+                        b.add(bk.toObject(Bookings.class));
+                    }
+                    for (Bookings bking : b) {
+                        final String patDate = date.getText().toString();
+                        final String patTime = tvTimer1.getText().toString();
+                        if (bking.bookingdate.equals(patDate) && bking.time.equals(patTime)) {
+                            Toast.makeText(PatientDateTimeBooking.this, "Unavailable time slot. Please select another time", LENGTH_LONG).show();
+                             break;
+
+                        } else {
+
+                            checkTest(book);
+
+
+                        }
+                    }
+
+                }
+            }
+        });
+
+
 
     }
+
+
+
+    public void checkTest(final Bookings book){
+        database.collection("acc-rej-data").whereEqualTo("doc_id", id)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    ArrayList<AccOrRej> b = new ArrayList<>();
+
+                    for (QueryDocumentSnapshot bk : task.getResult()) {
+                        b.add(bk.toObject(AccOrRej.class));
+                    }
+                    for (AccOrRej bking : b) {
+                        final String patDate = date.getText().toString();
+                        final String patTime = tvTimer1.getText().toString();
+                        if (bking.bookingdate.equals(patDate) && bking.time.equals(patTime) && bking.accOrRej.equals("Accepted")) {
+                            Toast.makeText(PatientDateTimeBooking.this, "Unavailable time slot. Please select another time", LENGTH_LONG).show();
+                             break;
+
+                        } else {
+
+                            //Toast.makeText(PatientDateTimeBooking.this, "Checking Availability",LENGTH_LONG).show();
+
+
+                            //confirm.setVisibility(View.VISIBLE);
+                          //  Toast.makeText(PatientDateTimeBooking.this, "Available Time Slot", LENGTH_LONG).show();
+                            Add(true,book);
+
+                              // btn.setVisibility(View.GONE);
+
+                        }
+                    }
+
+                }
+            }
+        });
+
+        database.collection("acc-rej-data").whereNotEqualTo("doc_id",id)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                Add(true,book);
+            }
+        }) ;
+
+
+
+
+    }
+
+    public void Add(boolean y, Bookings b){
+        if(y==true){
+            database.collection("pending-booking-data") // data gets added to a collection called patient-data
+                    .add(b)
+                    // Add a success listener so we can be notified if the operation was successfuly.
+
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+
+                            Intent start = new Intent(PatientDateTimeBooking.this, PatientFragActivity.class);
+
+                            Toast.makeText(PatientDateTimeBooking.this, "Your Booking Has Been Confirmed", Toast.LENGTH_LONG).show();
+                            startActivity(start);
+
+
+                        }
+                    })
+                    // Add a failure listener so we can be notified if something does wrong
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            // If we are here, the entry could not be added for some reason (e.g no internet connection)
+                            makeText(PatientDateTimeBooking.this, "Error Try Again", LENGTH_LONG).show();
+                        }
+                    });
+        }
+
+    }
+
+
+
+
+
+
+
+
+    }
+
 
 
 
