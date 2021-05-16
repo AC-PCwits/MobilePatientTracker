@@ -38,7 +38,8 @@
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_weight="0.1"
-                android:src="?android:attr/actionModeWebSearchDrawable" />
+                app:srcCompat="@drawable/ic_baseline_search_24"
+                tools:ignore="VectorDrawableCompat" />
 
             <EditText
                 android:id="@+id/pdl_searchbar"
