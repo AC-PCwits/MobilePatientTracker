@@ -8,36 +8,70 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    <TextView
-        android:id="@+id/titleText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Patient List"
-        android:textStyle="bold"
-        android:textAlignment="center"
-        android:gravity="center_horizontal"
-        android:textSize="36dp"
-        android:textColor="@android:color/black"/>
+        android:layout_height="wrap_content">
 
 
-    <!-- Recycler view Object, this will allow for the user to scroll through a list of items -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="2dp"
-        android:layout_below="@+id/titleText"
-        android:background="@drawable/border_set_patient_list"
-        android:scrollbars="vertical" />
+        <!-- Recycler view Object, this will allow for the user to scroll through a list of items -->
 
-    <TextView
-        android:id="@+id/testView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/recyclerView"
-        android:textSize="16sp"/>
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Patient List"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="36dp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/pdl_searchbar_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/titleText"
+            android:background="#25ff5d52"
+            android:divider="@drawable/border_set_patient_list"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_weight="0.1"
+                app:srcCompat="@drawable/ic_baseline_search_24"
+                tools:ignore="VectorDrawableCompat" />
+
+            <EditText
+                android:id="@+id/pdl_searchbar"
+                android:layout_width="345dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#00FFFFFF"
+                android:gravity="center|start"
+                android:hint="search..."
+                android:inputType="text"
+                android:paddingLeft="30dp"
+                android:textColor="@android:color/black"
+                android:textSize="24dp" />
+
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="648dp"
+            android:layout_below="@+id/pdl_searchbar_container"
+            android:background="@drawable/border_set_patient_list"
+            android:padding="2dp"
+            android:scrollbars="vertical" />
+
+        <TextView
+            android:id="@+id/testView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/recyclerView"
+            android:textSize="16sp" />
 
     </RelativeLayout>
 </FrameLayout>

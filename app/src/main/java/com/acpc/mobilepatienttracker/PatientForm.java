@@ -74,8 +74,6 @@ public class PatientForm extends AppCompatActivity  {
         pcell.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
         pemcell.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
 
-
-
         submit.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
