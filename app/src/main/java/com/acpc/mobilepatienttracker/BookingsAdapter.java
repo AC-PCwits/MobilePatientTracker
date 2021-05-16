@@ -38,8 +38,8 @@ public class BookingsAdapter extends RecyclerView.Adapter<BookingsAdapter.Bookin
 
         public BookingsListViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
-            nameText = itemView.findViewById(R.id.nameText);
-            bookingDateText = itemView.findViewById(R.id.idText);
+            nameText = itemView.findViewById(R.id.dateText);
+            bookingDateText = itemView.findViewById(R.id.statusText);
 
             //We handle the click on the cards using the itemView variable
             itemView.setOnClickListener(new View.OnClickListener() {

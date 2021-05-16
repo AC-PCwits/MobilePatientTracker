@@ -321,6 +321,4 @@ public class DoctorPatientList extends Fragment
         intent.putExtras(bundle);
         startActivity(intent);
     }
-
-
 }
