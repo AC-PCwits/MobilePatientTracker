@@ -1,39 +1,27 @@
 package com.acpc.mobilepatienttracker;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class PRegistration extends AppCompatActivity implements View.OnClickListener{
 
     private EditText inname, inemail, inpassword, in_id;
     private Button reg;
-    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_p_registration);
 
-        mAuth = FirebaseAuth.getInstance();
         inname= findViewById(R.id.inname);
         inemail= findViewById(R.id.inemail);
         inpassword= findViewById(R.id.inpassword);
@@ -122,53 +110,8 @@ public class PRegistration extends AppCompatActivity implements View.OnClickList
 
     public void uploadUserData(User user, String password)
     {
-        final String name = user.fname;
-        final String email = user.email;
-        final String id_no = user.id;
-
-        mAuth.createUserWithEmailAndPassword(email,password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-
-                        if(task.isSuccessful()){
-                            User user= new User(name,email,id_no);
-                            FirebaseDatabase.getInstance().getReference("Patient")
-
-                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-
-                                    .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-
-                                    if(task.isSuccessful()){
-
-                                        Toast.makeText(PRegistration.this, "You have successfully been registered as a patient.", Toast.LENGTH_LONG).show();
-
-                                        Intent start = new Intent(PRegistration.this, PatientForm.class);
-                                        Bundle bundle = new Bundle();
-                                        bundle.putString("PID", id_no);
-                                        bundle.putString("EMAIL", email);
-                                        start.putExtras(bundle);
-                                        startActivity(start);
-                                        finish();
-
-                                    }
-                                    else{
-                                        Toast.makeText(PRegistration.this, "Patient Registration Unsuccessful, Try Again", Toast.LENGTH_LONG).show();
-                                        Log.d("PATIENT", task.getException().getMessage());
-
-                                    }
-                                }
-                            });
-
-                        }
-                        else{
-                            Toast.makeText(PRegistration.this, "Patient Registration Unsuccessful, Try Again", Toast.LENGTH_LONG).show();
-                            Log.d("PATIENT", task.getException().getMessage());
-                        }
-                    }
-                });
+        FirebasePatient firebasePatient = new FirebasePatient(user, "Patient", password, getApplicationContext());
+        firebasePatient.patientRealtimeReg();
     }
 
 

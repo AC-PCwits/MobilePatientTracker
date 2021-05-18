@@ -103,8 +103,6 @@ DBookingDetails extends AppCompatActivity {
                         final String ID = dataSnapshot.child("id").getValue().toString();
                         doc_id = ID;
                         // Toast.makeText(DBookingDetails.this, "Hi", Toast.LENGTH_SHORT).show();
-
-                        final Bookings booking = new Bookings(name, id, date, time, doc_id);
                         //final AcceptReject s = new AcceptReject();
 
 
@@ -115,7 +113,7 @@ DBookingDetails extends AppCompatActivity {
                                 addPatient();
 
                                 aOrR = "Accepted";
-                                final AcceptReject s = new AcceptReject(booking, aOrR);
+                                final AccOrRej s = new AccOrRej(name, id, date, time, doc_id, aOrR);
 
                                 //      Toast.makeText(DBookingDetails.this, "Processing booking", LENGTH_LONG).show();
 
@@ -155,7 +153,7 @@ DBookingDetails extends AppCompatActivity {
                                 //  Toast.makeText(DBookingDetails.this, "Declining booking", LENGTH_LONG).show();
 
                                 aOrR = "Rejected";
-                                final AcceptReject s = new AcceptReject(booking, aOrR);
+                                final AccOrRej s = new AccOrRej(name, id, date, time, doc_id, aOrR);
 
                                 //  UpdateDPatientList(doc_id, id);
 

@@ -31,6 +31,7 @@ public class BookingsAdapter extends RecyclerView.Adapter<BookingsAdapter.Bookin
         return mListener;
     }
 
+
     //For the Adapter to work, we need a viewholder which will hold all items on the activity seen by the user
     public static class BookingsListViewHolder extends RecyclerView.ViewHolder {
         //These are the variables which will be displayed on the list

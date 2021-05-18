@@ -655,19 +655,27 @@ class DInfo{
 
 }
 
-class AcceptReject{
-    public Bookings booking;
+class AccOrRej{
+    public String pname;
+    public String bookingdate;
+    public String time;
+    public String id; //need this for linking to patient
+    public String doc_id;
     public String accOrRej;
 
-    public AcceptReject(Bookings booking, String accOrRej) {
-        this.booking = booking;
+    public AccOrRej(String pname, String id, String bookingdate, String time, String doc_id, String accOrRej){
+        this.pname = pname;
+        this.bookingdate = bookingdate;
+        this.id = id;
+        this.doc_id = doc_id;
+        this.time = time;
         this.accOrRej = accOrRej;
+    }
+
+    public AccOrRej(){
 
     }
 
-    public AcceptReject(){
-
-    }
 }
 
 

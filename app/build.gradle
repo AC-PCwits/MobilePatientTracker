@@ -80,6 +80,8 @@ dependencies {
     testImplementation 'org.robolectric:robolectric:4.4'
     androidTestImplementation 'androidx.test:rules:1.4.0-alpha06'
 
+    implementation 'com.github.jhonnyx2012:horizontal-picker:1.0.6'
+
 }
 
 project.afterEvaluate {

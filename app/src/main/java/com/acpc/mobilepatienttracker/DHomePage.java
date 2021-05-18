@@ -15,12 +15,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.jhonnyx2012.horizontalpicker.DatePickerListener;
+import com.github.jhonnyx2012.horizontalpicker.HorizontalPicker;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class DHomePage extends Fragment {
+import org.joda.time.DateTime;
+
+public class DHomePage extends Fragment implements DatePickerListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,6 +35,8 @@ public class DHomePage extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private TextView bookingDate, bookingTime, bookingPatient, patientID;
 
     public DHomePage() {
         // Required empty public constructor
@@ -69,8 +76,34 @@ public class DHomePage extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.activity_d_home_page, container, false);
 
+        bookingDate = rootView.findViewById(R.id.booking_date);
+        bookingTime = rootView.findViewById(R.id.booking_time);
+        bookingPatient = rootView.findViewById(R.id.booking_patient);
+        patientID = rootView.findViewById(R.id.patientID);
+
+
+        HorizontalPicker picker = rootView.findViewById(R.id.datePicker);
+
+
+        picker
+                .setListener(this)
+                .showTodayButton(true)
+                .setOffset(3)
+                .init();
+
         return rootView;
 
     }
 
+    @Override
+    public void onDateSelected(DateTime dateSelected) {
+
+    }
+
+    public void getUserData() {
+
+        //use this to get details from accept/reject bookings table
+
+
+    }
 }
