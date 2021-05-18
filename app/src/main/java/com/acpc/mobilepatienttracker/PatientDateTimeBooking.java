@@ -64,7 +64,8 @@ public class PatientDateTimeBooking extends AppCompatActivity {
     private String patientID;
     private String q;
     private FirebaseFirestore database = FirebaseFirestore.getInstance();
-    //String docID;/////
+    //String docID;////
+    private Button check;
 
 ///
 
@@ -80,6 +81,10 @@ public class PatientDateTimeBooking extends AppCompatActivity {
         exp=findViewById(R.id.exp);
         confirm=findViewById(R.id.confirmbtn);
         qual= findViewById(R.id.textView10);
+
+        check = findViewById(R.id.checkbtn);
+       // check.setVisibility(View.GONE);
+        confirm.setVisibility(View.GONE);
 
 
         Intent intent = getIntent();
@@ -223,7 +228,7 @@ public class PatientDateTimeBooking extends AppCompatActivity {
                         final String patName= dataSnapshot.child("fname").getValue().toString();
 
 
-                                confirm.setOnClickListener(new View.OnClickListener() {
+                                check.setOnClickListener(new View.OnClickListener() {
 
                                     @Override
                                     public void onClick(View view) {
@@ -235,8 +240,21 @@ public class PatientDateTimeBooking extends AppCompatActivity {
                                         checkPending(b);
 
 
+
+
                             }
                         });
+
+                                confirm.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        final String patDate = date.getText().toString();
+                                        final String patTime = tvTimer1.getText().toString();
+                                        Bookings b = new Bookings(patName, ID, patDate, patTime, id);
+                                        Add(true,b);
+
+                                    }
+                                });
 
 
                     }
@@ -280,6 +298,10 @@ public class PatientDateTimeBooking extends AppCompatActivity {
                     }
 
                 }
+                if (task.getResult().isEmpty()){
+                    checkTest(book);
+                }
+
             }
         });
 
@@ -307,14 +329,17 @@ public class PatientDateTimeBooking extends AppCompatActivity {
                             Toast.makeText(PatientDateTimeBooking.this, "Unavailable time slot. Please select another time", LENGTH_LONG).show();
                              break;
 
+
                         } else {
 
                             //Toast.makeText(PatientDateTimeBooking.this, "Checking Availability",LENGTH_LONG).show();
 
+                           // NoBookings();
+                            confirm.setVisibility(View.VISIBLE);
+                            check.setVisibility(View.GONE);
+                            Toast.makeText(PatientDateTimeBooking.this, "Available Time Slot", LENGTH_LONG).show();
 
-                            //confirm.setVisibility(View.VISIBLE);
-                          //  Toast.makeText(PatientDateTimeBooking.this, "Available Time Slot", LENGTH_LONG).show();
-                            Add(true,book);
+                           // Add(true,book);
 
                               // btn.setVisibility(View.GONE);
 
@@ -322,21 +347,20 @@ public class PatientDateTimeBooking extends AppCompatActivity {
                     }
 
                 }
+                if (task.getResult().isEmpty()){
+                    confirm.setVisibility(View.VISIBLE);
+                    check.setVisibility(View.GONE);
+                    Toast.makeText(PatientDateTimeBooking.this, "Available Time Slot", LENGTH_LONG).show();
+                }
+
             }
         });
-
-        database.collection("acc-rej-data").whereNotEqualTo("doc_id",id)
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                Add(true,book);
-            }
-        }) ;
-
 
 
 
     }
+
+
 
     public void Add(boolean y, Bookings b){
         if(y==true){
@@ -368,9 +392,28 @@ public class PatientDateTimeBooking extends AppCompatActivity {
 
     }
 
+   /* public void check(){
+
+        database.collection("acc-rej-data").whereEqualTo("doc_id", id)
+                .get().addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                Toast.makeText(DBookingDetails.this, "Booking Rejected", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(DBookingDetails.this, DoctorFragActivity.class);
+                startActivity(intent);
+            }
+        })
+
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(DBookingDetails.this, "Error", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
 
 
-
+    } */
 
 
 
