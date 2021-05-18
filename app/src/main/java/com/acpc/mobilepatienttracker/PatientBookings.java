@@ -26,6 +26,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class PatientBookings extends Fragment {
 
@@ -133,10 +134,14 @@ public class PatientBookings extends Fragment {
 
                     for(Doctor doc : doctor)
                     {
-                        if(!mDocTypeList.contains(doc.doc_type))
-                        {
-                            mDocTypeList.add(new DType(doc.doc_type));
-                        }
+                        list.add(doc.doc_type);
+                    }
+
+                    list = removeDuplicates(list);
+
+                    for(String str : list)
+                    {
+                        mDocTypeList.add(new DType(str));
                     }
 
                     buildRecyclerView(view);
@@ -196,6 +201,21 @@ public class PatientBookings extends Fragment {
                 startActivity(intent);
             }
         });
+    }
+
+    public ArrayList<String> removeDuplicates(ArrayList<String> list)
+    {
+        ArrayList<String> newList = new ArrayList<>();
+
+        for(String element : list)
+        {
+            if(!newList.contains(element))
+            {
+                newList.add(element);
+            }
+        }
+
+        return newList;
     }
 
 
