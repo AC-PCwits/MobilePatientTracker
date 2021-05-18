@@ -79,6 +79,7 @@ public class DoctorForm extends AppCompatActivity {
         institution.setFilters(new InputFilter[]{new InputFilter.LengthFilter(15)});
 //        password.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
         id_number.setFilters(new InputFilter[]{new InputFilter.LengthFilter(13)});
+        cellNum.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
 
 
 

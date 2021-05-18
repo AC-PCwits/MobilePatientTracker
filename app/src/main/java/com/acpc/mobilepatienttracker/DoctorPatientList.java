@@ -1,7 +1,11 @@
 package com.acpc.mobilepatienttracker;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +31,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DoctorPatientList extends Fragment
 {
@@ -47,6 +52,8 @@ public class DoctorPatientList extends Fragment
     private Doctor doc = new Doctor();
     private TextView testView;
 
+    private TextView searchBar;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -55,6 +62,7 @@ public class DoctorPatientList extends Fragment
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
 
     public DoctorPatientList() {
         // Required empty public constructor
@@ -95,46 +103,58 @@ public class DoctorPatientList extends Fragment
 
         testView = (TextView) rootView.findViewById(R.id.testView);
 
+        searchBar = rootView.findViewById(R.id.pdl_searchbar);
+        TextWatcher watcher = new TextWatcher()
+        {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2)
+            {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
+            {
+                String selector = charSequence.toString().toLowerCase();
+                if (selector == "")
+                {
+                    RebuildRecyclerView(mPatientList);
+                    return;
+                }
+
+                ArrayList<Patient> newPatientList = new ArrayList<>();
+
+                for (Patient patient : mPatientList)
+                {
+                    if (patient.fname.toLowerCase().contains(selector) || patient.fsurname.toLowerCase().contains(selector))
+                    {
+                        newPatientList.add(patient);
+                    }
+                }
+
+                RebuildRecyclerView(newPatientList);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable)
+            {
+
+            }
+        };
+        searchBar.addTextChangedListener(watcher);
+
         mPatientList = new ArrayList<>();
         getDocData();
         //To populate the list with actual data use the below function:
 //        buildExampleList();
         buildRecyclerView(rootView);
 
-
         return rootView;
     }
-
 
     public void getDocData()
     {
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-
-//        final String[] str = {""};
-//
-//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Doctors");
-//        reference.addValueEventListener(new ValueEventListener() {
-//
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                for(DataSnapshot dataSnapshot : snapshot.getChildren())
-//                {
-//                    if(dataSnapshot.child("email").getValue().toString().equalsIgnoreCase(user.getEmail()))
-//                    {
-////                            str[0] = dataSnapshot.child("IDnum").getValue().toString();
-//                        testView.setText(dataSnapshot.child("IDnum").getValue().toString());
-//                    }
-//                }
-//
-//            }
-//
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
 
         database.collection("doctor-data").whereEqualTo("email", user.getEmail())
         .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -157,7 +177,6 @@ public class DoctorPatientList extends Fragment
                         {
                             doc = doctor2;
                         }
-
                     }
 
                     if(doc.patient_ID == null)
@@ -191,7 +210,6 @@ public class DoctorPatientList extends Fragment
 
                     for(Patient patient : patients)
                     {
-//                        s = s + patient.fname + " " + patient.fsurname + " : " + patient.idno + "\n";
                         for(String pID : pIDs)
                         {
                             if(pID.equals(patient.idno))
@@ -201,11 +219,8 @@ public class DoctorPatientList extends Fragment
                             }
                         }
                     }
-//
                     testView.setText(s);
 ////                    testView.setText("Successful but list was empty");
-
-
                 }
                 else
                 {
@@ -242,7 +257,7 @@ public class DoctorPatientList extends Fragment
         This makes sure that the recycler view will not change size no matter how many items are in the list, which
         also will increase the performance of the app
         */
-        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setHasFixedSize(false);
         //This sets the layout the user will view
         mLayoutManager = new LinearLayoutManager(getContext());
         //This line is where information about the patient will be parsed to create the list
@@ -256,27 +271,54 @@ public class DoctorPatientList extends Fragment
             public void onItemClick(int position)
             {
 //                changeItem(position, "Clicked");
-                Intent intent = new Intent(getContext(), DPatientDetails.class);
-                Bundle bundle = new Bundle();
-
-                bundle.putString("PATIENT_NAME", mPatientList.get(position).fname + " " +
-                        mPatientList.get(position).fsurname);
-                bundle.putString("PATIENT_ID", mPatientList.get(position).idno);
-                bundle.putString("PATIENT_CELL", mPatientList.get(position).cellno);
-                bundle.putString("PATIENT_NAT", mPatientList.get(position).nationality);
-                bundle.putString("PATIENT_GENDER", mPatientList.get(position).gender);
-                bundle.putString("PATIENT_ADDRESS", mPatientList.get(position).address);
-                bundle.putString("PATIENT_ENAME", mPatientList.get(position).ename);
-                bundle.putString("PATIENT_ECONT", mPatientList.get(position).econtact);
-                bundle.putString("PATIENT_RACE", mPatientList.get(position).race);
-                bundle.putString("PATIENT_MARRIED", mPatientList.get(position).mstatus);
-                bundle.putStringArrayList("PATIENT_ILLNESS", mPatientList.get(position).cissues);
-                bundle.putString("PATIENT_MEDAID", mPatientList.get(position).medaid);
-                bundle.putString("PATIENT_ALLERGIES", mPatientList.get(position).allergies);
-
-                intent.putExtras(bundle);
-                startActivity(intent);
+                GoToNextActivity(position);
             }
         });
+    }
+
+    public void RebuildRecyclerView(ArrayList<Patient> newList)
+    {
+        if (mRecyclerView == null)
+        {
+            return;
+        }
+
+        mAdapter = new PatientListAdapter(newList);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(mAdapter);
+
+        //This function will allow click events to be referenced to the interface in the adapter class
+        mAdapter.setOnItemClickListener(new PatientListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position)
+            {
+//                changeItem(position, "Clicked");
+                GoToNextActivity(position);
+            }
+        });
+    }
+
+    public void GoToNextActivity(int position)
+    {
+        Intent intent = new Intent(getContext(), DPatientDetails.class);
+        Bundle bundle = new Bundle();
+
+        bundle.putString("PATIENT_NAME", mPatientList.get(position).fname + " " +
+                mPatientList.get(position).fsurname);
+        bundle.putString("PATIENT_ID", mPatientList.get(position).idno);
+        bundle.putString("PATIENT_CELL", mPatientList.get(position).cellno);
+        bundle.putString("PATIENT_NAT", mPatientList.get(position).nationality);
+        bundle.putString("PATIENT_GENDER", mPatientList.get(position).gender);
+        bundle.putString("PATIENT_ADDRESS", mPatientList.get(position).address);
+        bundle.putString("PATIENT_ENAME", mPatientList.get(position).ename);
+        bundle.putString("PATIENT_ECONT", mPatientList.get(position).econtact);
+        bundle.putString("PATIENT_RACE", mPatientList.get(position).race);
+        bundle.putString("PATIENT_MARRIED", mPatientList.get(position).mstatus);
+        bundle.putStringArrayList("PATIENT_ILLNESS", mPatientList.get(position).cissues);
+        bundle.putString("PATIENT_MEDAID", mPatientList.get(position).medaid);
+        bundle.putString("PATIENT_ALLERGIES", mPatientList.get(position).allergies);
+
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 }

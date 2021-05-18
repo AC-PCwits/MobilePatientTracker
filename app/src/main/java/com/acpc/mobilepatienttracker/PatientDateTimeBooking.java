@@ -42,6 +42,7 @@ import java.util.Date;
 
 import static android.widget.Toast.LENGTH_LONG;
 import static android.widget.Toast.makeText;
+import static com.acpc.mobilepatienttracker.DoctorField.ID;
 
 public class PatientDateTimeBooking extends AppCompatActivity {
 
@@ -54,14 +55,18 @@ public class PatientDateTimeBooking extends AppCompatActivity {
     private TextView name;
     private String s;
    // private TextView sname;
+    private TextView qual;
     private String e;
     private TextView exp;
     private String id;
     private Button confirm;
     private String patientname;
     private String patientID;
+    private String q;
     private FirebaseFirestore database = FirebaseFirestore.getInstance();
-    //String docID;/////
+    //String docID;////
+    private Button check;
+
 ///
 
 
@@ -75,6 +80,12 @@ public class PatientDateTimeBooking extends AppCompatActivity {
         //sname=findViewById(R.id.sname);
         exp=findViewById(R.id.exp);
         confirm=findViewById(R.id.confirmbtn);
+        qual= findViewById(R.id.textView10);
+
+        check = findViewById(R.id.checkbtn);
+       // check.setVisibility(View.GONE);
+        confirm.setVisibility(View.GONE);
+
 
         Intent intent = getIntent();
 
@@ -83,14 +94,39 @@ public class PatientDateTimeBooking extends AppCompatActivity {
             s = intent.getExtras().getString("DOCTOR_SNAME");
             e = intent.getExtras().getString("EXPERIENCE");
             id = intent.getExtras().getString("PID");
+
         }
 
         name.setText(f+" "+s);
       //  sname.setText(s);
         exp.setText(e);
 
+
+
         date = findViewById(R.id.date_of_birth);
         tvTimer1 = findViewById(R.id.tv_timer1);
+
+        //////
+        database.collection("doctor-data").whereEqualTo("p_no", id)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    ArrayList<Doctor> d = new ArrayList<>();
+
+                    for (QueryDocumentSnapshot doc : task.getResult()) {
+                        d.add(doc.toObject(Doctor.class) );
+                    }
+                    for (Doctor dt : d) {
+                        if (dt.p_no.equals(id)) {
+                            String uniQ= dt.uni_name;
+                            qual.setText(uniQ);
+
+                        }
+                    }
+                }
+            }
+        });
 
 
 
@@ -142,6 +178,7 @@ public class PatientDateTimeBooking extends AppCompatActivity {
                 timePickerDialog.show();
 
 
+
             }
         });
 
@@ -178,9 +215,6 @@ public class PatientDateTimeBooking extends AppCompatActivity {
 
 
 
-
-
-
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Patient");
@@ -193,48 +227,34 @@ public class PatientDateTimeBooking extends AppCompatActivity {
                         final String ID = dataSnapshot.child("id").getValue().toString();
                         final String patName= dataSnapshot.child("fname").getValue().toString();
 
-                        // final Bookings b= new Bookings(patName, ID,patDate,patTime,docID);
 
-                        /////////
-                        confirm.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
+                                check.setOnClickListener(new View.OnClickListener() {
 
+                                    @Override
+                                    public void onClick(View view) {
 
-                                final String patDate= date.getText().toString();
-                                final String patTime= tvTimer1.getText().toString();
-                                 Bookings b= new Bookings(patName, ID,patDate,patTime,id);
+                                        final String patDate = date.getText().toString();
+                                        final String patTime = tvTimer1.getText().toString();
+                                        Bookings b = new Bookings(patName, ID, patDate, patTime, id);
 
-
-                                //////////////////////////////
-                                database.collection("pending-booking-data") // data gets added to a collection called patient-data
-                                        .add(b)
-                                        // Add a success listener so we can be notified if the operation was successfuly.
-
-                                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                            @Override
-                                            public void onSuccess(DocumentReference documentReference) {
-
-                                                Intent start = new Intent(PatientDateTimeBooking.this, PatientFragActivity.class);
-
-                                                Toast.makeText(PatientDateTimeBooking.this, "Your Booking Has Been Confirmed", Toast.LENGTH_LONG).show();
-                                                startActivity(start);
+                                        checkPending(b);
 
 
-                                            }
-                                        })
-                                        // Add a failure listener so we can be notified if something does wrong
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                // If we are here, the entry could not be added for some reason (e.g no internet connection)
-                                                makeText(PatientDateTimeBooking.this, "Error Try Again", LENGTH_LONG).show();
-                                            }
-                                        });
 
 
                             }
                         });
+
+                                confirm.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        final String patDate = date.getText().toString();
+                                        final String patTime = tvTimer1.getText().toString();
+                                        Bookings b = new Bookings(patName, ID, patDate, patTime, id);
+                                        Add(true,b);
+
+                                    }
+                                });
 
 
                     }
@@ -250,8 +270,156 @@ public class PatientDateTimeBooking extends AppCompatActivity {
 
 
 
+    public void checkPending(final Bookings book){
+
+        database.collection("pending-booking-data").whereEqualTo("doc_id", id)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    ArrayList<Bookings> b = new ArrayList<>();
+
+                    for (QueryDocumentSnapshot bk : task.getResult()) {
+                        b.add(bk.toObject(Bookings.class));
+                    }
+                    for (Bookings bking : b) {
+                        final String patDate = date.getText().toString();
+                        final String patTime = tvTimer1.getText().toString();
+                        if (bking.bookingdate.equals(patDate) && bking.time.equals(patTime)) {
+                            Toast.makeText(PatientDateTimeBooking.this, "Unavailable time slot. Please select another time", LENGTH_LONG).show();
+                             break;
+
+                        } else {
+
+                            checkTest(book);
+
+
+                        }
+                    }
+
+                }
+                if (task.getResult().isEmpty()){
+                    checkTest(book);
+                }
+
+            }
+        });
+
+
 
     }
+
+
+
+    public void checkTest(final Bookings book){
+        database.collection("acc-rej-data").whereEqualTo("doc_id", id)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    ArrayList<AccOrRej> b = new ArrayList<>();
+
+                    for (QueryDocumentSnapshot bk : task.getResult()) {
+                        b.add(bk.toObject(AccOrRej.class));
+                    }
+                    for (AccOrRej bking : b) {
+                        final String patDate = date.getText().toString();
+                        final String patTime = tvTimer1.getText().toString();
+                        if (bking.bookingdate.equals(patDate) && bking.time.equals(patTime) && bking.accOrRej.equals("Accepted")) {
+                            Toast.makeText(PatientDateTimeBooking.this, "Unavailable time slot. Please select another time", LENGTH_LONG).show();
+                             break;
+
+
+                        } else {
+
+                            //Toast.makeText(PatientDateTimeBooking.this, "Checking Availability",LENGTH_LONG).show();
+
+                           // NoBookings();
+                            confirm.setVisibility(View.VISIBLE);
+                            check.setVisibility(View.GONE);
+                            Toast.makeText(PatientDateTimeBooking.this, "Available Time Slot", LENGTH_LONG).show();
+
+                           // Add(true,book);
+
+                              // btn.setVisibility(View.GONE);
+
+                        }
+                    }
+
+                }
+                if (task.getResult().isEmpty()){
+                    confirm.setVisibility(View.VISIBLE);
+                    check.setVisibility(View.GONE);
+                    Toast.makeText(PatientDateTimeBooking.this, "Available Time Slot", LENGTH_LONG).show();
+                }
+
+            }
+        });
+
+
+
+    }
+
+
+
+    public void Add(boolean y, Bookings b){
+        if(y==true){
+            database.collection("pending-booking-data") // data gets added to a collection called patient-data
+                    .add(b)
+                    // Add a success listener so we can be notified if the operation was successfuly.
+
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+
+                            Intent start = new Intent(PatientDateTimeBooking.this, PatientFragActivity.class);
+
+                            Toast.makeText(PatientDateTimeBooking.this, "Your Booking Has Been Confirmed", Toast.LENGTH_LONG).show();
+                            startActivity(start);
+
+
+                        }
+                    })
+                    // Add a failure listener so we can be notified if something does wrong
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            // If we are here, the entry could not be added for some reason (e.g no internet connection)
+                            makeText(PatientDateTimeBooking.this, "Error Try Again", LENGTH_LONG).show();
+                        }
+                    });
+        }
+
+    }
+
+   /* public void check(){
+
+        database.collection("acc-rej-data").whereEqualTo("doc_id", id)
+                .get().addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                Toast.makeText(DBookingDetails.this, "Booking Rejected", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(DBookingDetails.this, DoctorFragActivity.class);
+                startActivity(intent);
+            }
+        })
+
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(DBookingDetails.this, "Error", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+
+    } */
+
+
+
+
+    }
+
 
 
 
