@@ -1,11 +1,16 @@
 package com.acpc.mobilepatienttracker;
 
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -34,6 +39,10 @@ public class ConsultationHistoryAdapter extends RecyclerView.Adapter<Consultatio
         public TextView nameText;
         public TextView dateText;
         public TextView timeText;
+        public TextView statusText;
+        public Drawable pending;
+        public Drawable accepted;
+        public Drawable rejected;
 
         /*This is the Constructor for the variables to be displayed, this provides references to our values.
           OnItemClickListener is added to the parameters as a way to reference mListener from inside a static class
@@ -45,6 +54,10 @@ public class ConsultationHistoryAdapter extends RecyclerView.Adapter<Consultatio
             nameText = itemView.findViewById(R.id.nameText);
             dateText = itemView.findViewById(R.id.dateText);
             timeText = itemView.findViewById(R.id.timeText);
+            statusText = itemView.findViewById(R.id.statusText);
+            pending = ContextCompat.getDrawable(itemView.getContext(), R.drawable.rounded_corner_pending);
+            accepted = ContextCompat.getDrawable(itemView.getContext(), R.drawable.rounded_corner_accepted);
+            rejected = ContextCompat.getDrawable(itemView.getContext(), R.drawable.rounded_corner_rejected);
 
             //We handle the click on the cards using the itemView variable
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -91,10 +104,41 @@ public class ConsultationHistoryAdapter extends RecyclerView.Adapter<Consultatio
     {
         Appointment currentItem = mAppointmentList.get(position);
 
+        String colour = getColour(currentItem.status);
+
+        switch (currentItem.status)
+        {
+            case "Accepted":
+                 holder.statusText.setBackground(holder.accepted);
+                 break;
+            case "Pending":
+                holder.statusText.setBackground(holder.pending);
+                break;
+            default:
+                holder.statusText.setBackground(holder.rejected);
+                break;
+        }
+
+
         //The holder variable allows the values of view to be set by Patient objects
-        holder.nameText.setText("Dr " +currentItem.docName + "          -"+ " "+ currentItem.status);
+        holder.nameText.setText("Dr " +currentItem.docName);
         holder.dateText.setText("Date: " + currentItem.bookingdate);
         holder.timeText.setText("Time: " + currentItem.time);
+        holder.statusText.setText(currentItem.status);
+        holder.statusText.setTextColor(Color.parseColor(colour));
+    }
+
+    public String getColour(String status)
+    {
+        switch (status)
+        {
+            case "Accepted":
+                return "#50C878";
+            case "Pending":
+                return "#C3C3C3";
+            default:
+                return "#FF0000";
+        }
     }
 
     //This function defines how many items are in the list
