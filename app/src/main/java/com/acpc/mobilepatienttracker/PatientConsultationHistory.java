@@ -139,6 +139,7 @@ public class PatientConsultationHistory extends Fragment {
           //buildExampleList();
         getUserData(rootView);
         getPendingData(rootView);
+        getPastBookings(rootView);
        // buildRecyclerView(rootView);
 
         MovePastBookings(); //moving expired bookings to consultation history
@@ -465,35 +466,83 @@ public class PatientConsultationHistory extends Fragment {
 
     }
 
-   /* public String getDocName(final String docID, final ArrayList<Doctor> d){
-        final String name;
+    public void getPastBookings(final View view){
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        database.collection("doctor-data").whereEqualTo("p_no", docID)
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Patient");
+        reference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful())
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    if (dataSnapshot.child("email").getValue().toString().equalsIgnoreCase(user.getEmail())) {
+                        final String ID = dataSnapshot.child("id").getValue().toString();
 
-                  //  ArrayList<Doctor> d = new ArrayList<>();
 
-                for (QueryDocumentSnapshot doc : task.getResult()) {
-                    d.add(doc.toObject(Doctor.class) );
-                }
-                for (Doctor dt : d) {
-                    if (dt.p_no.equals(docID)) {
-                        String dname = dt.fname + " " + dt.lname;
-                        //qual.setText(uniQ);
+                        database.collection("booking-history-data").whereEqualTo("id", ID)
+                                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if(task.isSuccessful())
+                                {
 
+                                    ArrayList<AccOrRej> ar1 = new ArrayList<>();
+
+                                    for(QueryDocumentSnapshot doc : task.getResult())
+                                    {
+                                        ar1.add(doc.toObject(AccOrRej.class));
+                                    }
+
+                                    for(final AccOrRej ar2: ar1)
+                                    {  // String docName= "Eric";
+
+
+
+                                        database.collection("doctor-data").whereEqualTo("p_no", ar2.doc_id)
+                                                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                if(task.isSuccessful())
+
+                                                    //  ArrayList<Doctor> d = new ArrayList<>();
+
+                                                    for (QueryDocumentSnapshot doc : task.getResult()) {
+                                                        d.add(doc.toObject(Doctor.class) );
+                                                    }
+                                                for (Doctor dt : d) {
+                                                    if (dt.p_no.equals(ar2.doc_id)) {
+                                                        String docName = dt.lname;
+                                                        mAppointmentList.add(new Appointment(ar2.pname, ar2.id, ar2.bookingdate, ar2.time, ar2.doc_id, docName, "Past"));
+
+                                                    }
+                                                    buildRecyclerView(view);
+                                                }
+
+                                            }
+                                        });
+
+                                        //  mAppointmentList.add(new Appointment(ar2.pname, ar2.id, ar2.bookingdate, ar2.time, ar2.doc_id, docName, "Pending"));
+                                        //  Toast.makeText(getContext(), "Added", Toast.LENGTH_LONG).show();
+                                    }
+
+                                    //   buildRecyclerView(view);
+
+
+                                }
+                            }
+                        });
 
                     }
                 }
+            }
 
-
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
-        return name;
-    }*/
+
+
+    }
 
     public void buildRecyclerView(View rootView) {
         mRecyclerView = rootView.findViewById(R.id.recyclerView);
