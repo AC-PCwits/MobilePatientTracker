@@ -189,10 +189,6 @@ public class PatientBookings extends Fragment {
                 Intent intent = new Intent(getContext(), DocTypeList.class);
                 Bundle bundle = new Bundle();
 
-                //bundle.putString("PATIENT_NAME", mBookingsList.get(position).pname);
-                //bundle.putString("PATIENT_ID", mBookingsList.get(position).id);
-                //bundle.putString("BOOKING_DATE", mBookingsList.get(position).bookingdate);
-                //bundle.putString("BOOKING_TIME", mBookingsList.get(position).time);
                 bundle.putString("DOC_TYPE", mDocTypeList.get(position).type);
 
 
