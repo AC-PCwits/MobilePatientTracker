@@ -187,7 +187,7 @@ public class PendingBookings extends Fragment {
         });
     }
 
-    public void buildExampleList()
+   /* public void buildExampleList()
     {
 
         mBookingsList.add(new Bookings("Theo Jones", "3103310331033", "13/03/2021", "14:00", "0000000"));
@@ -196,7 +196,7 @@ public class PendingBookings extends Fragment {
         mBookingsList.add(new Bookings("Trin Jones", "1234567891111", "13/10/2021","16:00","0000000"));
         mBookingsList.add(new Bookings("Trip Jones", "2121212121212", "13/12/2021", "10:00","0000000"));
 
-    }
+    }*/
 
 
     public void buildRecyclerView(View rootView)
