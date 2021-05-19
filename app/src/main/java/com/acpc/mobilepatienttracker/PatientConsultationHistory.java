@@ -86,7 +86,6 @@ public class PatientConsultationHistory extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private FirebaseFirestore database = FirebaseFirestore.getInstance();
 
     public PatientConsultationHistory() {
         // Required empty public constructor
