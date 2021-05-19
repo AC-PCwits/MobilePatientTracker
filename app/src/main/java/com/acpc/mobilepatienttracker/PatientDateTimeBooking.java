@@ -196,6 +196,7 @@ public class PatientDateTimeBooking extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
+
                         int mnth = month+1;
 
                         if(dayOfMonth <10 && mnth >=10){
@@ -209,9 +210,16 @@ public class PatientDateTimeBooking extends AppCompatActivity {
                         }
                     }
                 }, year,month,day);
+
+                dpd.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
                 dpd.show();
             }
         });
+
+
+
+
+
 
 
 
@@ -233,8 +241,29 @@ public class PatientDateTimeBooking extends AppCompatActivity {
                                     @Override
                                     public void onClick(View view) {
 
+
                                         final String patDate = date.getText().toString();
                                         final String patTime = tvTimer1.getText().toString();
+
+
+
+                                        if(patTime.isEmpty()){
+
+                                            Toast.makeText(PatientDateTimeBooking.this, "Time is Required", Toast.LENGTH_LONG).show();
+                                            tvTimer1.requestFocus();
+
+                                            return;
+                                        }
+
+                                        else if(patDate.isEmpty()){
+                                            //tvTimer1.setError(" ");
+                                            Toast.makeText(PatientDateTimeBooking.this, "Date is Required", Toast.LENGTH_LONG).show();
+                                            tvTimer1.requestFocus();
+
+                                            return;
+                                        }
+
+
                                         Bookings b = new Bookings(patName, ID, patDate, patTime, id);
 
                                         checkPending(b);
