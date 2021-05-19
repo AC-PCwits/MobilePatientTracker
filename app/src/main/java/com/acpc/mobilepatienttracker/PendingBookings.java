@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -96,77 +98,48 @@ public class PendingBookings extends Fragment {
 
         testView = (TextView) rootView.findViewById(R.id.testView);
 
-        // mAuth = FirebaseAuth.getInstance();
-        // mUser = mAuth.getCurrentUser();
-        // mRef = FirebaseDatabase.getInstance().getReference().child("Bookings");
-
         mBookingsList = new ArrayList<>();
         // getDocData();
         BuildBookingsList();
 
-
-        //To populate the list with actual data use the below function:
-        //buildPatientList()
-//        buildExampleList();
-
         return rootView;
     }
 
-    public void BuildBookingsList()
-    {
+    public void BuildBookingsList() {
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         database.collection("doctor-data").whereEqualTo("email", user.getEmail())
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task1) {
-                if(task1.isSuccessful())
+            public void onComplete(@NonNull final Task<QuerySnapshot> task)
+            {
+                if (task.isSuccessful())
                 {
-                    ArrayList<Doctor> doctor1 = new ArrayList<>();
-
-                    for(QueryDocumentSnapshot doc : task1.getResult())
+                    Log.d("PENDING-BOOKINGS:", "pulled doctor count: " + task.getResult().size());
+                    for (QueryDocumentSnapshot d : task.getResult())
                     {
-                        doctor1.add(doc.toObject(Doctor.class));
-                    }
+                        doc = d.toObject(Doctor.class);
 
-                    String s = "";
+                        Log.d("PENDING-BOOKINGS:", "Name: " + doc.fname + " " + doc.lname);
+                        Log.d("PENDING-BOOKINGS:", "ID: " + doc.ID);
+                        Log.d("PENDING-BOOKINGS:", "Patient ID: " + doc.patient_ID);
+                        Log.d("PENDING-BOOKINGS:", "Email: " + doc.email);
+                        Log.d("PENDING-BOOKINGS:", "Date of birth: " + doc.dob);
+                        Log.d("PENDING-BOOKINGS:", "Type: " + doc.doc_type);
+                        Log.d("PENDING-BOOKINGS:", "P length: " + doc.p_length);
+                        Log.d("PENDING-BOOKINGS:", "P no: " + doc.p_no);
 
-                    for(Doctor d : doctor1)
-                    {
-                        if(d.email.equals(user.getEmail()))
-                        {
-                            doc = d;
-                        }
-                    }
-
-                    if(doc.patient_ID == null)
-                    {
-                        testView.setText("Error: doctor has no patients?");
-                        return;
-                    }
-                    else
-                    {
-                        database.collection("pending-booking-data")
+                        database.collection("pending-booking-data").whereEqualTo("doc_id", doc.p_no)
                                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if(task.isSuccessful())
-                                {
-                                    ArrayList<Bookings> bookings = new ArrayList<>();
+                                if (task.isSuccessful()) {
 
-                                    for(QueryDocumentSnapshot booking : task.getResult())
-                                    {
-                                        bookings.add(booking.toObject(Bookings.class));
-                                    }
+                                    Log.d("PENDING-BOOKINGS:", "pulled bookings count: " + task.getResult().size());
 
-                                    if (bookings.isEmpty())
+                                    for (QueryDocumentSnapshot booking : task.getResult())
                                     {
-                                        testView.setText("You have no pending bookings.");
-                                    }
-
-                                    for(Bookings booking : bookings)
-                                    {
-                                        mBookingsList.add(booking);
+                                        mBookingsList.add(booking.toObject(Bookings.class));
                                     }
 
                                     buildRecyclerView(rootView);
@@ -176,28 +149,22 @@ public class PendingBookings extends Fragment {
                                     testView.setText("Error: get bookings was not successful: " + task.getException().getMessage());
                                 }
                             }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w("PENDING-BOOKINGS:", "GET BOOKINGS FAILED: ", task.getException());
+                            }
                         });
                     }
                 }
                 else
                 {
-                    testView.setText("Error: get doctor was not successful: " + task1.getException().getMessage());
+                    testView.setText("Error: get doctor was not successful: " + task.getException().getMessage());
                 }
             }
         });
     }
-
-   /* public void buildExampleList()
-    {
-
-        mBookingsList.add(new Bookings("Theo Jones", "3103310331033", "13/03/2021", "14:00", "0000000"));
-        mBookingsList.add(new Bookings("Tam Jones", "1234567891011", "16/08/2021", "09:00","0000000"));
-        mBookingsList.add(new Bookings("Tim Jones", "6845645156135", "13/09/2021", "08:00","0000000"));
-        mBookingsList.add(new Bookings("Trin Jones", "1234567891111", "13/10/2021","16:00","0000000"));
-        mBookingsList.add(new Bookings("Trip Jones", "2121212121212", "13/12/2021", "10:00","0000000"));
-
-    }*/
-
 
     public void buildRecyclerView(View rootView)
     {
@@ -228,7 +195,6 @@ public class PendingBookings extends Fragment {
                 bundle.putString("PATIENT_ID", mBookingsList.get(position).id);
                 bundle.putString("BOOKING_DATE", mBookingsList.get(position).bookingdate);
                 bundle.putString("BOOKING_TIME", mBookingsList.get(position).time);
-
 
                 intent.putExtras(bundle);
                 startActivity(intent);
