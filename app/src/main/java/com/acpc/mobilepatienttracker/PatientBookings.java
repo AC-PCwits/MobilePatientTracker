@@ -41,8 +41,8 @@ public class PatientBookings extends Fragment {
 
     private Button logoutBut;
 
-    private FirebaseFirestore database = FirebaseFirestore.getInstance();
-    private DocumentReference noteRef = database.collection("doctor-data").document();
+
+//    private DocumentReference noteRef = database.collection("doctor-data").document();
     private DType dtype = new DType();
     private TextView testView;
 
@@ -117,6 +117,7 @@ public class PatientBookings extends Fragment {
 
     public void getDocTypes(final View view)
     {
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
         database.collection("doctor-data").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task)

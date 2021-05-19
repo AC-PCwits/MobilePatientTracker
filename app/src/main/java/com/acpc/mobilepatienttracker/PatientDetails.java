@@ -50,8 +50,6 @@ public class PatientDetails extends Fragment {
 
     private Context context;
 
-    private FirebaseFirestore database = FirebaseFirestore.getInstance();
-
     private DetailView firstname;
     private DetailView lastname;
     private DetailView id;
@@ -181,145 +179,60 @@ public class PatientDetails extends Fragment {
             }
         });
 
-        //Patient details are pulled from databse and displayed using this method
+        //Patient details are pulled from database and displayed using this method
         getUserData();
-
 
         return rootView;
     }
 
-    public void getUserData() {
-        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Patient");
-        reference.addValueEventListener(new ValueEventListener() {
+    public void getUserData()
+    {
+        if(firstname.content.getText().toString().equals("___NULL_DEV___"))
+        {
+            return;
+        }
+        FirebasePatient firebasePatient = new FirebasePatient();
+        firebasePatient.getUserData(new FirebasePatient.FirebaseCallback(){
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    if (dataSnapshot.child("email").getValue().toString().equalsIgnoreCase(user.getEmail())) {
-                        final String ID = dataSnapshot.child("id").getValue().toString();
+            public void onResponse(ArrayList<Patient> patients)
+            {
+                for (Patient patient : patients)
+                {
+                    info.setText("Personal Details");
 
-                        database.collection("patient-data").whereEqualTo("idno", ID)
-                                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if (task.isSuccessful()) {
-                                    ArrayList<Patient> patients = new ArrayList<>();
+                    firstname.content.setText(patient.fname);
+                    lastname.content.setText(patient.fsurname);
+                    id.content.setText(patient.idno);
+                    cellphone.content.setText(patient.cellno);
+                    nationality.content.setText(patient.nationality);
+                    gender.content.setText(patient.gender);
+                    race.content.setText(patient.race);
+                    address.content.setText(patient.address);
+                    mstatus.content.setText(patient.mstatus);
+                    illnesses.content.setText(patient.GetIllnessesString());
+                    allergies.content.setText(patient.allergies);
+                    medicalaid.content.setText(patient.medaid);
+                    econtact.content.setText(patient.ename);
+                    econtactno.content.setText(patient.econtact);
 
-                                    for (QueryDocumentSnapshot doc : task.getResult()) {
-                                        patients.add(doc.toObject(Patient.class));
-                                    }
-                                    for (Patient patient : patients) {
-                                        if (patient.idno.equals(ID)) {
-                                            info.setText("Personal Details");
+                    activeUser = patient;
 
-                                            firstname.content.setText(patient.fname);
-                                            lastname.content.setText(patient.fsurname);
-                                            id.content.setText(patient.idno);
-                                            cellphone.content.setText(patient.cellno);
-                                            nationality.content.setText(patient.nationality);
-                                            gender.content.setText(patient.gender);
-                                            race.content.setText(patient.race);
-                                            address.content.setText(patient.address);
-                                            mstatus.content.setText(patient.mstatus);
-                                            illnesses.content.setText(patient.GetIllnessesString());
-                                            allergies.content.setText(patient.allergies);
-                                            medicalaid.content.setText(patient.medaid);
-                                            econtact.content.setText(patient.ename);
-                                            econtactno.content.setText(patient.econtact);
-
-                                            activeUser = patient;
-
-                                            for (DetailView view : allDetails) {
-                                                view.edit.setVisibility(View.VISIBLE);
-                                                view.originalText = view.content.getText().toString();
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        });
+                    for (DetailView view : allDetails) {
+                        view.edit.setVisibility(View.VISIBLE);
+                        view.originalText = view.content.getText().toString();
                     }
                 }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
     }
 
-    public void UpdateField(final String IDnumber, PatientField field, final Object newValue) {
-        final String fieldName = Patient.GetFieldName(field);
-
-        database.collection("patient-data")
-                .whereEqualTo("idno", IDnumber)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            String documentID = "";
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                documentID = document.getId();
-                            }
-                            final String finalDocumentID = documentID;
-
-                            if (documentID != "") {
-                                DocumentReference patient = database.collection("patient-data").document(documentID);
-
-                                for (DetailView view : allDetails) {
-                                    if (view.content.getText().toString() != activeUser.GetFieldValue(view.type))
-
-                                        patient.update(fieldName, newValue)
-
-                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void aVoid) {
-                                                        Log.d("PD", "SUCCESS: Updated field: " + fieldName + " for document ID: " + finalDocumentID);
-                                                    }
-                                                })
-                                                .addOnFailureListener(new OnFailureListener() {
-                                                    @Override
-                                                    public void onFailure(@NonNull Exception e) {
-                                                        // failed to update the given field for some reason
-                                                        Log.w("PD", "ERROR: Could not update field: " + fieldName + "for document ID: " + finalDocumentID + ": ", e);
-                                                        Toast.makeText(getContext(), "Could not save: failed to update details", Toast.LENGTH_LONG).show();
-                                                    }
-                                                });
-                                }
-
-                                Toast.makeText(getContext(), "Successfully saved details :)", Toast.LENGTH_LONG).show();
-                                save.setEnabled(false);
-                                save.setVisibility(View.INVISIBLE);
-
-
-                                for (DetailView view : allDetails) {
-                                    if (view.content.isFocused()) {
-                                        view.content.clearFocus();
-                                        view.content.setBackgroundColor(Color.TRANSPARENT);
-                                    }
-                                    view.content.setEnabled(false);
-                                    view.originalText = view.content.getText().toString();
-                                }
-                            } else {
-                                // do document was found with the given field
-                                Log.w("PD", "QUERY ERROR: No document found with ID number: " + IDnumber);
-                                Toast.makeText(getContext(), "Could not save: document not found with that ID number???", Toast.LENGTH_LONG).show();
-                            }
-
-
-                        } else {
-                            // query did not complete
-                            Log.w("PD", "QUERY ERROR: query did not complete: " + task.getException().getMessage());
-                            Toast.makeText(getContext(), "Could not save: query do not complete", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
+    public void UpdateField(final String IDnumber, PatientField field, final Object newValue)
+    {
+        FirebasePatient firebasePatient = new FirebasePatient(getContext(), field, IDnumber, allDetails, activeUser, newValue, save);
+        firebasePatient.UpdateField();
     }
 
-    private class DetailView extends LinearLayout {
+    public class DetailView extends LinearLayout {
         public PatientField type;
 
         public TextView info;

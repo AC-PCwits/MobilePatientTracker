@@ -53,8 +53,6 @@ public class PHomePage extends Fragment {
     private ArrayList<AccOrRej> acceptRejects = new ArrayList<>();
     private String docName = "John Smith";
 
-    private FirebaseFirestore database = FirebaseFirestore.getInstance();
-
     public PHomePage() {
         // Required empty public constructor
     }
@@ -139,6 +137,7 @@ public class PHomePage extends Fragment {
 
     public void getUserData(final HorizontalPicker picker) {
 
+        final FirebaseFirestore database = FirebaseFirestore.getInstance();
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Patient");

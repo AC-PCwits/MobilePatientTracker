@@ -2,8 +2,10 @@ package com.acpc.mobilepatienttracker;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -12,6 +14,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -22,6 +25,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
 
 import static android.widget.Toast.LENGTH_LONG;
 import static android.widget.Toast.makeText;
@@ -37,10 +44,28 @@ public class FirebasePatient
     private String docName_2;
     private String password;
     private Context context;
+    private PatientField field;
+    private String query;
+    private ArrayList<PatientDetails.DetailView> allDetails;
+    private Patient activeUser;
+    private Object newValue;
+    private FloatingActionButton save;
+
+    public FirebasePatient(Context context, PatientField field, String query,
+                           ArrayList<PatientDetails.DetailView> allDetails, Patient activeUser,
+                           Object newValue, FloatingActionButton save) {
+        this.context = context;
+        this.field = field;
+        this.query = query;
+        this.allDetails = allDetails;
+        this.activeUser = activeUser;
+        this.newValue = newValue;
+        this.save = save;
+    }
 
     public interface FirebaseCallback
     {
-        void onResponse(Patient patient);
+        void onResponse(ArrayList<Patient> patients);
     }
 
     public FirebasePatient(User user, String docName, String password, Context context)
@@ -57,6 +82,8 @@ public class FirebasePatient
         this.docName = docName;
         this.context = context;
     }
+
+    public FirebasePatient() {}
 
     public void patientRealtimeReg()
     {
@@ -136,11 +163,11 @@ public class FirebasePatient
                 });
     }
 
-    public void getUserData()
+    public void getUserData(final FirebaseCallback callback)
     {
-        final FirebaseUser user = mAuth.getCurrentUser();
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child(docName);
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Patient");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -148,7 +175,22 @@ public class FirebasePatient
                     if (dataSnapshot.child("email").getValue().toString().equalsIgnoreCase(user.getEmail())) {
                         final String ID = dataSnapshot.child("id").getValue().toString();
 
-                        getPatientData(ID);
+                        database = FirebaseFirestore.getInstance();
+                        database.collection("patient-data").whereEqualTo("idno", ID)
+                                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    ArrayList<Patient> patients = new ArrayList<>();
+
+                                    for (QueryDocumentSnapshot doc : task.getResult())
+                                    {
+                                        patients.add(doc.toObject(Patient.class));
+                                    }
+                                    callback.onResponse(patients);
+                                }
+                            }
+                        });
 
                     }
                 }
@@ -161,10 +203,72 @@ public class FirebasePatient
         });
     }
 
-    public void getPatientData(String query)
-    {
+    public void UpdateField() {
+        final String fieldName = Patient.GetFieldName(field);
+
+        database = FirebaseFirestore.getInstance();
+        database.collection("patient-data")
+                .whereEqualTo("idno", query)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            String documentID = "";
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                documentID = document.getId();
+                            }
+                            final String finalDocumentID = documentID;
+
+                            if (documentID != "") {
+                                DocumentReference patient = database.collection("patient-data").document(documentID);
+
+                                for (PatientDetails.DetailView view : allDetails) {
+                                    if (view.content.getText().toString() != activeUser.GetFieldValue(view.type))
+
+                                        patient.update(fieldName, newValue)
+
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Log.d("PD", "SUCCESS: Updated field: " + fieldName + " for document ID: " + finalDocumentID);
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        // failed to update the given field for some reason
+                                                        Log.w("PD", "ERROR: Could not update field: " + fieldName + "for document ID: " + finalDocumentID + ": ", e);
+                                                        Toast.makeText(context, "Could not save: failed to update details", Toast.LENGTH_LONG).show();
+                                                    }
+                                                });
+                                }
+                                Toast.makeText(context, "Successfully saved details :)", Toast.LENGTH_LONG).show();
+                                save.setEnabled(false);
+                                save.setVisibility(View.INVISIBLE);
 
 
+                                for (PatientDetails.DetailView view : allDetails) {
+                                    if (view.content.isFocused()) {
+                                        view.content.clearFocus();
+                                        view.content.setBackgroundColor(Color.TRANSPARENT);
+                                    }
+                                    view.content.setEnabled(false);
+                                    view.originalText = view.content.getText().toString();
+                                }
+                            } else {
+                                // do document was found with the given field
+                                Log.w("PD", "QUERY ERROR: No document found with ID number: " + query);
+                                Toast.makeText(context, "Could not save: document not found with that ID number???", Toast.LENGTH_LONG).show();
+                            }
 
+
+                        } else {
+                            // query did not complete
+                            Log.w("PD", "QUERY ERROR: query did not complete: " + task.getException().getMessage());
+                            Toast.makeText(context, "Could not save: query do not complete", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
     }
 }

@@ -17,6 +17,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
 
 public class FirebaseDoctor
 {
@@ -28,6 +32,11 @@ public class FirebaseDoctor
     private String docName_2;
     private String password;
     private Context context;
+
+    public interface DInfoCallback
+    {
+        void onResponse(ArrayList<DInfo> dInfos);
+    }
 
     public FirebaseDoctor(User user, String docName, String password, Context context) {
         this.user = user;
@@ -41,6 +50,8 @@ public class FirebaseDoctor
         this.docName = docName;
         this.context = context;
     }
+
+    public FirebaseDoctor() {}
 
     public void doctorRealtimeReg()
     {
@@ -118,5 +129,37 @@ public class FirebaseDoctor
                         Toast.makeText(context, "Data was unable to be added. Check connection", Toast.LENGTH_LONG).show();
                     }
                 });
+    }
+
+    public void getDInfoData(String field, String query, final DInfoCallback callback)
+    {
+        if(query.equals("___NULL_DEV___"))
+        {
+            return;
+        }
+        database = FirebaseFirestore.getInstance();
+        database.collection("doctor-data").whereEqualTo(field, query).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful())
+                {
+                    ArrayList<Doctor> doctors = new ArrayList<>();
+
+                    for(QueryDocumentSnapshot doc : task.getResult())
+                    {
+                        doctors.add(doc.toObject(Doctor.class));
+                    }
+
+                    ArrayList<DInfo> mdinfoList = new ArrayList<>();
+
+                    for(Doctor doc: doctors)
+                    {
+                        mdinfoList.add(new DInfo(doc.fname, doc.lname, doc.p_length, doc.p_no));
+                    }
+
+                    callback.onResponse(mdinfoList);
+                }
+            }
+        });
     }
 }
