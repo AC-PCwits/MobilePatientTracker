@@ -477,7 +477,7 @@ class Doctor {
         this.p_no = p_no;
         this.p_length = p_length;
         this.uni_name = uni_name;
-        this.patient_ID = patient_ID;
+        this.patient_ID = new ArrayList<>();
 
     }
 
