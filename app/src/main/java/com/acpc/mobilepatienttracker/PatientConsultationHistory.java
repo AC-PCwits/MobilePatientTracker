@@ -1,5 +1,6 @@
 package com.acpc.mobilepatienttracker;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,7 +12,35 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.text.ParseException;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+import android.os.Bundle;
+import android.util.Log;
+
+import java.util.Random;
+
 import java.util.ArrayList;
+
 
 public class PatientConsultationHistory extends Fragment {
 
@@ -21,8 +50,16 @@ public class PatientConsultationHistory extends Fragment {
     This is the bridge between our data and recycler view. We have to use the PatientListAdapter
     instead of RecylcerView.Adapter as the class contains custom functions for the Recycler View
      */
+
+    //variables
+
     private ConsultationHistoryAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+
+    private FirebaseFirestore database = FirebaseFirestore.getInstance();
+    private DocumentReference noteRef = database.collection("acc-rej-data").document();
+
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -38,6 +75,8 @@ public class PatientConsultationHistory extends Fragment {
     public PatientConsultationHistory() {
         // Required empty public constructor
     }
+
+
 
     /**
      * Use this factory method to create a new instance of
@@ -81,6 +120,7 @@ public class PatientConsultationHistory extends Fragment {
           buildExampleList();
         buildRecyclerView(rootView);
 
+        MovePastBookings(); //moving expired bookings to consultation history
 
         return rootView;
 
@@ -121,6 +161,122 @@ public class PatientConsultationHistory extends Fragment {
 //        });
 
     }
+    //// method to move old bookings from acc-rej-data collection to booking-data-history collection
+    public void MovePastBookings() {
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        Log.d("ACC-REJ METHOD", "Running method...");
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Patient");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    if (dataSnapshot.child("email").getValue().toString().equalsIgnoreCase(user.getEmail())) {
+                        final String ID = dataSnapshot.child("id").getValue().toString();
+
+                        Log.d("ACC-REJ METHOD", "Got ID");
+
+                        database.collection("acc-rej-data").whereEqualTo("id", ID)
+                                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+
+                                    if (task.getResult().isEmpty())
+                                    {
+                                        Log.d("ACC-REJ METHOD", "Snapshot was empty :(");
+                                    }
+
+                                    for (QueryDocumentSnapshot doc : task.getResult()) {
+
+                                        final DocumentReference reference = doc.getReference();
+
+                                        AccOrRej accRej = doc.toObject(AccOrRej.class);
+
+                                        Log.d("ACC-REJ METHOD", "AccOrRej data:" + accRej.pname + ", " +  accRej.id + ", " + accRej.bookingdate);
+
+
+                                        String date = accRej.bookingdate.replace('/', '-');
+
+                                        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                                        try {
+                                            Date bookingDate = format.parse(date);
+                                            Date today = new Date();
+                                            if (today.equals(bookingDate) || today.after(bookingDate))
+                                            {
+                                                database.collection("booking-history-data") // specify the collection name here
+                                                        .add(accRej)
+                                                        // Add a success listener so we can be notified if the operation was successfuly.
+                                                        // i think success/failure listeners are optional, but if you don't use them you won't know if entry was actually added
+                                                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                                            @Override
+                                                            public void onSuccess(DocumentReference documentReference) {
+                                                                // If we are here, the app successfully connected to Firestore and added a new entry
+
+                                                                database.document(reference.getPath())
+                                                                        .delete()
+                                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                            @Override
+                                                                            public void onSuccess(Void aVoid) {
+                                                                                Log.d("ACC-REJ DELETE", "SUCCESS: Deleted document.");
+
+                                                                            }
+                                                                        })
+                                                                        .addOnFailureListener(new OnFailureListener() {
+                                                                            @Override
+                                                                            public void onFailure(@NonNull Exception e) {
+                                                                                Log.w("ACC-REJ DELETE", "ERROR: Could not delete document. Here is what went wrong: \n", e);
+
+                                                                            }
+                                                                        });
+
+                                                                Log.d("ACC-REJ ADD", "SUCCESS: Added new document with ID: " + documentReference.getId());
+                                                            }
+                                                        })
+                                                        // Add a failure listener so we can be notified if something does wrong
+                                                        .addOnFailureListener(new OnFailureListener() {
+                                                            @Override
+                                                            public void onFailure(@NonNull Exception e) {
+                                                                // If we are here, the entry could not be added for some reason (e.g no internet connection)
+                                                                Log.w("ACC-REJ ADD", "ERROR: Failed to add document", e);
+                                                            }
+                                                        });
+                                            }
+                                            else
+                                            {
+                                                Log.d("ACC-REJ DATE CONDITION", "Date was not old");
+                                            }
+
+                                        } catch (ParseException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    Log.w("ACC-REJ ADD", "ERROR: AccOrRej query failed :(", task.getException());
+                                }
+                            }
+                        })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w("ACC-REJ GET", "ERROR: Could not get AccOrRej objects of patient: \n", e);
+                                    }
+                                });
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+
 
     public void buildExampleList()
     {
@@ -131,8 +287,7 @@ public class PatientConsultationHistory extends Fragment {
 
     } // end of build example
 
-    public void buildRecyclerView(View rootView)
-    {
+    public void buildRecyclerView(View rootView) {
         mRecyclerView = rootView.findViewById(R.id.recyclerView);
         /*
         This makes sure that the recycler view will not change size no matter how many items are in the list, which
@@ -149,8 +304,7 @@ public class PatientConsultationHistory extends Fragment {
         //This function will allow click events to be referenced to the interface in the adapter class
         mAdapter.setOnItemClickListener(new ConsultationHistoryAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(int position)
-            {
+            public void onItemClick(int position) {
 //                changeItem(position, "Clicked");
                 Intent intent = new Intent(getContext(), ConsultationHistoryDetailed.class);
                 Bundle bundle = new Bundle();
@@ -163,6 +317,6 @@ public class PatientConsultationHistory extends Fragment {
                 startActivity(intent);
             }
         });
-    }/////////////
+    }
 
 }
