@@ -218,7 +218,6 @@ public class PatientConsultationHistory extends Fragment {
 
                                         Log.d("ACC-REJ METHOD", "AccOrRej data:" + accRej.pname + ", " +  accRej.id + ", " + accRej.bookingdate);
 
-
                                         String date = accRej.bookingdate.replace('/', '-');
 
                                         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -494,9 +493,6 @@ public class PatientConsultationHistory extends Fragment {
 
                                     for(final AccOrRej ar2: ar1)
                                     {  // String docName= "Eric";
-
-
-
                                         database.collection("doctor-data").whereEqualTo("p_no", ar2.doc_id)
                                                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                             @Override
@@ -540,8 +536,6 @@ public class PatientConsultationHistory extends Fragment {
 
             }
         });
-
-
     }
 
     public void buildRecyclerView(View rootView) {
@@ -570,6 +564,7 @@ public class PatientConsultationHistory extends Fragment {
                 bundle.putString("date", mAppointmentList.get(position).bookingdate);
                 bundle.putString("time", mAppointmentList.get(position).time);
                 bundle.putString("status",mAppointmentList.get(position).status);
+                bundle.putString("doc_id", mAppointmentList.get(position).doc_id);
 
                 intent.putExtras(bundle);
                 startActivity(intent);

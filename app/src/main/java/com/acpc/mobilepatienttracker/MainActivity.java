@@ -583,6 +583,7 @@ class Bookings {
     public String time;
     public String id; //need this for linking to patient
     public String doc_id;
+    public String path;
 
     public Bookings(String pname, String id, String bookingdate, String time, String doc_id){
         this.pname = pname;
@@ -590,6 +591,7 @@ class Bookings {
         this.id = id;
         this.doc_id = doc_id;
         this.time = time;
+        path = "";
     }
 
     public Bookings(){

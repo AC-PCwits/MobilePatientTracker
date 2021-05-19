@@ -137,9 +137,11 @@ public class PendingBookings extends Fragment {
 
                                     Log.d("PENDING-BOOKINGS:", "pulled bookings count: " + task.getResult().size());
 
-                                    for (QueryDocumentSnapshot booking : task.getResult())
+                                    for (QueryDocumentSnapshot b : task.getResult())
                                     {
-                                        mBookingsList.add(booking.toObject(Bookings.class));
+                                        Bookings booking = b.toObject(Bookings.class);
+                                        booking.path = b.getReference().getPath();
+                                        mBookingsList.add(booking);
                                     }
 
                                     buildRecyclerView(rootView);
@@ -195,6 +197,7 @@ public class PendingBookings extends Fragment {
                 bundle.putString("PATIENT_ID", mBookingsList.get(position).id);
                 bundle.putString("BOOKING_DATE", mBookingsList.get(position).bookingdate);
                 bundle.putString("BOOKING_TIME", mBookingsList.get(position).time);
+                bundle.putString("PATH", mBookingsList.get(position).path);
 
                 intent.putExtras(bundle);
                 startActivity(intent);
