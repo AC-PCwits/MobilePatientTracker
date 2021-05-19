@@ -32,7 +32,10 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firestore.v1.WriteResult;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import static android.widget.Toast.LENGTH_LONG;
 import static android.widget.Toast.makeText;
@@ -44,6 +47,7 @@ DBookingDetails extends AppCompatActivity {
     String id;
     String date;
     String time;
+    String path;
     String doc_id;
     String aOrR;
     //  String pId;
@@ -84,6 +88,7 @@ DBookingDetails extends AppCompatActivity {
             id = intent.getExtras().getString("PATIENT_ID");
             date = intent.getExtras().getString("BOOKING_DATE");
             time = intent.getExtras().getString("BOOKING_TIME");
+            path = intent.getExtras().getString("PATH");
 
         }
 
@@ -128,6 +133,7 @@ DBookingDetails extends AppCompatActivity {
                                             @Override
                                             public void onSuccess(DocumentReference documentReference) {
                                                 Toast.makeText(DBookingDetails.this, "Booking Accepted", Toast.LENGTH_SHORT).show();
+                                                DeleteBooking(path);
                                                 Intent intent = new Intent(DBookingDetails.this, DoctorFragActivity.class);
                                                 startActivity(intent);
                                             }
@@ -167,6 +173,7 @@ DBookingDetails extends AppCompatActivity {
                                             @Override
                                             public void onSuccess(DocumentReference documentReference) {
                                                 Toast.makeText(DBookingDetails.this, "Booking Rejected", Toast.LENGTH_SHORT).show();
+                                                DeleteBooking(path);
                                                 Intent intent = new Intent(DBookingDetails.this, DoctorFragActivity.class);
                                                 startActivity(intent);
                                             }
@@ -197,6 +204,26 @@ DBookingDetails extends AppCompatActivity {
         });
 
 
+    }
+
+    public void DeleteBooking(String path)
+    {
+        database.document(path)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("PENDING-BOOKING DELETE", "SUCCESS: Deleted document.");
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("PENDING-BOOKING DELETE", "ERROR: Could not delete document. Here is what went wrong: \n", e);
+
+                    }
+                });
     }
 
     public void addPatient(){
