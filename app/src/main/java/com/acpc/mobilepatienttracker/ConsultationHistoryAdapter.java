@@ -43,6 +43,7 @@ public class ConsultationHistoryAdapter extends RecyclerView.Adapter<Consultatio
         public Drawable pending;
         public Drawable accepted;
         public Drawable rejected;
+        public Drawable past;
 
         /*This is the Constructor for the variables to be displayed, this provides references to our values.
           OnItemClickListener is added to the parameters as a way to reference mListener from inside a static class
@@ -58,6 +59,7 @@ public class ConsultationHistoryAdapter extends RecyclerView.Adapter<Consultatio
             pending = ContextCompat.getDrawable(itemView.getContext(), R.drawable.rounded_corner_pending);
             accepted = ContextCompat.getDrawable(itemView.getContext(), R.drawable.rounded_corner_accepted);
             rejected = ContextCompat.getDrawable(itemView.getContext(), R.drawable.rounded_corner_rejected);
+            past = ContextCompat.getDrawable(itemView.getContext(), R.drawable.rounded_corner_past);
 
             //We handle the click on the cards using the itemView variable
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -114,6 +116,9 @@ public class ConsultationHistoryAdapter extends RecyclerView.Adapter<Consultatio
             case "Pending":
                 holder.statusText.setBackground(holder.pending);
                 break;
+            case "Past":
+                holder.statusText.setBackground(holder.past);
+                break;
             default:
                 holder.statusText.setBackground(holder.rejected);
                 break;
@@ -135,7 +140,10 @@ public class ConsultationHistoryAdapter extends RecyclerView.Adapter<Consultatio
             case "Accepted":
                 return "#50C878";
             case "Pending":
+
                 return "#C3C3C3";
+            case "Past":
+                return "#0E20C5";
             default:
                 return "#FF0000";
         }
