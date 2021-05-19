@@ -12,6 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 
 public class DPatientDetails extends AppCompatActivity {
+    public static String clickedname;
+    public static String clickedID;
+    public static String clickedcell;
 
     private String name;
     private String id;
@@ -111,6 +114,9 @@ public class DPatientDetails extends AppCompatActivity {
         illText.setText(ill);
         medaidText.setText(medaid);
         allergiesText.setText(allergies);
+        clickedname=name;
+        clickedcell=cellno;
+        clickedID=id;
     }
 
     @Override
