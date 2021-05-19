@@ -698,15 +698,27 @@ class AccOrRej{
 class Appointment{
 
     public String docName;
-    public String date;
-    public  String time;
+    public String pname;
+    public String bookingdate;
+    public String time;
+    public String id; //need this for linking to patient
+    public String doc_id;
+    public String status;
 
-    public Appointment(String docName, String date, String time) {
+
+    public Appointment(String pname, String id, String bookingdate, String time, String doc_id,String docName, String status) {
         this.docName = docName;
-        this.date = date;
+        this.bookingdate = bookingdate;
         this.time = time;
+
+
+        this.pname = pname;
+        this.bookingdate = bookingdate;
+        this.id = id;
+        this.doc_id = doc_id;
+        this.time = time;
+        this.status = status;
     }
 
     public Appointment(){}
 }
-

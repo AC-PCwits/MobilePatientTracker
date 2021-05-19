@@ -166,7 +166,6 @@ public class PendingBookings extends Fragment {
         });
     }
 
-
     public void buildRecyclerView(View rootView)
     {
         mRecyclerView = rootView.findViewById(R.id.recyclerView);

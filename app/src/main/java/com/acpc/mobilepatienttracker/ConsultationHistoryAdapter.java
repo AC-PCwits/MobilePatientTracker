@@ -92,9 +92,8 @@ public class ConsultationHistoryAdapter extends RecyclerView.Adapter<Consultatio
         Appointment currentItem = mAppointmentList.get(position);
 
         //The holder variable allows the values of view to be set by Patient objects
-        holder.nameText.setText("Doctor Name: " +currentItem.docName);
-        //TODO: Change from .idno to .lastvisited
-        holder.dateText.setText("Date: " + currentItem.date);
+        holder.nameText.setText("Dr " +currentItem.docName + "          -"+ " "+ currentItem.status);
+        holder.dateText.setText("Date: " + currentItem.bookingdate);
         holder.timeText.setText("Time: " + currentItem.time);
     }
 

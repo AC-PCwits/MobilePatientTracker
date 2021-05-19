@@ -11,6 +11,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -68,6 +82,7 @@ public class PatientConsultationHistory extends Fragment {
 
     private TextView testView;
     private ArrayList<Appointment> mAppointmentList;
+    private ArrayList<Doctor> d;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -115,10 +130,16 @@ public class PatientConsultationHistory extends Fragment {
         testView = (TextView) rootView.findViewById(R.id.testView);
 
         mAppointmentList = new ArrayList<>();
+        d = new ArrayList<>();
+
+
+
        // getBookingData();
         //To populate the list with dummy data use the below function:
-          buildExampleList();
-        buildRecyclerView(rootView);
+          //buildExampleList();
+        getUserData(rootView);
+        getPendingData(rootView);
+       // buildRecyclerView(rootView);
 
         MovePastBookings(); //moving expired bookings to consultation history
 
@@ -278,14 +299,201 @@ public class PatientConsultationHistory extends Fragment {
 
 
 
-    public void buildExampleList()
+  /*  public void buildExampleList()
     {
         mAppointmentList.add(new Appointment("Helen Joseph","12/05/2021","13:00"));
         mAppointmentList.add(new Appointment("Mark James","16/05/2021","14:00"));
         mAppointmentList.add(new Appointment("Helen Joseph","19/05/2021","13:00"));
         mAppointmentList.add(new Appointment("Krithi Pillay","25/05/2021","12:00"));
 
-    } // end of build example
+    } // end of build example */
+
+    public void getUserData(final View view) {
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Patient");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    if (dataSnapshot.child("email").getValue().toString().equalsIgnoreCase(user.getEmail())) {
+                        final String ID = dataSnapshot.child("id").getValue().toString();
+
+
+                        database.collection("acc-rej-data").whereEqualTo("id", ID)
+                                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if(task.isSuccessful())
+                                {
+
+                                    ArrayList<AccOrRej> ar1 = new ArrayList<>();
+
+                                    for(QueryDocumentSnapshot doc : task.getResult())
+                                    {
+                                        ar1.add(doc.toObject(AccOrRej.class));
+
+                                    }
+
+
+
+                                    for(final AccOrRej ar2: ar1)
+                                    {
+
+
+                                        database.collection("doctor-data").whereEqualTo("p_no", ar2.doc_id)
+                                                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                if(task.isSuccessful())
+
+                                                    //  ArrayList<Doctor> d = new ArrayList<>();
+
+                                                    for (QueryDocumentSnapshot doc : task.getResult()) {
+                                                        d.add(doc.toObject(Doctor.class) );
+                                                    }
+                                                for (Doctor dt : d) {
+                                                    if (dt.p_no.equals(ar2.doc_id)) {
+                                                        String docName = dt.lname;
+                                                        mAppointmentList.add(new Appointment(ar2.pname, ar2.id, ar2.bookingdate, ar2.time, ar2.doc_id, docName, ar2.accOrRej));
+
+                                                    }
+                                                    buildRecyclerView(view);
+                                                }
+
+                                            }
+                                        });
+
+                                    //    String docName= "Eric";
+                                    //    mAppointmentList.add(new Appointment(ar2.pname, ar2.id, ar2.bookingdate, ar2.time, ar2.doc_id, docName, ar2.accOrRej));
+                                      //  Toast.makeText(getContext(), "Added", Toast.LENGTH_LONG).show();
+                                    }
+
+                                  //  buildRecyclerView(view);
+
+
+                                }
+                            }
+                        });
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public void getPendingData(final View view){
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Patient");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    if (dataSnapshot.child("email").getValue().toString().equalsIgnoreCase(user.getEmail())) {
+                        final String ID = dataSnapshot.child("id").getValue().toString();
+
+
+                        database.collection("pending-booking-data").whereEqualTo("id", ID)
+                                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if(task.isSuccessful())
+                                {
+
+                                    ArrayList<Bookings> ar1 = new ArrayList<>();
+
+                                    for(QueryDocumentSnapshot doc : task.getResult())
+                                    {
+                                        ar1.add(doc.toObject(Bookings.class));
+                                    }
+
+                                    for(final Bookings ar2: ar1)
+                                    {  // String docName= "Eric";
+
+
+
+                                        database.collection("doctor-data").whereEqualTo("p_no", ar2.doc_id)
+                                                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                if(task.isSuccessful())
+
+                                                    //  ArrayList<Doctor> d = new ArrayList<>();
+
+                                                    for (QueryDocumentSnapshot doc : task.getResult()) {
+                                                        d.add(doc.toObject(Doctor.class) );
+                                                    }
+                                                for (Doctor dt : d) {
+                                                    if (dt.p_no.equals(ar2.doc_id)) {
+                                                        String docName = dt.lname;
+                                                        mAppointmentList.add(new Appointment(ar2.pname, ar2.id, ar2.bookingdate, ar2.time, ar2.doc_id, docName, "Pending"));
+
+                                                    }
+                                                    buildRecyclerView(view);
+                                                }
+
+                                            }
+                                        });
+
+                                      //  mAppointmentList.add(new Appointment(ar2.pname, ar2.id, ar2.bookingdate, ar2.time, ar2.doc_id, docName, "Pending"));
+                                        //  Toast.makeText(getContext(), "Added", Toast.LENGTH_LONG).show();
+                                    }
+
+                                 //   buildRecyclerView(view);
+
+
+                                }
+                            }
+                        });
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+    }
+
+   /* public String getDocName(final String docID, final ArrayList<Doctor> d){
+        final String name;
+
+        database.collection("doctor-data").whereEqualTo("p_no", docID)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful())
+
+                  //  ArrayList<Doctor> d = new ArrayList<>();
+
+                for (QueryDocumentSnapshot doc : task.getResult()) {
+                    d.add(doc.toObject(Doctor.class) );
+                }
+                for (Doctor dt : d) {
+                    if (dt.p_no.equals(docID)) {
+                        String dname = dt.fname + " " + dt.lname;
+                        //qual.setText(uniQ);
+
+
+                    }
+                }
+
+
+
+            }
+        });
+        return name;
+    }*/
 
     public void buildRecyclerView(View rootView) {
         mRecyclerView = rootView.findViewById(R.id.recyclerView);
@@ -310,8 +518,9 @@ public class PatientConsultationHistory extends Fragment {
                 Bundle bundle = new Bundle();
 
                 bundle.putString("doc_name", mAppointmentList.get(position).docName);
-                bundle.putString("date", mAppointmentList.get(position).date);
+                bundle.putString("date", mAppointmentList.get(position).bookingdate);
                 bundle.putString("time", mAppointmentList.get(position).time);
+                bundle.putString("status",mAppointmentList.get(position).status);
 
                 intent.putExtras(bundle);
                 startActivity(intent);
