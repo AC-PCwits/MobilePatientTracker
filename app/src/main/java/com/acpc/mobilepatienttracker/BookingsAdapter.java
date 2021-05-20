@@ -26,6 +26,12 @@ public class BookingsAdapter extends RecyclerView.Adapter<BookingsAdapter.Bookin
         mListener = listener;
     }
 
+    public BookingsAdapter.OnItemClickListener getOnItemClickListner()
+    {
+        return mListener;
+    }
+
+
     //For the Adapter to work, we need a viewholder which will hold all items on the activity seen by the user
     public static class BookingsListViewHolder extends RecyclerView.ViewHolder {
         //These are the variables which will be displayed on the list
@@ -38,8 +44,8 @@ public class BookingsAdapter extends RecyclerView.Adapter<BookingsAdapter.Bookin
 
         public BookingsListViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
-            nameText = itemView.findViewById(R.id.nameText);
-            bookingDateText = itemView.findViewById(R.id.idText);
+            nameText = itemView.findViewById(R.id.dateText);
+            bookingDateText = itemView.findViewById(R.id.statusText);
 
             //We handle the click on the cards using the itemView variable
             itemView.setOnClickListener(new View.OnClickListener() {

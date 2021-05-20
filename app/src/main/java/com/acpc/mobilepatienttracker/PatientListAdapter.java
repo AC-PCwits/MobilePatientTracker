@@ -28,6 +28,11 @@ public class PatientListAdapter extends RecyclerView.Adapter<PatientListAdapter.
         mListener = listener;
     }
 
+    public OnItemClickListener getOnItemClickListner()
+    {
+        return mListener;
+    }
+
     //For the Adapter to work, we need a viewholder which will hold all items on the activity seen by the user
     public static class PatientListViewHolder extends RecyclerView.ViewHolder
     {
@@ -42,8 +47,8 @@ public class PatientListAdapter extends RecyclerView.Adapter<PatientListAdapter.
         public PatientListViewHolder(@NonNull View itemView, final OnItemClickListener listener)
         {
             super(itemView);
-            nameText = itemView.findViewById(R.id.nameText);
-            idText = itemView.findViewById(R.id.idText);
+            nameText = itemView.findViewById(R.id.dateText);
+            idText = itemView.findViewById(R.id.statusText);
 
             //We handle the click on the cards using the itemView variable
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -92,7 +97,6 @@ public class PatientListAdapter extends RecyclerView.Adapter<PatientListAdapter.
 
         //The holder variable allows the values of view to be set by Patient objects
         holder.nameText.setText(currentItem.fname + " " + currentItem.fsurname);
-        //TODO: Change from .idno to .lastvisited
         holder.idText.setText("Last Visited: " + currentItem.lastVisited);
     }
 

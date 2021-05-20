@@ -26,6 +26,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class PatientBookings extends Fragment {
 
@@ -41,8 +42,8 @@ public class PatientBookings extends Fragment {
 
     private Button logoutBut;
 
-    private FirebaseFirestore database = FirebaseFirestore.getInstance();
-    private DocumentReference noteRef = database.collection("doctor-data").document();
+
+//    private DocumentReference noteRef = database.collection("doctor-data").document();
     private DType dtype = new DType();
     private TextView testView;
 
@@ -117,6 +118,7 @@ public class PatientBookings extends Fragment {
 
     public void getDocTypes(final View view)
     {
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
         database.collection("doctor-data").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task)
@@ -133,10 +135,14 @@ public class PatientBookings extends Fragment {
 
                     for(Doctor doc : doctor)
                     {
-                        if(!mDocTypeList.contains(doc.doc_type))
-                        {
-                            mDocTypeList.add(new DType(doc.doc_type));
-                        }
+                        list.add(doc.doc_type);
+                    }
+
+                    list = removeDuplicates(list);
+
+                    for(String str : list)
+                    {
+                        mDocTypeList.add(new DType(str));
                     }
 
                     buildRecyclerView(view);
@@ -184,10 +190,6 @@ public class PatientBookings extends Fragment {
                 Intent intent = new Intent(getContext(), DocTypeList.class);
                 Bundle bundle = new Bundle();
 
-                //bundle.putString("PATIENT_NAME", mBookingsList.get(position).pname);
-                //bundle.putString("PATIENT_ID", mBookingsList.get(position).id);
-                //bundle.putString("BOOKING_DATE", mBookingsList.get(position).bookingdate);
-                //bundle.putString("BOOKING_TIME", mBookingsList.get(position).time);
                 bundle.putString("DOC_TYPE", mDocTypeList.get(position).type);
 
 
@@ -196,6 +198,21 @@ public class PatientBookings extends Fragment {
                 startActivity(intent);
             }
         });
+    }
+
+    public ArrayList<String> removeDuplicates(ArrayList<String> list)
+    {
+        ArrayList<String> newList = new ArrayList<>();
+
+        for(String element : list)
+        {
+            if(!newList.contains(element))
+            {
+                newList.add(element);
+            }
+        }
+
+        return newList;
     }
 
 

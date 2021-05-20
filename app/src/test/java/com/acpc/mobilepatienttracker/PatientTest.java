@@ -28,7 +28,7 @@ public class PatientTest {
     private String lastVisited = "8/04/2021";
 
     private Patient testPatient = new Patient(fname, fsurname, idno, cellno, nationality, gender, address
-    , ename, econtact, race, mstatus, cissues, medaid, allergies);
+    , ename, econtact, race, mstatus, cissues, medaid, allergies,lastVisited);
 
     @Test
     public void testPatientObject()
@@ -47,6 +47,7 @@ public class PatientTest {
         assertEquals(cissues, testPatient.cissues);
         assertEquals(medaid, testPatient.medaid);
         assertEquals(allergies, testPatient.allergies);
+        assertEquals(lastVisited,testPatient.lastVisited);
         assertNotNull(new Patient());
     }
 
