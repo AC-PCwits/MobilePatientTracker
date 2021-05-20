@@ -25,7 +25,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import org.joda.time.DateTime;
 
-public class DHomePage extends Fragment implements DatePickerListener {
+public class DHomePage extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
