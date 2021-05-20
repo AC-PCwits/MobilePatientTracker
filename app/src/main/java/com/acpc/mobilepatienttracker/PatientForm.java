@@ -21,7 +21,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import static android.widget.Toast.LENGTH_LONG;
 import static android.widget.Toast.makeText;
@@ -131,8 +133,11 @@ public class PatientForm extends AppCompatActivity  {
                     final ArrayList<String> cissues = ailments(v);
                     final String gender = getGender(v); //changed to radiobuttons
                     final String medaid = checkAid(v);
+                    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                    Date currentdate = new Date();
+                    final String lastVisited = formatter.format(currentdate);
 
-                    Patient patient = new Patient(p_name, p_surname, p_id, p_cell, p_Nationality, gender, p_Address, p_emname, p_emcell, p_race, m_status, cissues, medaid, allergies);
+                    Patient patient = new Patient(p_name, p_surname, p_id, p_cell, p_Nationality, gender, p_Address, p_emname, p_emcell, p_race, m_status, cissues, medaid, allergies,lastVisited);
 
                     database.collection("patient-data") // data gets added to a collection called patient-data
                             .add(patient)
