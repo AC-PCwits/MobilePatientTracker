@@ -44,7 +44,6 @@ public class PHomePage extends Fragment {
     private TextView bookingDate, bookingTime, bookingDoc, docID;
 
     private ArrayList<AccOrRej> acceptRejects = new ArrayList<>();
-    private String docName = "John Smith";
     private HorizontalPicker picker;
 
     public interface DateCallBack
@@ -130,7 +129,9 @@ public class PHomePage extends Fragment {
                                             {
                                                 bookingDate.setText("Date: " + acceptReject.bookingdate);
                                                 bookingTime.setText("Time: " + acceptReject.time);
-                                                docID.setText("Doctor ID: " + acceptReject.doc_id);
+
+                                                docID.setText("Doctor Practice Number: " + acceptReject.doc_id);
+
                                                 bookingDoc.setText("Doctor: " + doctor.fname + " " + doctor.lname);
                                                 return;
                                             }
@@ -140,13 +141,14 @@ public class PHomePage extends Fragment {
 
                                 bookingDate.setText("Date: ");
                                 bookingTime.setText("Time: ");
-                                docID.setText("Doctor ID: ");
+                                docID.setText("Doctor Practice Number: ");
                                 bookingDoc.setText("Doctor: ");
                             }
                         })
                                 .showTodayButton(true)
                                 .setOffset(3)
                                 .init();
+
 
                         SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
                         Date date = new Date();
@@ -161,13 +163,12 @@ public class PHomePage extends Fragment {
                                     {
                                         bookingDate.setText("Date: " + acceptReject.bookingdate);
                                         bookingTime.setText("Time: " + acceptReject.time);
-                                        docID.setText("Doctor ID: " + acceptReject.doc_id);
+                                        docID.setText("Doctor Practice Number: " + acceptReject.doc_id);
                                         bookingDoc.setText("Doctor: " + doctor.fname + " " + doctor.lname);
                                     }
                                 }
                             }
                         }
-
                     }
                 });
             }
@@ -204,6 +205,7 @@ public class PHomePage extends Fragment {
 
                                 }
                             }
+                           
                         });
                     }
                 }
