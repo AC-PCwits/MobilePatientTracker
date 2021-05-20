@@ -81,7 +81,6 @@ dependencies {
     androidTestImplementation 'androidx.test:rules:1.4.0-alpha06'
 
     implementation 'com.github.jhonnyx2012:horizontal-picker:1.0.6'
-    //compile 'com.github.jhonnyx2012:horizontal-picker:1.0.6'
 
 }
 
