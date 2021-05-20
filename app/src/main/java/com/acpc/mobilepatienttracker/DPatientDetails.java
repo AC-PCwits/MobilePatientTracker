@@ -20,6 +20,11 @@ import java.util.ArrayList;
 
 public class DPatientDetails extends AppCompatActivity {
 
+
+    public static String clickedname;
+    public static String clickedID;
+    public static String clickedcell;
+
     private String name;
     private String id;
     private String cellno;
@@ -157,6 +162,9 @@ public class DPatientDetails extends AppCompatActivity {
         illText.setText(ill);
         medaidText.setText(medaid);
         allergiesText.setText(allergies);
+        clickedname=name;
+        clickedcell=cellno;
+        clickedID=id;
     }
 
     @Override
@@ -171,7 +179,7 @@ public class DPatientDetails extends AppCompatActivity {
     {
         int id = item.getItemId();
 
-        if(id == R.id.action_logout)
+        if(id == R.id.action_con)
         {
             Toast.makeText(getApplicationContext(), "New Consult Form Created", Toast.LENGTH_LONG).show();
             Intent start = new Intent( getApplicationContext(), DoctorConsultForm.class); //moving from main screen to reg screen when clicking register button on main screen

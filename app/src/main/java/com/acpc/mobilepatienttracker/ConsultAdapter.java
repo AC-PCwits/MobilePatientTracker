@@ -14,7 +14,7 @@ import java.util.concurrent.Callable;
 public class ConsultAdapter extends RecyclerView.Adapter<ConsultAdapter.ConsultViewHolder>{
 
 
-    private ArrayList<Consult> mPatientList;
+    private ArrayList<Consultation> mPatientList;
     private OnItemClickListener mListener;
 
     //Interface for handling when user clicks on list
@@ -70,7 +70,7 @@ public class ConsultAdapter extends RecyclerView.Adapter<ConsultAdapter.ConsultV
     }
 
     //This function allows data from the Patient class to be parsed to the Adapter
-    public ConsultAdapter(ArrayList<Consult> patientList)
+    public ConsultAdapter(ArrayList<Consultation> patientList)
     {
         mPatientList = patientList;
     }
@@ -89,12 +89,12 @@ public class ConsultAdapter extends RecyclerView.Adapter<ConsultAdapter.ConsultV
     @Override
     public void onBindViewHolder(@NonNull ConsultViewHolder holder, int position)
     {
-        Consult currentItem = mPatientList.get(position);
+        Consultation currentItem = mPatientList.get(position);
 
         //The holder variable allows the values of view to be set by Patient objects
-        holder.nameText.setText(currentItem.illness);
+        holder.nameText.setText(currentItem.pdiagnosis);
         //TODO: Change from .idno to .lastvisited
-        holder.idText.setText("Consult date: " + currentItem.lastVisited);
+        holder.idText.setText("Consult date: " + currentItem.pdate);
     }
 
     //This function defines how many items are in the list

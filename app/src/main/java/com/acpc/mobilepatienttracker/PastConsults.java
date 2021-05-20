@@ -134,8 +134,8 @@ public class PastConsults extends AppCompatActivity {
             }
         });
     }
-    //This function will populate the patient list from the database
-    public void buildConsultList(final ArrayList<String> pIDs, final String ide)
+    //This function will populate the patient list from the databased
+    public void buildConsultList(final ArrayList<String> pIDs, final String docId )
     {
         database.collection("patient-data")
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -177,7 +177,7 @@ public class PastConsults extends AppCompatActivity {
                                             for(Consultation consultation : consults)
                                             {
 
-                                                if(ide.equals(consultation.pdoctorID))
+                                                if(docId.equals(consultation.pdoctorID))
                                                 {
                                                     mConsultList.add(new Consultation(consultation.pcase,consultation.pdate,consultation.pdiagnosis,consultation.pdoctorID,consultation.ppatientID,consultation.psymptoms));
 
@@ -220,15 +220,14 @@ public class PastConsults extends AppCompatActivity {
         //This sets the layout the user will view
         mLayoutManager = new LinearLayoutManager(Context);
         //This line is where information about the patient will be parsed to create the list
-        mAdapter = new ConsultAdapter(ConsultList);
+        mAdapter = new ConsultAdapter(mConsultList);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
-        mAdapter.setOnItemClickListener(new ConsultAdapter.OnItemClickListener() {
+        /*mAdapter.setOnItemClickListener(new ConsultAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position)
             {
-
 
 //                changeItem(position, "Clicked");
                 Intent intent = new Intent(activity, PastConsultForm.class);
@@ -248,16 +247,16 @@ public class PastConsults extends AppCompatActivity {
                 bundle.putString("date", "10/10/2000");
 
 
+
                 intent.putExtras(bundle);
-
-
                 startActivity(intent);
-
-
 
 
             }
         });
+
+         */
+
 
 
 

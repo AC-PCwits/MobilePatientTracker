@@ -30,7 +30,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="9dp"
             android:layout_marginRight="4.5dp"
-
             android:layout_weight="1"/>
 
         <TextView
@@ -39,7 +38,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="4.5dp"
             android:layout_marginRight="9dp"
-
             android:layout_weight="1"/>
 
     </LinearLayout>
@@ -87,7 +85,6 @@
             android:id="@+id/dConsultName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:layout_marginLeft="9dp"
             android:layout_marginRight="4.5dp"
             android:layout_weight="1"/>
@@ -96,7 +93,6 @@
             android:id="@+id/dConsultLName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:layout_marginLeft="4.5dp"
             android:layout_marginRight="9dp"
             android:layout_weight="1"/>
@@ -115,10 +111,8 @@
             android:id="@+id/dConsultID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:layout_marginLeft="9dp"
             android:layout_marginRight="4.5dp"
-
             android:layout_weight="1"/>
 
         <TextView
@@ -157,7 +151,6 @@
             android:id="@+id/radioGroup4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:layout_weight="1">
 
             <RadioButton
@@ -198,15 +191,12 @@
                 android:id="@+id/pConsultSymptoms"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 />
 
             <TextView
                 android:id="@+id/pConsultDiagnosis"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
-
                 android:layout_below="@+id/pConsultSymptoms"
                 android:layout_marginTop="24dp"/>
 
@@ -228,7 +218,6 @@
             android:id="@+id/editTextTextPersonName10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:layout_weight="1"/>
 
         <LinearLayout
