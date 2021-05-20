@@ -66,100 +66,17 @@ public class PastConsults extends AppCompatActivity {
         mConsultList= new ArrayList<Consultation>();
         ConsultList= new ArrayList<Consult>();
 
-        buildExampleList();
+       // buildExampleList();
         buildRecyclerView();
 
     }
-    public void getDocData()
-    {
-        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
 
-//        final String[] str = {""};
-//
-//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Doctors");
-//        reference.addValueEventListener(new ValueEventListener() {
-//
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                for(DataSnapshot dataSnapshot : snapshot.getChildren())
-//                {
-//                    if(dataSnapshot.child("email").getValue().toString().equalsIgnoreCase(user.getEmail()))
-//                    {
-////                            str[0] = dataSnapshot.child("IDnum").getValue().toString();
-//                        testView.setText(dataSnapshot.child("IDnum").getValue().toString());
-//                    }
-//                }
-//
-//            }
-//
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
+public void buildConsultList(){
+        Bundle bundle = getIntent().getExtras();
+        String pID = bundle.getString("pID");
 
-        database.collection("doctor-data").whereEqualTo("email", user.getEmail())
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful())
-                {
-                    ArrayList<Doctor> doctor1 = new ArrayList<>();
-
-                    for(QueryDocumentSnapshot doc : task.getResult())
-                    {
-                        doctor1.add(doc.toObject(Doctor.class));
-                    }
-
-                    String s = "";
-
-                    for(Doctor doctor2 : doctor1)
-                    {
-                        if(doctor2.email.equals(user.getEmail()))
-                        {
-                            doc = doctor2;
-                        }
-
-                    }
-
-                    if(doc.patient_ID == null)
-                    { return;}
-                    else
-                    {
-                        buildConsultList(doc.patient_ID,doc.ID);
-                    }
-                }
-            }
-        });
-    }
-    //This function will populate the patient list from the databased
-    public void buildConsultList(final ArrayList<String> pIDs, final String docId )
-    {
-        database.collection("patient-data")
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful())
-                {
-                    ArrayList<Patient> patients = new ArrayList<>();
-
-                    for(QueryDocumentSnapshot doc : task.getResult())
-                    {
-                        patients.add(doc.toObject(Patient.class));
-                    }
-
-                    String s = "";
-
-                    for(Patient patient : patients)
-                    {
-//                        s = s + patient.fname + " " + patient.fsurname + " : " + patient.idno + "\n";
-                        for(String pID : pIDs)
-                        {
-                            if(pID.equals(patient.idno))
-                            {
-                                database.collection("consultation-data")
+           database.collection("consultation-data").whereEqualTo("ppatientid",pID)
                                         .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                     @Override
                                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -172,36 +89,17 @@ public class PastConsults extends AppCompatActivity {
                                                 consults.add(doc.toObject(Consultation.class));
                                             }
 
-                                            String s = "";
-
                                             for(Consultation consultation : consults)
                                             {
-
-                                                if(docId.equals(consultation.pdoctorID))
-                                                {
-                                                    mConsultList.add(new Consultation(consultation.pcase,consultation.pdate,consultation.pdiagnosis,consultation.pdoctorID,consultation.ppatientID,consultation.psymptoms));
-
-                                                }
-
+                                                mConsultList.add(new Consultation(consultation.pcase,consultation.pdate,consultation.pdiagnosis,consultation.pdoctorID,consultation.ppatientID,consultation.psymptoms));
                                             }
 
                                         }
 
                                     }
                                 });
-                            }
-                        }
-                    }
-//
 
-
-
-                }
-
-            }
-        });
-    }
-
+}
     public void buildExampleList()
     {
         ConsultList.add(new Consult("TB","8/04/2021"));
