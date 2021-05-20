@@ -236,6 +236,7 @@ public class PHomePage extends Fragment {
 
                     callback.onResponse(doctor);
                 }
+            }
         });
     }
-                                             }
+}
