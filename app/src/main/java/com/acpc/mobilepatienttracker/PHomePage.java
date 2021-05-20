@@ -59,6 +59,11 @@ public class PHomePage extends Fragment {
         void onResponse(ArrayList<AccOrRej> list);
     }
 
+    public interface DocNameCallback
+    {
+        void onResponse(ArrayList<Doctor> list);
+    }
+
     public PHomePage() {
         // Required empty public constructor
     }
@@ -105,7 +110,9 @@ public class PHomePage extends Fragment {
         picker = rootView.findViewById(R.id.datePicker);
 
 
-
+        getDocNames(new DocNameCallback() {
+            @Override
+            public void onResponse(final ArrayList<Doctor> doclist) {
 
         getUserData(picker, new DateCallBack() {
             @Override
@@ -124,11 +131,17 @@ public class PHomePage extends Fragment {
                                 {
                                     if(acceptReject.bookingdate.equals(formdate))
                                     {
-                                        bookingDate.setText("Date: " + acceptReject.bookingdate);
-                                        bookingTime.setText("Time: " + acceptReject.time);
-                                        docID.setText("Doctor ID: " + acceptReject.doc_id);
-                                        bookingDoc.setText("Doctor: " + docName);
-                                        return;
+                                        for(Doctor doctor: doclist)
+                                        {
+                                            if(doctor.p_no.equals(acceptReject.doc_id))
+                                            {
+                                                bookingDate.setText("Date: " + acceptReject.bookingdate);
+                                                bookingTime.setText("Time: " + acceptReject.time);
+                                                docID.setText("Doctor ID: " + acceptReject.doc_id);
+                                                bookingDoc.setText("Doctor: " + doctor.fname + " " + doctor.lname);
+                                                return;
+                                            }
+                                        }
                                     }
                                 }
 
@@ -147,20 +160,23 @@ public class PHomePage extends Fragment {
 
                 for(AccOrRej acceptReject : list)
                 {
-                    bookingDate.setText("Date: " + acceptReject.bookingdate);
-                    bookingTime.setText("Time: " + acceptReject.time);
-                    docID.setText("Doctor ID: " + acceptReject.doc_id);
-                    bookingDoc.setText("Doctor: " + docName);
-
                     if(acceptReject.bookingdate.equals(formatter.format(date)))
                     {
-                        bookingDate.setText("Date: " + acceptReject.bookingdate);
-                        bookingTime.setText("Time: " + acceptReject.time);
-                        docID.setText("Doctor ID: " + acceptReject.doc_id);
-                        bookingDoc.setText("Doctor: " + docName);
+                        for(Doctor doctor: doclist)
+                        {
+                            if(doctor.p_no.equals(acceptReject.doc_id))
+                            {
+                                bookingDate.setText("Date: " + acceptReject.bookingdate);
+                                bookingTime.setText("Time: " + acceptReject.time);
+                                docID.setText("Doctor ID: " + acceptReject.doc_id);
+                                bookingDoc.setText("Doctor: " + doctor.fname + " " + doctor.lname);
+                            }
+                        }
                     }
                 }
 
+            }
+        });
             }
         });
 
@@ -207,6 +223,26 @@ public class PHomePage extends Fragment {
         });
 
 
+    }
+
+    public void getDocNames(final DocNameCallback callback )
+    {
+        final FirebaseFirestore database = FirebaseFirestore.getInstance();
+        database.collection("doctor-data")
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    ArrayList<Doctor> doctor = new ArrayList<>();
+
+                    for (QueryDocumentSnapshot doc : task.getResult()) {
+                        doctor.add(doc.toObject(Doctor.class));
+                    }
+
+                    callback.onResponse(doctor);
+                }
+            }
+        });
     }
 
 }
