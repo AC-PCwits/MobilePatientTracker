@@ -146,7 +146,6 @@ public class PHomePage extends Fragment {
                                 bookingDoc.setText("Doctor: ");
                             }
                         })
-
                                 .showTodayButton(true)
                                 .setOffset(3)
                                 .init();
@@ -239,6 +238,4 @@ public class PHomePage extends Fragment {
                 }
         });
     }
-
-
-}
+                                             }
