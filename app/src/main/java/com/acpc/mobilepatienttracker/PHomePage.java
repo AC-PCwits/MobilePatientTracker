@@ -51,12 +51,16 @@ public class PHomePage extends Fragment {
     private TextView bookingDate, bookingTime, bookingDoc, docID;
 
     private ArrayList<AccOrRej> acceptRejects = new ArrayList<>();
-    private String docName = "John Smith";
     private HorizontalPicker picker;
 
     public interface DateCallBack
     {
         void onResponse(ArrayList<AccOrRej> list);
+    }
+
+    public interface DocNameCallback
+    {
+        void onResponse(ArrayList<Doctor> list);
     }
 
     public PHomePage() {
@@ -105,13 +109,15 @@ public class PHomePage extends Fragment {
         picker = rootView.findViewById(R.id.datePicker);
 
 
-
-
-        getUserData(picker, new DateCallBack() {
+        getDocNames(new DocNameCallback() {
             @Override
-            public void onResponse(final ArrayList<AccOrRej> list) {
+            public void onResponse(final ArrayList<Doctor> doclist) {
 
-                picker.setListener(new DatePickerListener() {
+                getUserData(picker, new DateCallBack() {
+                    @Override
+                    public void onResponse(final ArrayList<AccOrRej> list) {
+
+                        picker.setListener(new DatePickerListener() {
                             @Override
                             public void onDateSelected(DateTime dateSelected)
                             {
@@ -124,43 +130,52 @@ public class PHomePage extends Fragment {
                                 {
                                     if(acceptReject.bookingdate.equals(formdate))
                                     {
-                                        bookingDate.setText("Date: " + acceptReject.bookingdate);
-                                        bookingTime.setText("Time: " + acceptReject.time);
-                                        docID.setText("Doctor ID: " + acceptReject.doc_id);
-                                        bookingDoc.setText("Doctor: " + docName);
-                                        return;
+                                        for(Doctor doctor: doclist)
+                                        {
+                                            if(doctor.p_no.equals(acceptReject.doc_id))
+                                            {
+                                                bookingDate.setText("Date: " + acceptReject.bookingdate);
+                                                bookingTime.setText("Time: " + acceptReject.time);
+                                                docID.setText("Doctor Practice Number: " + acceptReject.doc_id);
+                                                bookingDoc.setText("Doctor: " + doctor.fname + " " + doctor.lname);
+                                                return;
+                                            }
+                                        }
                                     }
                                 }
 
                                 bookingDate.setText("Date: ");
                                 bookingTime.setText("Time: ");
-                                docID.setText("Doctor ID: ");
+                                docID.setText("Doctor Practice Number: ");
                                 bookingDoc.setText("Doctor: ");
                             }
                         })
-                        .showTodayButton(true)
-                        .setOffset(3)
-                        .init();
+                                .showTodayButton(true)
+                                .setOffset(3)
+                                .init();
 
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
-                Date date = new Date();
+                        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+                        Date date = new Date();
 
-                for(AccOrRej acceptReject : list)
-                {
-                    bookingDate.setText("Date: " + acceptReject.bookingdate);
-                    bookingTime.setText("Time: " + acceptReject.time);
-                    docID.setText("Doctor ID: " + acceptReject.doc_id);
-                    bookingDoc.setText("Doctor: " + docName);
+                        for(AccOrRej acceptReject : list)
+                        {
+                            if(acceptReject.bookingdate.equals(formatter.format(date)))
+                            {
+                                for(Doctor doctor: doclist)
+                                {
+                                    if(doctor.p_no.equals(acceptReject.doc_id))
+                                    {
+                                        bookingDate.setText("Date: " + acceptReject.bookingdate);
+                                        bookingTime.setText("Time: " + acceptReject.time);
+                                        docID.setText("Doctor Practice Number: " + acceptReject.doc_id);
+                                        bookingDoc.setText("Doctor: " + doctor.fname + " " + doctor.lname);
+                                    }
+                                }
+                            }
+                        }
 
-                    if(acceptReject.bookingdate.equals(formatter.format(date)))
-                    {
-                        bookingDate.setText("Date: " + acceptReject.bookingdate);
-                        bookingTime.setText("Time: " + acceptReject.time);
-                        docID.setText("Doctor ID: " + acceptReject.doc_id);
-                        bookingDoc.setText("Doctor: " + docName);
                     }
-                }
-
+                });
             }
         });
 
@@ -207,6 +222,26 @@ public class PHomePage extends Fragment {
         });
 
 
+    }
+
+    public void getDocNames(final DocNameCallback callback )
+    {
+        final FirebaseFirestore database = FirebaseFirestore.getInstance();
+        database.collection("doctor-data")
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    ArrayList<Doctor> doctor = new ArrayList<>();
+
+                    for (QueryDocumentSnapshot doc : task.getResult()) {
+                        doctor.add(doc.toObject(Doctor.class));
+                    }
+
+                    callback.onResponse(doctor);
+                }
+            }
+        });
     }
 
 }
