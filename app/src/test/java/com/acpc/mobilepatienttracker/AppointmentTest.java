@@ -1,5 +1,7 @@
 package com.acpc.mobilepatienttracker;
 
+import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 public class AppointmentTest {
@@ -11,18 +13,18 @@ public class AppointmentTest {
     private String docName = "Joe";
     private String status = "Accept";
 
-    private Appointment testBook = new Appointment (String pname, String id, String bookingdate, String time, String doc_id,String docName, String status);
+    private Appointment testApp = new Appointment (pname,id,bookingdate,time,doc_id,docName,status);
 
     @Test
     public void testAppointmentObject()
     {
-        assertEquals(pname, testBook.pname);
-        assertEquals(bookingdate, testBook.bookingdate);
-        assertEquals(time, testBook.time);
-        assertEquals(id, testBook.id);
-        assertEquals(doc_id, testBook.doc_id);
-        assertEquals(docName,testBook.docName)
-        assertEquals(status,testBook.status);
+        assertEquals(pname, testApp.pname);
+        assertEquals(bookingdate, testApp.bookingdate);
+        assertEquals(time, testApp.time);
+        assertEquals(id, testApp.id);
+        assertEquals(doc_id, testApp.doc_id);
+        assertEquals(docName,testApp.docName);
+        assertEquals(status,testApp.status);
         assertNotNull(new Appointment());
     }
 
