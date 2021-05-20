@@ -10,21 +10,74 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="208dp"
-        android:paddingBottom="40dp"
-        android:src="@mipmap/ic_launcher" />
+        <com.github.jhonnyx2012.horizontalpicker.HorizontalPicker
+            android:id="@+id/datePicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:text="Welcome to Redbox !"
-        android:textSize="18sp"
-        android:layout_below="@+id/imageView"
-        android:gravity="center"/>
+        <TextView
+            android:id="@+id/booking_date"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_above="@+id/booking_time"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="25dp"
+            android:hint="Date" />
+
+        <TextView
+            android:id="@+id/booking_time"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_above="@+id/booking_patient"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="25dp"
+            android:hint="Time" />
+
+        <TextView
+            android:id="@+id/booking_patient"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_above="@+id/patientID"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="25dp"
+            android:hint="Patient" />
+
+        <TextView
+            android:id="@+id/patientID"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="250dp"
+            android:hint="Patient ID" />
 
     </RelativeLayout>
 </FrameLayout>
