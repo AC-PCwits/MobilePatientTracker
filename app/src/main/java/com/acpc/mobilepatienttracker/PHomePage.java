@@ -107,11 +107,11 @@ public class PHomePage extends Fragment {
             @Override
             public void onResponse(final ArrayList<Doctor> doclist) {
 
-        getUserData(picker, new DateCallBack() {
-            @Override
-            public void onResponse(final ArrayList<AccOrRej> list) {
+                getUserData(picker, new DateCallBack() {
+                    @Override
+                    public void onResponse(final ArrayList<AccOrRej> list) {
 
-                picker.setListener(new DatePickerListener() {
+                        picker.setListener(new DatePickerListener() {
                             @Override
                             public void onDateSelected(DateTime dateSelected)
                             {
@@ -144,32 +144,32 @@ public class PHomePage extends Fragment {
                                 bookingDoc.setText("Doctor: ");
                             }
                         })
-                        .showTodayButton(true)
-                        .setOffset(3)
-                        .init();
+                                .showTodayButton(true)
+                                .setOffset(3)
+                                .init();
 
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
-                Date date = new Date();
+                        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+                        Date date = new Date();
 
-                for(AccOrRej acceptReject : list)
-                {
-                    if(acceptReject.bookingdate.equals(formatter.format(date)))
-                    {
-                        for(Doctor doctor: doclist)
+                        for(AccOrRej acceptReject : list)
                         {
-                            if(doctor.p_no.equals(acceptReject.doc_id))
+                            if(acceptReject.bookingdate.equals(formatter.format(date)))
                             {
-                                bookingDate.setText("Date: " + acceptReject.bookingdate);
-                                bookingTime.setText("Time: " + acceptReject.time);
-                                docID.setText("Doctor ID: " + acceptReject.doc_id);
-                                bookingDoc.setText("Doctor: " + doctor.fname + " " + doctor.lname);
+                                for(Doctor doctor: doclist)
+                                {
+                                    if(doctor.p_no.equals(acceptReject.doc_id))
+                                    {
+                                        bookingDate.setText("Date: " + acceptReject.bookingdate);
+                                        bookingTime.setText("Time: " + acceptReject.time);
+                                        docID.setText("Doctor ID: " + acceptReject.doc_id);
+                                        bookingDoc.setText("Doctor: " + doctor.fname + " " + doctor.lname);
+                                    }
+                                }
                             }
                         }
-                    }
-                }
 
-            }
-        });
+                    }
+                });
             }
         });
 
@@ -237,5 +237,4 @@ public class PHomePage extends Fragment {
             }
         });
     }
-
 }
