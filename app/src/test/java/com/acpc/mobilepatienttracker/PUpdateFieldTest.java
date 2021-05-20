@@ -41,7 +41,7 @@ public class PUpdateFieldTest
 
         bundle.putSerializable("patient", new Patient("1","1","1","1",
                 "1","1","1","1","1","1","1",
-                arrayList,"1","1"));
+                arrayList,"1","1", "1"));
         bundle.putSerializable("field", PatientField.FIRST_NAME);
 
         intent.putExtras(bundle);
@@ -60,7 +60,7 @@ public class PUpdateFieldTest
 
         bundle.putSerializable("patient", new Patient("1","1","1","1",
                 "1","1","1","1","1","1","1",
-                arrayList,"1","1"));
+                arrayList,"1","1", "1"));
         bundle.putSerializable("field", PatientField.LAST_NAME);
 
         intent.putExtras(bundle);
@@ -79,7 +79,7 @@ public class PUpdateFieldTest
 
         bundle.putSerializable("patient", new Patient("1","1","1","1",
                 "1","1","1","1","1","1","1",
-                arrayList,"1","1"));
+                arrayList,"1","1", "1"));
         bundle.putSerializable("field", PatientField.ID);
 
         intent.putExtras(bundle);
@@ -98,7 +98,7 @@ public class PUpdateFieldTest
 
         bundle.putSerializable("patient", new Patient("1","1","1","1",
                 "1","1","1","1","1","1","1",
-                arrayList,"1","1"));
+                arrayList,"1","1", "1"));
         bundle.putSerializable("field", PatientField.CELLPHONE);
 
         intent.putExtras(bundle);
@@ -117,7 +117,7 @@ public class PUpdateFieldTest
 
         bundle.putSerializable("patient", new Patient("1","1","1","1",
                 "1","1","1","1","1","1","1",
-                arrayList,"1","1"));
+                arrayList,"1","1", "1"));
         bundle.putSerializable("field", PatientField.NATIONALITY);
 
         intent.putExtras(bundle);
@@ -136,7 +136,7 @@ public class PUpdateFieldTest
 
         bundle.putSerializable("patient", new Patient("1","1","1","1",
                 "1","1","1","1","1","1","1",
-                arrayList,"1","1"));
+                arrayList,"1","1", "1"));
         bundle.putSerializable("field", PatientField.GENDER);
 
         intent.putExtras(bundle);
@@ -155,7 +155,7 @@ public class PUpdateFieldTest
 
         bundle.putSerializable("patient", new Patient("1","1","1","1",
                 "1","1","1","1","1","1","1",
-                arrayList,"1","1"));
+                arrayList,"1","1", "1"));
         bundle.putSerializable("field", PatientField.RACE);
 
         intent.putExtras(bundle);
@@ -174,7 +174,7 @@ public class PUpdateFieldTest
 
         bundle.putSerializable("patient", new Patient("1","1","1","1",
                 "1","1","1","1","1","1","1",
-                arrayList,"1","1"));
+                arrayList,"1","1", "1"));
         bundle.putSerializable("field", PatientField.ADDRESS);
 
         intent.putExtras(bundle);
@@ -193,7 +193,7 @@ public class PUpdateFieldTest
 
         bundle.putSerializable("patient", new Patient("1","1","1","1",
                 "1","1","1","1","1","1","1",
-                arrayList,"1","1"));
+                arrayList,"1","1", "1"));
         bundle.putSerializable("field", PatientField.MARITAL_STATUS);
 
         intent.putExtras(bundle);
@@ -212,7 +212,7 @@ public class PUpdateFieldTest
 
         bundle.putSerializable("patient", new Patient("1","1","1","1",
                 "1","1","1","1","1","1","1",
-                arrayList,"1","1"));
+                arrayList,"1","1", "1"));
         bundle.putSerializable("field", PatientField.ILLNESSES);
 
         intent.putExtras(bundle);
@@ -231,7 +231,7 @@ public class PUpdateFieldTest
 
         bundle.putSerializable("patient", new Patient("1","1","1","1",
                 "1","1","1","1","1","1","1",
-                arrayList,"1","1"));
+                arrayList,"1","1", "1"));
         bundle.putSerializable("field", PatientField.ALLERGIES);
 
         intent.putExtras(bundle);
@@ -250,7 +250,7 @@ public class PUpdateFieldTest
 
         bundle.putSerializable("patient", new Patient("1","1","1","1",
                 "1","1","1","1","1","1","1",
-                arrayList,"1","1"));
+                arrayList,"1","1", "1"));
         bundle.putSerializable("field", PatientField.MEDICAL_AID);
 
         intent.putExtras(bundle);
@@ -269,7 +269,7 @@ public class PUpdateFieldTest
 
         bundle.putSerializable("patient", new Patient("1","1","1","1",
                 "1","1","1","1","1","1","1",
-                arrayList,"1","1"));
+                arrayList,"1","1", "1"));
         bundle.putSerializable("field", PatientField.ECONTACT_NAME);
 
         intent.putExtras(bundle);
@@ -288,7 +288,7 @@ public class PUpdateFieldTest
 
         bundle.putSerializable("patient", new Patient("1","1","1","1",
                 "1","1","1","1","1","1","1",
-                arrayList,"1","1"));
+                arrayList,"1","1", "1"));
         bundle.putSerializable("field", PatientField.ECONTACT_CELLPHONE);
 
         intent.putExtras(bundle);

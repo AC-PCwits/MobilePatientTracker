@@ -110,7 +110,7 @@ public class PRegistration extends AppCompatActivity implements View.OnClickList
 
     public void uploadUserData(User user, String password)
     {
-        FirebasePatient firebasePatient = new FirebasePatient(user, "Patient", password, getApplicationContext());
+        FirebasePatient firebasePatient = new FirebasePatient(user, "Patient", password, PRegistration.this);
         firebasePatient.patientRealtimeReg();
     }
 

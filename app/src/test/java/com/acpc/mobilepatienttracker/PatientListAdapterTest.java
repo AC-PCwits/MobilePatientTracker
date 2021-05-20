@@ -12,7 +12,7 @@ public class PatientListAdapterTest {
         ArrayList<String> illness = new ArrayList<>();
         illness.add("TB");
         mPatientList.add(new Patient("John", "Smith", "1001", "0600606600", "SA", "Male"
-                ,"1234 street", "Emily Dow", "1110100001", "Caucasian", "Single", illness, "Yes", "None"));
+                ,"1234 street", "Emily Dow", "1110100001", "Caucasian", "Single", illness, "Yes", "None", "2021/12/12"));
     }
     public PatientListAdapter.OnItemClickListener mListener = new PatientListAdapter.OnItemClickListener() {
         @Override
@@ -27,7 +27,7 @@ public class PatientListAdapterTest {
         ArrayList<String> illness = new ArrayList<>();
         illness.add("TB");
         Patient patient = new Patient("John", "Smith", "1001", "0600606600", "SA", "Male"
-                ,"1234 street", "Emily Dow", "1110100001", "Caucasian", "Single", illness, "Yes", "None");
+                ,"1234 street", "Emily Dow", "1110100001", "Caucasian", "Single", illness, "Yes", "None","2021/12/12");
 
         PatientListAdapter patientListAdapter = new PatientListAdapter(mPatientList);
 
@@ -62,7 +62,7 @@ public class PatientListAdapterTest {
         ArrayList<String> illness = new ArrayList<>();
         illness.add("TB");
         Patient patient = new Patient("John", "Smith", "1001", "0600606600", "SA", "Male"
-                ,"1234 street", "Emily Dow", "1110100001", "Caucasian", "Single", illness, "Yes", "None");
+                ,"1234 street", "Emily Dow", "1110100001", "Caucasian", "Single", illness, "Yes", "None",  "2021/12/12");
 
         PatientListAdapter patientListAdapter = new PatientListAdapter(mPatientList);
 
