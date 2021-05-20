@@ -116,7 +116,7 @@ public class DoctorConsultForm extends AppCompatActivity {
                                 public void onSuccess(DocumentReference documentReference) {
                                     // If we are here, the app successfully connected to Firestore and added a new entry
                                     makeText(DoctorConsultForm.this, "Data successfully added", LENGTH_LONG).show();
-                                    Intent start = new Intent(DoctorConsultForm.this, DHomePage.class);
+                                    Intent start = new Intent(DoctorConsultForm.this, DoctorFragActivity.class);
                                     startActivity(start);
                                 }
                             })
@@ -170,11 +170,9 @@ public class DoctorConsultForm extends AppCompatActivity {
                         }
 
                     }
-
-                    String[] splitter= (doc.fname).split(" ", 2);
                     doctorid.setText(doc.ID);
-                    dname.setText(splitter[0]);
-                    dsurname.setText(splitter[1]);
+                    dname.setText(doc.fname);
+                    dsurname.setText(doc.lname);
 
                 }
             }
