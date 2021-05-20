@@ -90,14 +90,13 @@ public class DPatientDetails extends AppCompatActivity {
 
         String ill = "";
 
-        for(String text: illnesses)
-        {
-            if(ill.equals(""))
-            {
-                ill = text;
-            }else
-            {
-                ill = ill + "\n" + text;
+        if(illnesses != null) {
+            for (String text : illnesses) {
+                if (ill.equals("")) {
+                    ill = text;
+                } else {
+                    ill = ill + "\n" + text;
+                }
             }
         }
 
@@ -131,7 +130,7 @@ public class DPatientDetails extends AppCompatActivity {
     {
         int id = item.getItemId();
 
-        if(id == R.id.action_logout)
+        if(id == R.id.action_con)
         {
             Toast.makeText(getApplicationContext(), "New Consult Form Created", Toast.LENGTH_LONG).show();
             Intent start = new Intent( getApplicationContext(), DoctorConsultForm.class); //moving from main screen to reg screen when clicking register button on main screen

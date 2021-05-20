@@ -43,6 +43,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.ParseException;
+import java.util.Collections;
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -69,9 +70,6 @@ public class PatientConsultationHistory extends Fragment {
 
     private ConsultationHistoryAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-
-    private FirebaseFirestore database = FirebaseFirestore.getInstance();
-    private DocumentReference noteRef = database.collection("acc-rej-data").document();
 
 
 
@@ -183,9 +181,11 @@ public class PatientConsultationHistory extends Fragment {
 //        });
 
     }
+
     //// method to move old bookings from acc-rej-data collection to booking-data-history collection
     public void MovePastBookings() {
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        final FirebaseFirestore database = FirebaseFirestore.getInstance();
 
         Log.d("ACC-REJ METHOD", "Running method...");
 
@@ -310,6 +310,7 @@ public class PatientConsultationHistory extends Fragment {
 
     public void getUserData(final View view) {
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        final FirebaseFirestore database = FirebaseFirestore.getInstance();
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Patient");
         reference.addValueEventListener(new ValueEventListener() {
@@ -358,9 +359,10 @@ public class PatientConsultationHistory extends Fragment {
                                                         mAppointmentList.add(new Appointment(ar2.pname, ar2.id, ar2.bookingdate, ar2.time, ar2.doc_id, docName, ar2.accOrRej));
 
                                                     }
-                                                    buildRecyclerView(view);
-                                                }
 
+                                                }
+                                                Collections.sort(mAppointmentList);
+                                                buildRecyclerView(view);
                                             }
                                         });
 
@@ -389,6 +391,7 @@ public class PatientConsultationHistory extends Fragment {
 
     public void getPendingData(final View view){
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        final FirebaseFirestore database = FirebaseFirestore.getInstance();
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Patient");
         reference.addValueEventListener(new ValueEventListener() {
@@ -467,6 +470,7 @@ public class PatientConsultationHistory extends Fragment {
 
     public void getPastBookings(final View view){
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        final FirebaseFirestore database = FirebaseFirestore.getInstance();
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Patient");
         reference.addValueEventListener(new ValueEventListener() {
