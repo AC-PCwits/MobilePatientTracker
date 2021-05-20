@@ -44,10 +44,9 @@ public class PastConsultForm extends AppCompatActivity {
         doctorid=(TextView) findViewById(R.id.dConsultID);
         date=(TextView) findViewById(R.id.editTextTextPersonName10);
 
-        //Patient details from the list are sent with the intent used to send the user to this screen
+
         Intent intent = getIntent();
 
-//        Patient Details are set here
         if(intent.getExtras() != null) {
             Dlname = intent.getExtras().getString("dlname");
             Dfname = intent.getExtras().getString("dfname");

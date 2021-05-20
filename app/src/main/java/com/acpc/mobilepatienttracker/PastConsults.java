@@ -185,11 +185,6 @@ public class PastConsults extends AppCompatActivity {
 
                                             }
 
-
-
-//
-
-
                                         }
 
                                     }
