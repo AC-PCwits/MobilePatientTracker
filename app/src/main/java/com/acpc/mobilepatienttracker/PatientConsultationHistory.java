@@ -43,6 +43,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.ParseException;
+import java.util.Collections;
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -180,6 +181,7 @@ public class PatientConsultationHistory extends Fragment {
 //        });
 
     }
+
     //// method to move old bookings from acc-rej-data collection to booking-data-history collection
     public void MovePastBookings() {
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -357,9 +359,10 @@ public class PatientConsultationHistory extends Fragment {
                                                         mAppointmentList.add(new Appointment(ar2.pname, ar2.id, ar2.bookingdate, ar2.time, ar2.doc_id, docName, ar2.accOrRej));
 
                                                     }
-                                                    buildRecyclerView(view);
-                                                }
 
+                                                }
+                                                Collections.sort(mAppointmentList);
+                                                buildRecyclerView(view);
                                             }
                                         });
 
