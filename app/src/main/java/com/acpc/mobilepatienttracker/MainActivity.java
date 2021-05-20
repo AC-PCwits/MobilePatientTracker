@@ -2,7 +2,6 @@ package com.acpc.mobilepatienttracker;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,7 +17,10 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -698,7 +700,7 @@ class AccOrRej{
 }
 
 
-class Appointment{
+class Appointment implements Comparable<Appointment>{
 
     public String docName;
     public String pname;
@@ -724,4 +726,28 @@ class Appointment{
     }
 
     public Appointment(){}
+
+
+    public void  setBookingdate(){
+        this.bookingdate = bookingdate;
+    }
+
+    public String getBookingDate(){
+        return bookingdate;
+    }
+
+    @Override
+    public int compareTo(Appointment appointment) {
+        try {
+            Date thisDate = new SimpleDateFormat("yyyy/MM/dd").parse(this.bookingdate);
+            Date otherDate = new SimpleDateFormat("yyyy/MM/dd").parse(appointment.bookingdate);
+
+            return otherDate.compareTo(thisDate);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
 }
