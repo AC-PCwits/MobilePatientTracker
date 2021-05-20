@@ -40,6 +40,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.joda.time.DateTime;
+
 public class DHomePage extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -50,6 +52,7 @@ public class DHomePage extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
 
     private TextView booking_date, booking_time, booking_patient, patientID;
 
@@ -63,6 +66,7 @@ public class DHomePage extends Fragment {
     {
         void onResponse(ArrayList<AccOrRej> list);
     }
+
 
 
     public DHomePage() {
@@ -102,6 +106,7 @@ public class DHomePage extends Fragment {
 
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.activity_d_home_page, container, false);
+
 
         booking_date = rootView.findViewById(R.id.booking_date);
         booking_time = rootView.findViewById(R.id.booking_time);
@@ -199,7 +204,6 @@ public class DHomePage extends Fragment {
                                     callBack.onResponse(accept_rejects);
 
                                 }
-                            }
                         });
                     }
                 }

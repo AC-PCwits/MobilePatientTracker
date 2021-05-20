@@ -62,7 +62,7 @@
             android:layout_marginEnd="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="25dp"
-            android:hint="Doctor" />
+            android:hint="Patient" />
 
         <TextView
             android:id="@+id/patientID"
@@ -77,7 +77,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginRight="20dp"
-            android:hint="Doctor ID" />
+            android:hint="Patient ID" />
 
     </RelativeLayout>
 </FrameLayout>

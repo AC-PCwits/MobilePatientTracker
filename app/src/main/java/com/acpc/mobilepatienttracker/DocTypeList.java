@@ -41,14 +41,6 @@ public class DocTypeList extends AppCompatActivity {
 
     private ArrayList<DInfo> mdinfoList;
 
-
-    //  DatabaseReference mRef; // requestRef, bookingRef;
-    //  private FirebaseAuth mAuth; //using Realtime db
-    //  FirebaseUser mUser;
-
-    private FirebaseFirestore database = FirebaseFirestore.getInstance();
-
-    //private DocumentReference noteRef = database.collection("booking-data").document();
     private DInfo info = new DInfo();
     private TextView testView;
 
@@ -84,37 +76,49 @@ public class DocTypeList extends AppCompatActivity {
 
         }
 
-        dt.setText(t);
-        getDocData(t);
+        if(t.equals("__EXAMPLE_BUILD___"))
+        {
+            buildExampleList();
+            buildRecyclerView();
+        }
+        else {
+            dt.setText(t);
+            getDocData(t);
+        }
     }
 
     public void getDocData(String type)
     {
-        database.collection("doctor-data").whereEqualTo("doc_type", t).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//        database.collection("doctor-data").whereEqualTo("doc_type", type).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                if (task.isSuccessful())
+//                {
+//                    ArrayList<Doctor> doctors = new ArrayList<>();
+//
+//                    for(QueryDocumentSnapshot doc : task.getResult())
+//                    {
+//                        doctors.add(doc.toObject(Doctor.class));
+//                    }
+//
+//                    for(Doctor doc: doctors)
+//                    {
+//                        mdinfoList.add(new DInfo(doc.fname, doc.lname, doc.p_length, doc.p_no));
+//                    }
+//
+//                    buildRecyclerView();
+//                }
+//            }
+//        });
+        FirebaseDoctor firebaseDoctor = new FirebaseDoctor();
+        firebaseDoctor.getDInfoData("doc_type", type, new FirebaseDoctor.DInfoCallback() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful())
-                {
-                    ArrayList<Doctor> doctors = new ArrayList<>();
-
-                    for(QueryDocumentSnapshot doc : task.getResult())
-                    {
-                        doctors.add(doc.toObject(Doctor.class));
-                    }
-
-                    for(Doctor doc: doctors)
-                    {
-                        mdinfoList.add(new DInfo(doc.fname, doc.lname, doc.p_length, doc.p_no));
-                    }
-
-                    buildRecyclerView();
-                }
+            public void onResponse(ArrayList<DInfo> dInfos) {
+                mdinfoList.addAll(dInfos);
+                buildRecyclerView();
             }
         });
     }
-
-    ///////////////////
-
     public void buildExampleList()
     {
         mdinfoList.add(new DInfo("Sally","Parker","12 Years","12"));
