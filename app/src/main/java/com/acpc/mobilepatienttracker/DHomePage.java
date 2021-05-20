@@ -202,8 +202,8 @@ public class DHomePage extends Fragment {
                                     }
 
                                     callBack.onResponse(accept_rejects);
-
                                 }
+                            }
                         });
                     }
                 }
