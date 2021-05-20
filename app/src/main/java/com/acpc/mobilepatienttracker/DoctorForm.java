@@ -49,7 +49,6 @@ public class DoctorForm extends AppCompatActivity {
     private Calendar c;
     private DatePickerDialog dpd;
 
-    private final FirebaseFirestore database = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,22 +61,17 @@ public class DoctorForm extends AppCompatActivity {
         //select_date = findViewById(R.id.select_dob);
         first_name = findViewById(R.id.first_name);
         last_name = findViewById(R.id.last_name);
-//        email = findViewById(R.id.email);
         date_of_birth = findViewById(R.id.date_of_birth);
         id_number = findViewById(R.id.IDnu);
         length_practice = findViewById(R.id.LengthOfPractice);
         institution=findViewById(R.id.Institution);
-//        password = findViewById(R.id.password);
         doctorSpec = findViewById(R.id.Doctor_speciality);
         cellNum = findViewById(R.id.Cellnu);
-//        practicingNum = findViewById(R.id.practicingNum);
-//        policy = findViewById(R.id.policy);
 
         first_name.setFilters(new InputFilter[]{new InputFilter.LengthFilter(15)});
         last_name.setFilters(new InputFilter[]{new InputFilter.LengthFilter(15)});
         length_practice.setFilters(new InputFilter[]{new InputFilter.LengthFilter(15)});
         institution.setFilters(new InputFilter[]{new InputFilter.LengthFilter(15)});
-//        password.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
         id_number.setFilters(new InputFilter[]{new InputFilter.LengthFilter(13)});
         cellNum.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
 
@@ -122,7 +116,6 @@ public class DoctorForm extends AppCompatActivity {
                 int selected_gender = gender_group.getCheckedRadioButtonId();
                 gender_button = findViewById(selected_gender);
 
-//                String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
                 String datePattern = "^\\d{4}/\\d{2}/\\d{2}$";
 
 
@@ -134,12 +127,6 @@ public class DoctorForm extends AppCompatActivity {
                 } else if (last_name.getText().toString().equals("")) {
                     last_name.setError("Empty last name");
                     return;
-//                } else if (email.getText().toString().equals("")) {
-//                    email.setError("Empty email address");
-//                    return;
-//                } else if (!email.getText().toString().trim().matches(emailPattern)) {
-//                    email.setError("Invalid email address");
-//                    return;
                 } else if (date_of_birth.getText().toString().equals("")) {
                     date_of_birth.setError("Select date of birth");
                     return;
@@ -152,9 +139,6 @@ public class DoctorForm extends AppCompatActivity {
                 } else if (length_practice.getText().toString().equals("")) {
                     length_practice.setError("Empty length of practice");
                     return;
-//                } else if (practicingNum.getText().toString().equals("")) {
-//                    practicingNum.setError("Empty practice number");
-//                    return;
                 } else if (institution.getText().toString().equals("")) {
                     institution.setError("Empty name of institution");
                     return;
@@ -164,29 +148,7 @@ public class DoctorForm extends AppCompatActivity {
                 } else if (cellNum.getText().toString().equals("")) {
                     cellNum.setError("Empty cell number");
                     return;
-//                } else if (password.getText().toString().equals("")) {
-//                    password.setError("Empty password");
-//                    return;
                 }
-//                else if (!policy.isChecked()) {
-//                    policy.setError("Policy must be accepted");
-//
-//                    policy.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//
-//                        @Override
-//                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                            if (policy.isChecked()) {
-//
-//                                Intent intent = new Intent(DoctorForm.this, PrivacyPolicy.class);
-//                                startActivity(intent);
-//                            }
-//
-//                        }
-//                    });
-//
-//                    return;
-//                }
-
                 else{
                         ////////ADDING A BRAND NEW ENTRY OF DOCTOR INFORMATION ONCE SIGN UP HAS BEEN SELECTED
 
@@ -211,27 +173,8 @@ public class DoctorForm extends AppCompatActivity {
                     // Now we add it to a specified collection (table) in the database with database.collection().add()
                     // This way will give the new document an auto-generated unique ID as the file name. This can be used like a primary key
 
-                    database.collection("doctor-data") // specify the collection name here
-                            .add(doctor)
-                            // Add a success listener so we can be notified if the operation was successfuly.
-
-                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                @Override
-                                public void onSuccess(DocumentReference documentReference) {
-                                    // If we are here, the app successfully connected to Firestore and added a new entry
-                                    Toast.makeText(DoctorForm.this, "Data successfully added", Toast.LENGTH_LONG).show();
-                                    Intent intent = new Intent(DoctorForm.this, DoctorFragActivity.class);
-                                    startActivity(intent);
-                                }
-                            })
-                            // Add a failure listener so we can be notified if something does wrong
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    // If we are here, the entry could not be added for some reason (e.g no internet connection)
-                                    Toast.makeText(DoctorForm.this, "Data was unable to be added. Check connection", Toast.LENGTH_LONG).show();
-                                }
-                            });
+                    FirebaseDoctor firebaseDoctor = new FirebaseDoctor(doctor, "doctor-data", DoctorForm.this);
+                    firebaseDoctor.doctorFirestoreReg();
                 }
             }
         });

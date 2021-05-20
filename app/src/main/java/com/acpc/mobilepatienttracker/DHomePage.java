@@ -40,7 +40,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class DHomePage extends Fragment {
+import org.joda.time.DateTime;
+
+public class DHomePage extends Fragment implements DatePickerListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -63,7 +65,6 @@ public class DHomePage extends Fragment {
     {
         void onResponse(ArrayList<AccOrRej> list);
     }
-
 
     public DHomePage() {
         // Required empty public constructor
@@ -171,7 +172,7 @@ public class DHomePage extends Fragment {
         return rootView;
 
     }
-
+  
 
     public void getUserData(final HorizontalPicker picker, final DHomePage.DateCallBack callBack) {
 

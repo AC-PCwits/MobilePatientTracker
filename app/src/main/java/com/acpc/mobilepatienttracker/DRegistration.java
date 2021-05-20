@@ -29,16 +29,13 @@ import com.google.firebase.database.FirebaseDatabase;
 public class DRegistration extends AppCompatActivity implements View.OnClickListener {
 
     private Button reg;
-
     private EditText inname, inemail, inpassword, inprac_no;
-    private FirebaseAuth authorization;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_d_registration);
 
-        authorization = FirebaseAuth.getInstance();
         inname= findViewById(R.id.inname);
         inemail= findViewById(R.id.inemail);
         inpassword= findViewById(R.id.inpassword);
@@ -59,7 +56,6 @@ public class DRegistration extends AppCompatActivity implements View.OnClickList
     }
 
     private void registerUser(){
-        Log.d("DOCTOR", "Registering doctor...");
 
         final String name= inname.getText().toString().trim();
         final String email= inemail.getText().toString().trim();
@@ -89,11 +85,13 @@ public class DRegistration extends AppCompatActivity implements View.OnClickList
         if(prac_no.isEmpty()){
             inprac_no.setError("Practicing Number is Required");
             inprac_no.requestFocus();
+            return;
         }
 
         if(prac_no.length()!=7){
             inprac_no.setError("Practice Number must be 7 digits");
             inprac_no.requestFocus();
+            return;
         }
 
         if(password.isEmpty()){
@@ -101,13 +99,11 @@ public class DRegistration extends AppCompatActivity implements View.OnClickList
             inpassword.requestFocus();
             return;
         }
-
         if(password.length()<6){  //firebase requires password with min 6 characters
-            inpassword.setError("Min Length = 6");
+            inpassword.setError("Password must be at least 6 characters");
             inpassword.requestFocus();
             return;
         }
-
         openDialog(new User(name,email,prac_no), password);
 
     }
@@ -141,53 +137,8 @@ public class DRegistration extends AppCompatActivity implements View.OnClickList
 
     public void uploadUserData(User user, String password)
     {
-        final String name = user.fname;
-        final String email = user.email;
-        final String prac_no = user.id;
-
-        authorization.createUserWithEmailAndPassword(email,password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-
-                        if(task.isSuccessful()){
-                            User user= new User(name,email,prac_no);
-                            FirebaseDatabase.getInstance().getReference("Doctors")
-
-                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-
-                                    .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-
-                                    if(task.isSuccessful()){
-
-                                        Toast.makeText(DRegistration.this, "You have successfully been registered as a doctor.", Toast.LENGTH_LONG).show();
-
-                                        Intent start = new Intent(DRegistration.this, DoctorForm.class);
-                                        Bundle bundle = new Bundle();
-                                        bundle.putString("PID", prac_no);
-                                        bundle.putString("EMAIL", email);
-                                        start.putExtras(bundle);
-                                        startActivity(start);
-                                        finish();
-
-                                    }
-                                    else{
-                                        Toast.makeText(DRegistration.this, "Doctor Registration Unsuccessful, Try Again", Toast.LENGTH_LONG).show();
-                                        Log.d("DOCTOR", task.getException().getMessage());
-
-                                    }
-                                }
-                            });
-
-                        }
-                        else{
-                            Toast.makeText(DRegistration.this, "Doctor Registration Unsuccessful, Try Again", Toast.LENGTH_LONG).show();
-                            Log.d("DOCTOR", task.getException().getMessage());
-                        }
-                    }
-                });
+        FirebaseDoctor firebaseDoctor = new FirebaseDoctor(user, "Doctors", password, DRegistration.this);
+        firebaseDoctor.doctorRealtimeReg();
     }
 
 

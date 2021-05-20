@@ -230,7 +230,7 @@ public class DoctorPatientList extends Fragment
         });
     }
 
-    public void buildExampleList()
+  /*  public void buildExampleList()
     {
         ArrayList<String> illness = new ArrayList<>();
         illness.add("TB");
@@ -247,7 +247,7 @@ public class DoctorPatientList extends Fragment
                 ,"13 Av Blueberry Hill", "Joe Willock", "5264831346", "Indian", "Other", illness, "Yes", "Sulfates"));
         mPatientList.add(new Patient("Deena", "Schmidt", "1005", "6542156482", "SA", "Female"
                 ,"1 Victory Lane", "Emile Qura", "6248561279", "Black", "Married", illness, "Yes", "Peanuts"));
-    }
+    } */
 
     //This function creates the recylerview object
     public void buildRecyclerView(View rootView)

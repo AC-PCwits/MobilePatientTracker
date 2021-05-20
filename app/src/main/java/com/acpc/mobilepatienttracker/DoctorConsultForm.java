@@ -3,6 +3,7 @@ package com.acpc.mobilepatienttracker;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -105,6 +106,8 @@ public class DoctorConsultForm extends AppCompatActivity {
                     final String pdate = date.getText().toString();
                     final String pcase = getCase(v);
 
+                    UpdateLastVisited(ppatientid);
+
                     Consultation consultation = new Consultation(psymptoms, pdiagnosis, pcase,pdate,ppatientid,pdoctorid);
 
                     database.collection("consultation-data") // data gets added to a collection called patient-data
@@ -178,5 +181,55 @@ public class DoctorConsultForm extends AppCompatActivity {
             }
         });
     }
+
+    public void UpdateLastVisited(final String ppatientid) {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        Date currentdate = new Date();
+        final String lastVisited = formatter.format(currentdate);
+
+        database.collection("patient-data").whereEqualTo("idno",ppatientid).get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            //   ArrayList<String> patIDs = new ArrayList<>();
+
+                            String documentID = "";
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                documentID = document.getId();
+                            }
+                            if(documentID != ""){
+                                final DocumentReference Ref = database.collection("patient-data").document(documentID);
+
+                                Ref.update("lastVisited", lastVisited )
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Log.d("PD", "SUCCESS: Updated field: ");
+                                                //Toast.makeText(DBookingDetails.this, "Could not save: failed to update details", Toast.LENGTH_LONG).show();
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                // failed to update the given field for some reason
+                                                Log.w("PD", "ERROR: Could not update field: ", e);
+                                                // Toast.makeText(DBookingDetails.this, "Could not save: failed to update details", Toast.LENGTH_LONG).show();
+                                            }
+                                        });
+
+                            }
+
+                            //  }
+
+                        }
+
+                    }
+                });
+
+    }
+
+
+
 
 }
