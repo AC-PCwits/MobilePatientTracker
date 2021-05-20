@@ -10,13 +10,34 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Booking History"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/>
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Appointments"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:gravity="center_horizontal"
+            android:textSize="36dp"
+            android:textColor="@android:color/black"/>
+
+
+        <!-- Recycler view Object, this will allow for the user to scroll through a list of items -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="2dp"
+            android:layout_below="@+id/titleText"
+            android:background="@drawable/border_set_patient_list"
+            android:scrollbars="vertical" />
+
+        <TextView
+            android:id="@+id/testView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/recyclerView"
+            android:textSize="16sp"/>
 
     </RelativeLayout>
 

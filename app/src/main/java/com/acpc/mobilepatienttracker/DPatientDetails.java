@@ -9,11 +9,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.auth.FirebaseAuth;
-
 import java.util.ArrayList;
 
 public class DPatientDetails extends AppCompatActivity {
+    public static String clickedname;
+    public static String clickedID;
+    public static String clickedcell;
 
     private String name;
     private String id;
@@ -52,8 +53,8 @@ public class DPatientDetails extends AppCompatActivity {
         setContentView(R.layout.activity_d_patient_details);
 
         //Instantiation of View Components
-        nameText = (TextView)findViewById(R.id.nameText);
-        idText = (TextView)findViewById(R.id.idText);
+        nameText = (TextView)findViewById(R.id.dateText);
+        idText = (TextView)findViewById(R.id.statusText);
         illText = (TextView)findViewById(R.id.illnessText);
         cellText = (TextView)findViewById(R.id.cellText);
         nationalityText = (TextView)findViewById(R.id.natText);
@@ -112,6 +113,9 @@ public class DPatientDetails extends AppCompatActivity {
         illText.setText(ill);
         medaidText.setText(medaid);
         allergiesText.setText(allergies);
+        clickedname=name;
+        clickedcell=cellno;
+        clickedID=id;
     }
 
     @Override

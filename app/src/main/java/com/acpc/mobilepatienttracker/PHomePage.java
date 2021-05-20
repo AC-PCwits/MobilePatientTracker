@@ -1,6 +1,5 @@
 package com.acpc.mobilepatienttracker;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.AsyncListUtil;
 
 import com.github.jhonnyx2012.horizontalpicker.DatePickerListener;
 import com.github.jhonnyx2012.horizontalpicker.HorizontalPicker;
@@ -52,6 +52,12 @@ public class PHomePage extends Fragment {
 
     private ArrayList<AccOrRej> acceptRejects = new ArrayList<>();
     private String docName = "John Smith";
+    private HorizontalPicker picker;
+
+    public interface DateCallBack
+    {
+        void onResponse(ArrayList<AccOrRej> list);
+    }
 
     public PHomePage() {
         // Required empty public constructor
@@ -96,46 +102,73 @@ public class PHomePage extends Fragment {
         bookingDoc = rootView.findViewById(R.id.bookingDoc);
         docID = rootView.findViewById(R.id.docID);
 
-        HorizontalPicker picker = rootView.findViewById(R.id.datePicker);
+        picker = rootView.findViewById(R.id.datePicker);
 
 
 
 
-        getUserData(picker);
+        getUserData(picker, new DateCallBack() {
+            @Override
+            public void onResponse(final ArrayList<AccOrRej> list) {
 
+                picker.setListener(new DatePickerListener() {
+                            @Override
+                            public void onDateSelected(DateTime dateSelected)
+                            {
+                                String [] date = dateSelected.toString().substring(0,10).split("-");
+                                String formdate = date[0] + "/" + date[1] + "/" + date[2];
+
+                                bookingDate.setText("Date: " + formdate);
+
+                                for(AccOrRej acceptReject : list)
+                                {
+                                    if(acceptReject.bookingdate.equals(formdate))
+                                    {
+                                        bookingDate.setText("Date: " + acceptReject.bookingdate);
+                                        bookingTime.setText("Time: " + acceptReject.time);
+                                        docID.setText("Doctor ID: " + acceptReject.doc_id);
+                                        bookingDoc.setText("Doctor: " + docName);
+                                        return;
+                                    }
+                                }
+
+                                bookingDate.setText("Date: ");
+                                bookingTime.setText("Time: ");
+                                docID.setText("Doctor ID: ");
+                                bookingDoc.setText("Doctor: ");
+                            }
+                        })
+                        .showTodayButton(true)
+                        .setOffset(3)
+                        .init();
+
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+                Date date = new Date();
+
+                for(AccOrRej acceptReject : list)
+                {
+                    bookingDate.setText("Date: " + acceptReject.bookingdate);
+                    bookingTime.setText("Time: " + acceptReject.time);
+                    docID.setText("Doctor ID: " + acceptReject.doc_id);
+                    bookingDoc.setText("Doctor: " + docName);
+
+                    if(acceptReject.bookingdate.equals(formatter.format(date)))
+                    {
+                        bookingDate.setText("Date: " + acceptReject.bookingdate);
+                        bookingTime.setText("Time: " + acceptReject.time);
+                        docID.setText("Doctor ID: " + acceptReject.doc_id);
+                        bookingDoc.setText("Doctor: " + docName);
+                    }
+                }
+
+            }
+        });
 
         return rootView;
 
     }
 
-//    @Override
-//    public void onDateSelected(DateTime dateSelected)
-//    {
-//        String [] date = dateSelected.toString().substring(0,10).split("-");
-//        String formdate = date[2] + "/" + date[1] + "/" + date[0];
-//
-//        bookingDate.setText("Date: " + formdate);
-//
-//        for(AccOrRej acceptReject : acceptRejects)
-//        {
-//            if(acceptReject.bookingdate.equals(formdate))
-//            {
-//                bookingDate.setText("Date: " + acceptReject.bookingdate);
-//                bookingTime.setText("Time: " + acceptReject.time);
-//                docID.setText("Doctor ID: " + acceptReject.doc_id);
-//                bookingDoc.setText("Doctor: " + docName);
-//                return;
-//            }
-//        }
-//
-//        bookingDate.setText("Date: ");
-//        bookingTime.setText("Time: ");
-//        docID.setText("Doctor ID: ");
-//        bookingDoc.setText("Doctor: ");
-//
-//    }
-
-    public void getUserData(final HorizontalPicker picker) {
+    public void getUserData(final HorizontalPicker picker, final DateCallBack callBack) {
 
         final FirebaseFirestore database = FirebaseFirestore.getInstance();
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -157,61 +190,9 @@ public class PHomePage extends Fragment {
                                     for (QueryDocumentSnapshot booking : task.getResult()) {
                                         acceptRejects.add(booking.toObject(AccOrRej.class));
                                     }
-//                                    for (AccOrRej AorR : bookingData) {
-//                                        if (AorR.id.equals(ID)) {
-//
-//                                            bookingTime.setText(AorR.time);
-//                                            docID.setText(AorR.doc_id);
-//                                            bookingDate.setText(AorR.bookingdate);
-//
-//
-//                                        }
-//                                    }
-                                    picker
-                                            .setListener(new DatePickerListener() {
-                                                @Override
-                                                public void onDateSelected(DateTime dateSelected)
-                                                {
-                                                    String [] date = dateSelected.toString().substring(0,10).split("-");
-                                                    String formdate = date[2] + "/" + date[1] + "/" + date[0];
 
-                                                    bookingDate.setText("Date: " + formdate);
+                                    callBack.onResponse(acceptRejects);
 
-                                                    for(AccOrRej acceptReject : acceptRejects)
-                                                    {
-                                                        if(acceptReject.bookingdate.equals(formdate))
-                                                        {
-                                                            bookingDate.setText("Date: " + acceptReject.bookingdate);
-                                                            bookingTime.setText("Time: " + acceptReject.time);
-                                                            docID.setText("Doctor ID: " + acceptReject.doc_id);
-                                                            bookingDoc.setText("Doctor: " + docName);
-                                                            return;
-                                                        }
-                                                    }
-
-                                                    bookingDate.setText("Date: ");
-                                                    bookingTime.setText("Time: ");
-                                                    docID.setText("Doctor ID: ");
-                                                    bookingDoc.setText("Doctor: ");
-                                                }
-                                            })
-                                            .showTodayButton(true)
-                                            .setOffset(3)
-                                            .init();
-
-                                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
-                                    Date date = new Date();
-
-                                    for(AccOrRej acceptReject : acceptRejects)
-                                    {
-                                        if(acceptReject.bookingdate.equals(formatter.format(date)))
-                                        {
-                                            bookingDate.setText("Date: " + acceptReject.bookingdate);
-                                            bookingTime.setText("Time: " + acceptReject.time);
-                                            docID.setText("Doctor ID: " + acceptReject.doc_id);
-                                            bookingDoc.setText("Doctor: " + docName);
-                                        }
-                                    }
                                 }
                             }
                         });
@@ -228,36 +209,4 @@ public class PHomePage extends Fragment {
 
     }
 
-    /*public void getPatientID(){
-
-        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Patient");
-
-        bookingDoc.setText("Query failed");
-
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                bookingDoc.setText("List empty");
-
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    if (dataSnapshot.child("email").getValue().toString().equalsIgnoreCase(user.getEmail())) {
-                        final String ID = dataSnapshot.child("id").getValue().toString();
-
-                        bookingDate.setText(ID);
-
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-
-        });
-
-    }*/
 }

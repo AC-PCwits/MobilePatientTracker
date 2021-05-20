@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         logout_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                FirebaseAuth.getInstance().signOut();
+                FirebaseAuth.getInstance().signOut();
                 Intent intent = new Intent(MainActivity.this, LoginPatient.class);
                 startActivity(intent);
             }
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         // These are just instructions on how to use code to code
         // For all Cloud Firestore related stuff, we start of by getting our database (it works off our package name, so no login or authentication is required for now)
 
-//        final FirebaseFirestore database = FirebaseFirestore.getInstance();
+        final FirebaseFirestore database = FirebaseFirestore.getInstance();
 
         // In Cloud Firestore, data is stored in collections. A collection is like a table. 'Collections' are really just folders on the firestore server.
         // Inside a collection there will be multiple documents.
@@ -125,66 +125,66 @@ public class MainActivity extends AppCompatActivity {
         });*/
 
 
-//        update.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                logbox.setText("executing...");
-//
-//                // UPDATING AN ENTRY
-//                // The following code tries to find a document called 'patient-1' inside the collection 'patient-data' and sets it ID to 10.
-//
-//                // Updating works in the same way as adding
-//                // The following code updates the ID of the patient with document name 'patient-1' to 10
-//
-//                // Create a DocumentReference so that we can specify which document we want to update.
-//                // Again, 'patient-data' is the collection name, and 'patient-1' is the document name
-//                DocumentReference patient_1  = database.collection("patient-data").document("patient-1");
-//
-//
-//                patient_1.update("ID", 10)
-//
-//                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                            @Override
-//                            public void onSuccess(Void aVoid) {
-//                                Log.d(TAG, "SUCCESS: Updated document.");
-//                                logbox.setText("SUCCESS:\nUpdated document.");
-//                            }
-//                        })
-//                        .addOnFailureListener(new OnFailureListener() {
-//                            @Override
-//                            public void onFailure(@NonNull Exception e) {
-//                                Log.w(TAG, "ERROR:Could not update document: ", e);
-//                                logbox.setText("ERROR:\nCould not update document. Here is what went wrong: \n" + e.getMessage());
-//                            }
-//                        });
-//            }
-//        });
-//
-//        remove.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                logbox.setText("executing...");
-//
-//                // REMOVING AN ENTRY
-//                // The following code removes the document named 'patient-2' from the database
-//                // Also works in the same way as adding and updating
-//
-//                database.collection("patient-data").document("patient-2")
-//                        .delete()
-//                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                            @Override
-//                            public void onSuccess(Void aVoid) {
-//                                Log.d(TAG, "SUCCESS: Deleted document.");
-//                                logbox.setText("SUCCESS:\nDeleted document, or document did not exist in the first place.");
-//                            }
-//                        })
-//                        .addOnFailureListener(new OnFailureListener() {
-//                            @Override
-//                            public void onFailure(@NonNull Exception e) {
-//                                Log.w(TAG, "ERROR: Could not delete document. Here is what went wrong: \n", e);
-//                                logbox.setText("ERROR:\nCould not delete document. Here is what went wrong: \n" + e.getMessage());
-//                            }
-//                        });
-//            }
-//        });
+        update.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                logbox.setText("executing...");
+
+                // UPDATING AN ENTRY
+                // The following code tries to find a document called 'patient-1' inside the collection 'patient-data' and sets it ID to 10.
+
+                // Updating works in the same way as adding
+                // The following code updates the ID of the patient with document name 'patient-1' to 10
+
+                // Create a DocumentReference so that we can specify which document we want to update.
+                // Again, 'patient-data' is the collection name, and 'patient-1' is the document name
+                DocumentReference patient_1  = database.collection("patient-data").document("patient-1");
+
+
+                patient_1.update("ID", 10)
+
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d(TAG, "SUCCESS: Updated document.");
+                                logbox.setText("SUCCESS:\nUpdated document.");
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "ERROR:Could not update document: ", e);
+                                logbox.setText("ERROR:\nCould not update document. Here is what went wrong: \n" + e.getMessage());
+                            }
+                        });
+            }
+        });
+
+        remove.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                logbox.setText("executing...");
+
+                // REMOVING AN ENTRY
+                // The following code removes the document named 'patient-2' from the database
+                // Also works in the same way as adding and updating
+
+                database.collection("patient-data").document("patient-2")
+                        .delete()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d(TAG, "SUCCESS: Deleted document.");
+                                logbox.setText("SUCCESS:\nDeleted document, or document did not exist in the first place.");
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "ERROR: Could not delete document. Here is what went wrong: \n", e);
+                                logbox.setText("ERROR:\nCould not delete document. Here is what went wrong: \n" + e.getMessage());
+                            }
+                        });
+            }
+        });
 
      /*   get.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -338,11 +338,11 @@ class Patient implements Serializable
     public String medaid;
     public String allergies;
     //TODO: Add lastVisited to DB once logic for retrieving info has been completed
-    public String lastVisited = "8/04/2021";
+    public String lastVisited; // = "8/04/2021";
 
 
     // public Patient(String fname, String fsurname, String idno, String cellno, String nationality, String gender, String address, String ename, String econtact, String race, String mstatus, ArrayList cissues, String medaid, String allergies)
-    public Patient (String fname, String fsurname, String idno, String cellno, String nationality, String gender, String address, String ename, String econtact, String race, String mstatus, ArrayList<String> cissues, String medaid, String allergies)
+    public Patient (String fname, String fsurname, String idno, String cellno, String nationality, String gender, String address, String ename, String econtact, String race, String mstatus, ArrayList<String> cissues, String medaid, String allergies,String lastVisited)
     {
         this.fname= fname;
         this.fsurname=  fsurname;
@@ -358,6 +358,7 @@ class Patient implements Serializable
         this.cissues= cissues;
         this.medaid= medaid;
         this.allergies= allergies;
+        this.lastVisited = lastVisited;
     }
 
     public Patient()
@@ -477,7 +478,7 @@ class Doctor {
         this.p_no = p_no;
         this.p_length = p_length;
         this.uni_name = uni_name;
-        this.patient_ID = patient_ID;
+        this.patient_ID = new ArrayList<>();
 
     }
 
@@ -583,6 +584,7 @@ class Bookings {
     public String time;
     public String id; //need this for linking to patient
     public String doc_id;
+    public String path;
 
     public Bookings(String pname, String id, String bookingdate, String time, String doc_id){
         this.pname = pname;
@@ -590,6 +592,7 @@ class Bookings {
         this.id = id;
         this.doc_id = doc_id;
         this.time = time;
+        path = "";
     }
 
     public Bookings(){
@@ -655,6 +658,22 @@ class DInfo{
 
 }
 
+/*class AcceptReject{
+    public Bookings booking;
+    public String accOrRej;
+
+    public AcceptReject(Bookings booking, String accOrRej) {
+        this.booking = booking;
+        this.accOrRej = accOrRej;
+
+    }
+
+    public AcceptReject(){
+
+    }
+
+}*/
+
 class AccOrRej{
     public String pname;
     public String bookingdate;
@@ -679,5 +698,30 @@ class AccOrRej{
 }
 
 
+class Appointment{
+
+    public String docName;
+    public String pname;
+    public String bookingdate;
+    public String time;
+    public String id; //need this for linking to patient
+    public String doc_id;
+    public String status;
 
 
+    public Appointment(String pname, String id, String bookingdate, String time, String doc_id,String docName, String status) {
+        this.docName = docName;
+        this.bookingdate = bookingdate;
+        this.time = time;
+
+
+        this.pname = pname;
+        this.bookingdate = bookingdate;
+        this.id = id;
+        this.doc_id = doc_id;
+        this.time = time;
+        this.status = status;
+    }
+
+    public Appointment(){}
+}
