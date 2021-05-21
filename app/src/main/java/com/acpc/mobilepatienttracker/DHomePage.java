@@ -42,7 +42,7 @@ import java.util.Date;
 
 import org.joda.time.DateTime;
 
-public class DHomePage extends Fragment implements DatePickerListener {
+public class DHomePage extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -106,6 +106,7 @@ public class DHomePage extends Fragment implements DatePickerListener {
 
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.activity_d_home_page, container, false);
+
 
         booking_date = rootView.findViewById(R.id.booking_date);
         booking_time = rootView.findViewById(R.id.booking_time);
@@ -201,7 +202,6 @@ public class DHomePage extends Fragment implements DatePickerListener {
                                     }
 
                                     callBack.onResponse(accept_rejects);
-
                                 }
                             }
                         });

@@ -103,7 +103,6 @@ public class PHomePage extends Fragment {
 
 
         getDocNames(new DocNameCallback() {
-
             @Override
             public void onResponse(final ArrayList<Doctor> doclist) {
 
@@ -150,6 +149,7 @@ public class PHomePage extends Fragment {
                                 .setOffset(3)
                                 .init();
 
+
                         SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
                         Date date = new Date();
 
@@ -169,7 +169,6 @@ public class PHomePage extends Fragment {
                                 }
                             }
                         }
-
                     }
                 });
             }
@@ -206,6 +205,7 @@ public class PHomePage extends Fragment {
 
                                 }
                             }
+                           
                         });
                     }
                 }
@@ -236,6 +236,7 @@ public class PHomePage extends Fragment {
 
                     callback.onResponse(doctor);
                 }
+            }
         });
     }
-                                             }
+}
