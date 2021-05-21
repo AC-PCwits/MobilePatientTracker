@@ -30,6 +30,8 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.installations.FirebaseInstallations;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firestore.v1.WriteResult;
 
 import java.text.ParseException;
@@ -69,7 +71,6 @@ DBookingDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_d_booking_details);
-
 
         nameT = (TextView) findViewById(R.id.name);
         dateT = (TextView) findViewById(R.id.date);
@@ -119,7 +120,7 @@ DBookingDetails extends AppCompatActivity {
 
                                 addPatient();
 
-                                aOrR = "Accepted";
+                            aOrR = "Accepted";
                                 final AccOrRej s = new AccOrRej(name,id,date,time,doc_id, aOrR);
 
                                 //      Toast.makeText(DBookingDetails.this, "Processing booking", LENGTH_LONG).show();
