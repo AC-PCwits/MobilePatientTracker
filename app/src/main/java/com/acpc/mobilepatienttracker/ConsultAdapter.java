@@ -14,7 +14,7 @@ import java.util.concurrent.Callable;
 public class ConsultAdapter extends RecyclerView.Adapter<ConsultAdapter.ConsultViewHolder>{
 
 
-    private ArrayList<Consultation> mPatientList;
+    private ArrayList<AccOrRej> mPatientList;
     private OnItemClickListener mListener;
 
     //Interface for handling when user clicks on list
@@ -43,8 +43,8 @@ public class ConsultAdapter extends RecyclerView.Adapter<ConsultAdapter.ConsultV
         public ConsultViewHolder(@NonNull View itemView, final OnItemClickListener listener)
         {
             super(itemView);
-            nameText = itemView.findViewById(R.id.nameText);
-            idText = itemView.findViewById(R.id.idText);
+            nameText = itemView.findViewById(R.id.dateText);
+            idText = itemView.findViewById(R.id.statusText);
 
             //We handle the click on the cards using the itemView variable
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -70,7 +70,7 @@ public class ConsultAdapter extends RecyclerView.Adapter<ConsultAdapter.ConsultV
     }
 
     //This function allows data from the Patient class to be parsed to the Adapter
-    public ConsultAdapter(ArrayList<Consultation> patientList)
+    public ConsultAdapter(ArrayList<AccOrRej> patientList)
     {
         mPatientList = patientList;
     }
@@ -89,12 +89,12 @@ public class ConsultAdapter extends RecyclerView.Adapter<ConsultAdapter.ConsultV
     @Override
     public void onBindViewHolder(@NonNull ConsultViewHolder holder, int position)
     {
-        Consultation currentItem = mPatientList.get(position);
+        AccOrRej currentItem = mPatientList.get(position);
 
         //The holder variable allows the values of view to be set by Patient objects
-        holder.nameText.setText(currentItem.pdiagnosis);
+        holder.nameText.setText(currentItem.bookingdate);
         //TODO: Change from .idno to .lastvisited
-        holder.idText.setText("Consult date: " + currentItem.pdate);
+        holder.idText.setText("Consult time: " + currentItem.time);
     }
 
     //This function defines how many items are in the list

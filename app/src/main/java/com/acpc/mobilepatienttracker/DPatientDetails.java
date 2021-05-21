@@ -94,6 +94,12 @@ public class DPatientDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), PastConsults.class);
+
+                Bundle bundle = new Bundle();
+//Add your data from getFactualResults method to bundle
+                bundle.putString("pID", id);
+//Add the bundle to the intent
+                intent.putExtras(bundle);
                 startActivity(intent);
 
             }

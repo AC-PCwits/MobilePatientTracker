@@ -39,7 +39,7 @@ public class PastConsults extends AppCompatActivity {
     private ConsultAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager; //This will allow single items in our list to alligned correctly
 
-    private ArrayList<Consultation> mConsultList;
+    private ArrayList<AccOrRej> mConsultList;
     private ArrayList<Consult> ConsultList;
     private TextView testView;
     private Context Context;
@@ -47,6 +47,8 @@ public class PastConsults extends AppCompatActivity {
     private FirebaseFirestore database = FirebaseFirestore.getInstance();
     private DocumentReference noteRef = database.collection("doctor-data").document();
     private Doctor doc = new Doctor();
+
+    private String pID;
 
 
 
@@ -61,40 +63,49 @@ public class PastConsults extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_past_consults);
 
+        Intent intentRecieved = getIntent();
+        Bundle data = intentRecieved.getExtras();
+
+        if(data != null){
+            pID = data.getString("pID");
+        }else{
+            pID ="";
+        }
 
 
-        mConsultList= new ArrayList<Consultation>();
+
+        mConsultList= new ArrayList<AccOrRej>();
         ConsultList= new ArrayList<Consult>();
 
        // buildExampleList();
-        buildRecyclerView();
+        buildConsultList();
+
 
     }
 
 
 public void buildConsultList(){
-        Bundle bundle = getIntent().getExtras();
-        String pID = bundle.getString("pID");
 
-           database.collection("consultation-data").whereEqualTo("ppatientid",pID)
+           database.collection("booking-history-data").whereEqualTo("id",pID)
                                         .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                     @Override
                                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                         if(task.isSuccessful())
                                         {
-                                            ArrayList<Consultation> consults = new ArrayList<>();
+                                            ArrayList<AccOrRej> consults = new ArrayList<>();
 
                                             for(QueryDocumentSnapshot doc : task.getResult())
                                             {
-                                                consults.add(doc.toObject(Consultation.class));
+                                                consults.add(doc.toObject(AccOrRej.class));
                                             }
 
-                                            for(Consultation consultation : consults)
+                                            for(AccOrRej consultation : consults)
                                             {
-                                                mConsultList.add(new Consultation(consultation.pcase,consultation.pdate,consultation.pdiagnosis,consultation.pdoctorID,consultation.ppatientID,consultation.psymptoms));
+                                                mConsultList.add(new AccOrRej(consultation.pname,consultation.id,consultation.bookingdate,consultation.time,consultation.doc_id,consultation.accOrRej));
                                             }
 
                                         }
+                                        buildRecyclerView();
 
                                     }
                                 });

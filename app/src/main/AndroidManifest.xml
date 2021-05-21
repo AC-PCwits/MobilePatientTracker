@@ -24,6 +24,10 @@
             android:name=".DRegistration"
             android:label="Registration : Doctor" />
         <activity
+            android:name=".PastConsults"
+            android:label="Past Consults" />
+
+        <activity
             android:name=".LoginPatient"
             android:label="Patient Login" />
         <activity
