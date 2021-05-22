@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         final String TAG = "AC/PC";
 
-
         final TextView logbox = findViewById(R.id.logbox);
         Button add = findViewById(R.id.add);
         Button update = findViewById(R.id.update);
