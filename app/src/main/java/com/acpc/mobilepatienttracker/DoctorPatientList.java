@@ -183,6 +183,7 @@ public class DoctorPatientList extends Fragment
                     { return;}
                     else
                     {
+
                         buildPatientList(doc.patient_ID);
                     }
                 }
@@ -214,6 +215,8 @@ public class DoctorPatientList extends Fragment
                         {
                             if(pID.equals(patient.idno))
                             {
+                                Intent intent = new Intent(getContext(),PastConsults.class);
+                                intent.putExtra("pID",pID);
                                 mPatientList.add(patient);
                                 s = s + patient.fname + " " + patient.fsurname + " : " + patient.idno + "\n";
                             }

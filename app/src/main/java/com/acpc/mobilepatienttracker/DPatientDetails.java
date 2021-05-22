@@ -1,17 +1,26 @@
 package com.acpc.mobilepatienttracker;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
+
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
 public class DPatientDetails extends AppCompatActivity {
+
+
     public static String clickedname;
     public static String clickedID;
     public static String clickedcell;
@@ -46,15 +55,54 @@ public class DPatientDetails extends AppCompatActivity {
 
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_d_patient_details);
 
+        final ExtendedFloatingActionButton extendedFloatingActionButton = findViewById(R.id.extFloatingActionButton);
+
+        // register the nestedScrollView from the main layout
+        NestedScrollView nestedScrollView = findViewById(R.id.nestedScrollView);
+
+        // handle the nestedScrollView behaviour with OnScrollChangeListener
+        // to extend or shrink the Extended Floating Action Button
+        nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                // the delay of the extension of the FAB is set for 12 items
+                if (scrollY > oldScrollY + 12 && extendedFloatingActionButton.isExtended()) {
+                    extendedFloatingActionButton.shrink();
+                }
+
+                // the delay of the extension of the FAB is set for 12 items
+                if (scrollY < oldScrollY - 12 && !extendedFloatingActionButton.isExtended()) {
+                    extendedFloatingActionButton.extend();
+                }
+
+                // if the nestedScrollView is at the first item of the list then the
+                // extended floating action should be in extended state
+                if (scrollY == 0) {
+                    extendedFloatingActionButton.extend();
+                }
+            }
+        });
+        extendedFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), PastConsults.class);
+                startActivity(intent);
+
+            }
+        });
+
+
         //Instantiation of View Components
-        nameText = (TextView)findViewById(R.id.dateText);
-        idText = (TextView)findViewById(R.id.statusText);
+        nameText = (TextView)findViewById(R.id.nameText);
+        idText = (TextView)findViewById(R.id.idText);
         illText = (TextView)findViewById(R.id.illnessText);
         cellText = (TextView)findViewById(R.id.cellText);
         nationalityText = (TextView)findViewById(R.id.natText);
@@ -90,13 +138,14 @@ public class DPatientDetails extends AppCompatActivity {
 
         String ill = "";
 
-        if(illnesses != null) {
-            for (String text : illnesses) {
-                if (ill.equals("")) {
-                    ill = text;
-                } else {
-                    ill = ill + "\n" + text;
-                }
+        for(String text: illnesses)
+        {
+            if(ill.equals(""))
+            {
+                ill = text;
+            }else
+            {
+                ill = ill + "\n" + text;
             }
         }
 
