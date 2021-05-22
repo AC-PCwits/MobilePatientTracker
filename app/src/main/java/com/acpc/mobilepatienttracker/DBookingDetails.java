@@ -118,7 +118,7 @@ DBookingDetails extends AppCompatActivity {
                             public void onClick(View v) {
 
                                 addPatient();
-
+                                SplashActivity.msgserv.sendNotification("Booking accepted");
                                 aOrR = "Accepted";
                                 final AccOrRej s = new AccOrRej(name,id,date,time,doc_id, aOrR);
 
@@ -159,7 +159,7 @@ DBookingDetails extends AppCompatActivity {
                             public void onClick(View v) {
 
                                 //  Toast.makeText(DBookingDetails.this, "Declining booking", LENGTH_LONG).show();
-
+                                SplashActivity.msgserv.sendNotification("Booking rejected");
                                 aOrR = "Rejected";
                                 final AccOrRej s = new AccOrRej(name,id,date,time,doc_id, aOrR);
 

@@ -12,11 +12,17 @@ public class SplashActivity extends AppCompatActivity  {
 
     ProgressBar splashProgress;
     int SPLASH_TIME = 3000; //This is 3 seconds
+    public static MessagingService msgserv= null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+        if (msgserv== null){
+            msgserv = new MessagingService(SplashActivity.this);
+        }
+        msgserv.sendNotification("hiii"); //copy from here and edit the message string
 
         //This is additional feature, used to run a progress bar
         splashProgress = findViewById(R.id.splashProgress);
