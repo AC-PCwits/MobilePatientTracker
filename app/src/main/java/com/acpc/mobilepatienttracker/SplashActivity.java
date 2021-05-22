@@ -17,7 +17,7 @@ public class SplashActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
+        new PushNotification();
         //This is additional feature, used to run a progress bar
         splashProgress = findViewById(R.id.splashProgress);
         playProgress();
