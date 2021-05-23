@@ -323,8 +323,13 @@ public class DHomePage extends Fragment {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                 if (task.isSuccessful()) {
-                                    for (QueryDocumentSnapshot booking : task.getResult()) {
-                                        accept_rejects.add(booking.toObject(AccOrRej.class));
+                                    for (QueryDocumentSnapshot b : task.getResult()) {
+                                        AccOrRej accOrRej = b.toObject(AccOrRej.class);
+
+                                        if (accOrRej.accOrRej.equals("Accepted"))
+                                        {
+                                            accept_rejects.add(accOrRej);
+                                        }
                                     }
 
                                     callBack.onResponse(accept_rejects);
