@@ -37,22 +37,22 @@
             android:textSize="22dp"/>
 
         <TextView
-            android:id="@+id/txtPFirstSurname"
+            android:id="@+id/txtPFirstname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="firstname"
-            android:textSize="22dp"/>
+            android:text="..."
+            android:textSize="22dp" />
 
         <Space
             android:layout_width="20dp"
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/txtPatientSurname"
+            android:id="@+id/txtPSurname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="surname"
-            android:textSize="22dp"/>
+            android:text="..."
+            android:textSize="22dp" />
 
 
     </LinearLayout>
@@ -79,8 +79,8 @@
             android:id="@+id/txtID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="id"
-            android:textSize="22dp"/>
+            android:text="..."
+            android:textSize="22dp" />
 
     </LinearLayout>
 
@@ -106,8 +106,8 @@
             android:id="@+id/txtCell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="cell"
-            android:textSize="22dp"/>
+            android:text="..."
+            android:textSize="22dp" />
 
     </LinearLayout>
 
@@ -132,19 +132,19 @@
             android:id="@+id/txtDFirstName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="dfirstname"
-            android:textSize="22dp"/>
+            android:text="..."
+            android:textSize="22dp" />
 
         <Space
             android:layout_width="20dp"
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/txtDoctorSurname"
+            android:id="@+id/txtDSurname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="dsurname"
-            android:textSize="22dp"/>
+            android:text="..."
+            android:textSize="22dp" />
 
 
     </LinearLayout>
@@ -170,8 +170,8 @@
             android:id="@+id/txtDPracticeID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="practice id"
-            android:textSize="22dp"/>
+            android:text="..."
+            android:textSize="22dp" />
 
 
     </LinearLayout>
@@ -197,8 +197,8 @@
             android:id="@+id/txtCaseInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="case info"
-            android:textSize="22dp"/>
+            android:text="..."
+            android:textSize="22dp" />
 
 
     </LinearLayout>
@@ -224,8 +224,8 @@
             android:id="@+id/txtSymptoms"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="symp"
-            android:textSize="22dp"/>
+            android:text="..."
+            android:textSize="22dp" />
 
 
     </LinearLayout>
@@ -251,8 +251,8 @@
             android:id="@+id/txtDiagnosis"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="diagnosis"
-            android:textSize="22dp"/>
+            android:text="..."
+            android:textSize="22dp" />
 
 
     </LinearLayout>
@@ -278,8 +278,8 @@
             android:id="@+id/txtDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="date"
-            android:textSize="22dp"/>
+            android:text="..."
+            android:textSize="22dp" />
 
 
     </LinearLayout>

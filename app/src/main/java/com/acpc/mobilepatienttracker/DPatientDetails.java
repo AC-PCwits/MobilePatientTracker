@@ -50,8 +50,6 @@ public class DPatientDetails extends AppCompatActivity {
     private TextView medaidText;
     private TextView allergiesText;
 
-    private ExtendedFloatingActionButton pastConsults;
-
 
 
 
@@ -92,12 +90,10 @@ public class DPatientDetails extends AppCompatActivity {
         extendedFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), PastConsults.class);
+                Intent intent = new Intent(getApplicationContext(), DoctorConsultationList.class);
 
                 Bundle bundle = new Bundle();
-//Add your data from getFactualResults method to bundle
-                bundle.putString("pID", id);
-//Add the bundle to the intent
+                bundle.putString("PATIENT_ID", id);
                 intent.putExtras(bundle);
                 startActivity(intent);
 
@@ -119,8 +115,6 @@ public class DPatientDetails extends AppCompatActivity {
         mstatusText = (TextView)findViewById(R.id.mstatusText);
         medaidText = (TextView)findViewById(R.id.medaidText);
         allergiesText = (TextView)findViewById(R.id.allergiesText);
-
-        pastConsults = (ExtendedFloatingActionButton) findViewById(R.id.dpl_past_consults);
 
 
         //Patient details from the list are sent with the intent used to send the user to this screen
@@ -172,32 +166,6 @@ public class DPatientDetails extends AppCompatActivity {
         clickedname=name;
         clickedcell=cellno;
         clickedID=id;
-
-        pastConsults.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(DPatientDetails.this, PastConsults.class);
-                Bundle bundle = new Bundle();
-
-                bundle.putString("PATIENT_NAME", name);
-                bundle.putString("PATIENT_ID", id);
-                bundle.putString("PATIENT_CELL", cellno);
-                bundle.putString("PATIENT_NAT", nationality);
-                bundle.putString("PATIENT_GENDER", gender);
-                bundle.putString("PATIENT_ADDRESS", address);
-                bundle.putString("PATIENT_ENAME", ename);
-                bundle.putString("PATIENT_ECONT", econtact);
-                bundle.putString("PATIENT_RACE", race);
-                bundle.putString("PATIENT_MARRIED", mstatus);
-                bundle.putString("PATIENT_ILLNESS", allergies);
-                bundle.putString("PATIENT_MEDAID", medaid);
-                bundle.putString("PATIENT_ALLERGIES", allergies);
-
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });
     }
 
     @Override
@@ -214,11 +182,13 @@ public class DPatientDetails extends AppCompatActivity {
 
         if(id == R.id.action_con)
         {
-//            Toast.makeText(getApplicationContext(), "New Consult Form Created", Toast.LENGTH_LONG).show();
-//            Intent start = new Intent( getApplicationContext(), DoctorConsultForm.class); //moving from main screen to reg screen when clicking register button on main screen
-//            startActivity(start);
+            Toast.makeText(getApplicationContext(), "New Consult Form Created", Toast.LENGTH_LONG).show();
+            Intent start = new Intent( getApplicationContext(), DoctorConsultForm.class); //moving from main screen to reg screen when clicking register button on main screen
+            startActivity(start);
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 }

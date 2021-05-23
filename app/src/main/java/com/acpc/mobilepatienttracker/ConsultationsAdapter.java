@@ -9,13 +9,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.concurrent.Callable;
 
-public class ConsultAdapter extends RecyclerView.Adapter<ConsultAdapter.ConsultViewHolder>{
+public class ConsultationsAdapter extends RecyclerView.Adapter<ConsultationsAdapter.ConsultViewHolder>{
 
 
-    private ArrayList<AccOrRej> mPatientList;
-    private ConsultAdapter.OnItemClickListener mListener;
+    private ArrayList<Consultation> mPatientList;
+    private ConsultationsAdapter.OnItemClickListener mListener;
 
     public interface OnItemClickListener
     {
@@ -23,7 +22,7 @@ public class ConsultAdapter extends RecyclerView.Adapter<ConsultAdapter.ConsultV
     }
 
     //Sets local Listener to main Listener
-    public void setOnItemClickListener(ConsultAdapter.OnItemClickListener listener)
+    public void setOnItemClickListener(ConsultationsAdapter.OnItemClickListener listener)
     {
         mListener = listener;
     }
@@ -69,7 +68,7 @@ public class ConsultAdapter extends RecyclerView.Adapter<ConsultAdapter.ConsultV
     }
 
     //This function allows data from the Patient class to be parsed to the Adapter
-    public ConsultAdapter(ArrayList<AccOrRej> patientList)
+    public ConsultationsAdapter(ArrayList<Consultation> patientList)
     {
         mPatientList = patientList;
     }
@@ -88,12 +87,10 @@ public class ConsultAdapter extends RecyclerView.Adapter<ConsultAdapter.ConsultV
     @Override
     public void onBindViewHolder(@NonNull ConsultViewHolder holder, int position)
     {
-        AccOrRej currentItem = mPatientList.get(position);
+        Consultation currentItem = mPatientList.get(position);
 
-        //The holder variable allows the values of view to be set by Patient objects
-        holder.nameText.setText(currentItem.bookingdate);
-        //TODO: Change from .idno to .lastvisited
-        holder.idText.setText("Consult time: " + currentItem.time);
+        holder.nameText.setText(currentItem.pcase);
+        holder.idText.setText("Consult time: " + currentItem.pdate);
     }
 
     //This function defines how many items are in the list

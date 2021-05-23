@@ -44,7 +44,7 @@ public class PastConsultDetailed extends AppCompatActivity {
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent start = new Intent(PastConsultDetailed.this, PastConsults.class);
+                Intent start = new Intent(PastConsultDetailed.this, DoctorConsultationList.class);
                 Bundle bundle = new Bundle();
 
                 bundle.putString("PATIENT_ID", patientID);
