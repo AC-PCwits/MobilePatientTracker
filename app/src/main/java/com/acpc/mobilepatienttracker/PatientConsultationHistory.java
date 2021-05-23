@@ -675,15 +675,38 @@ public class PatientConsultationHistory extends Fragment {
 //                changeItem(position, "Clicked");
                 Intent intent = new Intent(getContext(), ConsultationHistoryDetailed.class);
                 Bundle bundle = new Bundle();
+                Bundle b = new Bundle();
 
-                bundle.putString("doc_name", mAppointmentList.get(position).docName);
-                bundle.putString("date", mAppointmentList.get(position).bookingdate);
-                bundle.putString("time", mAppointmentList.get(position).time);
-                bundle.putString("status",mAppointmentList.get(position).status);
-                bundle.putString("doc_id", mAppointmentList.get(position).doc_id);
 
-                intent.putExtras(bundle);
-                startActivity(intent);
+                Intent i = new Intent(getContext(),ConsultationDetails.class);
+
+
+                if(!mAppointmentList.get(position).status.equals("Rejected") && !mAppointmentList.get(position).status.equals("Past" )) {
+                    bundle.putString("doc_name", mAppointmentList.get(position).docName);
+                    bundle.putString("date", mAppointmentList.get(position).bookingdate);
+                    bundle.putString("time", mAppointmentList.get(position).time);
+                    bundle.putString("status", mAppointmentList.get(position).status);
+                    bundle.putString("doc_id", mAppointmentList.get(position).doc_id);
+
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+
+                if(mAppointmentList.get(position).status.equals("Past")){
+
+                    String datetime = mAppointmentList.get(position).bookingdate + " " + mAppointmentList.get(position).time;
+                    Log.d("DATE TIME ", ":  " + datetime);
+                    Log.d("DOC ID ", ":  " + mAppointmentList.get(position).doc_id);
+                    Log.d("PATIENT ID ", ":  " + mAppointmentList.get(position).id);
+
+                    b.putString("DATETIME", datetime);
+                    b.putString("DOCTOR_ID", mAppointmentList.get(position).doc_id);
+                    b.putString("PATIENT_ID", mAppointmentList.get(position).id);
+
+                    i.putExtras(b);
+                    startActivity(i);
+
+                }
             }
         });
     }

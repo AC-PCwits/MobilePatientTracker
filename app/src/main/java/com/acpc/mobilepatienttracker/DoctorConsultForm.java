@@ -49,7 +49,7 @@ public class DoctorConsultForm extends AppCompatActivity {
 
         //populate date field
         date=findViewById(R.id.editTextTextPersonName10);
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy//MM/dd HH:mm");
         Date currentdate = new Date();
         date.setText(formatter.format(currentdate));
 
