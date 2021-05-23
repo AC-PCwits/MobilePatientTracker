@@ -730,7 +730,6 @@ class Appointment implements Comparable<Appointment>{
         this.bookingdate = bookingdate;
         this.time = time;
 
-
         this.pname = pname;
         this.bookingdate = bookingdate;
         this.id = id;
