@@ -16,8 +16,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
-import androidx.work.Worker;
-import androidx.work.WorkerParameters;
+
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -80,6 +79,9 @@ public class MessagingService extends FirebaseMessagingService
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
     }
+    private void handleNow() {
+        Log.d("MESSAGING", "Short lived task is done.");
+    }
 
     public void sendNotification(String messageBody) {
 
@@ -114,5 +116,4 @@ public class MessagingService extends FirebaseMessagingService
 
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
     }
-
 }

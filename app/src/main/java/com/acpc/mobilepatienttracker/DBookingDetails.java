@@ -136,6 +136,7 @@ DBookingDetails extends AppCompatActivity {
                                             public void onSuccess(DocumentReference documentReference) {
                                                 Toast.makeText(DBookingDetails.this, "Booking Accepted", Toast.LENGTH_SHORT).show();
                                                 DeleteBooking(path);
+                                                SplashActivity.msgserv.sendNotification("Booking accepted for patient: " + name);
                                                 Intent intent = new Intent(DBookingDetails.this, DoctorFragActivity.class);
                                                 startActivity(intent);
                                             }
@@ -176,6 +177,7 @@ DBookingDetails extends AppCompatActivity {
                                             public void onSuccess(DocumentReference documentReference) {
                                                 Toast.makeText(DBookingDetails.this, "Booking Successfully Rejected", Toast.LENGTH_SHORT).show();
                                                 DeleteBooking(path);
+                                                SplashActivity.msgserv.sendNotification("Booking rejected for patient: " + name);
                                                 Intent intent = new Intent(DBookingDetails.this, DoctorFragActivity.class);
                                                 startActivity(intent);
                                             }
