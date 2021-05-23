@@ -27,7 +27,6 @@ import com.google.firebase.messaging.RemoteMessage;
 
 public class MessagingService extends FirebaseMessagingService
 {
-
     Context context;
 
     public MessagingService(Context context)
@@ -81,15 +80,6 @@ public class MessagingService extends FirebaseMessagingService
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
     }
-    private void scheduleJob() {
-        OneTimeWorkRequest work = new OneTimeWorkRequest.Builder(OurWorker.class)
-                .build();
-        WorkManager.getInstance(this).beginWith(work).enqueue();
-    }
-
-    private void handleNow() {
-        Log.d("MESSAGING", "Short lived task is done.");
-    }
 
     public void sendNotification(String messageBody) {
 
@@ -103,13 +93,13 @@ public class MessagingService extends FirebaseMessagingService
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(context, channelId)
-                        .setSmallIcon(R.drawable.ic_baseline_edit_24)
-                        .setContentTitle("Hello ;)")
+                        .setSmallIcon(R.drawable.ic_baseline_info_24)
+                        .setContentTitle("You have a new booking update")
                         .setContentText(messageBody)
                         .setSound(defaultSoundUri)
                         .setContentIntent(pendingIntent)
                         .setStyle(new NotificationCompat.BigTextStyle()
-                            .bigText("Much longer text that cannot fit one line..."))
+                                .bigText(messageBody))
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
@@ -125,36 +115,4 @@ public class MessagingService extends FirebaseMessagingService
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
     }
 
-    private void createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = getString(R.string.gcm_send_message);
-            String description = getString(R.string.gcm_send_message_desc);
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel("0", name, importance);
-            channel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-    }
-}
-
-class OurWorker extends Worker {
-    public OurWorker(
-            @NonNull Context context,
-            @NonNull WorkerParameters params) {
-        super(context, params);
-    }
-
-    @Override
-    public Result doWork() {
-
-        // Do the work here--in this case, upload the images.
-
-        // Indicate whether the work finished successfully with the Result
-        return Result.success();
-    }
 }
