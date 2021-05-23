@@ -1,11 +1,8 @@
 package com.acpc.mobilepatienttracker;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,22 +13,18 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
-public class PastConsults extends AppCompatActivity {
+public class DoctorConsultationList extends AppCompatActivity {
 
-    public PastConsults activity;
+    public DoctorConsultationList activity;
 
     private RecyclerView mRecyclerView;
 
-    private ConsultAdapter mAdapter;
+    private ConsultationsAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
     private FirebaseFirestore database = FirebaseFirestore.getInstance();
@@ -39,15 +32,18 @@ public class PastConsults extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_past_consults);
+        setContentView(R.layout.activity_doctor_consultation_list);
 
-        Intent intentRecieved = getIntent();
-        Bundle data = intentRecieved.getExtras();
+        Intent intent = getIntent();
+        if (intent.getExtras() != null)
+        {
+            Bundle data = intent.getExtras();
 
-        GetPastConsults(data.getString("PATIENT_ID"));
+            GetConsultList(data.getString("PATIENT_ID"));
+        }
     }
 
-    public void GetPastConsults(final String patientID)
+    public void GetConsultList(final String patientID)
     {
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -59,13 +55,13 @@ public class PastConsults extends AppCompatActivity {
                 {
                     Doctor doctor = task.getResult().toObjects(Doctor.class).get(0);
 
-                    database.collection("booking-history-data").whereEqualTo("doc_id", doctor.p_no).whereEqualTo("id", patientID)
+                    database.collection("consultation-data").whereEqualTo("pdoctorID", doctor.p_no).whereEqualTo("ppatientID", patientID)
                             .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if(task.isSuccessful())
                             {
-                                ArrayList<AccOrRej> pastConsults = (ArrayList<AccOrRej>) task.getResult().toObjects(AccOrRej.class);
+                                ArrayList<Consultation> pastConsults = (ArrayList<Consultation>) task.getResult().toObjects(Consultation.class);
 
                                 Log.d("PAST CONSULTS", "Past consults size: " + pastConsults.size());
 
@@ -87,27 +83,26 @@ public class PastConsults extends AppCompatActivity {
         });
     }
 
-    public void buildRecyclerView(final ArrayList<AccOrRej> list)
+    public void buildRecyclerView(final ArrayList<Consultation> list)
     {
         mRecyclerView = findViewById(R.id.recyclerView1);
         mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(PastConsults.this);
-        mAdapter = new ConsultAdapter(list);
+        mLayoutManager = new LinearLayoutManager(DoctorConsultationList.this);
+        mAdapter = new ConsultationsAdapter(list);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
-        mAdapter.setOnItemClickListener(new ConsultAdapter.OnItemClickListener() {
+        mAdapter.setOnItemClickListener(new ConsultationsAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Intent start = new Intent( PastConsults.this, PastConsultDetailed.class); //moving from main screen to reg screen when clicking register button on main screen
+                Intent start = new Intent( DoctorConsultationList.this, ConsultationDetails.class); //moving from main screen to reg screen when clicking register button on main screen
                 startActivity(start);
 
                 Bundle bundle = new Bundle();
 
-                bundle.putString("PATIENT_ID", list.get(position).id);
-                bundle.putString("PATIENT_NAME", list.get(position).pname);
-                bundle.putString("DATE", list.get(position).bookingdate);
-                bundle.putString("TIME", list.get(position).time);
+                bundle.putString("PATIENT_ID", list.get(position).ppatientID);
+                bundle.putString("DOCTOR_ID", list.get(position).pdoctorID);
+                bundle.putString("DATETIME", list.get(position).pdate);
 
                 start.putExtras(bundle);
                 startActivity(start);
