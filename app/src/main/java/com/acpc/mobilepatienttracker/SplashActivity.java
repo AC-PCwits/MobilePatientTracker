@@ -22,7 +22,7 @@ public class SplashActivity extends AppCompatActivity  {
         if (msgserv== null){
             msgserv = new MessagingService(SplashActivity.this);
         }
-        msgserv.sendNotification("hiii"); //copy from here and edit the message string
+       msgserv.sendNotification("hiii"); //copy from here and edit the message string
 
         //This is additional feature, used to run a progress bar
         splashProgress = findViewById(R.id.splashProgress);

@@ -81,8 +81,8 @@ public class MessagingService extends FirebaseMessagingService
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(context, channelId)
-                        .setSmallIcon(R.drawable.ic_baseline_edit_24)
-                        .setContentTitle("Booking Update")
+                        .setSmallIcon(R.drawable.ic_baseline_info_24)
+                        .setContentTitle("You have a new booking update")
                         .setContentText(messageBody)
                         .setSound(defaultSoundUri)
                         .setContentIntent(pendingIntent)
