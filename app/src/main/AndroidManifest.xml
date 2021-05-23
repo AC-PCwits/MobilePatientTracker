@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ConsultationHistoryDetailed"></activity>
+        <activity android:name=".ConsultationDetails"></activity>
+        <activity android:name=".ConsultationHistoryDetailed" />
         <activity
             android:name=".PatientDateTimeBooking"
             android:label="Select Date and Time of Appointment" />
