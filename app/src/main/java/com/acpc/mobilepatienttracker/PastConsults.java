@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,42 +22,19 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class PastConsults extends AppCompatActivity {
 
     public PastConsults activity;
 
-    public void onAttach(PastConsults activity){
-        this.activity =  activity;
-    }
+    private RecyclerView mRecyclerView;
 
-    private RecyclerView mRecyclerView; //This variable will contain the recycler view created in the XML layout
-
-    /*
-    This is the bridge between our data and recycler view. We have to use the PatientListAdapter
-    instead of RecylcerView.Adapter as the class contains custom functions for the Recycler View
-     */
     private ConsultAdapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager; //This will allow single items in our list to alligned correctly
-
-    private ArrayList<AccOrRej> mConsultList;
-    private ArrayList<Consult> ConsultList;
-    private TextView testView;
-    private Context Context;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     private FirebaseFirestore database = FirebaseFirestore.getInstance();
-    private DocumentReference noteRef = database.collection("doctor-data").document();
-    private Doctor doc = new Doctor();
-
-    private String pID;
-
-
-
-    public PastConsults() {
-        // Required empty public constructor
-    }
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,110 +44,74 @@ public class PastConsults extends AppCompatActivity {
         Intent intentRecieved = getIntent();
         Bundle data = intentRecieved.getExtras();
 
-        if(data != null){
-            pID = data.getString("pID");
-        }else{
-            pID ="";
-        }
-
-
-
-        mConsultList= new ArrayList<AccOrRej>();
-        ConsultList= new ArrayList<Consult>();
-
-       // buildExampleList();
-        buildConsultList();
-
-
+        GetPastConsults(data.getString("PATIENT_ID"));
     }
 
-
-public void buildConsultList(){
-
-           database.collection("booking-history-data").whereEqualTo("id",pID)
-                                        .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                        if(task.isSuccessful())
-                                        {
-                                            ArrayList<AccOrRej> consults = new ArrayList<>();
-
-                                            for(QueryDocumentSnapshot doc : task.getResult())
-                                            {
-                                                consults.add(doc.toObject(AccOrRej.class));
-                                            }
-
-                                            for(AccOrRej consultation : consults)
-                                            {
-                                                mConsultList.add(new AccOrRej(consultation.pname,consultation.id,consultation.bookingdate,consultation.time,consultation.doc_id,consultation.accOrRej));
-                                            }
-
-                                        }
-                                        buildRecyclerView();
-
-                                    }
-                                });
-
-}
-    public void buildExampleList()
+    public void GetPastConsults(final String patientID)
     {
-        ConsultList.add(new Consult("TB","8/04/2021"));
-        ConsultList.add(new Consult("Corona","10/04/2021"));
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+        database.collection("doctor-data").whereEqualTo("email", user.getEmail())
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful())
+                {
+                    Doctor doctor = task.getResult().toObjects(Doctor.class).get(0);
+
+                    database.collection("booking-history-data").whereEqualTo("doc_id", doctor.p_no).whereEqualTo("id", patientID)
+                            .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if(task.isSuccessful())
+                            {
+                                ArrayList<AccOrRej> pastConsults = (ArrayList<AccOrRej>) task.getResult().toObjects(AccOrRej.class);
+
+                                Log.d("PAST CONSULTS", "Past consults size: " + pastConsults.size());
+
+                                buildRecyclerView(pastConsults);
+                            }
+                            else
+                            {
+                                Log.w("PAST CONSULTS", "Could not get past consults: ", task.getException());
+                            }
+                        }
+                    });
+
+                }
+                else
+                {
+                    Log.w("PAST CONSULTS", "Could not get doctor info: ", task.getException());
+                }
+            }
+        });
     }
 
-    public void buildRecyclerView()
+    public void buildRecyclerView(final ArrayList<AccOrRej> list)
     {
         mRecyclerView = findViewById(R.id.recyclerView1);
-        /*
-        This makes sure that the recycler view will not change size no matter how many items are in the list, which
-        also will increase the performance of the app
-        */
         mRecyclerView.setHasFixedSize(true);
-        //This sets the layout the user will view
-        mLayoutManager = new LinearLayoutManager(Context);
-        //This line is where information about the patient will be parsed to create the list
-        mAdapter = new ConsultAdapter(mConsultList);
+        mLayoutManager = new LinearLayoutManager(PastConsults.this);
+        mAdapter = new ConsultAdapter(list);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
-        /*mAdapter.setOnItemClickListener(new ConsultAdapter.OnItemClickListener() {
+        mAdapter.setOnItemClickListener(new ConsultAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(int position)
-            {
+            public void onItemClick(int position) {
+                Intent start = new Intent( PastConsults.this, PastConsultDetailed.class); //moving from main screen to reg screen when clicking register button on main screen
+                startActivity(start);
 
-//                changeItem(position, "Clicked");
-                Intent intent = new Intent(activity, PastConsultForm.class);
                 Bundle bundle = new Bundle();
 
+                bundle.putString("PATIENT_ID", list.get(position).id);
+                bundle.putString("PATIENT_NAME", list.get(position).pname);
+                bundle.putString("DATE", list.get(position).bookingdate);
+                bundle.putString("TIME", list.get(position).time);
 
-
-                bundle.putString("dfname", "Dr Eric");
-                bundle.putString("dlname", "Khan");
-                bundle.putString("cell", "0789765454");
-                bundle.putString("fname", "alan");
-                bundle.putString("sname", "walker");
-                bundle.putString("symptoms", "cough");
-                bundle.putString("diagnosis", "Corona");
-                bundle.putString("patientId", "8736372727");
-                bundle.putString("doctorId", "883882282");
-                bundle.putString("date", "10/10/2000");
-
-
-
-                intent.putExtras(bundle);
-                startActivity(intent);
-
-
+                start.putExtras(bundle);
+                startActivity(start);
             }
         });
-
-         */
-
-
-
-
-
-
     }
 }

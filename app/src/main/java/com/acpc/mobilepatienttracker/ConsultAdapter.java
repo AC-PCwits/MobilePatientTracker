@@ -15,16 +15,15 @@ public class ConsultAdapter extends RecyclerView.Adapter<ConsultAdapter.ConsultV
 
 
     private ArrayList<AccOrRej> mPatientList;
-    private OnItemClickListener mListener;
+    private ConsultAdapter.OnItemClickListener mListener;
 
-    //Interface for handling when user clicks on list
     public interface OnItemClickListener
     {
         void onItemClick(int position);
     }
 
     //Sets local Listener to main Listener
-    public void setOnItemClickListener(OnItemClickListener listener)
+    public void setOnItemClickListener(ConsultAdapter.OnItemClickListener listener)
     {
         mListener = listener;
     }

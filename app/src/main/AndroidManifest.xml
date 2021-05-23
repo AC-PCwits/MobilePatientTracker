@@ -11,11 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PatientDateTimeBooking"
-            android:label="Select Date and Time of Appointment"
-            ></activity>
-        <activity android:name=".DocTypeList"
-            />
+        <activity android:name=".PastConsultDetailed"></activity>
+        <activity
+            android:name=".PatientDateTimeBooking"
+            android:label="Select Date and Time of Appointment" />
+        <activity android:name=".DocTypeList" />
         <activity android:name=".PatientFragActivity" />
         <activity android:name=".DoctorFragActivity" />
         <activity android:name=".DoctorConsultForm" />
@@ -26,7 +26,9 @@
         <activity
             android:name=".PastConsults"
             android:label="Past Consults" />
-
+        <activity
+            android:name=".PastConsultForm"
+            android:label="Past Consult Form" />
         <activity
             android:name=".LoginPatient"
             android:label="Patient Login" />
@@ -57,4 +59,5 @@
         </activity>
         <activity android:name=".DBookingDetails" />
     </application>
+
 </manifest>

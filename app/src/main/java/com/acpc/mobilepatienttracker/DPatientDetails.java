@@ -1,7 +1,6 @@
 package com.acpc.mobilepatienttracker;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,10 +10,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
-
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.auth.FirebaseAuth;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
@@ -67,7 +62,7 @@ public class DPatientDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_d_patient_details);
 
-        final ExtendedFloatingActionButton extendedFloatingActionButton = findViewById(R.id.extFloatingActionButton);
+        final ExtendedFloatingActionButton extendedFloatingActionButton = findViewById(R.id.dpl_past_consults);
 
         // register the nestedScrollView from the main layout
         NestedScrollView nestedScrollView = findViewById(R.id.nestedScrollView);
@@ -182,7 +177,7 @@ public class DPatientDetails extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(DPatientDetails.this, DPatientDetails.class);
+                Intent intent = new Intent(DPatientDetails.this, PastConsults.class);
                 Bundle bundle = new Bundle();
 
                 bundle.putString("PATIENT_NAME", name);
@@ -201,7 +196,6 @@ public class DPatientDetails extends AppCompatActivity {
 
                 intent.putExtras(bundle);
                 startActivity(intent);
-
             }
         });
     }
@@ -220,13 +214,11 @@ public class DPatientDetails extends AppCompatActivity {
 
         if(id == R.id.action_con)
         {
-            Toast.makeText(getApplicationContext(), "New Consult Form Created", Toast.LENGTH_LONG).show();
-            Intent start = new Intent( getApplicationContext(), DoctorConsultForm.class); //moving from main screen to reg screen when clicking register button on main screen
-            startActivity(start);
+//            Toast.makeText(getApplicationContext(), "New Consult Form Created", Toast.LENGTH_LONG).show();
+//            Intent start = new Intent( getApplicationContext(), DoctorConsultForm.class); //moving from main screen to reg screen when clicking register button on main screen
+//            startActivity(start);
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 }
