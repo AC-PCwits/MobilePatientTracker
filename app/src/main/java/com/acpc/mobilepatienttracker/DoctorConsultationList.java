@@ -73,7 +73,6 @@ public class DoctorConsultationList extends AppCompatActivity {
                             }
                         }
                     });
-
                 }
                 else
                 {
