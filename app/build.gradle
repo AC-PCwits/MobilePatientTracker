@@ -9,7 +9,8 @@ android {
     compileSdkVersion 30
     buildToolsVersion '30.0.3'
 
-    defaultConfig {
+    defaultConfig
+    {
         applicationId "com.acpc.mobilepatienttracker"
         minSdkVersion 16
         targetSdkVersion 29
@@ -83,10 +84,11 @@ dependencies {
 
     implementation 'com.github.jhonnyx2012:horizontal-picker:1.0.6'
 
+    implementation 'com.google.firebase:firebase-messaging'
+
 }
 
 project.afterEvaluate {
-
     task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'connectedDebugAndroidTest']) {
         group = "Report"
         description = "Generates a Jacoco HTML and XML report based on JUnit 4 coverage debug"

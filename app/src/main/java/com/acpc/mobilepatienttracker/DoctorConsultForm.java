@@ -228,8 +228,4 @@ public class DoctorConsultForm extends AppCompatActivity {
                 });
 
     }
-
-
-
-
 }

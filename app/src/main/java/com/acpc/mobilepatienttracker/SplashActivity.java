@@ -1,12 +1,27 @@
 package com.acpc.mobilepatienttracker;
 
 import android.animation.ObjectAnimator;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class SplashActivity extends AppCompatActivity  {
 
@@ -22,7 +37,6 @@ public class SplashActivity extends AppCompatActivity  {
         if (msgserv== null){
             msgserv = new MessagingService(SplashActivity.this);
         }
-//       msgserv.sendNotification("hiii"); //copy from here and edit the message string
 
         //This is additional feature, used to run a progress bar
         splashProgress = findViewById(R.id.splashProgress);
@@ -44,9 +58,6 @@ public class SplashActivity extends AppCompatActivity  {
                 {
 
                 }
-
-
-
 
                 //This 'finish()' is for exiting the app when back button pressed from Home page which is ActivityHome
                 finish();

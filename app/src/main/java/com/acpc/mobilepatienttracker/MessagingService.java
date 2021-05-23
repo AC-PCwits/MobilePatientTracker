@@ -16,7 +16,8 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
-
+import androidx.work.Worker;
+import androidx.work.WorkerParameters;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -55,6 +56,21 @@ public class MessagingService extends FirebaseMessagingService
         Log.d("MESSAGING", "From: " + remoteMessage.getFrom());
 
         // Check if message contains a data payload.
+        if (remoteMessage.getData().size() > 0) {
+            Log.d("MESSAGING", "Message data payload: " + remoteMessage.getData());
+
+            if (/* Check if data needs to be processed by long running job */ true) {
+                // For long-running tasks (10 seconds or more) use WorkManager.
+                scheduleJob();
+            } else {
+                // Handle message within 10 seconds
+                handleNow();
+            }
+        }
+        else
+        {
+            Log.d("MESSAGING", "MESSAGE WAS EMPTY??? :(");
+        }
 
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
@@ -63,10 +79,6 @@ public class MessagingService extends FirebaseMessagingService
 
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
-    }
-
-    private void handleNow() {
-        Log.d("MESSAGING", "Short lived task is done.");
     }
 
     public void sendNotification(String messageBody) {
@@ -104,6 +116,3 @@ public class MessagingService extends FirebaseMessagingService
     }
 
 }
-
-
-
