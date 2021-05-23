@@ -128,8 +128,6 @@ public class PatientConsultationHistory extends Fragment {
         mAppointmentList = new ArrayList<>();
         d = new ArrayList<>();
 
-
-
        // getBookingData();
         //To populate the list with dummy data use the below function:
           //buildExampleList();
@@ -141,41 +139,6 @@ public class PatientConsultationHistory extends Fragment {
 
         return rootView;
 
-
-
-//        BottomNavigationView bottomNavigationView = findViewById(R.id.d_nav_bar);
-//
-//        bottomNavigationView.setSelectedItemId(R.id.d_home);
-//
-//        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//
-//                switch (item.getItemId()){
-//
-//                    case R.id.d_home:
-//                        return true;
-//                    case R.id.d_details:
-//                        startActivity(new Intent(getApplicationContext()
-//                                ,DoctorDetails.class));
-//                        overridePendingTransition(0 , 0);
-//                        return true;
-//                    case R.id.patient_list:
-//                        startActivity(new Intent(getApplicationContext()
-//                                ,DoctorPatientList.class));
-//                        overridePendingTransition(0 , 0);
-//                        return true;
-//                    case R.id.pending_bookings:
-//                        startActivity(new Intent(getApplicationContext()
-//                                ,PendingBookings.class));
-//                        overridePendingTransition(0 , 0);
-//                        return true;
-//
-//                }
-//
-//                return false;
-//            }
-//        });
 
     }
 

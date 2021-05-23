@@ -4,10 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -44,6 +47,8 @@ public class DPatientDetails extends AppCompatActivity {
     private TextView medaidText;
     private TextView allergiesText;
 
+    private ExtendedFloatingActionButton pastConsults;
+
 
 
     @Override
@@ -66,6 +71,8 @@ public class DPatientDetails extends AppCompatActivity {
         mstatusText = (TextView)findViewById(R.id.mstatusText);
         medaidText = (TextView)findViewById(R.id.medaidText);
         allergiesText = (TextView)findViewById(R.id.allergiesText);
+
+        pastConsults = (ExtendedFloatingActionButton) findViewById(R.id.dpl_past_consults);
 
 
         //Patient details from the list are sent with the intent used to send the user to this screen
@@ -116,6 +123,33 @@ public class DPatientDetails extends AppCompatActivity {
         clickedname=name;
         clickedcell=cellno;
         clickedID=id;
+
+        pastConsults.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(DPatientDetails.this, DPatientDetails.class);
+                Bundle bundle = new Bundle();
+
+                bundle.putString("PATIENT_NAME", name);
+                bundle.putString("PATIENT_ID", id);
+                bundle.putString("PATIENT_CELL", cellno);
+                bundle.putString("PATIENT_NAT", nationality);
+                bundle.putString("PATIENT_GENDER", gender);
+                bundle.putString("PATIENT_ADDRESS", address);
+                bundle.putString("PATIENT_ENAME", ename);
+                bundle.putString("PATIENT_ECONT", econtact);
+                bundle.putString("PATIENT_RACE", race);
+                bundle.putString("PATIENT_MARRIED", mstatus);
+                bundle.putString("PATIENT_ILLNESS", allergies);
+                bundle.putString("PATIENT_MEDAID", medaid);
+                bundle.putString("PATIENT_ALLERGIES", allergies);
+
+                intent.putExtras(bundle);
+                startActivity(intent);
+
+            }
+        });
     }
 
     @Override

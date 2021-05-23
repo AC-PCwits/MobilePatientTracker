@@ -105,7 +105,7 @@ public class MessagingService extends FirebaseMessagingService
                 new NotificationCompat.Builder(context, channelId)
                         .setSmallIcon(R.drawable.ic_baseline_edit_24)
                         .setContentTitle("Hello ;)")
-                        .setContentText("What's up")
+                        .setContentText(messageBody)
                         .setSound(defaultSoundUri)
                         .setContentIntent(pendingIntent)
                         .setStyle(new NotificationCompat.BigTextStyle()

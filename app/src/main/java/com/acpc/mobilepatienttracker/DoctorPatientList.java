@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -102,6 +103,7 @@ public class DoctorPatientList extends Fragment
         View rootView = inflater.inflate(R.layout.activity_d_patient_list, container, false);
 
         testView = (TextView) rootView.findViewById(R.id.testView);
+
 
         searchBar = rootView.findViewById(R.id.pdl_searchbar);
         TextWatcher watcher = new TextWatcher()

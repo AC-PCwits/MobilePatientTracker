@@ -9,7 +9,8 @@ android {
     compileSdkVersion 30
     buildToolsVersion '30.0.3'
 
-    defaultConfig {
+    defaultConfig
+    {
         applicationId "com.acpc.mobilepatienttracker"
         minSdkVersion 16
         targetSdkVersion 29
@@ -88,7 +89,6 @@ dependencies {
 }
 
 project.afterEvaluate {
-
     task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'connectedDebugAndroidTest']) {
         group = "Report"
         description = "Generates a Jacoco HTML and XML report based on JUnit 4 coverage debug"
