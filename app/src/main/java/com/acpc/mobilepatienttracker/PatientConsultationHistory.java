@@ -85,9 +85,31 @@ public class PatientConsultationHistory extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    public interface DocListCallback
+    {
+        public void onResponse(ArrayList<Doctor> doctors);
+    }
+
+    public interface AccOrRejCallback
+    {
+        public void onResponse(ArrayList<AccOrRej> accOrRejs);
+    }
+
+    public interface PendingCallback
+    {
+        public void onResponse(ArrayList<Bookings> bookings);
+    }
+
+    public interface PastCallback
+    {
+        public void onResponse(ArrayList<AccOrRej> past);
+    }
+
     public PatientConsultationHistory() {
         // Required empty public constructor
     }
+
+
 
     /**
      * Use this factory method to create a new instance of
@@ -121,25 +143,154 @@ public class PatientConsultationHistory extends Fragment {
         super.onCreate(savedInstanceState);
 
         super.onCreateView(inflater, container, savedInstanceState);
-        View rootView = inflater.inflate(R.layout.activity_patient_consultation_history, container, false);
+        final View rootView = inflater.inflate(R.layout.activity_patient_consultation_history, container, false);
 
-        testView = (TextView) rootView.findViewById(R.id.testView);
+        testView = (TextView) rootView.findViewById(R.id.testView111);
 
         mAppointmentList = new ArrayList<>();
         d = new ArrayList<>();
 
+
+
        // getBookingData();
         //To populate the list with dummy data use the below function:
           //buildExampleList();
-        getUserData(rootView);
-        getPendingData(rootView);
-        getPastBookings(rootView);
+        getDocList(new DocListCallback() {
+            @Override
+            public void onResponse(final ArrayList<Doctor> doctors) {
+                getUserData(new AccOrRejCallback() {
+                    @Override
+                    public void onResponse(final ArrayList<AccOrRej> accOrRejs) {
+                        getPendingData(new PendingCallback() {
+                            @Override
+                            public void onResponse(final ArrayList<Bookings> bookings) {
+                                getPastBookings(new PastCallback() {
+                                    @Override
+                                    public void onResponse(ArrayList<AccOrRej> past) {
+
+                                        for(AccOrRej accOrRej : accOrRejs)
+                                        {
+                                            for(Doctor doc: doctors)
+                                            {
+                                                if(doc.p_no.equals(accOrRej.doc_id))
+                                                {
+                                                    mAppointmentList.add(new Appointment(accOrRej.pname, accOrRej.id, accOrRej.bookingdate, accOrRej.time, accOrRej.doc_id,
+                                                            doc.fname + " " + doc.lname, accOrRej.accOrRej));
+                                                }
+                                            }
+                                        }
+
+                                        for(Bookings booking : bookings)
+                                        {
+                                            for(Doctor doc: doctors)
+                                            {
+                                                if(doc.p_no.equals(booking.doc_id))
+                                                {
+                                                    mAppointmentList.add(new Appointment(booking.pname, booking.id, booking.bookingdate, booking.time, booking.doc_id,
+                                                            doc.fname + " " + doc.lname, "Pending"));
+                                                }
+                                            }
+                                        }
+
+                                        ArrayList<Appointment> pastList = new ArrayList<>();
+
+                                        for(AccOrRej accOrRej : past)
+                                        {
+                                            for(Doctor doc: doctors)
+                                            {
+                                                if(doc.p_no.equals(accOrRej.doc_id))
+                                                {
+                                                    pastList.add(new Appointment(accOrRej.pname, accOrRej.id, accOrRej.bookingdate, accOrRej.time, accOrRej.doc_id,
+                                                            doc.fname + " " + doc.lname, "Past"));
+                                                }
+                                            }
+                                        }
+
+                                        Collections.sort(mAppointmentList, Collections.<Appointment>reverseOrder());
+                                        Collections.sort(pastList);
+
+                                        mAppointmentList.addAll(pastList);
+
+                                        //Testing Code
+//                                        String test = "Full List\n";
+//                                        for (Appointment appointment : mAppointmentList)
+//                                        {
+//                                            test += appointment.docName + "-" + appointment.bookingdate + "-" + appointment.time + "-" + appointment.status + "\n";
+//                                        }
+//
+//                                        testView.setText(test);
+
+                                        buildRecyclerView(rootView);
+
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+        });
+       // buildRecyclerView(rootView);
 
         MovePastBookings(); //moving expired bookings to consultation history
 
         return rootView;
 
 
+
+//        BottomNavigationView bottomNavigationView = findViewById(R.id.d_nav_bar);
+//
+//        bottomNavigationView.setSelectedItemId(R.id.d_home);
+//
+//        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//
+//                switch (item.getItemId()){
+//
+//                    case R.id.d_home:
+//                        return true;
+//                    case R.id.d_details:
+//                        startActivity(new Intent(getApplicationContext()
+//                                ,DoctorDetails.class));
+//                        overridePendingTransition(0 , 0);
+//                        return true;
+//                    case R.id.patient_list:
+//                        startActivity(new Intent(getApplicationContext()
+//                                ,DoctorPatientList.class));
+//                        overridePendingTransition(0 , 0);
+//                        return true;
+//                    case R.id.pending_bookings:
+//                        startActivity(new Intent(getApplicationContext()
+//                                ,PendingBookings.class));
+//                        overridePendingTransition(0 , 0);
+//                        return true;
+//
+//                }
+//
+//                return false;
+//            }
+//        });
+
+    }
+
+    public void getDocList(final DocListCallback callback) {
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        final FirebaseFirestore database = FirebaseFirestore.getInstance();
+        database.collection("doctor-data")
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    ArrayList<Doctor> d = new ArrayList<>();
+                    for (QueryDocumentSnapshot doc : task.getResult()) {
+                        d.add(doc.toObject(Doctor.class));
+                    }
+
+                    callback.onResponse(d);
+                }
+            }
+        });
     }
 
     //// method to move old bookings from acc-rej-data collection to booking-data-history collection
@@ -268,7 +419,7 @@ public class PatientConsultationHistory extends Fragment {
 
     } // end of build example */
 
-    public void getUserData(final View view) {
+    public void getUserData(final AccOrRejCallback callback) {
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         final FirebaseFirestore database = FirebaseFirestore.getInstance();
 
@@ -285,42 +436,54 @@ public class PatientConsultationHistory extends Fragment {
                                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if(task.isSuccessful())
-                                {
+                                if (task.isSuccessful()) {
 
                                     ArrayList<AccOrRej> ar1 = new ArrayList<>();
 
-                                    for(QueryDocumentSnapshot doc : task.getResult())
-                                    {
+                                    for (QueryDocumentSnapshot doc : task.getResult()) {
                                         ar1.add(doc.toObject(AccOrRej.class));
 
                                     }
 
+                                    callback.onResponse(ar1);
 
+//                                    for(final AccOrRej ar2: ar1)
+//                                    {
+//
+//
+//                                        database.collection("doctor-data").whereEqualTo("p_no", ar2.doc_id)
+//                                                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                                            @Override
+//                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                                                if(task.isSuccessful())
+//
+//                                                    //  ArrayList<Doctor> d = new ArrayList<>();
+//
+//                                                    for (QueryDocumentSnapshot doc : task.getResult()) {
+//                                                        d.add(doc.toObject(Doctor.class) );
+//                                                    }
+//                                                for (Doctor dt : d) {
+//                                                    if (dt.p_no.equals(ar2.doc_id)) {
+//                                                        String docName = dt.lname;
+//                                                        mAppointmentList.add(new Appointment(ar2.pname, ar2.id, ar2.bookingdate, ar2.time, ar2.doc_id, docName, ar2.accOrRej));
+//
+//                                                    }
+//
+//                                                }
+//                                                Collections.sort(mAppointmentList);
+//
+//                                            }
+//                                        });
 
-                                    for(final AccOrRej ar2: ar1)
-                                    {
-                                        database.collection("doctor-data").whereEqualTo("p_no", ar2.doc_id)
-                                                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                if(task.isSuccessful())
-                                                {
-                                                    for (QueryDocumentSnapshot doc : task.getResult()) {
-                                                        Doctor doctor = doc.toObject(Doctor.class);
-                                                        mAppointmentList.add(new Appointment(ar2.pname, ar2.id, ar2.bookingdate, ar2.time, ar2.doc_id, doctor.lname, ar2.accOrRej));
-                                                        Collections.sort(mAppointmentList);
-                                                        buildRecyclerView(view);
-                                                    }
-                                                }
-                                            }
-                                        });
-                                    }
-
-                                  //  buildRecyclerView(view);
-
-
+                                    //    String docName= "Eric";
+                                    //    mAppointmentList.add(new Appointment(ar2.pname, ar2.id, ar2.bookingdate, ar2.time, ar2.doc_id, docName, ar2.accOrRej));
+                                    //  Toast.makeText(getContext(), "Added", Toast.LENGTH_LONG).show();
                                 }
+
+                                //  buildRecyclerView(view);
+
+
+//                            }
                             }
                         });
 
@@ -335,7 +498,7 @@ public class PatientConsultationHistory extends Fragment {
         });
     }
 
-    public void getPendingData(final View view){
+    public void getPendingData(final PendingCallback callback){
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         final FirebaseFirestore database = FirebaseFirestore.getInstance();
 
@@ -362,31 +525,38 @@ public class PatientConsultationHistory extends Fragment {
                                         ar1.add(doc.toObject(Bookings.class));
                                     }
 
-                                    for(final Bookings ar2: ar1)
-                                    {  // String docName= "Eric";
+                                    callback.onResponse(ar1);
+
+//                                    for(final Bookings ar2: ar1)
+//                                    {  // String docName= "Eric";
 
 
 
-                                        database.collection("doctor-data").whereEqualTo("p_no", ar2.doc_id)
-                                                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                if(task.isSuccessful())
-                                                {
-                                                    for (QueryDocumentSnapshot doc : task.getResult()) {
-                                                        Doctor doctor = doc.toObject(Doctor.class);
-                                                        mAppointmentList.add(new Appointment(ar2.pname, ar2.id, ar2.bookingdate, ar2.time, ar2.doc_id, doctor.lname, "Pending"));
-                                                        Collections.sort(mAppointmentList);
-                                                        buildRecyclerView(view);
-                                                    }
-                                                }
-
-                                            }
-                                        });
+//                                        database.collection("doctor-data").whereEqualTo("p_no", ar2.doc_id)
+//                                                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                                            @Override
+//                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                                                if(task.isSuccessful())
+//
+//                                                    //  ArrayList<Doctor> d = new ArrayList<>();
+//
+//                                                    for (QueryDocumentSnapshot doc : task.getResult()) {
+//                                                        d.add(doc.toObject(Doctor.class) );
+//                                                    }
+//                                                for (Doctor dt : d) {
+//                                                    if (dt.p_no.equals(ar2.doc_id)) {
+//                                                        String docName = dt.lname;
+//                                                        mAppointmentList.add(new Appointment(ar2.pname, ar2.id, ar2.bookingdate, ar2.time, ar2.doc_id, docName, "Pending"));
+//
+//                                                    }
+//                                                }
+//
+//                                            }
+//                                        });
 
                                       //  mAppointmentList.add(new Appointment(ar2.pname, ar2.id, ar2.bookingdate, ar2.time, ar2.doc_id, docName, "Pending"));
                                         //  Toast.makeText(getContext(), "Added", Toast.LENGTH_LONG).show();
-                                    }
+//                                    }
 
                                  //   buildRecyclerView(view);
 
@@ -404,9 +574,11 @@ public class PatientConsultationHistory extends Fragment {
 
             }
         });
+
+
     }
 
-    public void getPastBookings(final View view){
+    public void getPastBookings(final PastCallback callback){
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         final FirebaseFirestore database = FirebaseFirestore.getInstance();
 
@@ -425,6 +597,7 @@ public class PatientConsultationHistory extends Fragment {
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                 if(task.isSuccessful())
                                 {
+
                                     ArrayList<AccOrRej> ar1 = new ArrayList<>();
 
                                     for(QueryDocumentSnapshot doc : task.getResult())
@@ -432,27 +605,36 @@ public class PatientConsultationHistory extends Fragment {
                                         ar1.add(doc.toObject(AccOrRej.class));
                                     }
 
-                                    for(final AccOrRej ar2: ar1)
-                                    {  // String docName= "Eric";
-                                        database.collection("doctor-data").whereEqualTo("p_no", ar2.doc_id)
-                                                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                if(task.isSuccessful())
-                                                {
-                                                    for (QueryDocumentSnapshot doc : task.getResult()) {
-                                                        Doctor doctor = doc.toObject(Doctor.class);
-                                                        mAppointmentList.add(new Appointment(ar2.pname, ar2.id, ar2.bookingdate, ar2.time, ar2.doc_id, doctor.lname, "Past"));
-                                                        Collections.sort(mAppointmentList);
-                                                        buildRecyclerView(view);
-                                                    }
-                                                }
-                                            }
-                                        });
+                                    callback.onResponse(ar1);
 
-                                        //  mAppointmentList.add(new Appointment(ar2.pname, ar2.id, ar2.bookingdate, ar2.time, ar2.doc_id, docName, "Pending"));
-                                        //  Toast.makeText(getContext(), "Added", Toast.LENGTH_LONG).show();
-                                    }
+//                                    for(final AccOrRej ar2: ar1)
+//                                    {  // String docName= "Eric";
+//                                        database.collection("doctor-data").whereEqualTo("p_no", ar2.doc_id)
+//                                                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                                            @Override
+//                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                                                if(task.isSuccessful())
+//
+//                                                    //  ArrayList<Doctor> d = new ArrayList<>();
+//
+//                                                    for (QueryDocumentSnapshot doc : task.getResult()) {
+//                                                        d.add(doc.toObject(Doctor.class) );
+//                                                    }
+//                                                for (Doctor dt : d) {
+//                                                    if (dt.p_no.equals(ar2.doc_id)) {
+//                                                        String docName = dt.lname;
+//                                                        mAppointmentList.add(new Appointment(ar2.pname, ar2.id, ar2.bookingdate, ar2.time, ar2.doc_id, docName, "Past"));
+//
+//                                                    }
+//                                                    buildRecyclerView(view);
+//                                                }
+//
+//                                            }
+//                                        });
+//
+//                                        //  mAppointmentList.add(new Appointment(ar2.pname, ar2.id, ar2.bookingdate, ar2.time, ar2.doc_id, docName, "Pending"));
+//                                        //  Toast.makeText(getContext(), "Added", Toast.LENGTH_LONG).show();
+//                                    }
 
                                     //   buildRecyclerView(view);
 
@@ -494,17 +676,14 @@ public class PatientConsultationHistory extends Fragment {
                 Intent intent = new Intent(getContext(), ConsultationHistoryDetailed.class);
                 Bundle bundle = new Bundle();
 
-                if (!mAppointmentList.get(position).status.equals("Rejected"))
-                {
-                    bundle.putString("doc_name", mAppointmentList.get(position).docName);
-                    bundle.putString("date", mAppointmentList.get(position).bookingdate);
-                    bundle.putString("time", mAppointmentList.get(position).time);
-                    bundle.putString("status", mAppointmentList.get(position).status);
-                    bundle.putString("doc_id", mAppointmentList.get(position).doc_id);
+                bundle.putString("doc_name", mAppointmentList.get(position).docName);
+                bundle.putString("date", mAppointmentList.get(position).bookingdate);
+                bundle.putString("time", mAppointmentList.get(position).time);
+                bundle.putString("status",mAppointmentList.get(position).status);
+                bundle.putString("doc_id", mAppointmentList.get(position).doc_id);
 
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                }
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
     }

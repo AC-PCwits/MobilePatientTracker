@@ -1,6 +1,7 @@
 package com.acpc.mobilepatienttracker;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
@@ -8,12 +9,15 @@ import androidx.fragment.app.Fragment;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ExpandableListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +43,8 @@ import org.joda.time.DateTime;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.joda.time.DateTime;
 
@@ -61,6 +67,7 @@ public class DHomePage extends Fragment {
     private ArrayList<AccOrRej> accept_rejects = new ArrayList<>();
     private HorizontalPicker picker;
 
+    private SparseArray<Group> groups = new SparseArray<>();
 
     public interface DateCallBack
     {
@@ -107,11 +114,8 @@ public class DHomePage extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.activity_d_home_page, container, false);
 
-
-        booking_date = rootView.findViewById(R.id.booking_date);
-        booking_time = rootView.findViewById(R.id.booking_time);
-        booking_patient = rootView.findViewById(R.id.booking_patient);
-        patientID = rootView.findViewById(R.id.patientID);
+        final ExpandableListView listView = rootView.findViewById(R.id.listView);
+        groups.clear();
 
         picker = rootView.findViewById(R.id.datePicker);
 
@@ -120,31 +124,66 @@ public class DHomePage extends Fragment {
             @Override
             public void onResponse(final ArrayList<AccOrRej> list) {
 
+                if(!isVisible())
+                {
+                    list.clear();
+                }
+
+                groups.clear();
                 picker.setListener(new DatePickerListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.N)
                     @Override
                     public void onDateSelected(DateTime dateSelected)
                     {
+                        groups.clear();
                         String [] date = dateSelected.toString().substring(0,10).split("-");
                         String formdate = date[0] + "/" + date[1] + "/" + date[2];
 
-                        booking_date.setText("Date: " + formdate);
-
+                        ArrayList<String[]> strings = new ArrayList<>();
                         for(AccOrRej acceptReject : list)
                         {
+                            if(strings.size() > 0 && strings.get(0)[1].equals(acceptReject.time))
+                            {
+                                break;
+                            }
                             if(acceptReject.bookingdate.equals(formdate))
                             {
-                                booking_date.setText("Date: " + acceptReject.bookingdate);
-                                booking_time.setText("Time: " + acceptReject.time);
-                                patientID.setText("Patient ID: " + acceptReject.id);
-                                booking_patient.setText("Patient: " + acceptReject.pname);
-                                return;
+                                String [] str = new String[4];
+
+                                str[0] = acceptReject.bookingdate;
+                                str[1] = acceptReject.time;
+                                str[2] = acceptReject.id;
+                                str[3] = acceptReject.pname;
+
+                                strings.add(str);
                             }
                         }
 
-                        booking_date.setText("Date: ");
-                        booking_time.setText("Time: ");
-                        patientID.setText("Patient ID: ");
-                        booking_patient.setText("Patient: ");
+                        if(strings.size() > 0)
+                        {
+                            ArrayList<String[]> sortedList = new ArrayList<>();
+                            sortedList.addAll(sortByTime(strings));
+
+
+                            for(int i = 0; i < sortedList.size(); i++)
+                            {
+                                Group group = new Group(sortedList.get(i)[1]);
+
+                                group.children.add("Date: " + sortedList.get(i)[0]);
+                                group.children.add("Time: " + sortedList.get(i)[1]);
+                                group.children.add("Patient ID: " + sortedList.get(i)[2]);
+                                group.children.add("Patient: " + sortedList.get(i)[3]);
+
+                                groups.append(i, group);
+                            }
+
+                        }
+                        else
+                        {
+                            Group group = new Group("There Are No Events For Today");
+                            groups.append(0, group);
+                        }
+                        buildList(groups, listView);
                     }
                 })
                         .showTodayButton(true)
@@ -154,27 +193,115 @@ public class DHomePage extends Fragment {
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
                 Date date = new Date();
 
+
+                ArrayList<String[]> strings = new ArrayList<>();
                 for(AccOrRej acceptReject : list)
                 {
-                    booking_date.setText("Date: " + acceptReject.bookingdate);
-                    booking_time.setText("Time: " + acceptReject.time);
-                    patientID.setText("Patient ID: " + acceptReject.id);
-                    booking_patient.setText("Patient: " + acceptReject.pname);
-
+                    if(strings.size() > 0 && strings.get(0)[1].equals(acceptReject.time))
+                    {
+                        break;
+                    }
                     if(acceptReject.bookingdate.equals(formatter.format(date)))
                     {
-                        booking_date.setText("Date: " + acceptReject.bookingdate);
-                        booking_time.setText("Time: " + acceptReject.time);
-                        patientID.setText("Patient ID: " + acceptReject.id);
-                        booking_patient.setText("Patient: " + acceptReject.pname);
+                        String [] str = new String[4];
+
+                        str[0] = acceptReject.bookingdate;
+                        str[1] = acceptReject.time;
+                        str[2] = acceptReject.id;
+                        str[3] = acceptReject.pname;
+
+                        strings.add(str);
                     }
                 }
+                if(strings.size() > 0)
+                {
+                    ArrayList<String[]> sortedList = new ArrayList<>();
+                    sortedList.addAll(sortByTime(strings));
+
+
+                    for(int i = 0; i < sortedList.size(); i++)
+                    {
+                        Group group = new Group(sortedList.get(i)[1]);
+
+                        group.children.add("Date: " + sortedList.get(i)[0]);
+                        group.children.add("Time: " + sortedList.get(i)[1]);
+                        group.children.add("Patient ID: " + sortedList.get(i)[2]);
+                        group.children.add("Patient: " + sortedList.get(i)[3]);
+
+                        groups.append(i, group);
+                    }
+
+                }
+                else
+                {
+                    Group group = new Group("There Are No Events For Today");
+                    groups.append(0, group);
+                }
+                buildList(groups, listView);
 
             }
         });
 
+        groups.clear();
+
         return rootView;
 
+    }
+
+    public ArrayList<String[]> sortByTime(ArrayList<String[]> strings)
+    {
+
+        for(int i = 0; i < strings.size() - 1; i++)
+        {
+            for(int j  = i + 1; j <strings.size(); j++)
+            {
+                String [] split1 = strings.get(i)[1].split(" ");
+                String [] split2 = strings.get(j)[1].split(" ");
+
+                if(split1[1].equals("PM") && split2[1].equals("AM"))
+                {
+                    String [] temp = new String[4];
+                    temp[0] = strings.get(i)[0];
+                    temp[1] = strings.get(i)[1];
+                    temp[2] = strings.get(i)[2];
+                    temp[3] = strings.get(i)[3];
+                    strings.get(i)[0] = strings.get(j)[0];
+                    strings.get(i)[1] = strings.get(j)[1];
+                    strings.get(i)[2] = strings.get(j)[2];
+                    strings.get(i)[3] = strings.get(j)[3];
+                    strings.get(j)[0] = temp[0];
+                    strings.get(j)[1] = temp[1];
+                    strings.get(j)[2] = temp[2];
+                    strings.get(j)[3] = temp[3];
+                    continue;
+                }
+                else if(split1[0].compareTo(split2[0]) > 0)
+                {
+                    String [] temp = new String[4];
+                    temp[0] = strings.get(i)[0];
+                    temp[1] = strings.get(i)[1];
+                    temp[2] = strings.get(i)[2];
+                    temp[3] = strings.get(i)[3];
+                    strings.get(i)[0] = strings.get(j)[0];
+                    strings.get(i)[1] = strings.get(j)[1];
+                    strings.get(i)[2] = strings.get(j)[2];
+                    strings.get(i)[3] = strings.get(j)[3];
+                    strings.get(j)[0] = temp[0];
+                    strings.get(j)[1] = temp[1];
+                    strings.get(j)[2] = temp[2];
+                    strings.get(j)[3] = temp[3];
+                    continue;
+                }
+            }
+        }
+
+        return strings;
+    }
+
+    public void buildList(SparseArray<Group> groups, ExpandableListView listView)
+    {
+        PHomepageAdapter adapter = new PHomepageAdapter(getActivity(), groups);
+        listView.setAdapter(adapter);
     }
 
 
@@ -196,7 +323,6 @@ public class DHomePage extends Fragment {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                 if (task.isSuccessful()) {
-
                                     for (QueryDocumentSnapshot booking : task.getResult()) {
                                         accept_rejects.add(booking.toObject(AccOrRej.class));
                                     }
