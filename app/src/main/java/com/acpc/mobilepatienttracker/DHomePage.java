@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -142,10 +143,6 @@ public class DHomePage extends Fragment {
                         ArrayList<String[]> strings = new ArrayList<>();
                         for(AccOrRej acceptReject : list)
                         {
-                            if(strings.size() > 0 && strings.get(0)[1].equals(acceptReject.time))
-                            {
-                                break;
-                            }
                             if(acceptReject.bookingdate.equals(formdate))
                             {
                                 String [] str = new String[4];
@@ -163,7 +160,6 @@ public class DHomePage extends Fragment {
                         {
                             ArrayList<String[]> sortedList = new ArrayList<>();
                             sortedList.addAll(sortByTime(strings));
-
 
                             for(int i = 0; i < sortedList.size(); i++)
                             {
@@ -197,10 +193,6 @@ public class DHomePage extends Fragment {
                 ArrayList<String[]> strings = new ArrayList<>();
                 for(AccOrRej acceptReject : list)
                 {
-                    if(strings.size() > 0 && strings.get(0)[1].equals(acceptReject.time))
-                    {
-                        break;
-                    }
                     if(acceptReject.bookingdate.equals(formatter.format(date)))
                     {
                         String [] str = new String[4];
@@ -323,9 +315,24 @@ public class DHomePage extends Fragment {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                 if (task.isSuccessful()) {
-                                    for (QueryDocumentSnapshot booking : task.getResult()) {
-                                        accept_rejects.add(booking.toObject(AccOrRej.class));
+                                    for (QueryDocumentSnapshot b : task.getResult()) {
+                                        AccOrRej accOrRej = b.toObject(AccOrRej.class);
+
+                                        if (accOrRej.accOrRej.equals("Accepted"))
+                                        {
+                                            accept_rejects.add(accOrRej);
+                                        }
                                     }
+
+//                                    for (AccOrRej ar : accept_rejects)
+//                                    {
+//                                        Log.d("ACC-REJ LIST", ar.accOrRej);
+//                                        Log.d("ACC-REJ LIST", ar.id);
+//                                        Log.d("ACC-REJ LIST", ar.doc_id);
+//                                        Log.d("ACC-REJ LIST", ar.pname);
+//                                        Log.d("ACC-REJ LIST", ar.bookingdate);
+//                                        Log.d("ACC-REJ LIST", ar.time);
+//                                    }
 
                                     callBack.onResponse(accept_rejects);
                                 }
