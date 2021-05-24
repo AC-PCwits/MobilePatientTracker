@@ -49,7 +49,7 @@ public class DoctorConsultForm extends AppCompatActivity {
 
         //populate date field
         date=findViewById(R.id.editTextTextPersonName10);
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy//MM/dd HH:mm");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd hh:mm aa");
         Date currentdate = new Date();
         date.setText(formatter.format(currentdate));
 
@@ -71,7 +71,7 @@ public class DoctorConsultForm extends AppCompatActivity {
         String[] splitter= (DPatientDetails.clickedname).split(" ", 2);
         pname.setText(splitter[0]);
         psurname.setText(splitter[1]);
-
+      
         pcell.setText((DPatientDetails.clickedcell));
         patientid.setText(DPatientDetails.clickedID);
 
@@ -173,7 +173,7 @@ public class DoctorConsultForm extends AppCompatActivity {
                         }
 
                     }
-                    doctorid.setText(doc.ID);
+                    doctorid.setText(doc.p_no);
                     dname.setText(doc.fname);
                     dsurname.setText(doc.lname);
 
