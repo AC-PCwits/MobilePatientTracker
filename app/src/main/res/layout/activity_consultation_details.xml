@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ConsultationDetails">
+
+    //lbl= text label
+    //txt = textview to actually display the info
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Consultation Details"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"/>
+
+    <LinearLayout
+        android:id="@+id/lay1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/textView7"
+        android:layout_marginTop="25dp">
+
+        <TextView
+            android:id="@+id/lblPname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="23dp"
+            android:layout_marginRight="23dp"
+            android:text="Patient Name: "
+            android:textSize="22dp"/>
+
+        <TextView
+            android:id="@+id/txtPFirstname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="..."
+            android:textSize="22dp" />
+
+        <Space
+            android:layout_width="20dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/txtPSurname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="..."
+            android:textSize="22dp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lay2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/lay1"
+        android:layout_marginTop="25dp">
+
+        <TextView
+            android:id="@+id/lblPid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="23dp"
+            android:layout_marginRight="23dp"
+            android:text="ID No: "
+            android:textSize="22dp"/>
+
+
+        <TextView
+            android:id="@+id/txtID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="..."
+            android:textSize="22dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lay3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/lay2"
+        android:layout_marginTop="24dp">
+
+        <TextView
+            android:id="@+id/lblCell"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="23dp"
+            android:layout_marginRight="23dp"
+            android:text="Cell No: "
+            android:textSize="22dp"/>
+
+
+        <TextView
+            android:id="@+id/txtCell"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="..."
+            android:textSize="22dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lay4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/lay3"
+        android:layout_marginTop="25dp">
+
+        <TextView
+            android:id="@+id/lblDname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="23dp"
+            android:layout_marginRight="23dp"
+            android:text="Doctor Name: "
+            android:textSize="22dp"/>
+
+        <TextView
+            android:id="@+id/txtDFirstName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="..."
+            android:textSize="22dp" />
+
+        <Space
+            android:layout_width="20dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/txtDSurname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="..."
+            android:textSize="22dp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lay5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/lay4"
+        android:layout_marginTop="24dp">
+
+        <TextView
+            android:id="@+id/lblPracticeID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="23dp"
+            android:layout_marginRight="23dp"
+            android:text="Practice ID: "
+            android:textSize="22dp"/>
+
+        <TextView
+            android:id="@+id/txtDPracticeID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="..."
+            android:textSize="22dp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lay6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/lay5"
+        android:layout_marginTop="25dp">
+
+        <TextView
+            android:id="@+id/lblCase"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="23dp"
+            android:layout_marginRight="23dp"
+            android:text="Case Information: "
+            android:textSize="22dp"/>
+
+        <TextView
+            android:id="@+id/txtCaseInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="..."
+            android:textSize="22dp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lay7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/lay6"
+        android:layout_marginTop="25dp">
+
+        <TextView
+            android:id="@+id/lblSymptoms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="23dp"
+            android:layout_marginRight="23dp"
+            android:text="Symptoms: "
+            android:textSize="22dp"/>
+
+        <TextView
+            android:id="@+id/txtSymptoms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="..."
+            android:textSize="22dp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lay8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/lay7"
+        android:layout_marginTop="25dp">
+
+        <TextView
+            android:id="@+id/lblDiagn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="23dp"
+            android:layout_marginRight="23dp"
+            android:text="Diagnosis: "
+            android:textSize="22dp"/>
+
+        <TextView
+            android:id="@+id/txtDiagnosis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="..."
+            android:textSize="22dp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lay9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/lay8"
+        android:layout_marginTop="25dp">
+
+        <TextView
+            android:id="@+id/lblDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="23dp"
+            android:layout_marginRight="23dp"
+            android:text="Date: "
+            android:textSize="22dp"/>
+
+        <TextView
+            android:id="@+id/txtDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="..."
+            android:textSize="22dp" />
+
+
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>

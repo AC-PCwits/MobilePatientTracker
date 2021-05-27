@@ -122,10 +122,6 @@ public class PHomePage extends Fragment {
                                 ArrayList<String[]> strings = new ArrayList<>();
                                 for(AccOrRej acceptReject : list)
                                 {
-                                    if(strings.size() > 0 && strings.get(0)[1].equals(acceptReject.time))
-                                    {
-                                        break;
-                                    }
                                     if(acceptReject.bookingdate.equals(formdate))
                                     {
                                         for(Doctor doctor: doclist)
@@ -162,7 +158,6 @@ public class PHomePage extends Fragment {
 
                                         groups.append(i, group);
                                     }
-
                                 }
                                 else
                                 {
@@ -183,10 +178,6 @@ public class PHomePage extends Fragment {
                         ArrayList<String[]> strings = new ArrayList<>();
                         for(AccOrRej acceptReject : list)
                         {
-                            if(strings.size() > 0 && strings.get(0)[1].equals(acceptReject.time))
-                            {
-                                break;
-                            }
                             if(acceptReject.bookingdate.equals(formatter.format(date)))
                             {
                                 for(Doctor doctor: doclist)
@@ -221,7 +212,6 @@ public class PHomePage extends Fragment {
 
                                 groups.append(i, group);
                             }
-
                         }
                         else
                         {
@@ -313,12 +303,16 @@ public class PHomePage extends Fragment {
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                 if (task.isSuccessful()) {
 
-                                    for (QueryDocumentSnapshot booking : task.getResult()) {
-                                        acceptRejects.add(booking.toObject(AccOrRej.class));
+                                    for (QueryDocumentSnapshot b : task.getResult()) {
+                                        AccOrRej accOrRej = b.toObject(AccOrRej.class);
+
+                                        if (accOrRej.accOrRej.equals("Accepted"))
+                                        {
+                                            acceptRejects.add(accOrRej);
+                                        }
                                     }
 
                                     callBack.onResponse(acceptRejects);
-
                                 }
                             }
                            

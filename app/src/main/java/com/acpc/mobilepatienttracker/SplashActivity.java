@@ -12,11 +12,16 @@ public class SplashActivity extends AppCompatActivity  {
 
     ProgressBar splashProgress;
     int SPLASH_TIME = 3000; //This is 3 seconds
+    public static MessagingService msgserv= null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+        if (msgserv== null){
+            msgserv = new MessagingService(SplashActivity.this);
+        }
 
         //This is additional feature, used to run a progress bar
         splashProgress = findViewById(R.id.splashProgress);
@@ -38,9 +43,6 @@ public class SplashActivity extends AppCompatActivity  {
                 {
 
                 }
-
-
-
 
                 //This 'finish()' is for exiting the app when back button pressed from Home page which is ActivityHome
                 finish();

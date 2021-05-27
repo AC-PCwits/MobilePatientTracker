@@ -119,6 +119,8 @@ DBookingDetails extends AppCompatActivity {
 
                                 addPatient();
 
+                                SplashActivity.msgserv.sendNotification("Booking accepted for patient: "+name);
+
                                 aOrR = "Accepted";
                                 final AccOrRej s = new AccOrRej(name,id,date,time,doc_id, aOrR);
 
@@ -134,6 +136,7 @@ DBookingDetails extends AppCompatActivity {
                                             public void onSuccess(DocumentReference documentReference) {
                                                 Toast.makeText(DBookingDetails.this, "Booking Accepted", Toast.LENGTH_SHORT).show();
                                                 DeleteBooking(path);
+                                                SplashActivity.msgserv.sendNotification("Booking accepted for patient: " + name);
                                                 Intent intent = new Intent(DBookingDetails.this, DoctorFragActivity.class);
                                                 startActivity(intent);
                                             }
@@ -159,7 +162,7 @@ DBookingDetails extends AppCompatActivity {
                             public void onClick(View v) {
 
                                 //  Toast.makeText(DBookingDetails.this, "Declining booking", LENGTH_LONG).show();
-
+                                SplashActivity.msgserv.sendNotification("Booking rejected for patient: "+name);
                                 aOrR = "Rejected";
                                 final AccOrRej s = new AccOrRej(name,id,date,time,doc_id, aOrR);
 
@@ -174,6 +177,7 @@ DBookingDetails extends AppCompatActivity {
                                             public void onSuccess(DocumentReference documentReference) {
                                                 Toast.makeText(DBookingDetails.this, "Booking Successfully Rejected", Toast.LENGTH_SHORT).show();
                                                 DeleteBooking(path);
+                                                SplashActivity.msgserv.sendNotification("Booking rejected for patient: " + name);
                                                 Intent intent = new Intent(DBookingDetails.this, DoctorFragActivity.class);
                                                 startActivity(intent);
                                             }

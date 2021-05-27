@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         final String TAG = "AC/PC";
 
-
         final TextView logbox = findViewById(R.id.logbox);
         Button add = findViewById(R.id.add);
         Button update = findViewById(R.id.update);
@@ -319,6 +318,21 @@ public class MainActivity extends AppCompatActivity {
 
     }
 }
+class Consult {
+    public String illness;
+
+    //TODO: Add lastVisited to DB once logic for retrieving info has been completed
+    public String lastVisited;
+    public Consult(){
+    }
+    public Consult (String illness, String lastVisited)
+    {
+        this.illness= illness;
+        this.lastVisited=  lastVisited;
+
+    }
+}
+
 
 
 // Here is the custom class Patient that is being serialized to the database
@@ -715,7 +729,6 @@ class Appointment implements Comparable<Appointment>{
         this.docName = docName;
         this.bookingdate = bookingdate;
         this.time = time;
-
 
         this.pname = pname;
         this.bookingdate = bookingdate;
