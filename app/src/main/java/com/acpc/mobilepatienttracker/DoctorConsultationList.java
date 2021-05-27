@@ -27,8 +27,6 @@ public class DoctorConsultationList extends AppCompatActivity {
     private ConsultationsAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    private FirebaseFirestore database = FirebaseFirestore.getInstance();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +43,14 @@ public class DoctorConsultationList extends AppCompatActivity {
 
     public void GetConsultList(final String patientID)
     {
+
+        if(patientID.equals("1234567891234")){
+
+            return;
+        }
+
+        final FirebaseFirestore database = FirebaseFirestore.getInstance();
+
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         database.collection("doctor-data").whereEqualTo("email", user.getEmail())
@@ -108,4 +114,5 @@ public class DoctorConsultationList extends AppCompatActivity {
             }
         });
     }
+
 }
