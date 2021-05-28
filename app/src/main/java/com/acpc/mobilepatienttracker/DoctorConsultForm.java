@@ -71,7 +71,7 @@ public class DoctorConsultForm extends AppCompatActivity {
         String[] splitter= (DPatientDetails.clickedname).split(" ", 2);
         pname.setText(splitter[0]);
         psurname.setText(splitter[1]);
-      
+
         pcell.setText((DPatientDetails.clickedcell));
         patientid.setText(DPatientDetails.clickedID);
 
