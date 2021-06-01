@@ -8,6 +8,7 @@ import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ import com.github.jhonnyx2012.horizontalpicker.HorizontalPicker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -49,7 +51,7 @@ import java.util.Set;
 
 import org.joda.time.DateTime;
 
-public class DHomePage extends Fragment {
+public class DHomePage extends Fragment  {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -63,12 +65,15 @@ public class DHomePage extends Fragment {
 
     private TextView booking_date, booking_time, booking_patient, patientID;
 
+    private FloatingActionButton newCForm;
+
     private FirebaseFirestore database = FirebaseFirestore.getInstance();
 
     private ArrayList<AccOrRej> accept_rejects = new ArrayList<>();
     private HorizontalPicker picker;
 
     private SparseArray<Group> groups = new SparseArray<>();
+
 
     public interface DateCallBack
     {
@@ -117,6 +122,19 @@ public class DHomePage extends Fragment {
 
         final ExpandableListView listView = rootView.findViewById(R.id.listView);
         groups.clear();
+
+        newCForm = rootView.findViewById(R.id.newCForm);
+
+        newCForm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getContext(), DoctorConsultForm.class);
+                startActivity(intent);
+
+            }
+        });
+
 
         picker = rootView.findViewById(R.id.datePicker);
 
@@ -292,7 +310,7 @@ public class DHomePage extends Fragment {
 
     public void buildList(SparseArray<Group> groups, ExpandableListView listView)
     {
-        PHomepageAdapter adapter = new PHomepageAdapter(getActivity(), groups);
+        DHomePageAdapter adapter = new DHomePageAdapter(getActivity(), groups);
         listView.setAdapter(adapter);
     }
 
