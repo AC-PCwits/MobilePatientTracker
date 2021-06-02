@@ -1,17 +1,19 @@
 package com.acpc.mobilepatienttracker;
 
-import java.util.ArrayList;
-
 import org.junit.Test;
+
+import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
+
 public class ConsultationHistoryAdapterTest {
-    public ArrayList<Appointment> mList = new ArrayList<>();
+
+    public ArrayList<Appointment> list = new ArrayList<>();
     {
-        mList.add(new Appointment("John", "1", "1", "1", "1", "1", "1"));
+        list.add(new Appointment("John", "12345678901", "2021/06/1", "10:00 AM", "333333", "Kanye", "Accepted"));
     }
-    public ConsultationHistoryAdapter.OnItemClickListener mListener = new ConsultationHistoryAdapter.OnItemClickListener() {
+    public ConsultationHistoryAdapter.OnItemClickListener listener = new ConsultationHistoryAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(int position) {
 
@@ -21,56 +23,83 @@ public class ConsultationHistoryAdapterTest {
     @Test
     public void testConsultationHistoryAdapter()
     {
-       Appointment appointment = new Appointment("John", "1", "1", "1", "1", "1", "1");
+        ConsultationHistoryAdapter adapter = new ConsultationHistoryAdapter(list);
 
-        ConsultationHistoryAdapter consultationHistoryAdapter = new ConsultationHistoryAdapter(mList);
-
-        assertEquals(1, consultationHistoryAdapter.getItemCount());
-        assertNotNull(consultationHistoryAdapter);
-
+        assertEquals(1, adapter.getItemCount());
+        assertNotNull(adapter);
     }
 
-  /*  @Test
-    public void setOnItemClickListener()
-    {
-        ConsultationHistoryAdapter listAdapter = new ConsultationHistoryAdapter(mList);
-
-        listAdapter.setOnItemClickListener(mListener);
-
-        assertEquals(mListener, listAdapter.getOnItemClickListner());
-    }*/
-
     @Test
-    public void onCreateViewHolder()
+    public void testSetOnItemClickListener()
+    {
+        ConsultationHistoryAdapter adapter = new ConsultationHistoryAdapter(list);
+
+        adapter.setOnItemClickListener(listener);
+
+        assertEquals(listener, adapter.getOnItemClickListner());
+    }
+    @Test
+    public void testOnCreateViewHolder()
     {
 
     }
-
     @Test
-    public void onBindViewHolder() {
-    }
-
-    @Test
-    public void getItemCount()
+    public void testOnBindViewHolder()
     {
-      Appointment appointment = new Appointment( "John", "1", "1", "1", "1", "1", "1");
-
-        ConsultationHistoryAdapter consultationHistoryAdapter = new ConsultationHistoryAdapter(mList);
-
-        assertEquals(mList.size(), consultationHistoryAdapter.getItemCount());
     }
-
     @Test
-    public void testgetColour() {
+    public void testGetColour()
+    {
 
-  ConsultationHistoryAdapter c = new ConsultationHistoryAdapter(mList);
+        ConsultationHistoryAdapter adapter = new ConsultationHistoryAdapter(list);
 
-        assertTrue(c.getColour("Accepted") =="#50C878");
-        assertTrue(c.getColour("Pending")=="#C3C3C3");
-        assertTrue(c.getColour("Past")=="#0E20C5");
+        adapter.setOnItemClickListener(listener);
 
-        //haven't catered for default
+        for (int i =0; i < 4; i++)
+        {
+            String status = "";
 
+            switch (i)
+            {
+                case 0:
+                    status = "Accepted";
+                    break;
+                case 1:
+                    status = "Pending";
+                    break;
+                case 2:
+                    status = "Past";
+                    break;
+                case 3:
+                    status = "Rejected";
+                    break;
+            }
+
+
+            switch (status)
+            {
+                case "Accepted":
+                    assertEquals("#50C878", adapter.getColour(status));
+                    break;
+                case "Pending":
+                    assertEquals("#C3C3C3", adapter.getColour(status));
+                    break;
+                case "Past":
+                    assertEquals("#0E20C5", adapter.getColour(status));
+                    break;
+                default:
+                    assertEquals("#FF0000", adapter.getColour(status));
+                    break;
+            }
+        }
+    }
+    @Test
+    public void testGetItemCount()
+    {
+        ConsultationHistoryAdapter adapter = new ConsultationHistoryAdapter(list);
+
+        adapter.setOnItemClickListener(listener);
+
+        assertEquals(list.size(), adapter.getItemCount());
     }
 }
-
