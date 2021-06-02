@@ -61,7 +61,7 @@ public class DoctorConsultationList extends AppCompatActivity {
                 {
                     Doctor doctor = task.getResult().toObjects(Doctor.class).get(0);
 
-                    database.collection("consultation-data").whereEqualTo("pdoctorID", doctor.p_no).whereEqualTo("ppatientID", patientID)
+                    database.collection("consultation-data").whereEqualTo("ppatientID", patientID)
                             .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
