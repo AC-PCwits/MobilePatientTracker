@@ -104,7 +104,4 @@ public class ConsultationsAdapter extends RecyclerView.Adapter<ConsultationsAdap
     {
         return mPatientList.size();
     }
-
-
-
 }
