@@ -13,12 +13,23 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 public class DHomePageAdapter extends BaseExpandableListAdapter
 {
 
     private final SparseArray<Group> groups;
     public LayoutInflater inflater;
     public Activity activity;
+    private OnItemClickListener mListener;
+
+    public interface OnItemClickListener {
+        void onItemClick(Group group);
+    }
+
+    public void setOnItemClickListener(DHomePageAdapter.OnItemClickListener listener) {
+        mListener = listener;
+    }
 
     public DHomePageAdapter(Activity act, SparseArray<Group> groups) {
         activity = act;
@@ -37,20 +48,23 @@ public class DHomePageAdapter extends BaseExpandableListAdapter
     }
 
     @Override
-    public View getChildView(int groupPosition, final int childPosition,
+    public View getChildView(final int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
         final String children = (String) getChild(groupPosition, childPosition);
+        String getButText = (String) getChild(groupPosition, 3);
         TextView text = null;
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.listrow_details, null);
         }
         text = (TextView) convertView.findViewById(R.id.textView1);
         text.setText(children);
+
         convertView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(activity, children,
+                Toast.makeText(activity, groups.get(groupPosition).children.get(3),
                         Toast.LENGTH_SHORT).show();
+                mListener.onItemClick(groups.get(groupPosition));
             }
         });
 

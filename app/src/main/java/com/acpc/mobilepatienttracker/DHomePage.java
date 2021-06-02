@@ -124,6 +124,7 @@ public class DHomePage extends Fragment  {
         groups.clear();
 
         newCForm = rootView.findViewById(R.id.newCForm);
+        newCForm.setVisibility(View.INVISIBLE);
 
         newCForm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -308,10 +309,43 @@ public class DHomePage extends Fragment  {
         return strings;
     }
 
-    public void buildList(SparseArray<Group> groups, ExpandableListView listView)
+    public void buildList(final SparseArray<Group> groups, ExpandableListView listView)
     {
         DHomePageAdapter adapter = new DHomePageAdapter(getActivity(), groups);
         listView.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(new DHomePageAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Group group) {
+
+                Bundle bundle = new Bundle();
+
+                String [] id = group.children.get(2).toString().split(" ");
+
+//                Toast.makeText(getContext(), id[2], Toast.LENGTH_LONG).show();
+
+                FirebasePatient firebasePatient = new FirebasePatient(group.children.get(2));
+                firebasePatient.getUserData(new FirebasePatient.FirebaseCallback() {
+                    @Override
+                    public void onResponse(ArrayList<Patient> patients)
+                    {
+
+                        Bundle bundle = new Bundle();
+
+                        bundle.putString("PATIENT_ID", patients.get(0).idno);
+                        bundle.putString("PATIENT_FName", patients.get(0).fname);
+                        bundle.putString("PATIENT_LName", patients.get(0).fsurname);
+                        bundle.putString("PATIENT_Cell", patients.get(0).cellno);
+
+                        goToConsult(bundle);
+
+                    }
+                },id[2]);
+
+
+
+            }
+        });
     }
 
 
@@ -367,5 +401,12 @@ public class DHomePage extends Fragment  {
         });
 
 
+    }
+
+    public void goToConsult(Bundle bundle)
+    {
+        Intent intent = new Intent(getContext(), DoctorConsultForm.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 }

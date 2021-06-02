@@ -1,12 +1,14 @@
 package com.acpc.mobilepatienttracker;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
@@ -18,6 +20,7 @@ public class PHomepageAdapter  extends BaseExpandableListAdapter
     private final SparseArray<Group> groups;
     public LayoutInflater inflater;
     public Activity activity;
+
 
     public PHomepageAdapter(Activity act, SparseArray<Group> groups) {
         activity = act;
@@ -36,7 +39,7 @@ public class PHomepageAdapter  extends BaseExpandableListAdapter
     }
 
     @Override
-    public View getChildView(int groupPosition, final int childPosition,
+    public View getChildView(final int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
         final String children = (String) getChild(groupPosition, childPosition);
         TextView text = null;
@@ -45,6 +48,7 @@ public class PHomepageAdapter  extends BaseExpandableListAdapter
         }
         text = (TextView) convertView.findViewById(R.id.textView1);
         text.setText(children);
+
         convertView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
