@@ -37,7 +37,7 @@ import static android.widget.Toast.makeText;
 public class DoctorConsultForm extends AppCompatActivity {
     private RadioGroup radioCase;
     private RadioButton case_button;
-    private EditText symptoms, diagnosis, patientid,doctorid,date,dname,dsurname,pname,pcell,psurname;
+    private EditText symptoms, diagnosis, patientid,doctorid,date,dname,dsurname,pname,pcell,psurname,dtype;
     private Button save;
     private FirebaseFirestore database = FirebaseFirestore.getInstance();
     private Doctor doc = new Doctor();
@@ -67,13 +67,20 @@ public class DoctorConsultForm extends AppCompatActivity {
         doctorid=findViewById(R.id.dConsultID);
         dname=findViewById(R.id.dConsultName);
         dsurname=findViewById(R.id.dConsultLName);
+        dtype=findViewById(R.id.dType);
+        Intent intent = getIntent();
+        if(intent.getExtras() != null) {
+            pname.setText(intent.getExtras().getString("PATIENT_FName"));
+        psurname.setText(intent.getExtras().getString("PATIENT_LName"));
+            pcell.setText(intent.getExtras().getString("PATIENT_Cell"));
+            patientid.setText(intent.getExtras().getString("PATIENT_ID"));}
 
-        String[] splitter= (DPatientDetails.clickedname).split(" ", 2);
-        pname.setText(splitter[0]);
-        psurname.setText(splitter[1]);
-      
-        pcell.setText((DPatientDetails.clickedcell));
-        patientid.setText(DPatientDetails.clickedID);
+        //String[] splitter= (DPatientDetails.clickedname).split(" ", 2);
+
+        //psurname.setText(splitter[1]);
+
+       // pcell.setText((DPatientDetails.clickedcell));
+        //patientid.setText(DPatientDetails.clickedID);
 
         getDocDet();
 
@@ -176,7 +183,7 @@ public class DoctorConsultForm extends AppCompatActivity {
                     doctorid.setText(doc.p_no);
                     dname.setText(doc.fname);
                     dsurname.setText(doc.lname);
-
+                    dtype.setText(doc.doc_type);
                 }
             }
         });

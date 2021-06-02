@@ -124,12 +124,16 @@
             android:inputType="textPersonName"
             android:layout_weight="1"/>
 
-        <TextView
+        <EditText
+            android:id="@+id/dType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="4.5dp"
-            android:layout_marginRight="9dp"
+            android:hint="Speciality"
+            android:layout_marginLeft="9dp"
+            android:layout_marginRight="4.5dp"
+            android:inputType="textPersonName"
             android:layout_weight="1"/>
+
 
     </LinearLayout>
 

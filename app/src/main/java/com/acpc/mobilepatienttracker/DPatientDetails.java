@@ -17,11 +17,6 @@ import java.util.ArrayList;
 
 public class DPatientDetails extends AppCompatActivity {
 
-
-    public static String clickedname;
-    public static String clickedID;
-    public static String clickedcell;
-
     private String name;
     private String id;
     private String cellno;
@@ -163,9 +158,19 @@ public class DPatientDetails extends AppCompatActivity {
         illText.setText(ill);
         medaidText.setText(medaid);
         allergiesText.setText(allergies);
-        clickedname=name;
-        clickedcell=cellno;
-        clickedID=id;
+        //clickedname=name;
+      //  clickedcell=cellno;
+       // clickedID=id;
+
+        Intent start = new Intent(DPatientDetails.this, DoctorConsultForm.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("PATIENT_ID", id);
+        String[] splitter= name.split(" ", 2);
+        bundle.putString("PATIENT_FName", splitter[0]);
+        bundle.putString("PATIENT_LName", splitter[1]);
+        bundle.putString("PATIENT_Cell", cellno);
+        start.putExtras(bundle);
+        startActivity(start);
     }
 
     @Override
