@@ -27,6 +27,11 @@ public class ConsultationsAdapter extends RecyclerView.Adapter<ConsultationsAdap
         mListener = listener;
     }
 
+    public ConsultationsAdapter.OnItemClickListener getOnItemClickListner()
+    {
+        return this.mListener;
+    }
+
     //For the Adapter to work, we need a viewholder which will hold all items on the activity seen by the user
     public static class ConsultViewHolder extends RecyclerView.ViewHolder
     {

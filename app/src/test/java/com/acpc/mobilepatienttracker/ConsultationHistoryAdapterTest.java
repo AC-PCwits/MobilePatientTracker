@@ -1,15 +1,13 @@
 package com.acpc.mobilepatienttracker;
 
-import junit.framework.TestCase;
-
 import org.junit.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
-public class ConsultationHistoryAdapterTest extends TestCase {
+
+public class ConsultationHistoryAdapterTest {
 
     public ArrayList<Appointment> list = new ArrayList<>();
     {
