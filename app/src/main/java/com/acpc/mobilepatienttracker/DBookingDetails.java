@@ -40,8 +40,7 @@ import java.util.Date;
 import static android.widget.Toast.LENGTH_LONG;
 import static android.widget.Toast.makeText;
 
-public class
-DBookingDetails extends AppCompatActivity {
+public class DBookingDetails extends AppCompatActivity {
 
     String name;
     String id;
@@ -59,9 +58,6 @@ DBookingDetails extends AppCompatActivity {
     private Button accept;
     private Button reject;
 
-
-    FirebaseAuth mAuth;
-    final FirebaseFirestore database = FirebaseFirestore.getInstance();
 
     private Doctor doc = new Doctor();
 
@@ -96,6 +92,8 @@ DBookingDetails extends AppCompatActivity {
         idT.setText(id);
         dateT.setText(date);
         timeT.setText(time);
+
+        final FirebaseFirestore database = FirebaseFirestore.getInstance();
 
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -212,6 +210,8 @@ DBookingDetails extends AppCompatActivity {
 
     public void DeleteBooking(String path)
     {
+        final FirebaseFirestore database = FirebaseFirestore.getInstance();
+
         database.document(path)
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -231,6 +231,8 @@ DBookingDetails extends AppCompatActivity {
     }
 
     public void addPatient(){
+
+        final FirebaseFirestore database = FirebaseFirestore.getInstance();
 
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
