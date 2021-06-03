@@ -68,6 +68,11 @@ public class FirebasePatient
         void onResponse(ArrayList<Patient> patients);
     }
 
+    public FirebasePatient(String query)
+    {
+        this.query = query;
+    }
+
     public FirebasePatient(User user, String docName, String password, Context context)
     {
         this.user = user;
@@ -201,6 +206,26 @@ public class FirebasePatient
 
             }
         });
+    }
+
+    public void getUserData(final FirebaseCallback callback, String ID)
+    {
+                        database = FirebaseFirestore.getInstance();
+                        database.collection("patient-data").whereEqualTo("idno", ID)
+                                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    ArrayList<Patient> patients = new ArrayList<>();
+
+                                    for (QueryDocumentSnapshot doc : task.getResult())
+                                    {
+                                        patients.add(doc.toObject(Patient.class));
+                                    }
+                                    callback.onResponse(patients);
+                                }
+                            }
+                        });
     }
 
     public void UpdateField() {

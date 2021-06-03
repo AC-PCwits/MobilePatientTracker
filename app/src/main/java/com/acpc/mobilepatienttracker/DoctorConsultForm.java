@@ -69,11 +69,14 @@ public class DoctorConsultForm extends AppCompatActivity {
         dsurname=findViewById(R.id.dConsultLName);
         dtype=findViewById(R.id.dType);
         Intent intent = getIntent();
-        if(intent.getExtras() != null) {
+
+        if(intent.getExtras() != null)
+        {
             pname.setText(intent.getExtras().getString("PATIENT_FName"));
-        psurname.setText(intent.getExtras().getString("PATIENT_LName"));
+            psurname.setText(intent.getExtras().getString("PATIENT_LName"));
             pcell.setText(intent.getExtras().getString("PATIENT_Cell"));
-            patientid.setText(intent.getExtras().getString("PATIENT_ID"));}
+            patientid.setText(intent.getExtras().getString("PATIENT_ID"));
+        }
 
         //String[] splitter= (DPatientDetails.clickedname).split(" ", 2);
 
