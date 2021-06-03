@@ -321,8 +321,12 @@ public class DHomePage extends Fragment  {
                 Bundle bundle = new Bundle();
 
                 String [] id = group.children.get(2).toString().split(" ");
+               final String [] date = group.children.get(0).toString().split(" ");
+               final String [] time = group.children.get(1).toString().split(" ");
 
 //                Toast.makeText(getContext(), id[2], Toast.LENGTH_LONG).show();
+
+
 
                 FirebasePatient firebasePatient = new FirebasePatient(group.children.get(2));
                 firebasePatient.getUserData(new FirebasePatient.FirebaseCallback() {
@@ -336,6 +340,9 @@ public class DHomePage extends Fragment  {
                         bundle.putString("PATIENT_FName", patients.get(0).fname);
                         bundle.putString("PATIENT_LName", patients.get(0).fsurname);
                         bundle.putString("PATIENT_Cell", patients.get(0).cellno);
+                        bundle.putString("DATE", date[1]);
+                        bundle.putString("TIME", time[1] + " " + time[2]);
+
 
                         goToConsult(bundle);
 

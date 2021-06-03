@@ -10,15 +10,15 @@ import android.widget.TextView;
 
 public class PastConsultDetailed extends AppCompatActivity {
 
-    private TextView dlname,dfname,cell,fname,sname,symptoms, diagnosis, patientid,doctorid,date;
-    private Button done;
+   /* private TextView dlname,dfname,cell,fname,sname,symptoms, diagnosis, patientid,doctorid,date;
+    private Button done;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_past_consult_detailed);
 
-        dlname = (TextView) findViewById(R.id.dConsultLName);
+       /* dlname = (TextView) findViewById(R.id.dConsultLName);
         dfname = (TextView) findViewById(R.id.dConsultName);
         cell = (TextView) findViewById(R.id.pConsultCell);
         fname = (TextView) findViewById(R.id.pConsultName);
@@ -52,8 +52,9 @@ public class PastConsultDetailed extends AppCompatActivity {
                 start.putExtras(bundle);
                 startActivity(start);
             }
-        });
+        });*/
     }
+
 
     public void GetAdditionalPatientData(final String patientID)
     {
