@@ -17,6 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class DoctorConsultationList extends AppCompatActivity {
 
@@ -68,6 +69,7 @@ public class DoctorConsultationList extends AppCompatActivity {
                             if(task.isSuccessful())
                             {
                                 ArrayList<Consultation> pastConsults = (ArrayList<Consultation>) task.getResult().toObjects(Consultation.class);
+                                Collections.sort(pastConsults);
 
                                 Log.d("PAST CONSULTS", "Past consults size: " + pastConsults.size());
 

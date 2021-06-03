@@ -616,7 +616,7 @@ class Bookings {
     }
 }
 
-class Consultation{
+class Consultation implements Comparable<Consultation>{
     public String pcase;
     public String psymptoms;
     public String pdiagnosis;
@@ -635,6 +635,20 @@ class Consultation{
 
     public Consultation (){
 
+    }
+
+    @Override
+    public int compareTo(Consultation consultation) {
+        try {
+            Date thisDate = new SimpleDateFormat("yyyy/MM/dd").parse(this.pdate);
+            Date otherDate = new SimpleDateFormat("yyyy/MM/dd").parse(consultation.pdate);
+
+            return otherDate.compareTo(thisDate);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 }
 
