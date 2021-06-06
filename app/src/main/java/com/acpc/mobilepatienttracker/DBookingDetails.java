@@ -1,7 +1,6 @@
 package com.acpc.mobilepatienttracker;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,23 +21,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firestore.v1.WriteResult;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-
-import static android.widget.Toast.LENGTH_LONG;
-import static android.widget.Toast.makeText;
 
 public class DBookingDetails extends AppCompatActivity {
 
@@ -88,11 +76,25 @@ public class DBookingDetails extends AppCompatActivity {
 
         }
 
+        pullBookingData("___NULL_DEV___");
+
         nameT.setText(name);
         idT.setText(id);
         dateT.setText(date);
         timeT.setText(time);
 
+
+    }
+
+    public void pullBookingData(String test)
+    {
+        if(test.equals("___NULL_DEV___"))
+        {
+            addPatient("___NULL_DEV___");
+            DeleteBooking("___NULL_DEV___");
+            return;
+
+        }
         final FirebaseFirestore database = FirebaseFirestore.getInstance();
 
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -107,7 +109,7 @@ public class DBookingDetails extends AppCompatActivity {
                         doc_id = ID;
                         // Toast.makeText(DBookingDetails.this, "Hi", Toast.LENGTH_SHORT).show();
 
-                       // final Bookings booking = new Bookings(name, id, date, time, doc_id);
+                        // final Bookings booking = new Bookings(name, id, date, time, doc_id);
                         //final AcceptReject s = new AcceptReject();
 
 
@@ -115,7 +117,7 @@ public class DBookingDetails extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
 
-                                addPatient();
+                                addPatient("1");
 
                                 SplashActivity.msgserv.sendNotification("Booking accepted for patient: "+name);
 
@@ -204,12 +206,14 @@ public class DBookingDetails extends AppCompatActivity {
 
             }
         });
-
-
     }
 
     public void DeleteBooking(String path)
     {
+        if(path.equals("___NULL_DEV___"))
+        {
+            return;
+        }
         final FirebaseFirestore database = FirebaseFirestore.getInstance();
 
         database.document(path)
@@ -230,7 +234,12 @@ public class DBookingDetails extends AppCompatActivity {
                 });
     }
 
-    public void addPatient(){
+    public void addPatient(String test){
+
+        if(test.equals("___NULL_DEV___"))
+        {
+            return;
+        }
 
         final FirebaseFirestore database = FirebaseFirestore.getInstance();
 
