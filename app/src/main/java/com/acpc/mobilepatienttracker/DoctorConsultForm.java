@@ -96,6 +96,10 @@ public class DoctorConsultForm extends AppCompatActivity {
 
         getDocDet();
 
+ //       if(pname.getText().toString().isEmpty()){
+
+   //     }
+
         save.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
