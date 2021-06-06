@@ -99,7 +99,7 @@ public class PatientDateTimeBooking extends AppCompatActivity {
 
         name.setText(f+" "+s);
         //  sname.setText(s);
-        exp.setText(e);
+        exp.setText(e + " Years");
 
 
 
