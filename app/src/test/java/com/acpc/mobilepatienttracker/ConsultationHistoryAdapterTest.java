@@ -93,6 +93,7 @@ public class ConsultationHistoryAdapterTest {
             }
         }
     }
+
     @Test
     public void testGetItemCount()
     {

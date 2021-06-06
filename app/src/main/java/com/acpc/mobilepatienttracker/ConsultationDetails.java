@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -32,12 +33,15 @@ public class ConsultationDetails extends AppCompatActivity {
     private TextView txtSymptoms;
     private TextView txtDiagnosis;
     private TextView txtDate;
+    private TextView txtConsultationDetailsLabel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consultation_details);
 
+        txtConsultationDetailsLabel = findViewById(R.id.txtConsultationDetailsLabel);
+        txtConsultationDetailsLabel.setPaintFlags(txtConsultationDetailsLabel.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);// to underline text
         txtPFirstName = findViewById(R.id.txtPFirstname);
         txtPSurname = findViewById(R.id.txtPSurname);
         txtPatientID = findViewById(R.id.txtID);
