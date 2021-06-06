@@ -30,15 +30,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         final String TAG = "AC/PC";
 
-        final TextView logbox = findViewById(R.id.logbox);
-        Button add = findViewById(R.id.add);
-        Button update = findViewById(R.id.update);
-        Button remove = findViewById(R.id.remove);
-        Button get = findViewById(R.id.get);
-        Button getmultiple = findViewById(R.id.getmultiple);
+     //   final TextView logbox = findViewById(R.id.logbox);
+     //   Button add = findViewById(R.id.add);
+     //   Button update = findViewById(R.id.update);
+     //   Button remove = findViewById(R.id.remove);
+     //   Button get = findViewById(R.id.get);
+     //   Button getmultiple = findViewById(R.id.getmultiple);
 
         Button registration = findViewById(R.id.registration);
-        Button add_doc = findViewById(R.id.add_doc);
+      //  Button add_doc = findViewById(R.id.add_doc);
         Button reg_doc = findViewById(R.id.reg_doc);
         Button logout_btn = findViewById(R.id.btn_logout);
 
@@ -318,7 +318,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 }
-class Consult {
+/*class Consult {
     public String illness;
 
     //TODO: Add lastVisited to DB once logic for retrieving info has been completed
@@ -331,7 +331,7 @@ class Consult {
         this.lastVisited=  lastVisited;
 
     }
-}
+}*/
 
 
 
@@ -616,7 +616,7 @@ class Bookings {
     }
 }
 
-class Consultation{
+class Consultation implements Comparable<Consultation>{
     public String pcase;
     public String psymptoms;
     public String pdiagnosis;
@@ -635,6 +635,20 @@ class Consultation{
 
     public Consultation (){
 
+    }
+
+    @Override
+    public int compareTo(Consultation consultation) {
+        try {
+            Date thisDate = new SimpleDateFormat("yyyy/MM/dd").parse(this.pdate);
+            Date otherDate = new SimpleDateFormat("yyyy/MM/dd").parse(consultation.pdate);
+
+            return otherDate.compareTo(thisDate);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 }
 

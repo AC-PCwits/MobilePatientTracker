@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,7 +14,9 @@ import androidx.core.widget.NestedScrollView;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class DPatientDetails extends AppCompatActivity {
 
@@ -162,15 +165,7 @@ public class DPatientDetails extends AppCompatActivity {
       //  clickedcell=cellno;
        // clickedID=id;
 
-        Intent start = new Intent(DPatientDetails.this, DoctorConsultForm.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("PATIENT_ID", id);
-        String[] splitter= name.split(" ", 2);
-        bundle.putString("PATIENT_FName", splitter[0]);
-        bundle.putString("PATIENT_LName", splitter[1]);
-        bundle.putString("PATIENT_Cell", cellno);
-        start.putExtras(bundle);
-        startActivity(start);
+
     }
 
     @Override
@@ -183,12 +178,25 @@ public class DPatientDetails extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        int id = item.getItemId();
+        int id_n = item.getItemId();
 
-        if(id == R.id.action_con)
+        if(id_n == R.id.action_con)
         {
             Toast.makeText(getApplicationContext(), "New Consult Form Created", Toast.LENGTH_LONG).show();
             Intent start = new Intent( getApplicationContext(), DoctorConsultForm.class); //moving from main screen to reg screen when clicking register button on main screen
+            Bundle bundle = new Bundle();
+            bundle.putString("PATIENT_ID", id);
+            String[] splitter= name.split(" ", 2);
+            bundle.putString("PATIENT_FName", splitter[0]);
+            bundle.putString("PATIENT_LName", splitter[1]);
+            bundle.putString("PATIENT_Cell", cellno);
+
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd hh:mm aa");
+            Date currentdate = new Date();
+            String date = formatter.format(currentdate);
+            bundle.putString("DATE",date);
+
+            start.putExtras(bundle);
             startActivity(start);
             return true;
         }
