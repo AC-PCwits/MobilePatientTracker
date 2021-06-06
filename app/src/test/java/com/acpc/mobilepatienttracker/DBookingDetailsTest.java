@@ -22,7 +22,7 @@ import static org.junit.Assert.*;
 public class DBookingDetailsTest {
 
     private String PName = "John";
-    private String P_ID = "1234567891234";
+    private String P_ID = "___NULL_DEV___";
     private String BookingDate = "2021/01/20";
     private String BookingTime = "09:00 AM";
     private String docID = "";
@@ -37,7 +37,11 @@ public class DBookingDetailsTest {
         Intent intent = new Intent(RuntimeEnvironment.application, DBookingDetails.class);
         Bundle bundle = new Bundle();
 
-        bundle.putString("PATIENT_ID", "1234567891234");
+        bundle.putString("PATIENT_ID", "___NULL_DEV___");
+        bundle.putString("PATIENT_NAME", "John");
+        bundle.putString("BOOKING_DATE", "2021");
+        bundle.putString("BOOKING_TIME", "09:00 AM");
+        bundle.putString("PATH", "___NULL_DEV___");
 
         intent.putExtras(bundle);
 
