@@ -14,7 +14,7 @@
         android:textStyle="bold"
         android:textAlignment="center"
         android:gravity="center_horizontal"
-        android:textSize="36dp"
+        android:textSize="30dp"
         android:textColor="@android:color/black"/>
 
 

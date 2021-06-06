@@ -47,11 +47,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="24dp"
-                android:text="Patient Details"
-                android:textSize="24sp"
+                android:layout_marginTop="15dp"
                 android:gravity="center"
-                />
+                android:text="Patient Details"
+                android:textColor="@color/gradStop"
+                android:textSize="30sp"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:id="@+id/dd_backround"
