@@ -4,17 +4,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class DPatientDetails extends AppCompatActivity {
-    public static String clickedname;
-    public static String clickedID;
-    public static String clickedcell;
 
     private String name;
     private String id;
@@ -46,15 +50,58 @@ public class DPatientDetails extends AppCompatActivity {
 
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_d_patient_details);
 
+        final ExtendedFloatingActionButton extendedFloatingActionButton = findViewById(R.id.dpl_past_consults);
+
+        // register the nestedScrollView from the main layout
+        NestedScrollView nestedScrollView = findViewById(R.id.nestedScrollView);
+
+        // handle the nestedScrollView behaviour with OnScrollChangeListener
+        // to extend or shrink the Extended Floating Action Button
+        nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                // the delay of the extension of the FAB is set for 12 items
+                if (scrollY > oldScrollY + 12 && extendedFloatingActionButton.isExtended()) {
+                    extendedFloatingActionButton.shrink();
+                }
+
+                // the delay of the extension of the FAB is set for 12 items
+                if (scrollY < oldScrollY - 12 && !extendedFloatingActionButton.isExtended()) {
+                    extendedFloatingActionButton.extend();
+                }
+
+                // if the nestedScrollView is at the first item of the list then the
+                // extended floating action should be in extended state
+                if (scrollY == 0) {
+                    extendedFloatingActionButton.extend();
+                }
+            }
+        });
+        extendedFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), DoctorConsultationList.class);
+
+                Bundle bundle = new Bundle();
+                bundle.putString("PATIENT_ID", id);
+                intent.putExtras(bundle);
+                startActivity(intent);
+
+            }
+        });
+
+
         //Instantiation of View Components
-        nameText = (TextView)findViewById(R.id.dateText);
-        idText = (TextView)findViewById(R.id.statusText);
+        nameText = (TextView)findViewById(R.id.nameText);
+        idText = (TextView)findViewById(R.id.idText);
         illText = (TextView)findViewById(R.id.illnessText);
         cellText = (TextView)findViewById(R.id.cellText);
         nationalityText = (TextView)findViewById(R.id.natText);
@@ -114,9 +161,11 @@ public class DPatientDetails extends AppCompatActivity {
         illText.setText(ill);
         medaidText.setText(medaid);
         allergiesText.setText(allergies);
-        clickedname=name;
-        clickedcell=cellno;
-        clickedID=id;
+        //clickedname=name;
+      //  clickedcell=cellno;
+       // clickedID=id;
+
+
     }
 
     @Override
@@ -129,12 +178,25 @@ public class DPatientDetails extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        int id = item.getItemId();
+        int id_n = item.getItemId();
 
-        if(id == R.id.action_logout)
+        if(id_n == R.id.action_con)
         {
             Toast.makeText(getApplicationContext(), "New Consult Form Created", Toast.LENGTH_LONG).show();
             Intent start = new Intent( getApplicationContext(), DoctorConsultForm.class); //moving from main screen to reg screen when clicking register button on main screen
+            Bundle bundle = new Bundle();
+            bundle.putString("PATIENT_ID", id);
+            String[] splitter= name.split(" ", 2);
+            bundle.putString("PATIENT_FName", splitter[0]);
+            bundle.putString("PATIENT_LName", splitter[1]);
+            bundle.putString("PATIENT_Cell", cellno);
+
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd hh:mm aa");
+            Date currentdate = new Date();
+            String date = formatter.format(currentdate);
+            bundle.putString("DATE",date);
+
+            start.putExtras(bundle);
             startActivity(start);
             return true;
         }

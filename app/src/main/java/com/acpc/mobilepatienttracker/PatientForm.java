@@ -45,7 +45,6 @@ public class PatientForm extends AppCompatActivity  {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        final FirebaseFirestore database= FirebaseFirestore.getInstance();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_form);
@@ -76,6 +75,8 @@ public class PatientForm extends AppCompatActivity  {
         pcell.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
         pemcell.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
 
+
+
         submit.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
@@ -93,9 +94,6 @@ public class PatientForm extends AppCompatActivity  {
                 } else if (psurname.getText().toString().equals("")) {
                     psurname.setError("Empty last name");
                     return;
-//                } else if (pid.getText().toString().equals("")) {
-//                    pid.setError("Enter ID");
-//                    return;
                 } else if (pcell.getText().toString().equals("")) {
                     pcell.setError("Enter cell number");
                     return;
@@ -114,9 +112,7 @@ public class PatientForm extends AppCompatActivity  {
                 } else if(chkHIV.isChecked()==false && chkTB.isChecked()==false && chkHyp.isChecked()==false && chKDiabetes.isChecked()==false && chkNone.isChecked()==false){
                     Toast.makeText(PatientForm.this, "Select a Common Issue option!", LENGTH_LONG).show(); //error message for common issues
                 }//common issues validation
-
                 else {
-
                     Bundle extras = getIntent().getExtras();
 
                     final String p_name = pname.getText().toString();
@@ -136,32 +132,10 @@ public class PatientForm extends AppCompatActivity  {
                     SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
                     Date currentdate = new Date();
                     final String lastVisited = formatter.format(currentdate);
-
-                    Patient patient = new Patient(p_name, p_surname, p_id, p_cell, p_Nationality, gender, p_Address, p_emname, p_emcell, p_race, m_status, cissues, medaid, allergies,lastVisited);
-
-                    database.collection("patient-data") // data gets added to a collection called patient-data
-                            .add(patient)
-                            // Add a success listener so we can be notified if the operation was successfuly.
-
-                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                @Override
-                                public void onSuccess(DocumentReference documentReference) {
-                                    // If we are here, the app successfully connected to Firestore and added a new entry
-                                    makeText(PatientForm.this, "Data successfully added", LENGTH_LONG).show();
-                                    Intent start = new Intent(PatientForm.this, PatientFragActivity.class);
-                                    startActivity(start);
-                                }
-                            })
-                            // Add a failure listener so we can be notified if something does wrong
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    // If we are here, the entry could not be added for some reason (e.g no internet connection)
-                                    makeText(PatientForm.this, "Data was unable added", LENGTH_LONG).show();
-                                }
-                            });
+                    Patient patient = new Patient(p_name, p_surname, p_id, p_cell, p_Nationality, gender, p_Address, p_emname, p_emcell, p_race, m_status, cissues, medaid, allergies, lastVisited);
+                    FirebasePatient firebasePatient = new FirebasePatient(patient, "patient-data", PatientForm.this);
+                    firebasePatient.patientFirestoreReg();
                 }
-
             }
         });
 
@@ -175,9 +149,7 @@ public class PatientForm extends AppCompatActivity  {
         RadioButton singleButton = (RadioButton) findViewById(radioID);
         String out = singleButton.getText().toString();
         return out;
-
     }
-
 
     public String getRace (View v){    ////function to help convert radiogroup selections to string, this allows us to store it as a string in the DB
 
@@ -187,7 +159,6 @@ public class PatientForm extends AppCompatActivity  {
         RadioButton singleButton = (RadioButton) findViewById(radioID);
         String out = singleButton.getText().toString();
         return out;
-
     }
 
     public String getGender(View v) {      ///// function to help convert radiogroup selections to string, this allows us to store it as a string in the DBra
@@ -197,9 +168,7 @@ public class PatientForm extends AppCompatActivity  {
         RadioButton singleButton = (RadioButton) findViewById(radioID);
         String out = singleButton.getText().toString();
         return out;
-
     }
-
 
     public ArrayList<String> ailments(View v){         ////function to collect options selected from the check box, stores in a string arrayList, this is stored in the DB
         ArrayList<String> sickness= new ArrayList<String>();
@@ -210,23 +179,17 @@ public class PatientForm extends AppCompatActivity  {
         if(chkTB.isChecked()){
             sickness.add("TB");
         }
-
         if(chKDiabetes.isChecked()){
             sickness.add("Diabetes");
         }
-
         if(chkHyp.isChecked()){
             sickness.add("Hypertension");
         }
-
         if(chkNone.isChecked()){
             sickness.add("None");
         }
-
         return sickness;
-
     }
-
 
     public String checkAid(View v){    ///// function that checks check box, stores option as a string, this can be stored in the DB
         String aid= "";
@@ -241,5 +204,4 @@ public class PatientForm extends AppCompatActivity  {
         return aid;
 
     }
-
 }

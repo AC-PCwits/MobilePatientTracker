@@ -10,44 +10,45 @@
         android:id="@+id/txtDocName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="23dp"
-        android:layout_marginRight="23dp"
+        android:layout_marginTop="148dp"
+        android:layout_marginEnd="96dp"
+        android:layout_marginRight="96dp"
         android:text="Doctor Name"
-        android:textSize="22dp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/lblDocName"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txtDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="328dp"
+        android:layout_marginEnd="260dp"
+        android:layout_marginRight="260dp"
         android:text="Date"
-        android:textSize="22dp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/lblDate"
-        app:layout_constraintStart_toStartOf="@+id/txtTime" />
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txtTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="102dp"
-        android:layout_marginLeft="102dp"
-        android:layout_marginEnd="103dp"
-        android:layout_marginRight="103dp"
+        android:layout_marginTop="416dp"
+        android:layout_marginEnd="248dp"
+        android:layout_marginRight="248dp"
         android:text="Time"
-        android:textSize="22dp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/lblTme"
+
+        android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/statusText" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/statusText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_marginStart="156dp"
-        android:layout_marginLeft="156dp"
-        android:layout_marginBottom="144dp"
+        android:layout_marginBottom="148dp"
         android:background="@drawable/rounded_corner_pending"
         android:gravity="center"
         android:text="Status"
@@ -55,83 +56,92 @@
         android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/txtDocExp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="39dp"
-        android:layout_marginLeft="39dp"
-        android:layout_marginTop="57dp"
+        android:layout_marginTop="240dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginRight="100dp"
         android:text="Years"
-        android:textSize="22dp"
-        app:layout_constraintStart_toEndOf="@+id/lblDocExp"
-        app:layout_constraintTop_toBottomOf="@+id/txtDocName" />
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/lblDocName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="175dp"
-        android:layout_marginEnd="41dp"
-        android:layout_marginRight="41dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="148dp"
         android:text="Doctor Name:"
+        android:textColor="@color/gradStop"
         android:textSize="22dp"
+
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/txtDocName"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/lblDocExp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="240dp"
         android:text="Years of Experience:"
+        android:textColor="@color/gradStop"
         android:textSize="22dp"
         android:textStyle="bold"
-        app:layout_constraintBaseline_toBaselineOf="@+id/txtDocExp"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/lblDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="41dp"
-        android:layout_marginRight="41dp"
-        android:layout_marginBottom="54dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="328dp"
         android:text="Date:"
+
+
+        android:textColor="@color/gradStop"
         android:textSize="22dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/lblTme"
-        app:layout_constraintEnd_toStartOf="@+id/txtDate" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/lblTme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:layout_marginLeft="2dp"
-        android:layout_marginEnd="3dp"
-        android:layout_marginRight="3dp"
-        android:layout_marginBottom="78dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="416dp"
         android:text="Time:"
+        android:textColor="@color/gradStop"
         android:textSize="22dp"
+
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/statusText"
-        app:layout_constraintEnd_toEndOf="@+id/lblDate"
-        app:layout_constraintStart_toStartOf="@+id/statusText" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView18"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="47dp"
+        android:layout_marginTop="40dp"
         android:text="Appointment Details"
+        android:textColor="@color/gradStop"
         android:textSize="30dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

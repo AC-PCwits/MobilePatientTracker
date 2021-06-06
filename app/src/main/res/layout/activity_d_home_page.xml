@@ -10,21 +10,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="208dp"
-        android:paddingBottom="40dp"
-        android:src="@mipmap/ic_launcher" />
+        <com.github.jhonnyx2012.horizontalpicker.HorizontalPicker
+            android:id="@+id/datePicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:text="Welcome to Redbox !"
-        android:textSize="18sp"
-        android:layout_below="@+id/imageView"
-        android:gravity="center"/>
+        <ExpandableListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/datePicker">
+        </ExpandableListView>
 
     </RelativeLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="16dp"
+        android:id="@+id/newCForm"
+        android:src="@drawable/ic_baseline_add_24"
+        app:fabSize="normal"
+        app:elevation="6dp"
+        android:backgroundTint="@color/colorPrimary"/>
+
 </FrameLayout>

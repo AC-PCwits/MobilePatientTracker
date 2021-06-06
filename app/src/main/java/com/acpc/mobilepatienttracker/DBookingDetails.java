@@ -40,8 +40,7 @@ import java.util.Date;
 import static android.widget.Toast.LENGTH_LONG;
 import static android.widget.Toast.makeText;
 
-public class
-DBookingDetails extends AppCompatActivity {
+public class DBookingDetails extends AppCompatActivity {
 
     String name;
     String id;
@@ -59,9 +58,6 @@ DBookingDetails extends AppCompatActivity {
     private Button accept;
     private Button reject;
 
-
-    FirebaseAuth mAuth;
-    final FirebaseFirestore database = FirebaseFirestore.getInstance();
 
     private Doctor doc = new Doctor();
 
@@ -97,6 +93,8 @@ DBookingDetails extends AppCompatActivity {
         dateT.setText(date);
         timeT.setText(time);
 
+        final FirebaseFirestore database = FirebaseFirestore.getInstance();
+
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Doctors");
@@ -119,6 +117,8 @@ DBookingDetails extends AppCompatActivity {
 
                                 addPatient();
 
+                                SplashActivity.msgserv.sendNotification("Booking accepted for patient: "+name);
+
                                 aOrR = "Accepted";
                                 final AccOrRej s = new AccOrRej(name,id,date,time,doc_id, aOrR);
 
@@ -134,6 +134,7 @@ DBookingDetails extends AppCompatActivity {
                                             public void onSuccess(DocumentReference documentReference) {
                                                 Toast.makeText(DBookingDetails.this, "Booking Accepted", Toast.LENGTH_SHORT).show();
                                                 DeleteBooking(path);
+                                                SplashActivity.msgserv.sendNotification("Booking accepted for patient: " + name);
                                                 Intent intent = new Intent(DBookingDetails.this, DoctorFragActivity.class);
                                                 startActivity(intent);
                                             }
@@ -159,7 +160,7 @@ DBookingDetails extends AppCompatActivity {
                             public void onClick(View v) {
 
                                 //  Toast.makeText(DBookingDetails.this, "Declining booking", LENGTH_LONG).show();
-
+                                SplashActivity.msgserv.sendNotification("Booking rejected for patient: "+name);
                                 aOrR = "Rejected";
                                 final AccOrRej s = new AccOrRej(name,id,date,time,doc_id, aOrR);
 
@@ -172,8 +173,9 @@ DBookingDetails extends AppCompatActivity {
                                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                             @Override
                                             public void onSuccess(DocumentReference documentReference) {
-                                                Toast.makeText(DBookingDetails.this, "Booking Rejected", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(DBookingDetails.this, "Booking Successfully Rejected", Toast.LENGTH_SHORT).show();
                                                 DeleteBooking(path);
+                                                SplashActivity.msgserv.sendNotification("Booking rejected for patient: " + name);
                                                 Intent intent = new Intent(DBookingDetails.this, DoctorFragActivity.class);
                                                 startActivity(intent);
                                             }
@@ -208,6 +210,8 @@ DBookingDetails extends AppCompatActivity {
 
     public void DeleteBooking(String path)
     {
+        final FirebaseFirestore database = FirebaseFirestore.getInstance();
+
         database.document(path)
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -227,6 +231,8 @@ DBookingDetails extends AppCompatActivity {
     }
 
     public void addPatient(){
+
+        final FirebaseFirestore database = FirebaseFirestore.getInstance();
 
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 

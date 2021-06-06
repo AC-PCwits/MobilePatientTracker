@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DoctorConsultForm">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/textView7"
@@ -124,12 +128,16 @@
             android:inputType="textPersonName"
             android:layout_weight="1"/>
 
-        <TextView
+        <EditText
+            android:id="@+id/dType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="4.5dp"
-            android:layout_marginRight="9dp"
+            android:hint="Speciality"
+            android:layout_marginLeft="9dp"
+            android:layout_marginRight="4.5dp"
+            android:inputType="textPersonName"
             android:layout_weight="1"/>
+
 
     </LinearLayout>
 
@@ -250,5 +258,6 @@
         </LinearLayout>
 
     </LinearLayout>
+    </RelativeLayout>
 
-</RelativeLayout>
+</ScrollView>

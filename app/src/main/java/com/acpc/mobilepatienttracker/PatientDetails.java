@@ -50,8 +50,6 @@ public class PatientDetails extends Fragment {
 
     private Context context;
 
-    private FirebaseFirestore database = FirebaseFirestore.getInstance();
-
     private DetailView firstname;
     private DetailView lastname;
     private DetailView id;
@@ -117,10 +115,9 @@ public class PatientDetails extends Fragment {
         View rootView = inflater.inflate(R.layout.activity_patient_details, container, false);
         context = getContext();
 
-        background = (LinearLayout) rootView.findViewById(R.id.pd_background);
+
         save = rootView.findViewById(R.id.pd_save);
-        info = rootView.findViewById(R.id.pd_header);
-        info.setText("Fetching user data...");
+
 
         firstname = new DetailView(PatientField.FIRST_NAME, context);
         lastname = new DetailView(PatientField.LAST_NAME, context);
@@ -153,9 +150,6 @@ public class PatientDetails extends Fragment {
         allDetails.add(econtact);
         allDetails.add(econtactno);
 
-        for (DetailView view : allDetails) {
-            background.addView(view);
-        }
 
         save.setVisibility(View.INVISIBLE);
         save.setEnabled(false);
@@ -181,146 +175,122 @@ public class PatientDetails extends Fragment {
             }
         });
 
-        //Patient details are pulled from databse and displayed using this method
+        //Patient details are pulled from database and displayed using this method
         getUserData();
-
 
         return rootView;
     }
 
-    public void getUserData() {
-        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Patient");
-        reference.addValueEventListener(new ValueEventListener() {
+    public void getUserData()
+    {
+        if(firstname.content.getText().toString().equals("___NULL_DEV___"))
+        {
+            return;
+        }
+        FirebasePatient firebasePatient = new FirebasePatient();
+        firebasePatient.getUserData(new FirebasePatient.FirebaseCallback(){
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    if (dataSnapshot.child("email").getValue().toString().equalsIgnoreCase(user.getEmail())) {
-                        final String ID = dataSnapshot.child("id").getValue().toString();
+            public void onResponse(ArrayList<Patient> patients)
+            {
+                for (Patient patient : patients)
+                {
 
-                        database.collection("patient-data").whereEqualTo("idno", ID)
-                                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if (task.isSuccessful()) {
-                                    ArrayList<Patient> patients = new ArrayList<>();
+                    activeUser = patient;
 
-                                    for (QueryDocumentSnapshot doc : task.getResult()) {
-                                        patients.add(doc.toObject(Patient.class));
-                                    }
-                                    for (Patient patient : patients) {
-                                        if (patient.idno.equals(ID)) {
-                                            info.setText("Personal Details");
+                    background =(LinearLayout) getView().findViewById(R.id.dd_backround);
+                    background.addView(firstname);
+                    firstname.content.setText(activeUser.fname);
+                    firstname.edit.setVisibility(View.VISIBLE);
+                    firstname.originalText = firstname.content.getText().toString();
 
-                                            firstname.content.setText(patient.fname);
-                                            lastname.content.setText(patient.fsurname);
-                                            id.content.setText(patient.idno);
-                                            cellphone.content.setText(patient.cellno);
-                                            nationality.content.setText(patient.nationality);
-                                            gender.content.setText(patient.gender);
-                                            race.content.setText(patient.race);
-                                            address.content.setText(patient.address);
-                                            mstatus.content.setText(patient.mstatus);
-                                            illnesses.content.setText(patient.GetIllnessesString());
-                                            allergies.content.setText(patient.allergies);
-                                            medicalaid.content.setText(patient.medaid);
-                                            econtact.content.setText(patient.ename);
-                                            econtactno.content.setText(patient.econtact);
+                    background =(LinearLayout) getView().findViewById(R.id.Iden);
+                    background.addView(id);
+                    id.content.setText(activeUser.idno);
+                    id.edit.setVisibility(View.VISIBLE);
+                    id.originalText = id.content.getText().toString();
 
-                                            activeUser = patient;
+                    background =(LinearLayout) getView().findViewById(R.id.birth);
+                    background.addView(race);
+                    race.content.setText(activeUser.race);
+                    race.edit.setVisibility(View.VISIBLE);
+                    race.originalText = race.content.getText().toString();
 
-                                            for (DetailView view : allDetails) {
-                                                view.edit.setVisibility(View.VISIBLE);
-                                                view.originalText = view.content.getText().toString();
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        });
-                    }
+                    background =(LinearLayout) getView().findViewById(R.id.nation);
+                    background.addView(nationality);
+                    nationality.content.setText(activeUser.nationality);
+                    nationality.edit.setVisibility(View.VISIBLE);
+                    nationality.originalText = nationality.content.getText().toString();
+
+                    background =(LinearLayout) getView().findViewById(R.id.gen);
+                    background.addView(gender);
+                    gender.content.setText(activeUser.gender);
+                    gender.edit.setVisibility(View.VISIBLE);
+                    gender.originalText = gender.content.getText().toString();
+
+                    background =(LinearLayout) getView().findViewById(R.id.marital);
+                    background.addView(mstatus);
+                    mstatus.content.setText(activeUser.mstatus);
+                    mstatus.edit.setVisibility(View.VISIBLE);
+                    mstatus.originalText = mstatus.content.getText().toString();
+
+
+                    background =(LinearLayout) getView().findViewById(R.id.cell);
+                    background.addView(cellphone);
+                    cellphone.content.setText(activeUser.cellno);
+                    cellphone.edit.setVisibility(View.VISIBLE);
+                    cellphone.originalText = cellphone.content.getText().toString();
+
+                    background =(LinearLayout) getView().findViewById(R.id.em);
+                    background.addView(address);
+                    address.content.setText(activeUser.address);
+                    address.edit.setVisibility(View.VISIBLE);
+                    address.originalText = address.content.getText().toString();
+
+                    background =(LinearLayout) getView().findViewById(R.id.emCont);
+                    background.addView(econtact);
+                    econtact.content.setText(activeUser.ename);
+                    econtact.edit.setVisibility(View.VISIBLE);
+                    econtact.originalText = econtact.content.getText().toString();
+
+                    background =(LinearLayout) getView().findViewById(R.id.emContno);
+                    background.addView(econtactno);
+                    econtactno.content.setText(activeUser.econtact);
+                    econtactno.edit.setVisibility(View.VISIBLE);
+                    econtactno.originalText = econtact.content.getText().toString();
+
+                    background =(LinearLayout) getView().findViewById(R.id.pnum);
+                    background.addView(illnesses);
+                    illnesses.content.setText(activeUser.GetIllnessesString());
+                    illnesses.edit.setVisibility(View.VISIBLE);
+                    illnesses.originalText = illnesses.content.getText().toString();
+
+                    background =(LinearLayout) getView().findViewById(R.id.lenp);
+                    background.addView(allergies);
+                    allergies.content.setText(activeUser.allergies);
+                    allergies.edit.setVisibility(View.VISIBLE);
+                    allergies.originalText = allergies.content.getText().toString();
+
+                    background =(LinearLayout) getView().findViewById(R.id.uni);
+                    background.addView(medicalaid);
+                    medicalaid.content.setText(activeUser.medaid);
+                    medicalaid.edit.setVisibility(View.VISIBLE);
+                    medicalaid.originalText = medicalaid.content.getText().toString();
+
                 }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
     }
 
-    public void UpdateField(final String IDnumber, PatientField field, final Object newValue) {
-        final String fieldName = Patient.GetFieldName(field);
-
-        database.collection("patient-data")
-                .whereEqualTo("idno", IDnumber)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            String documentID = "";
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                documentID = document.getId();
-                            }
-                            final String finalDocumentID = documentID;
-
-                            if (documentID != "") {
-                                DocumentReference patient = database.collection("patient-data").document(documentID);
-
-                                for (DetailView view : allDetails) {
-                                    if (view.content.getText().toString() != activeUser.GetFieldValue(view.type))
-
-                                        patient.update(fieldName, newValue)
-
-                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void aVoid) {
-                                                        Log.d("PD", "SUCCESS: Updated field: " + fieldName + " for document ID: " + finalDocumentID);
-                                                    }
-                                                })
-                                                .addOnFailureListener(new OnFailureListener() {
-                                                    @Override
-                                                    public void onFailure(@NonNull Exception e) {
-                                                        // failed to update the given field for some reason
-                                                        Log.w("PD", "ERROR: Could not update field: " + fieldName + "for document ID: " + finalDocumentID + ": ", e);
-                                                        Toast.makeText(getContext(), "Could not save: failed to update details", Toast.LENGTH_LONG).show();
-                                                    }
-                                                });
-                                }
-
-                                Toast.makeText(getContext(), "Successfully saved details :)", Toast.LENGTH_LONG).show();
-                                save.setEnabled(false);
-                                save.setVisibility(View.INVISIBLE);
-
-
-                                for (DetailView view : allDetails) {
-                                    if (view.content.isFocused()) {
-                                        view.content.clearFocus();
-                                        view.content.setBackgroundColor(Color.TRANSPARENT);
-                                    }
-                                    view.content.setEnabled(false);
-                                    view.originalText = view.content.getText().toString();
-                                }
-                            } else {
-                                // do document was found with the given field
-                                Log.w("PD", "QUERY ERROR: No document found with ID number: " + IDnumber);
-                                Toast.makeText(getContext(), "Could not save: document not found with that ID number???", Toast.LENGTH_LONG).show();
-                            }
-                        } else {
-                            // query did not complete
-                            Log.w("PD", "QUERY ERROR: query did not complete: " + task.getException().getMessage());
-                            Toast.makeText(getContext(), "Could not save: query do not complete", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
+    public void UpdateField(final String IDnumber, PatientField field, final Object newValue)
+    {
+        FirebasePatient firebasePatient = new FirebasePatient(getContext(), field, IDnumber, allDetails, activeUser, newValue, save);
+        firebasePatient.UpdateField();
     }
 
-    private class DetailView extends LinearLayout {
+    public class DetailView extends LinearLayout {
         public PatientField type;
 
-        public TextView info;
+
         public EditText content;
         public ImageButton edit;
 
@@ -333,16 +303,14 @@ public class PatientDetails extends Fragment {
 
             this.type = type;
 
-            info = new TextView(context);
+
             content = new EditText(context);
             edit = new ImageButton(context);
 
-            this.addView(info);
+
             this.addView(content);
             this.addView(edit);
 
-            info.setTextSize(16);
-            info.setGravity(Gravity.CENTER);
 
             content.setTextSize(20);
             content.setTextColor(Color.parseColor("#565c5c"));
@@ -356,9 +324,7 @@ public class PatientDetails extends Fragment {
             edit.setColorFilter(Color.parseColor("#9eaeb0"));
             edit.setVisibility(View.INVISIBLE);
 
-            info.setLayoutParams(new LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT));
+
             content.setLayoutParams(new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.MATCH_PARENT));
@@ -366,52 +332,7 @@ public class PatientDetails extends Fragment {
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.MATCH_PARENT));
 
-            switch (type) {
-                case FIRST_NAME:
-                    info.setText("First name: ");
-                    content.setInputType(InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
-                    break;
-                case LAST_NAME:
-                    info.setText("Last name: ");
-                    break;
-                case ID:
-                    info.setText("ID number: ");
-                    content.setEnabled(false);
-                    break;
-                case CELLPHONE:
-                    info.setText("Cell number: ");
-                    break;
-                case NATIONALITY:
-                    info.setText("Nationality: ");
-                    break;
-                case GENDER:
-                    info.setText("Gender: ");
-                    break;
-                case RACE:
-                    info.setText("Race: ");
-                    break;
-                case ADDRESS:
-                    info.setText("Address: ");
-                    break;
-                case MARITAL_STATUS:
-                    info.setText("Marital status: ");
-                    break;
-                case ILLNESSES:
-                    info.setText("Illnesses: ");
-                    break;
-                case ALLERGIES:
-                    info.setText("Allergies: ");
-                    break;
-                case MEDICAL_AID:
-                    info.setText("Medical aid: ");
-                    break;
-                case ECONTACT_NAME:
-                    info.setText("Emergency contact name: ");
-                    break;
-                case ECONTACT_CELLPHONE:
-                    info.setText("Emergency contact number: ");
-                    break;
-            }
+
 
             edit.setOnClickListener(new OnClickListener() {
                 @Override

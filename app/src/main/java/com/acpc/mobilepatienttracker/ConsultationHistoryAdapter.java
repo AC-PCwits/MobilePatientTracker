@@ -32,6 +32,11 @@ public class ConsultationHistoryAdapter extends RecyclerView.Adapter<Consultatio
         mListener = listener;
     }
 
+    public ConsultationHistoryAdapter.OnItemClickListener getOnItemClickListner()
+    {
+        return mListener;
+    }
+
     //For the Adapter to work, we need a viewholder which will hold all items on the activity seen by the user
     public static class ConsultationHistoryViewHolder extends RecyclerView.ViewHolder
     {

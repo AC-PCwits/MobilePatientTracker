@@ -37,7 +37,7 @@ import static android.widget.Toast.makeText;
 public class DoctorConsultForm extends AppCompatActivity {
     private RadioGroup radioCase;
     private RadioButton case_button;
-    private EditText symptoms, diagnosis, patientid,doctorid,date,dname,dsurname,pname,pcell,psurname;
+    private EditText symptoms, diagnosis, patientid,doctorid,date,dname,dsurname,pname,pcell,psurname,dtype;
     private Button save;
     private FirebaseFirestore database = FirebaseFirestore.getInstance();
     private Doctor doc = new Doctor();
@@ -49,9 +49,6 @@ public class DoctorConsultForm extends AppCompatActivity {
 
         //populate date field
         date=findViewById(R.id.editTextTextPersonName10);
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        Date currentdate = new Date();
-        date.setText(formatter.format(currentdate));
 
         save = findViewById(R.id.buttonSave);
 
@@ -67,15 +64,41 @@ public class DoctorConsultForm extends AppCompatActivity {
         doctorid=findViewById(R.id.dConsultID);
         dname=findViewById(R.id.dConsultName);
         dsurname=findViewById(R.id.dConsultLName);
+        dtype=findViewById(R.id.dType);
+        Intent intent = getIntent();
 
-        String[] splitter= (DPatientDetails.clickedname).split(" ", 2);
-        pname.setText(splitter[0]);
-        psurname.setText(splitter[1]);
+        if(intent.getExtras() != null)
+        {
+            pname.setText(intent.getExtras().getString("PATIENT_FName"));
+            psurname.setText(intent.getExtras().getString("PATIENT_LName"));
+            pcell.setText(intent.getExtras().getString("PATIENT_Cell"));
+            patientid.setText(intent.getExtras().getString("PATIENT_ID"));
+            String d = intent.getExtras().getString("DATE");
+            String t = intent.getExtras().getString("TIME");
+            date.setText(d + " " + t);
+        }
+       // else{
+       //     date.setText(formatter.format(currentdate));
+       // }
 
-        pcell.setText((DPatientDetails.clickedcell));
-        patientid.setText(DPatientDetails.clickedID);
+        //String[] splitter= (DPatientDetails.clickedname).split(" ", 2);
+
+        //psurname.setText(splitter[1]);
+
+       // pcell.setText((DPatientDetails.clickedcell));
+        //patientid.setText(DPatientDetails.clickedID);
+
+        if(date.getText().toString().isEmpty()){
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd hh:mm aa");
+            Date currentdate = new Date();
+            date.setText(formatter.format(currentdate));
+        }
 
         getDocDet();
+
+ //       if(pname.getText().toString().isEmpty()){
+
+   //     }
 
         save.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -173,9 +196,11 @@ public class DoctorConsultForm extends AppCompatActivity {
                         }
 
                     }
-                    doctorid.setText(doc.ID);
+                    doctorid.setText(doc.p_no);
                     dname.setText(doc.fname);
                     dsurname.setText(doc.lname);
+                    dtype.setText(doc.doc_type);
+
 
                 }
             }
@@ -228,8 +253,4 @@ public class DoctorConsultForm extends AppCompatActivity {
                 });
 
     }
-
-
-
-
 }
