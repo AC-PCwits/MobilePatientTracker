@@ -76,7 +76,7 @@ public class DBookingDetails extends AppCompatActivity {
 
         }
 
-        pullBookingData("___NULL_DEV___");
+        pullBookingData(id);
 
         nameT.setText(name);
         idT.setText(id);
@@ -85,6 +85,7 @@ public class DBookingDetails extends AppCompatActivity {
 
 
     }
+
 
     public void pullBookingData(String test)
     {

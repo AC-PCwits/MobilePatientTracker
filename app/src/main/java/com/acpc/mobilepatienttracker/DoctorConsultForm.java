@@ -74,7 +74,9 @@ public class DoctorConsultForm extends AppCompatActivity {
             pcell.setText(intent.getExtras().getString("PATIENT_Cell"));
             patientid.setText(intent.getExtras().getString("PATIENT_ID"));
             String d = intent.getExtras().getString("DATE");
-            String t = intent.getExtras().getString("TIME");
+            String t = "";
+            t = intent.getExtras().getString("TIME");
+
             date.setText(d + " " + t);
         }
        // else{
