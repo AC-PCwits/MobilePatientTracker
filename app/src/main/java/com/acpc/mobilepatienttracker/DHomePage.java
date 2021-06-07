@@ -162,6 +162,21 @@ public class DHomePage extends Fragment  {
                         ArrayList<String[]> strings = new ArrayList<>();
                         for(AccOrRej acceptReject : list)
                         {
+                            boolean TimeAlreadyExists = false;
+
+                            for (int j = 0; j < strings.size(); j++)
+                            {
+                                if (acceptReject.time.equals(strings.get(j)[1]))
+                                {
+                                    TimeAlreadyExists = true;
+                                    break;
+                                }
+                            }
+
+                            if (TimeAlreadyExists)
+                            {
+                                continue;
+                            }
                             if(acceptReject.bookingdate.equals(formdate))
                             {
                                 String [] str = new String[4];
@@ -212,6 +227,21 @@ public class DHomePage extends Fragment  {
                 ArrayList<String[]> strings = new ArrayList<>();
                 for(AccOrRej acceptReject : list)
                 {
+                    boolean TimeAlreadyExists = false;
+
+                    for (int j = 0; j < strings.size(); j++)
+                    {
+                        if (acceptReject.time.equals(strings.get(j)[1]))
+                        {
+                            TimeAlreadyExists = true;
+                            break;
+                        }
+                    }
+
+                    if (TimeAlreadyExists)
+                    {
+                        continue;
+                    }
                     if(acceptReject.bookingdate.equals(formatter.format(date)))
                     {
                         String [] str = new String[4];
