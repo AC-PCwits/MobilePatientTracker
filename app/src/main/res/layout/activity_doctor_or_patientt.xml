@@ -36,7 +36,7 @@
         android:paddingTop="3dp"
         android:paddingRight="15dp"
         android:paddingBottom="3dp"
-        android:text="Are you a patient or a doctor?"
+        android:text="Are you a Patient or a Doctor?"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/gradStop"
         android:visibility="visible"

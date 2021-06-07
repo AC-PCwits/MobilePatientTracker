@@ -335,7 +335,7 @@ public class PatientConsultationHistory extends Fragment {
                                         try {
                                             Date bookingDate = format.parse(date);
                                             Date today = new Date();
-                                            if (today.equals(bookingDate) || today.after(bookingDate))
+                                            if ((today.equals(bookingDate) || today.after(bookingDate)) && accRej.accOrRej.equals("Accepted"))
                                             {
                                                 database.collection("booking-history-data") // specify the collection name here
                                                         .add(accRej)

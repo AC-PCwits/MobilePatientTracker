@@ -82,7 +82,7 @@ public class DocInfoAdapter extends RecyclerView.Adapter<DocInfoAdapter.DInfoLis
         //The holder variable allows the values of view to be set by Patient objects
         holder.nameText.setText("Dr " +currentItem.fname+" "+ currentItem.sname);
 
-        holder.ExperienceText.setText("Experience: " + currentItem.exp);
+        holder.ExperienceText.setText("Experience: " + currentItem.exp + " Years");
     }
 
     //This function defines how many items are in the list

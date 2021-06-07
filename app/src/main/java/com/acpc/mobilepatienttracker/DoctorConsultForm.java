@@ -49,9 +49,6 @@ public class DoctorConsultForm extends AppCompatActivity {
 
         //populate date field
         date=findViewById(R.id.editTextTextPersonName10);
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd hh:mm aa");
-        Date currentdate = new Date();
-        date.setText(formatter.format(currentdate));
 
         save = findViewById(R.id.buttonSave);
 
@@ -76,7 +73,15 @@ public class DoctorConsultForm extends AppCompatActivity {
             psurname.setText(intent.getExtras().getString("PATIENT_LName"));
             pcell.setText(intent.getExtras().getString("PATIENT_Cell"));
             patientid.setText(intent.getExtras().getString("PATIENT_ID"));
+            String d = intent.getExtras().getString("DATE");
+            String t = "";
+            t = intent.getExtras().getString("TIME");
+
+            date.setText(d + " " + t);
         }
+       // else{
+       //     date.setText(formatter.format(currentdate));
+       // }
 
         //String[] splitter= (DPatientDetails.clickedname).split(" ", 2);
 
@@ -85,7 +90,17 @@ public class DoctorConsultForm extends AppCompatActivity {
        // pcell.setText((DPatientDetails.clickedcell));
         //patientid.setText(DPatientDetails.clickedID);
 
+        if(date.getText().toString().isEmpty()){
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd hh:mm aa");
+            Date currentdate = new Date();
+            date.setText(formatter.format(currentdate));
+        }
+
         getDocDet();
+
+ //       if(pname.getText().toString().isEmpty()){
+
+   //     }
 
         save.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -187,6 +202,8 @@ public class DoctorConsultForm extends AppCompatActivity {
                     dname.setText(doc.fname);
                     dsurname.setText(doc.lname);
                     dtype.setText(doc.doc_type);
+
+
                 }
             }
         });

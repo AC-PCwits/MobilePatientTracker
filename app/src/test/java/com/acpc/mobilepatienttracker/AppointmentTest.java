@@ -28,4 +28,13 @@ public class AppointmentTest {
         assertNotNull(new Appointment());
     }
 
+
+    @Test
+    public void getBookingDate(){
+    String bdate = "2021/05/04";
+    assertEquals(bdate,testApp.getBookingDate());
+
+    }
+
+
 }

@@ -1,7 +1,6 @@
 package com.acpc.mobilepatienttracker;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,23 +21,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firestore.v1.WriteResult;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-
-import static android.widget.Toast.LENGTH_LONG;
-import static android.widget.Toast.makeText;
 
 public class DBookingDetails extends AppCompatActivity {
 
@@ -100,10 +88,10 @@ public class DBookingDetails extends AppCompatActivity {
 
     public void pullBookingData(String test)
     {
-        if(test.equals("___NULL_DEV___"))
+        if(test.equals(""))
         {
-            addPatient("___NULL_DEV___");
-            DeleteBooking("___NULL_DEV___");
+            addPatient("");
+            DeleteBooking("");
             return;
 
         }
