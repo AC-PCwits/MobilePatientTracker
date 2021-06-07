@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -41,6 +42,7 @@ public class DoctorConsultForm extends AppCompatActivity {
     private Button save;
     private FirebaseFirestore database = FirebaseFirestore.getInstance();
     private Doctor doc = new Doctor();
+    String status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +78,8 @@ public class DoctorConsultForm extends AppCompatActivity {
             String d = intent.getExtras().getString("DATE");
             String t = "";
             t = intent.getExtras().getString("TIME");
+            status = intent.getExtras().getString("STATUS");
+
 
             date.setText(d + " " + t);
         }
@@ -120,6 +124,9 @@ public class DoctorConsultForm extends AppCompatActivity {
                     diagnosis.setError("Diagnosis is empty");
                     return;
                 }
+                else if(selected_case==-1){
+                    Toast.makeText(DoctorConsultForm.this,"Please select a case", LENGTH_LONG).show();
+                }
                 else {
 
                     Bundle extras = getIntent().getExtras();
@@ -132,6 +139,7 @@ public class DoctorConsultForm extends AppCompatActivity {
                     final String pcase = getCase(v);
 
                     UpdateLastVisited(ppatientid);
+                    UpdateBStatus(pdate,ppatientid,pdoctorid);
 
                     Consultation consultation = new Consultation(psymptoms, pdiagnosis, pcase,pdate,ppatientid,pdoctorid);
 
@@ -254,5 +262,50 @@ public class DoctorConsultForm extends AppCompatActivity {
                     }
                 });
 
+    }
+
+    public void UpdateBStatus(String date, String p_id, String doc_id){
+        String [] arr = date.split(" ");
+        database.collection("acc-rej-data").whereEqualTo("id",p_id).whereEqualTo("doc_id",doc_id).whereEqualTo("bookingdate",arr[0]).whereEqualTo("time",arr[1]+" "+arr[2])
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                if (task.isSuccessful()) {
+                    //   ArrayList<String> patIDs = new ArrayList<>();
+
+                    String documentID = "";
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        documentID = document.getId();
+                    }
+                    if(documentID != ""){
+                        final DocumentReference Ref = database.collection("acc-rej-data").document(documentID);
+
+                        Ref.update("status", "Completed" )
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d("PD", "SUCCESS: Updated field: ");
+                                        //Toast.makeText(DBookingDetails.this, "Could not save: failed to update details", Toast.LENGTH_LONG).show();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        // failed to update the given field for some reason
+                                        Log.w("PD", "ERROR: Could not update field: ", e);
+                                        // Toast.makeText(DBookingDetails.this, "Could not save: failed to update details", Toast.LENGTH_LONG).show();
+                                    }
+                                });
+
+                    }
+
+                    //  }
+
+                }
+
+
+            }
+        });
     }
 }

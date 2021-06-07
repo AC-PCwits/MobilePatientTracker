@@ -31,6 +31,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Calendar;
 
+import static android.widget.Toast.LENGTH_LONG;
+
 
 //This code should not be confused with DRegistration.java
 //This code is the doctor information form that will be filled out when a doctor registers for the first time.
@@ -148,6 +150,9 @@ public class DoctorForm extends AppCompatActivity {
                 } else if (cellNum.getText().toString().equals("")) {
                     cellNum.setError("Empty cell number");
                     return;
+                }
+                else if(gender_group.getCheckedRadioButtonId()==-1){
+                    Toast.makeText(DoctorForm.this,"Please select your gender", LENGTH_LONG).show();
                 }
                 else{
                         ////////ADDING A BRAND NEW ENTRY OF DOCTOR INFORMATION ONCE SIGN UP HAS BEEN SELECTED

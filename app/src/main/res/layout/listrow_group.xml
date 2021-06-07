@@ -10,4 +10,5 @@
     android:paddingTop="8dp"
     android:text="Test"
     android:textSize="24sp"
-    android:textStyle="bold"/>
+    android:textStyle="bold"
+    />

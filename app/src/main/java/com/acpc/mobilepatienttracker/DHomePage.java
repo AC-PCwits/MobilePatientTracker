@@ -126,6 +126,7 @@ public class DHomePage extends Fragment  {
         newCForm = rootView.findViewById(R.id.newCForm);
         newCForm.setVisibility(View.INVISIBLE);
 
+
         newCForm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -179,12 +180,13 @@ public class DHomePage extends Fragment  {
                             }
                             if(acceptReject.bookingdate.equals(formdate))
                             {
-                                String [] str = new String[4];
+                                String [] str = new String[5];
 
                                 str[0] = acceptReject.bookingdate;
                                 str[1] = acceptReject.time;
                                 str[2] = acceptReject.id;
                                 str[3] = acceptReject.pname;
+                                str[4] = acceptReject.status;
 
                                 strings.add(str);
                             }
@@ -203,6 +205,7 @@ public class DHomePage extends Fragment  {
                                 group.children.add("Time: " + sortedList.get(i)[1]);
                                 group.children.add("Patient ID: " + sortedList.get(i)[2]);
                                 group.children.add("Patient: " + sortedList.get(i)[3]);
+                                group.children.add("Status: " + sortedList.get(i)[4]);
 
                                 groups.append(i, group);
                             }
@@ -244,12 +247,13 @@ public class DHomePage extends Fragment  {
                     }
                     if(acceptReject.bookingdate.equals(formatter.format(date)))
                     {
-                        String [] str = new String[4];
+                        String [] str = new String[5];
 
                         str[0] = acceptReject.bookingdate;
                         str[1] = acceptReject.time;
                         str[2] = acceptReject.id;
                         str[3] = acceptReject.pname;
+                        str[4] = acceptReject.status;
 
                         strings.add(str);
                     }
@@ -268,6 +272,7 @@ public class DHomePage extends Fragment  {
                         group.children.add("Time: " + sortedList.get(i)[1]);
                         group.children.add("Patient ID: " + sortedList.get(i)[2]);
                         group.children.add("Patient: " + sortedList.get(i)[3]);
+                        group.children.add("Status: " + sortedList.get(i)[4]);
 
                         groups.append(i, group);
                     }
@@ -348,36 +353,46 @@ public class DHomePage extends Fragment  {
             @Override
             public void onItemClick(Group group) {
 
-                Bundle bundle = new Bundle();
+                if(group.children.get(4).toString().equals("Incomplete")){
 
-                String [] id = group.children.get(2).toString().split(" ");
-               final String [] date = group.children.get(0).toString().split(" ");
-               final String [] time = group.children.get(1).toString().split(" ");
+                    Bundle bundle = new Bundle();
+
+                    String [] id = group.children.get(2).toString().split(" ");
+                    final String [] date = group.children.get(0).toString().split(" ");
+                    final String [] time = group.children.get(1).toString().split(" ");
 
 //                Toast.makeText(getContext(), id[2], Toast.LENGTH_LONG).show();
 
 
 
-                FirebasePatient firebasePatient = new FirebasePatient(group.children.get(2));
-                firebasePatient.getUserData(new FirebasePatient.FirebaseCallback() {
-                    @Override
-                    public void onResponse(ArrayList<Patient> patients)
-                    {
+                    FirebasePatient firebasePatient = new FirebasePatient(group.children.get(2));
+                    firebasePatient.getUserData(new FirebasePatient.FirebaseCallback() {
+                        @Override
+                        public void onResponse(ArrayList<Patient> patients)
+                        {
 
-                        Bundle bundle = new Bundle();
+                            Bundle bundle = new Bundle();
 
-                        bundle.putString("PATIENT_ID", patients.get(0).idno);
-                        bundle.putString("PATIENT_FName", patients.get(0).fname);
-                        bundle.putString("PATIENT_LName", patients.get(0).fsurname);
-                        bundle.putString("PATIENT_Cell", patients.get(0).cellno);
-                        bundle.putString("DATE", date[1]);
-                        bundle.putString("TIME", time[1] + " " + time[2]);
+                            bundle.putString("PATIENT_ID", patients.get(0).idno);
+                            bundle.putString("PATIENT_FName", patients.get(0).fname);
+                            bundle.putString("PATIENT_LName", patients.get(0).fsurname);
+                            bundle.putString("PATIENT_Cell", patients.get(0).cellno);
+                            bundle.putString("DATE", date[1]);
+                            bundle.putString("TIME", time[1] + " " + time[2]);
+                            bundle.putString("STATUS", "Completed");
 
 
-                        goToConsult(bundle);
+                            goToConsult(bundle);
 
-                    }
-                },id[2]);
+                        }
+                    },id[2]);
+
+
+                }
+                else{
+                    Toast.makeText(getContext(),"Consultation Completed",Toast.LENGTH_SHORT).show();
+                }
+
 
 
 
@@ -446,4 +461,6 @@ public class DHomePage extends Fragment  {
         intent.putExtras(bundle);
         startActivity(intent);
     }
+
+
 }

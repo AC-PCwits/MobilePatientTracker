@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <com.github.jhonnyx2012.horizontalpicker.HorizontalPicker
             android:id="@+id/datePicker"
             android:layout_width="match_parent"
@@ -19,8 +20,11 @@
             android:id="@+id/listView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/datePicker">
-        </ExpandableListView>
+            android:layout_below="@+id/datePicker"
+            android:background="@drawable/rectangle_border"
+            android:footerDividersEnabled="false"
+
+            ></ExpandableListView>
 
     </RelativeLayout>
 

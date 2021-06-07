@@ -624,6 +624,7 @@ class Consultation implements Comparable<Consultation>{
     public String ppatientID;
     public String pdoctorID;
 
+
     public Consultation(String pcase,String psymptoms, String pdiagnosis, String pdate, String ppatientID,String pdoctorID){
        this.pcase=pcase;
         this.psymptoms=psymptoms;
@@ -711,14 +712,16 @@ class AccOrRej{
     public String id; //need this for linking to patient
     public String doc_id;
     public String accOrRej;
+    public String status;
 
-    public AccOrRej(String pname, String id, String bookingdate, String time, String doc_id, String accOrRej){
+    public AccOrRej(String pname, String id, String bookingdate, String time, String doc_id, String accOrRej,String status){
         this.pname = pname;
         this.bookingdate = bookingdate;
         this.id = id;
         this.doc_id = doc_id;
         this.time = time;
         this.accOrRej = accOrRej;
+        this.status = status;
     }
 
     public AccOrRej(){
