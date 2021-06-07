@@ -67,7 +67,7 @@ public class ConsultationHistoryDetailed extends AppCompatActivity {
                         txtDate.setText(date);
                         txtTime.setText(time);
                         txtStatus.setText(status);
-                        txtDocExp.setText(doctor.p_length);
+                        txtDocExp.setText(doctor.p_length + "  years");
 
                         if (status.equals("Pending"))
                         {
