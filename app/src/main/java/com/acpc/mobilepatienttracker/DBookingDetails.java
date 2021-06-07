@@ -88,10 +88,10 @@ public class DBookingDetails extends AppCompatActivity {
 
     public void pullBookingData(String test)
     {
-        if(test.equals("___NULL_DEV___"))
+        if(test.equals(""))
         {
-            addPatient("___NULL_DEV___");
-            DeleteBooking("___NULL_DEV___");
+            addPatient("");
+            DeleteBooking("");
             return;
 
         }

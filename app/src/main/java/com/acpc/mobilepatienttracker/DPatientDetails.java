@@ -195,6 +195,7 @@ public class DPatientDetails extends AppCompatActivity {
             Date currentdate = new Date();
             String date = formatter.format(currentdate);
             bundle.putString("DATE",date);
+          //  bundle.putString("TIME"," ");
 
             start.putExtras(bundle);
             startActivity(start);
