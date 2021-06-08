@@ -26,6 +26,7 @@ public class LoginPatient extends AppCompatActivity {
     EditText inputEmail;
 
 
+
     private FirebaseAuth.AuthStateListener mAuthStateListener;
 
     @Override
