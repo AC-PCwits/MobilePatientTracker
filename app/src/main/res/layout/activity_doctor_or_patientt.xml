@@ -9,22 +9,22 @@
     tools:context=".DoctorOrPatient">
 
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="208dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="75dp"
+        android:layout_marginBottom="66dp"
+        android:paddingBottom="40dp"
+        android:src="@mipmap/ic_launcher" />
+
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="52dp"
-        android:layout_below="@+id/textView"
-
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="69dp"
-        android:layout_marginLeft="69dp"
-        android:layout_marginEnd="57dp"
-        android:layout_marginRight="57dp"
-        android:layout_marginBottom="273dp"
+        android:layout_below="@+id/imageView"
+        android:layout_centerHorizontal="true"
         android:gravity="center_horizontal|center_vertical"
         android:paddingLeft="15dp"
         android:paddingTop="3dp"
@@ -46,60 +46,29 @@
         android:layout_marginTop="70dp"
         android:orientation="horizontal">
 
+        <Button
+            android:id="@+id/doctor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/gradStop"
+            android:text="Doctor"
+            android:textColor="#FFFFFF"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="12dp"/>
+
+        <Button
+            android:id="@+id/patient"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/gradStop"
+            android:text="Patient"
+            android:textColor="#FFFFFF"
+            android:layout_marginRight="60dp"
+            android:layout_marginLeft="12dp"/>
+
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="208dp"
-        android:layout_above="@+id/textView2"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="130dp"
-        android:layout_marginBottom="66dp"
-        android:paddingBottom="40dp"
-        android:src="@mipmap/ic_launcher" />
-
-    <Button
-        android:id="@+id/doctor"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="60dp"
-        android:layout_marginLeft="60dp"
-        android:layout_marginTop="521dp"
-        android:layout_marginEnd="214dp"
-        android:layout_marginRight="214dp"
-        android:layout_marginBottom="175dp"
-        android:layout_weight="1"
-        android:background="@color/gradStop"
-        android:text="Doctor"
-        android:textColor="#FFFFFF" />
-
-    <Button
-        android:id="@+id/patient"
-        android:layout_width="147dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="214dp"
-        android:layout_marginLeft="214dp"
-        android:layout_marginTop="521dp"
-        android:layout_marginEnd="60dp"
-        android:layout_marginRight="60dp"
-        android:layout_marginBottom="175dp"
-        android:layout_weight="1"
-        android:background="@color/gradStop"
-        android:text="Patient"
-        android:textColor="#FFFFFF" />
 
 
 </RelativeLayout>
