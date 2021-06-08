@@ -19,6 +19,8 @@ public class SplashActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+
+
         if (msgserv== null){
             msgserv = new MessagingService(SplashActivity.this);
         }
