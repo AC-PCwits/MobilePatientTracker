@@ -15,18 +15,38 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Consultation Form"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="28dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="12dp"/>
+
+    <TextView
+        android:id="@+id/patientHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView7"
+        android:text="Patient Information"
+        android:layout_marginLeft="9dp"
+        android:layout_marginTop="12dp"
+        android:textSize="22dp"/>
+
+    <View
+        android:id="@+id/patientBreak"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/patientHeading"
+        android:background="#595959"
+        android:layout_marginTop="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"/>
 
     <LinearLayout
         android:id="@+id/lay1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_below="@+id/textView7"
-        android:layout_marginTop="24dp">
+        android:layout_below="@+id/patientBreak"
+        android:layout_marginTop="6dp">
 
         <EditText
             android:id="@+id/pConsultName"
@@ -80,12 +100,42 @@
 
     </LinearLayout>
 
+        <View
+            android:id="@+id/patientFooter"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/lay2"
+            android:background="#595959"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"/>
+
+        <TextView
+            android:id="@+id/doctorHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/patientFooter"
+            android:text="Doctor Information"
+            android:layout_marginLeft="9dp"
+            android:layout_marginTop="12dp"
+            android:textSize="22dp"/>
+
+        <View
+            android:id="@+id/doctorBreak"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/doctorHeading"
+            android:background="#595959"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"/>
+
     <LinearLayout
         android:id="@+id/lay3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_below="@+id/lay2"
+        android:layout_below="@+id/doctorBreak"
         android:layout_marginTop="24dp">
 
         <EditText
@@ -141,16 +191,36 @@
 
     </LinearLayout>
 
+        <View
+            android:id="@+id/doctorFooter"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/lay4"
+            android:background="#595959"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"/>
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Case Info"
-        android:layout_below="@id/lay4"
+        android:text="Case Information"
+        android:layout_below="@id/doctorFooter"
         android:layout_marginLeft="9dp"
         android:layout_marginRight="9dp"
-        android:layout_marginTop="24dp"/>
+        android:layout_marginTop="12dp"
+        android:textSize="22dp"/>
+
+        <View
+            android:id="@+id/caseBreak"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/textView8"
+            android:background="#595959"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"/>
 
 
     <LinearLayout
@@ -158,76 +228,110 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_below="@+id/textView8"
+        android:layout_below="@+id/caseBreak"
         android:layout_marginLeft="9dp"
         android:layout_marginRight="9dp"
-        android:layout_marginTop="36dp">
+        android:layout_marginTop="12dp">
 
         <RadioGroup
             android:id="@+id/radioGroup4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:layout_weight="1">
 
             <RadioButton
                 android:id="@+id/radioButton"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Acute" />
+                android:text="Acute"
+                android:layout_weight="1"/>
 
             <RadioButton
                 android:id="@+id/radioButton2"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Chronic" />
+                android:text="Chronic"
+                android:layout_weight="1"/>
 
             <RadioButton
                 android:id="@+id/radioButton3"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Existing" />
+                android:text="Pre-Existing"
+                android:layout_weight="1"/>
 
             <RadioButton
                 android:id="@+id/radioButton4"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Injury" />
+                android:text="Injury"
+                android:layout_weight="1"/>
         </RadioGroup>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
 
-            <EditText
-                android:id="@+id/pConsultSymptoms"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="Symptoms"
-                android:inputType="textPersonName" />
-
-            <EditText
-                android:id="@+id/pConsultDiagnosis"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="Diagnosis"
-                android:inputType="textPersonName"
-                android:layout_below="@+id/pConsultSymptoms"
-                android:layout_marginTop="24dp"/>
-
-        </RelativeLayout>
 
     </LinearLayout>
+
+        <TextView
+            android:id="@+id/symptomHeading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Symptoms:"
+            android:layout_below="@id/lay5"
+            android:layout_marginLeft="9dp"
+            android:layout_marginRight="9dp"
+            android:layout_marginTop="12dp"
+            android:textSize="20dp"/>
+
+        <EditText
+                android:id="@+id/pConsultSymptoms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/symptomHeading"
+                android:inputType="text|textMultiLine"
+                android:layout_marginLeft="9dp"
+                android:layout_marginRight="9dp"/>
+
+        <TextView
+            android:id="@+id/diagnosisHeading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Diagnosis:"
+            android:layout_below="@id/pConsultSymptoms"
+            android:layout_marginLeft="9dp"
+            android:layout_marginRight="9dp"
+            android:layout_marginTop="12dp"
+            android:textSize="20dp"/>
+
+        <EditText
+                android:id="@+id/pConsultDiagnosis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text|textMultiLine"
+                android:layout_below="@+id/diagnosisHeading"
+                android:layout_marginLeft="9dp"
+                android:layout_marginRight="9dp"/>
+
+        <View
+            android:id="@+id/caseFooter"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/pConsultDiagnosis"
+            android:background="#595959"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"/>
 
     <LinearLayout
         android:id="@+id/lay6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_below="@+id/lay5"
+        android:layout_below="@+id/caseFooter"
         android:layout_marginLeft="9dp"
         android:layout_marginRight="9dp"
-        android:layout_marginTop="36dp">
+        android:layout_marginTop="24dp">
 
         <EditText
             android:id="@+id/editTextTextPersonName10"
@@ -253,6 +357,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Save"
+                android:background="@drawable/rounded_redfill"
                 android:layout_weight="1"/>
 
         </LinearLayout>
