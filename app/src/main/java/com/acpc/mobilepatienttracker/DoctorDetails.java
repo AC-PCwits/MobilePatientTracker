@@ -144,7 +144,6 @@ public class DoctorDetails extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        getActivity().setTitle("Redbox Doctor");
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
