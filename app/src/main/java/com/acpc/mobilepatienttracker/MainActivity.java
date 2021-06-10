@@ -740,9 +740,12 @@ class Appointment implements Comparable<Appointment>{
     public String id; //need this for linking to patient
     public String doc_id;
     public String status;
+    public String doc_type;
+    public String cell;
+    public String email;
 
 
-    public Appointment(String pname, String id, String bookingdate, String time, String doc_id,String docName, String status) {
+    public Appointment(String pname, String id, String bookingdate, String time, String doc_id,String docName, String status, String doctType, String cell, String email) {
         this.docName = docName;
         this.bookingdate = bookingdate;
         this.time = time;
@@ -753,9 +756,11 @@ class Appointment implements Comparable<Appointment>{
         this.doc_id = doc_id;
         this.time = time;
         this.status = status;
+        this.doc_type=doctType;
+        this.cell=cell;
+        this.email=email;
     }
 
-    public Appointment(){}
 
 
     public void  setBookingdate(){
