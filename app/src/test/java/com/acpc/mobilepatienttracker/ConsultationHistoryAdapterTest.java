@@ -11,7 +11,7 @@ public class ConsultationHistoryAdapterTest {
 
     public ArrayList<Appointment> list = new ArrayList<>();
     {
-        list.add(new Appointment("John", "12345678901", "2021/06/1", "10:00 AM", "333333", "Kanye", "Accepted"));
+        list.add(new Appointment("John", "12345678901", "2021/06/1", "10:00 AM", "333333", "Kanye", "Accepted","Oncologist","1","a@g.com"));
     }
     public ConsultationHistoryAdapter.OnItemClickListener listener = new ConsultationHistoryAdapter.OnItemClickListener() {
         @Override

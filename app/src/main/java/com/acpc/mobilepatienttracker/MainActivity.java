@@ -761,6 +761,10 @@ class Appointment implements Comparable<Appointment>{
         this.email=email;
     }
 
+    public Appointment(){
+
+    }
+
 
 
     public void  setBookingdate(){
