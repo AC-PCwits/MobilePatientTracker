@@ -27,6 +27,38 @@ public class PatientFragActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.view_pager);
         setupViewPager(viewPager);
 
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position)
+            {
+                switch (position)
+                {
+                    case 0:
+                        getSupportActionBar().setTitle("Calendar");
+                        break;
+                    case 1:
+                        getSupportActionBar().setTitle("Patient Details");
+                        break;
+                    case 2:
+                        getSupportActionBar().setTitle("Create A Booking");
+                        break;
+                    case 3:
+                        getSupportActionBar().setTitle("Consultation History");
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
         tabLayout = findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
         setupTabIcons();
