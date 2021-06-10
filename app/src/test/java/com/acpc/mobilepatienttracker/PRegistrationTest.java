@@ -47,7 +47,7 @@ public class PRegistrationTest
         TextView idText = pRegistration.findViewById(R.id.inid);
         TextView passText = pRegistration.findViewById(R.id.inpassword);
 
-        Button button = pRegistration.findViewById(R.id.reg);
+        TextView button = pRegistration.findViewById(R.id.register_p);
 
         button.performClick();
 
@@ -102,7 +102,7 @@ public class PRegistrationTest
         TextView idText = pRegistration.findViewById(R.id.inid);
         TextView passText = pRegistration.findViewById(R.id.inpassword);
 
-        Button button = pRegistration.findViewById(R.id.reg);
+        TextView button = pRegistration.findViewById(R.id.register_p);
 
         nameText.setText("Bob");
         emailText.setText("Bob@gmail.com");

@@ -11,6 +11,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,7 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class DRegistration extends AppCompatActivity implements View.OnClickListener {
 
-    private Button reg;
+    private TextView reg;
     private EditText inname, inemail, inpassword, inprac_no;
 
     @Override
