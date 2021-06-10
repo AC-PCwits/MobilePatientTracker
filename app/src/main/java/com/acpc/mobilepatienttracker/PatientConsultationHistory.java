@@ -80,6 +80,7 @@ public class PatientConsultationHistory extends Fragment {
 
     private TextView testView;
     private ArrayList<Appointment> mAppointmentList;
+    private ArrayList<Appointment> mAppointmentList2;
     private ArrayList<Doctor> d;
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -131,7 +132,6 @@ public class PatientConsultationHistory extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        getActivity().setTitle("Redbox Patient");
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -149,6 +149,7 @@ public class PatientConsultationHistory extends Fragment {
         testView = (TextView) rootView.findViewById(R.id.testView111);
 
         mAppointmentList = new ArrayList<>();
+        mAppointmentList2 = new ArrayList<>();
         d = new ArrayList<>();
 
 
@@ -175,9 +176,11 @@ public class PatientConsultationHistory extends Fragment {
                                             {
                                                 if(doc.p_no.equals(accOrRej.doc_id))
                                                 {
-                                                    mAppointmentList.add(new Appointment(accOrRej.pname, accOrRej.id, accOrRej.bookingdate, accOrRej.time, accOrRej.doc_id,
-                                                            doc.fname + " " + doc.lname, accOrRej.accOrRej));
+                                                    mAppointmentList.add(new Appointment(accOrRej.pname,accOrRej.id, accOrRej.bookingdate, accOrRej.time, accOrRej.doc_id,
+                                                            doc.fname + " " + doc.lname, accOrRej.accOrRej, doc.doc_type,doc.cell_no,doc.email));
+
                                                 }
+
                                             }
                                         }
 
@@ -188,7 +191,7 @@ public class PatientConsultationHistory extends Fragment {
                                                 if(doc.p_no.equals(booking.doc_id))
                                                 {
                                                     mAppointmentList.add(new Appointment(booking.pname, booking.id, booking.bookingdate, booking.time, booking.doc_id,
-                                                            doc.fname + " " + doc.lname, "Pending"));
+                                                            doc.fname + " " + doc.lname, "Pending",doc.doc_type,doc.cell_no,doc.email));
                                                 }
                                             }
                                         }
@@ -202,7 +205,7 @@ public class PatientConsultationHistory extends Fragment {
                                                 if(doc.p_no.equals(accOrRej.doc_id))
                                                 {
                                                     pastList.add(new Appointment(accOrRej.pname, accOrRej.id, accOrRej.bookingdate, accOrRej.time, accOrRej.doc_id,
-                                                            doc.fname + " " + doc.lname, "Past"));
+                                                            doc.fname + " " + doc.lname, "Past",doc.doc_type,doc.cell_no,doc.email));
                                                 }
                                             }
                                         }
@@ -688,7 +691,9 @@ public class PatientConsultationHistory extends Fragment {
                     bundle.putString("time", mAppointmentList.get(position).time);
                     bundle.putString("status", mAppointmentList.get(position).status);
                     bundle.putString("doc_id", mAppointmentList.get(position).doc_id);
-
+                    bundle.putString("doc_type", mAppointmentList.get(position).doc_type);
+                    bundle.putString("doc_cell", mAppointmentList.get(position).cell);
+                    bundle.putString("doc_email", mAppointmentList.get(position).email);
                     intent.putExtras(bundle);
                     startActivity(intent);
                 }

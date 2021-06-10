@@ -106,7 +106,7 @@ public class DHomePage extends Fragment  {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        getActivity().setTitle("Redbox Doctor");
+        getActivity().setTitle("Calendar");
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);

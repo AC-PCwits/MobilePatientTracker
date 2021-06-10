@@ -24,6 +24,37 @@ public class DoctorFragActivity extends AppCompatActivity {
 
         viewPager = findViewById(R.id.view_pager);
         setupViewPager(viewPager);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position)
+            {
+                switch (position)
+                {
+                    case 0:
+                        getSupportActionBar().setTitle("Calendar");
+                        break;
+                    case 1:
+                        getSupportActionBar().setTitle("Doctor Details");
+                        break;
+                    case 2:
+                        getSupportActionBar().setTitle("Patient List");
+                        break;
+                    case 3:
+                        getSupportActionBar().setTitle("Pending Bookings");
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         tabLayout = findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
