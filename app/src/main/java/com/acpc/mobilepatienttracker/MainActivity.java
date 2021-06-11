@@ -1,8 +1,11 @@
 package com.acpc.mobilepatienttracker;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -740,9 +743,12 @@ class Appointment implements Comparable<Appointment>{
     public String id; //need this for linking to patient
     public String doc_id;
     public String status;
+    public String doc_type;
+    public String cell;
+    public String email;
 
 
-    public Appointment(String pname, String id, String bookingdate, String time, String doc_id,String docName, String status) {
+    public Appointment(String pname, String id, String bookingdate, String time, String doc_id,String docName, String status, String doctType, String cell, String email) {
         this.docName = docName;
         this.bookingdate = bookingdate;
         this.time = time;
@@ -753,9 +759,15 @@ class Appointment implements Comparable<Appointment>{
         this.doc_id = doc_id;
         this.time = time;
         this.status = status;
+        this.doc_type=doctType;
+        this.cell=cell;
+        this.email=email;
     }
 
-    public Appointment(){}
+    public Appointment(){
+
+    }
+
 
 
     public void  setBookingdate(){
@@ -780,4 +792,32 @@ class Appointment implements Comparable<Appointment>{
         }
     }
 
+}
+
+class LoadingDialog {
+
+    private Activity activity;
+    private AlertDialog dialog;
+
+
+    LoadingDialog(Activity myActivity){
+        activity = myActivity;
+
+
+    }
+
+    public void startLoading(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+
+        LayoutInflater inflater = activity.getLayoutInflater();
+        builder.setView(inflater.inflate(R.layout.custom_dialog,null));
+        builder.setCancelable(false);
+
+        dialog = builder.create();
+        dialog.show();
+    }
+
+    public void dismiss(){
+        dialog.dismiss();
+    }
 }

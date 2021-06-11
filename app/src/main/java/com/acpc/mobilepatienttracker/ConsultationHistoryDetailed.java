@@ -12,6 +12,7 @@ import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -32,11 +33,26 @@ public class ConsultationHistoryDetailed extends AppCompatActivity {
     private TextView txtStatus;
     private TextView txtDocExp;
 
+    private TextView txtContact;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consultation_history_detailed);
+
+        final LoadingDialog loadingDialog = new LoadingDialog(ConsultationHistoryDetailed.this);
+
+        loadingDialog.startLoading();
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                loadingDialog.dismiss();
+            }
+        }, 2000);
+
 
         final Intent intent = getIntent();
 
@@ -57,17 +73,27 @@ public class ConsultationHistoryDetailed extends AppCompatActivity {
                         txtTime = findViewById(R.id.txtTime);
                         txtStatus = findViewById(R.id.statusText);
                         txtDocExp = findViewById(R.id.txtDocExp);
+                        txtContact=findViewById(R.id.txtContact);
 
                         String docName = intent.getExtras().getString("doc_name");
                         String date = intent.getExtras().getString("date");
                         String time = intent.getExtras().getString("time");
                         String status = intent.getExtras().getString("status");
+                        String type = intent.getExtras().getString("doc_type");
+                        String email =intent.getExtras().getString("doc_email");
+                        String cell =intent.getExtras().getString("doc_cell");
 
-                        txtDocName.setText(docName);
+
+                        String output1 = "Dr. "+docName +" ( "+ type +" )";
+                        txtDocName.setText(output1);
                         txtDate.setText(date);
                         txtTime.setText(time);
                         txtStatus.setText(status);
-                        txtDocExp.setText(doctor.p_length + "  years");
+                        String output2= doctor.p_length + " years";
+                        txtDocExp.setText(doctor.p_length + " years");
+                        String output3 = "If you have any queries, please feel feel to contact your doctor on " + cell + " or via email " + email;
+                        txtContact.setText(output3);
+
 
                         if (status.equals("Pending"))
                         {

@@ -12,6 +12,7 @@
 
 
         <!-- Recycler view Object, this will allow for the user to scroll through a list of items -->
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
