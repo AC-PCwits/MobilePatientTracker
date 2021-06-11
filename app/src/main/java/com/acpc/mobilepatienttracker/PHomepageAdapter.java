@@ -43,7 +43,15 @@ public class PHomepageAdapter  extends BaseExpandableListAdapter
                              boolean isLastChild, View convertView, ViewGroup parent) {
         final String children = (String) getChild(groupPosition, childPosition);
         TextView text = null;
-        if (convertView == null) {
+        if (convertView == null && getChildrenCount(groupPosition) != childPosition + 1) {
+            convertView = inflater.inflate(R.layout.listrow_details, null);
+        }
+        if(getChildrenCount(groupPosition) == childPosition + 1)
+        {
+            convertView = inflater.inflate(R.layout.listrow_details_bottom, null);
+        }
+        else
+        {
             convertView = inflater.inflate(R.layout.listrow_details, null);
         }
         text = (TextView) convertView.findViewById(R.id.textView1);
@@ -98,8 +106,8 @@ public class PHomepageAdapter  extends BaseExpandableListAdapter
             convertView = inflater.inflate(R.layout.listrow_group, null);
         }
         Group group = (Group) getGroup(groupPosition);
-        ((CheckedTextView) convertView).setText(group.string);
-        ((CheckedTextView) convertView).setChecked(isExpanded);
+        TextView text = convertView.findViewById(R.id.textView1);
+        text.setText(group.string);
         return convertView;
     }
 

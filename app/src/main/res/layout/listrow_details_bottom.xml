@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     android:clickable="true"
     android:orientation="vertical"
-    tools:context=".PHomePage">
+    tools:context=".PHomePage"
+    >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -35,6 +36,12 @@
             android:layout_centerVertical="true"/>
     </RelativeLayout>
 
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@color/colorPrimary"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"/>
 
 </LinearLayout>

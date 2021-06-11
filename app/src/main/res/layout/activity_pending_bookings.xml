@@ -6,24 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".PendingBookings">
 
-    <TextView
-        android:id="@+id/titleText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Booking Requests"
-        android:textStyle="bold"
-        android:textAlignment="center"
-        android:gravity="center_horizontal"
-        android:textSize="30dp"
-        android:textColor="@android:color/black"/>
-
 
     <!-- Recycler view Object, this will allow for the user to scroll through a list of items -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="655dp"
-        android:layout_below="@+id/titleText"
+        android:layout_height="match_parent"
         android:padding="2dp"
         android:scrollbars="vertical" />
 
