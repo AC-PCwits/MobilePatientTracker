@@ -12,6 +12,7 @@ import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -39,6 +40,19 @@ public class ConsultationHistoryDetailed extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consultation_history_detailed);
+
+        final LoadingDialog loadingDialog = new LoadingDialog(ConsultationHistoryDetailed.this);
+
+        loadingDialog.startLoading();
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                loadingDialog.dismiss();
+            }
+        }, 2000);
+
 
         final Intent intent = getIntent();
 
