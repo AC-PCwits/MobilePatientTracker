@@ -25,8 +25,9 @@
             android:id="@+id/listView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/rectangle_border"
-            android:layout_below="@+id/datePicker">
+            android:layout_below="@+id/datePicker"
+            android:groupIndicator="@color/cardview_light_background"
+            android:divider="@color/transparent">
         </ExpandableListView>
 
     </RelativeLayout>

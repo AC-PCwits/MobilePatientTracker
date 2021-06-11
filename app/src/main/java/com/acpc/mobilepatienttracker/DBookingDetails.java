@@ -120,7 +120,7 @@ public class DBookingDetails extends AppCompatActivity {
 
                                 addPatient("1");
 
-                                SplashActivity.msgserv.sendNotification("Booking accepted for patient: "+name);
+//                                SplashActivity.msgserv.sendNotification("Booking accepted for patient: "+name);
 
                                 aOrR = "Accepted";
                                 final AccOrRej s = new AccOrRej(name,id,date,time,doc_id, aOrR,"Incomplete");
@@ -163,7 +163,7 @@ public class DBookingDetails extends AppCompatActivity {
                             public void onClick(View v) {
 
                                 //  Toast.makeText(DBookingDetails.this, "Declining booking", LENGTH_LONG).show();
-                                SplashActivity.msgserv.sendNotification("Booking rejected for patient: "+name);
+//                                SplashActivity.msgserv.sendNotification("Booking rejected for patient: "+name);
                                 aOrR = "Rejected";
                                 final AccOrRej s = new AccOrRej(name,id,date,time,doc_id, aOrR,"");
 

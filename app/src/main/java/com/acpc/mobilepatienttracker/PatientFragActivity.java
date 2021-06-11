@@ -105,4 +105,14 @@ public class PatientFragActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
     }
 
+    public void callPause()
+    {
+        onPause();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
 }

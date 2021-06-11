@@ -4,13 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:ignore="MissingClass">
+    tools:ignore="MissingClass"
+    app:cardElevation="0dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="0dp"
-        android:background="@drawable/border_set_patient_list">
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:paddingLeft="12dp"
+        android:background="@drawable/border_set_patient_list1"
+        android:elevation="3dp">
 
         <!-- This is where the Patient name will be -->
         <TextView
@@ -21,7 +27,8 @@
             android:textSize="26sp"
             android:textStyle="bold"
             android:layout_alignParentTop="true"
-            android:id="@+id/dateText"/>
+            android:id="@+id/dateText"
+            android:layout_marginTop="8dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -29,9 +36,17 @@
             android:text="Experience"
             android:textSize="18sp"
             android:layout_below="@id/dateText"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:id="@+id/statusText"/>
+            android:layout_marginTop="24dp"
+            android:id="@+id/statusText"
+            android:layout_marginBottom="8dp"/>
+
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@drawable/ic_baseline_keyboard_arrow_right_24"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:layout_centerVertical="true"/>
 
     </RelativeLayout>
 
