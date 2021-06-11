@@ -69,7 +69,8 @@ public class DPatientDetails extends AppCompatActivity {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 // the delay of the extension of the FAB is set for 12 items
-                if (scrollY > oldScrollY + 12 && extendedFloatingActionButton.isExtended()) {
+                if (scrollY > oldScrollY + 12 && extendedFloatingActionButton.isExtended())
+                {
                     extendedFloatingActionButton.shrink();
                 }
 
