@@ -582,7 +582,7 @@ public class PatientConsultationHistory extends Fragment {
 
     }
 
-    public void getPastBookings(final PastCallback callback){
+    public void getPastBookings(final PastCallback callback){ //has a consult form
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         final FirebaseFirestore database = FirebaseFirestore.getInstance();
 
@@ -595,7 +595,7 @@ public class PatientConsultationHistory extends Fragment {
                         final String ID = dataSnapshot.child("id").getValue().toString();
 
 
-                        database.collection("booking-history-data").whereEqualTo("id", ID)
+                        database.collection("booking-history-data").whereEqualTo("id", ID).whereEqualTo("status","Completed")
                                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {

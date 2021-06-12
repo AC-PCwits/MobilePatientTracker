@@ -16,7 +16,8 @@
         <activity
             android:name=".PatientDateTimeBooking"
             android:label="Select Date and Time of Appointment" />
-        <activity android:name=".DocTypeList" />
+        <activity android:name=".DocTypeList"
+            android:label="Create a Booking : Select a Doctor"/>
         <activity android:name=".PatientFragActivity" />
         <activity android:name=".DoctorFragActivity" />
         <activity android:name=".DoctorConsultForm"
@@ -36,7 +37,8 @@
         <activity
             android:name=".LoginDoctor"
             android:label="Doctor : Login" />
-        <activity android:name=".PatientForm" />
+        <activity android:name=".PatientForm"
+            android:label="Please Input Personal Details"/>
         <activity
             android:name=".DoctorOrPatient"
             android:label="Welcome to Redbox" />
@@ -59,7 +61,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DBookingDetails" />
+        <activity android:name=".DBookingDetails"
+            android:label="Booking Request Details"/>
 
         <meta-data
             android:name="preloaded_fonts"

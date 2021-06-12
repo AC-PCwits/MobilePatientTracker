@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -46,12 +47,12 @@ public class ConsultationHistoryDetailed extends AppCompatActivity {
         loadingDialog.startLoading();
 
         Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+     /*   handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 loadingDialog.dismiss();
             }
-        }, 2000);
+        }, 2000);*/
 
 
         final Intent intent = getIntent();
@@ -99,21 +100,25 @@ public class ConsultationHistoryDetailed extends AppCompatActivity {
                         {
                             txtStatus.setBackground(ContextCompat.getDrawable(ConsultationHistoryDetailed.this, R.drawable.rounded_corner_pending));
                             txtStatus.setTextColor(Color.parseColor("#C3C3C3"));
+                            loadingDialog.dismiss();
                         }
                         if (status.equals("Accepted"))
                         {
                             txtStatus.setBackground(ContextCompat.getDrawable(ConsultationHistoryDetailed.this, R.drawable.rounded_corner_accepted));
                             txtStatus.setTextColor(Color.parseColor("#50C878"));
+                            loadingDialog.dismiss();
                         }
                         if (status.equals("Past"))
                         {
                             txtStatus.setBackground(ContextCompat.getDrawable(ConsultationHistoryDetailed.this, R.drawable.rounded_corner_past));
                             txtStatus.setTextColor(Color.parseColor("#0E20C5"));
+                            loadingDialog.dismiss();
                         }
                         return;
                     }
                 } else {
                     Log.w("CONSULTATION DETAILS: ", "GET DOCTOR FAILED: ", task.getException());
+                    Toast.makeText(ConsultationHistoryDetailed.this, "Please Check Your Connection",Toast.LENGTH_LONG).show();
                 }
             }
         })
@@ -121,6 +126,7 @@ public class ConsultationHistoryDetailed extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.w("CONSULTATION DETAILS: ", "GET DOCTOR FAILED: ", e);
+                        Toast.makeText(ConsultationHistoryDetailed.this, "Please Check Your Connection",Toast.LENGTH_LONG).show();
                     }
                 });
     }

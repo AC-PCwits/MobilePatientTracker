@@ -68,7 +68,7 @@ public class DocTypeList extends AppCompatActivity {
 //        buildExampleList();
 //        buildRecyclerView();
 
-        dt=findViewById(R.id.dt);
+       // dt=findViewById(R.id.dt);
         Intent intent = getIntent();
 
         if(intent.getExtras() != null) {
@@ -82,7 +82,7 @@ public class DocTypeList extends AppCompatActivity {
             buildRecyclerView();
         }
         else {
-            dt.setText(t);
+          //  dt.setText(t);
             getDocData(t);
         }
     }
