@@ -200,36 +200,42 @@ public class PatientDetails extends Fragment {
                     background =(LinearLayout) getView().findViewById(R.id.dd_backround);
                     background.addView(firstname);
                     firstname.content.setText(activeUser.fname);
+                    firstname.content.setTextSize(20);
                     firstname.edit.setVisibility(View.VISIBLE);
                     firstname.originalText = firstname.content.getText().toString();
 
                     background =(LinearLayout) getView().findViewById(R.id.Iden);
                     background.addView(id);
                     id.content.setText(activeUser.idno);
+                    id.content.setTextSize(20);
                     id.edit.setVisibility(View.VISIBLE);
                     id.originalText = id.content.getText().toString();
 
                     background =(LinearLayout) getView().findViewById(R.id.birth);
                     background.addView(race);
                     race.content.setText(activeUser.race);
+                    race.content.setTextSize(20);
                     race.edit.setVisibility(View.VISIBLE);
                     race.originalText = race.content.getText().toString();
 
                     background =(LinearLayout) getView().findViewById(R.id.nation);
                     background.addView(nationality);
                     nationality.content.setText(activeUser.nationality);
+                    nationality.content.setTextSize(20);
                     nationality.edit.setVisibility(View.VISIBLE);
                     nationality.originalText = nationality.content.getText().toString();
 
                     background =(LinearLayout) getView().findViewById(R.id.gen);
                     background.addView(gender);
                     gender.content.setText(activeUser.gender);
+                    gender.content.setTextSize(20);
                     gender.edit.setVisibility(View.VISIBLE);
                     gender.originalText = gender.content.getText().toString();
 
                     background =(LinearLayout) getView().findViewById(R.id.marital);
                     background.addView(mstatus);
                     mstatus.content.setText(activeUser.mstatus);
+                    mstatus.content.setTextSize(20);
                     mstatus.edit.setVisibility(View.VISIBLE);
                     mstatus.originalText = mstatus.content.getText().toString();
 
@@ -237,24 +243,28 @@ public class PatientDetails extends Fragment {
                     background =(LinearLayout) getView().findViewById(R.id.cell);
                     background.addView(cellphone);
                     cellphone.content.setText(activeUser.cellno);
+                    cellphone.content.setTextSize(20);
                     cellphone.edit.setVisibility(View.VISIBLE);
                     cellphone.originalText = cellphone.content.getText().toString();
 
                     background =(LinearLayout) getView().findViewById(R.id.em);
                     background.addView(address);
                     address.content.setText(activeUser.address);
+                    address.content.setTextSize(20);
                     address.edit.setVisibility(View.VISIBLE);
                     address.originalText = address.content.getText().toString();
 
                     background =(LinearLayout) getView().findViewById(R.id.emCont);
                     background.addView(econtact);
                     econtact.content.setText(activeUser.ename);
+                    econtact.content.setTextSize(20);
                     econtact.edit.setVisibility(View.VISIBLE);
                     econtact.originalText = econtact.content.getText().toString();
 
                     background =(LinearLayout) getView().findViewById(R.id.emContno);
                     background.addView(econtactno);
                     econtactno.content.setText(activeUser.econtact);
+                    econtactno.content.setTextSize(20);
                     econtactno.edit.setVisibility(View.VISIBLE);
                     econtactno.originalText = econtact.content.getText().toString();
 
@@ -262,17 +272,20 @@ public class PatientDetails extends Fragment {
                     background.addView(illnesses);
                     illnesses.content.setText(activeUser.GetIllnessesString());
                     illnesses.edit.setVisibility(View.VISIBLE);
+                    illnesses.content.setTextSize(20);
                     illnesses.originalText = illnesses.content.getText().toString();
 
                     background =(LinearLayout) getView().findViewById(R.id.lenp);
                     background.addView(allergies);
                     allergies.content.setText(activeUser.allergies);
+                    allergies.content.setTextSize(20);
                     allergies.edit.setVisibility(View.VISIBLE);
                     allergies.originalText = allergies.content.getText().toString();
 
                     background =(LinearLayout) getView().findViewById(R.id.uni);
                     background.addView(medicalaid);
                     medicalaid.content.setText(activeUser.medaid);
+                    medicalaid.content.setTextSize(20);
                     medicalaid.edit.setVisibility(View.VISIBLE);
                     medicalaid.originalText = medicalaid.content.getText().toString();
 
