@@ -158,6 +158,10 @@ public class DoctorDetails extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.activity_doctor_details, container, false);
 
+        final LoadingDialog loadingDialog = new LoadingDialog(getActivity());
+
+        loadingDialog.startLoading();
+
         context = getContext();
 
         save = rootView.findViewById(R.id.dd_save);
@@ -216,6 +220,8 @@ public class DoctorDetails extends Fragment {
         });
 
         getDocDet();
+
+        loadingDialog.dismiss();
 
 
         return rootView;

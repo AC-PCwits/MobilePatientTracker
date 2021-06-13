@@ -121,6 +121,10 @@ public class DHomePage extends Fragment  {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.activity_d_home_page, container, false);
 
+        final LoadingDialog loadingDialog = new LoadingDialog(getActivity());
+
+        loadingDialog.startLoading();
+
         final ExpandableListView listView = rootView.findViewById(R.id.listView);
         groups.clear();
 
@@ -290,6 +294,8 @@ public class DHomePage extends Fragment  {
         });
 
         groups.clear();
+
+        loadingDialog.dismiss();
 
         return rootView;
 

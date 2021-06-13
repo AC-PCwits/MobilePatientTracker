@@ -40,6 +40,10 @@ public class ConsultationDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consultation_details);
 
+        final LoadingDialog loadingDialog = new LoadingDialog(ConsultationDetails.this);
+
+        loadingDialog.startLoading();
+
         txtConsultationDetailsLabel = findViewById(R.id.txtConsultationDetailsLabel);
         txtConsultationDetailsLabel.setPaintFlags(txtConsultationDetailsLabel.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);// to underline text
         txtPFirstName = findViewById(R.id.txtPFirstname);
@@ -67,11 +71,15 @@ public class ConsultationDetails extends AppCompatActivity {
             Log.d("CONSULTATION-DETAILS", dateTime);
 
             GetPastConsult(patientID, doctorID, dateTime);
+
         }
         else
         {
             Log.w("CONSULTATION-DETAILS", "Bundle was null");
         }
+
+        loadingDialog.dismiss();
+
     }
 
     public void GetPastConsult(final String patientID, final String doctorID, final String dateTime)
@@ -111,7 +119,9 @@ public class ConsultationDetails extends AppCompatActivity {
                                                  txtSymptoms.setText(consultation.psymptoms);
                                                  txtDiagnosis.setText(consultation.pdiagnosis);
                                                  txtDate.setText(consultation.pdate);
+
                                              }
+
                                              else
                                              {
                                                  Log.w("CONSULTATION-DETAILS", "Could not get past consults: ", task.getException());
@@ -132,5 +142,6 @@ public class ConsultationDetails extends AppCompatActivity {
                 }
             }
         });
+
     }
 }

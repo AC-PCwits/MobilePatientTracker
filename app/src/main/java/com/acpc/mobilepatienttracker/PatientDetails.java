@@ -115,6 +115,10 @@ public class PatientDetails extends Fragment {
         View rootView = inflater.inflate(R.layout.activity_patient_details, container, false);
         context = getContext();
 
+        final LoadingDialog loadingDialog = new LoadingDialog(getActivity());
+
+        loadingDialog.startLoading();
+
 
         save = rootView.findViewById(R.id.pd_save);
 
@@ -177,6 +181,8 @@ public class PatientDetails extends Fragment {
 
         //Patient details are pulled from database and displayed using this method
         getUserData();
+
+        loadingDialog.dismiss();
 
         return rootView;
     }
