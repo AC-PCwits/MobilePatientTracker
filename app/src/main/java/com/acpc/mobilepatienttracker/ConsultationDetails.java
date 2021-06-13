@@ -70,7 +70,7 @@ public class ConsultationDetails extends AppCompatActivity {
             Log.d("CONSULTATION-DETAILS", doctorID);
             Log.d("CONSULTATION-DETAILS", dateTime);
 
-            GetPastConsult(patientID, doctorID, dateTime);
+            GetPastConsult(patientID, doctorID, dateTime,loadingDialog);
 
         }
         else
@@ -78,11 +78,11 @@ public class ConsultationDetails extends AppCompatActivity {
             Log.w("CONSULTATION-DETAILS", "Bundle was null");
         }
 
-        loadingDialog.dismiss();
+      //  loadingDialog.dismiss();
 
     }
 
-    public void GetPastConsult(final String patientID, final String doctorID, final String dateTime)
+    public void GetPastConsult(final String patientID, final String doctorID, final String dateTime, final LoadingDialog loadingDialog)
     {
         database.collection("doctor-data").whereEqualTo("p_no", doctorID)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -119,6 +119,7 @@ public class ConsultationDetails extends AppCompatActivity {
                                                  txtSymptoms.setText(consultation.psymptoms);
                                                  txtDiagnosis.setText(consultation.pdiagnosis);
                                                  txtDate.setText(consultation.pdate);
+                                                 loadingDialog.dismiss();
 
                                              }
 

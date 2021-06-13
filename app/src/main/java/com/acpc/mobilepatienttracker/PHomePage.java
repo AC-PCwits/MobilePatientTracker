@@ -102,17 +102,17 @@ public class PHomePage extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.activity_p_home_page, container, false);
 
-        final LoadingDialog loadingDialog = new LoadingDialog(getActivity());
+        final Loading loadingDialog = new Loading (getActivity());
 
         loadingDialog.startLoading();
 
-        /*Handler handler = new Handler();
+        Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 loadingDialog.dismiss();
             }
-        }, 2000);*/
+        }, 7000);
 
         final ExpandableListView listView = rootView.findViewById(R.id.listView);
 
@@ -271,7 +271,7 @@ public class PHomePage extends Fragment {
             }
         });
 
-        loadingDialog.dismiss();
+     //   loadingDialog.dismiss();
 
         return rootView;
 

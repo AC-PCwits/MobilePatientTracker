@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -801,6 +802,34 @@ class LoadingDialog {
 
 
     LoadingDialog(Activity myActivity){
+        activity = myActivity;
+
+
+    }
+
+    public void startLoading(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+
+        LayoutInflater inflater = activity.getLayoutInflater();
+        builder.setView(inflater.inflate(R.layout.custom_dialog,null));
+        builder.setCancelable(false);
+
+        dialog = builder.create();
+        dialog.show();
+    }
+
+    public void dismiss(){
+        dialog.dismiss();
+    }
+}
+
+class Loading { //fragment
+
+    private FragmentActivity activity;
+    private AlertDialog dialog;
+
+
+    Loading(FragmentActivity myActivity){
         activity = myActivity;
 
 
