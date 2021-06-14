@@ -2,6 +2,7 @@ package com.acpc.mobilepatienttracker;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -115,9 +116,17 @@ public class PatientDetails extends Fragment {
         View rootView = inflater.inflate(R.layout.activity_patient_details, container, false);
         context = getContext();
 
-        final LoadingDialog loadingDialog = new LoadingDialog(getActivity());
+        /* final Loading loadingDialog = new Loading(getActivity());
 
         loadingDialog.startLoading();
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                loadingDialog.dismiss();
+            }
+        }, 2000); */
 
 
         save = rootView.findViewById(R.id.pd_save);
@@ -182,7 +191,6 @@ public class PatientDetails extends Fragment {
         //Patient details are pulled from database and displayed using this method
         getUserData();
 
-        loadingDialog.dismiss();
 
         return rootView;
     }
