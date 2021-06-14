@@ -5,11 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DoctorConsultationList"
+
     >
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
 
         <!-- Recycler view Object, this will allow for the user to scroll through a list of items -->
@@ -36,7 +38,8 @@
             android:paddingLeft="50dp"
             android:paddingRight="50dp"
             android:text="You have no past consults with this patient."
-            android:textSize="26sp" />
+            android:textSize="26sp"
+            android:textColor="#000000"/>
 
 
     </RelativeLayout>
