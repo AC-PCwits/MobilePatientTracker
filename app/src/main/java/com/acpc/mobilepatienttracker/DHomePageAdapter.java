@@ -106,8 +106,6 @@ public class DHomePageAdapter extends BaseExpandableListAdapter
         super.onGroupExpanded(groupPosition);
     }
 
-
-
     @Override
     public long getGroupId(int groupPosition) {
         return 0;

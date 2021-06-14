@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -18,9 +19,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-public class ConsultationDetails extends AppCompatActivity {
+import static com.acpc.mobilepatienttracker.DatabaseManager.GetPastConsult;
 
-    private FirebaseFirestore database = FirebaseFirestore.getInstance();
+public class ConsultationDetails extends AppCompatActivity {
 
     private TextView txtPFirstName;
     private TextView txtPSurname;
@@ -40,9 +41,7 @@ public class ConsultationDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consultation_details);
 
-        final LoadingDialog loadingDialog = new LoadingDialog(ConsultationDetails.this);
-
-        loadingDialog.startLoading();
+        FirebaseApp.initializeApp(this.getApplicationContext());
 
         txtConsultationDetailsLabel = findViewById(R.id.txtConsultationDetailsLabel);
         txtConsultationDetailsLabel.setPaintFlags(txtConsultationDetailsLabel.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);// to underline text
@@ -70,78 +69,26 @@ public class ConsultationDetails extends AppCompatActivity {
             Log.d("CONSULTATION-DETAILS", doctorID);
             Log.d("CONSULTATION-DETAILS", dateTime);
 
-            GetPastConsult(patientID, doctorID, dateTime);
-
+            GetPastConsult(patientID, doctorID, dateTime, new DatabaseManager.ConsultCallback() {
+                @Override
+                public void onResponse(Consultation consultation, Doctor doctor, Patient patient) {
+                    txtPFirstName.setText(patient.fname);
+                    txtPSurname.setText(patient.fsurname);
+                    txtPatientID.setText(patient.idno);
+                    txtPcell.setText(patient.cellno);
+                    txtDFirstName.setText(doctor.fname);
+                    txtDSurname.setText(doctor.lname);
+                    txtPracticeID.setText(doctor.p_no);
+                    txtCaseInfo.setText(consultation.pcase);
+                    txtSymptoms.setText(consultation.psymptoms);
+                    txtDiagnosis.setText(consultation.pdiagnosis);
+                    txtDate.setText(consultation.pdate);
+                }
+            });
         }
         else
         {
             Log.w("CONSULTATION-DETAILS", "Bundle was null");
         }
-
-        loadingDialog.dismiss();
-
-    }
-
-    public void GetPastConsult(final String patientID, final String doctorID, final String dateTime)
-    {
-        database.collection("doctor-data").whereEqualTo("p_no", doctorID)
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful())
-                {
-                    final Doctor doctor = task.getResult().toObjects(Doctor.class).get(0);
-
-                    database.collection("patient-data").whereEqualTo("idno", patientID)
-                            .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                             @Override
-                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                 if (task.isSuccessful()) {
-
-                                     final Patient patient = task.getResult().toObjects(Patient.class).get(0);
-
-                                     database.collection("consultation-data").whereEqualTo("pdoctorID", doctorID).whereEqualTo("ppatientID", patientID).whereEqualTo("pdate", dateTime)
-                                             .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                         @Override
-                                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                             if(task.isSuccessful())
-                                             {
-                                                 Consultation consultation = task.getResult().toObjects(Consultation.class).get(0);
-
-                                                 txtPFirstName.setText(patient.fname);
-                                                 txtPSurname.setText(patient.fsurname);
-                                                 txtPatientID.setText(patient.idno);
-                                                 txtPcell.setText(patient.cellno);
-                                                 txtDFirstName.setText(doctor.fname);
-                                                 txtDSurname.setText(doctor.lname);
-                                                 txtPracticeID.setText(doctor.p_no);
-                                                 txtCaseInfo.setText(consultation.pcase);
-                                                 txtSymptoms.setText(consultation.psymptoms);
-                                                 txtDiagnosis.setText(consultation.pdiagnosis);
-                                                 txtDate.setText(consultation.pdate);
-
-                                             }
-
-                                             else
-                                             {
-                                                 Log.w("CONSULTATION-DETAILS", "Could not get past consults: ", task.getException());
-                                             }
-                                         }
-                                     });
-                                 }
-                                 else
-                                 {
-                                     Log.w("CONSULTATION-DETAILS", "Could not get patient info: ", task.getException());
-                                 }
-                             }
-                         });
-                }
-                else
-                {
-                    Log.w("CONSULTATION-DETAILS", "Could not get doctor info: ", task.getException());
-                }
-            }
-        });
-
     }
 }
