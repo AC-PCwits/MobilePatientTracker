@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PendingBookings">
+    tools:context=".PendingBookings"
+    android:background="@drawable/gradient_1">
 
 
     <!-- Recycler view Object, this will allow for the user to scroll through a list of items -->
@@ -22,5 +23,22 @@
         android:layout_below="@+id/recyclerView"
         android:text=""
         android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/dcl_noitems"
+        android:layout_width="match_parent"
+        android:layout_height="106dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="50dp"
+        android:gravity="center"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:text="No Pending Bookings Currently."
+        android:textColor="#000000"
+        android:textSize="26sp" />
 
 </RelativeLayout>
