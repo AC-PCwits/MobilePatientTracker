@@ -8,6 +8,9 @@ import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class SplashActivity extends AppCompatActivity  {
 
     ProgressBar splashProgress;
@@ -37,14 +40,6 @@ public class SplashActivity extends AppCompatActivity  {
                 Intent mySuperIntent = new Intent(SplashActivity.this, DoctorOrPatient.class);
                 startActivity(mySuperIntent);
 
-                if (DatabaseManager.IsSignedIn())
-                {
-                    // go to main activty
-                }
-                else
-                {
-
-                }
 
                 //This 'finish()' is for exiting the app when back button pressed from Home page which is ActivityHome
                 finish();

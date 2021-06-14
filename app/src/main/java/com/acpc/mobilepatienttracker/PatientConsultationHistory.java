@@ -338,7 +338,9 @@ public class PatientConsultationHistory extends Fragment {
                                         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                                         try {
                                             Date bookingDate = format.parse(date);
+                                            Log.d("ACC-REJ METHOD", "Date:" + bookingDate);
                                             Date today = new Date();
+                                            Log.d("ACC-REJ METHOD", "Today:" + today);
                                             if ((today.equals(bookingDate) || today.after(bookingDate)) && accRej.accOrRej.equals("Accepted"))
                                             {
                                                 database.collection("booking-history-data") // specify the collection name here
@@ -434,7 +436,6 @@ public class PatientConsultationHistory extends Fragment {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     if (dataSnapshot.child("email").getValue().toString().equalsIgnoreCase(user.getEmail())) {
                         final String ID = dataSnapshot.child("id").getValue().toString();
-
 
                         database.collection("acc-rej-data").whereEqualTo("id", ID)
                                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -711,7 +712,6 @@ public class PatientConsultationHistory extends Fragment {
 
                     i.putExtras(b);
                     startActivity(i);
-
                 }
             }
         });

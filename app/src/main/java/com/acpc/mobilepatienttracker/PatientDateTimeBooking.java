@@ -59,13 +59,14 @@ public class PatientDateTimeBooking extends AppCompatActivity {
     private String e;
     private TextView exp;
     private String id;
-    private Button confirm;
     private String patientname;
     private String patientID;
     private String q;
     private FirebaseFirestore database = FirebaseFirestore.getInstance();
     //String docID;////
     private Button check;
+
+    private Boolean IsChecked = false;
 
 ///
 
@@ -79,12 +80,9 @@ public class PatientDateTimeBooking extends AppCompatActivity {
         name=findViewById(R.id.name);
         //sname=findViewById(R.id.sname);
         exp=findViewById(R.id.exp);
-        confirm=findViewById(R.id.confirmbtn);
         qual= findViewById(R.id.textView10);
 
         check = findViewById(R.id.checkbtn);
-        // check.setVisibility(View.GONE);
-        confirm.setVisibility(View.GONE);
 
 
         Intent intent = getIntent();
@@ -216,13 +214,6 @@ public class PatientDateTimeBooking extends AppCompatActivity {
             }
         });
 
-
-
-
-
-
-
-
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Patient");
@@ -241,51 +232,47 @@ public class PatientDateTimeBooking extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
 
+                                if (IsChecked)
+                                {
+                                    final String patDate = date.getText().toString();
+                                    final String patTime = tvTimer1.getText().toString();
+                                    Bookings b = new Bookings(patName, ID, patDate, patTime, id);
+                                    Add(true,b);
 
-                                final String patDate = date.getText().toString();
-                                final String patTime = tvTimer1.getText().toString();
-
-
-
-                                if(patTime.isEmpty()){
-
-                                    Toast.makeText(PatientDateTimeBooking.this, "Time is Required", Toast.LENGTH_LONG).show();
-                                    tvTimer1.requestFocus();
-
-                                    return;
                                 }
+                                else
+                                {
+                                    final String patDate = date.getText().toString();
+                                    final String patTime = tvTimer1.getText().toString();
 
-                                else if(patDate.isEmpty()){
-                                    //tvTimer1.setError(" ");
-                                    Toast.makeText(PatientDateTimeBooking.this, "Date is Required", Toast.LENGTH_LONG).show();
-                                    tvTimer1.requestFocus();
 
-                                    return;
+
+                                    if(patTime.isEmpty()){
+
+                                        Toast.makeText(PatientDateTimeBooking.this, "Time is Required", Toast.LENGTH_LONG).show();
+                                        tvTimer1.requestFocus();
+
+                                        return;
+                                    }
+
+                                    else if(patDate.isEmpty()){
+                                        //tvTimer1.setError(" ");
+                                        Toast.makeText(PatientDateTimeBooking.this, "Date is Required", Toast.LENGTH_LONG).show();
+                                        tvTimer1.requestFocus();
+
+                                        return;
+                                    }
+
+
+                                    Bookings b = new Bookings(patName, ID, patDate, patTime, id);
+
+                                    if (!IsChecked)
+                                    {
+                                        checkPending(b);
+                                    }
                                 }
-
-
-                                Bookings b = new Bookings(patName, ID, patDate, patTime, id);
-
-                                checkPending(b);
-
-
-
-
                             }
                         });
-
-                        confirm.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                final String patDate = date.getText().toString();
-                                final String patTime = tvTimer1.getText().toString();
-                                Bookings b = new Bookings(patName, ID, patDate, patTime, id);
-                                Add(true,b);
-
-                            }
-                        });
-
-
                     }
                 }
             }
@@ -321,8 +308,6 @@ public class PatientDateTimeBooking extends AppCompatActivity {
                         } else {
 
                             checkTest(book);
-
-
                         }
                     }
 
@@ -364,8 +349,13 @@ public class PatientDateTimeBooking extends AppCompatActivity {
                             //Toast.makeText(PatientDateTimeBooking.this, "Checking Availability",LENGTH_LONG).show();
 
                             // NoBookings();
-                            confirm.setVisibility(View.VISIBLE);
-                            check.setVisibility(View.GONE);
+                            //confirm.setVisibility(View.VISIBLE);
+                            //check.setVisibility(View.GONE);
+
+                            check.setText("CONFIRM");
+
+                            IsChecked = true;
+
                             Toast.makeText(PatientDateTimeBooking.this, "Available Time Slot", Toast.LENGTH_SHORT).show();
                             break;
 
@@ -378,12 +368,12 @@ public class PatientDateTimeBooking extends AppCompatActivity {
 
                 }
                 if (task.getResult().isEmpty()){
-                    confirm.setVisibility(View.VISIBLE);
-                    check.setVisibility(View.GONE);
+                    //confirm.setVisibility(View.VISIBLE);
+                    //check.setVisibility(View.GONE);
+                    IsChecked = true;
+                    check.setText("CONFIRM");
                     Toast.makeText(PatientDateTimeBooking.this, "Available Time Slot", Toast.LENGTH_SHORT).show();
-
                 }
-
             }
         });
 
@@ -422,29 +412,6 @@ public class PatientDateTimeBooking extends AppCompatActivity {
         }
 
     }
-
-   /* public void check(){
-
-        database.collection("acc-rej-data").whereEqualTo("doc_id", id)
-                .get().addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-            @Override
-            public void onSuccess(DocumentReference documentReference) {
-                Toast.makeText(DBookingDetails.this, "Booking Rejected", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(DBookingDetails.this, DoctorFragActivity.class);
-                startActivity(intent);
-            }
-        })
-
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(DBookingDetails.this, "Error", Toast.LENGTH_SHORT).show();
-
-                    }
-                });
-
-
-    } */
 
 
     @Override
