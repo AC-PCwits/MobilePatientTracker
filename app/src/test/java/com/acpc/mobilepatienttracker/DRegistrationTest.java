@@ -45,7 +45,7 @@ public class DRegistrationTest
         EditText idText = activity.findViewById(R.id.inprac_no);
         EditText passText = activity.findViewById(R.id.inpassword);
 
-        Button button = activity.findViewById(R.id.register_doc);
+        TextView button = activity.findViewById(R.id.register_doc);
 
         button.performClick();
 
@@ -100,7 +100,7 @@ public class DRegistrationTest
         TextView idText = activity.findViewById(R.id.inprac_no);
         TextView passText = activity.findViewById(R.id.inpassword);
 
-        Button button = activity.findViewById(R.id.register_doc);
+        TextView button = activity.findViewById(R.id.register_doc);
 
         nameText.setText("Bob");
         emailText.setText("Bob@gmail.com");

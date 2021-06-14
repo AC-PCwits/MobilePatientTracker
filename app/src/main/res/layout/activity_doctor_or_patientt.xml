@@ -51,8 +51,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/gradStop"
             android:text="Doctor"
+            android:background="@drawable/rounded_redfill"
             android:textColor="#FFFFFF"
             android:layout_marginLeft="60dp"
             android:layout_marginRight="12dp"/>
@@ -62,7 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/gradStop"
+            android:background="@drawable/rounded_redfill"
             android:text="Patient"
             android:textColor="#FFFFFF"
             android:layout_marginRight="60dp"

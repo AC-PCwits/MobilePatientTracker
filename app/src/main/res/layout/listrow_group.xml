@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:elevation="0dp">
+
+    <TextView
     android:id="@+id/textView1"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="?android:attr/listPreferredItemHeight"
-    android:layout_marginLeft="8dp"
-    android:gravity="center_horizontal"
+    android:gravity="center_vertical"
     android:paddingLeft="32dp"
     android:paddingTop="8dp"
+    android:paddingBottom="8dp"
     android:text="Test"
     android:textSize="24sp"
     android:textStyle="bold"
-    />
+    android:background="@drawable/border_set_patient_list4"
+    android:layout_marginLeft="6dp"
+    android:layout_marginRight="6dp"
+    android:textColor="#FFFFFF"
+    android:layout_marginBottom="8dp"/>
+</RelativeLayout>
