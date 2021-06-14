@@ -3,6 +3,8 @@ package com.acpc.mobilepatienttracker;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +20,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class DoctorConsultationList extends AppCompatActivity {
 
@@ -28,6 +31,8 @@ public class DoctorConsultationList extends AppCompatActivity {
     private ConsultationsAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
+    private TextView noitems;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +41,9 @@ public class DoctorConsultationList extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent.getExtras() != null)
         {
+            noitems = findViewById(R.id.dcl_noitems);
+            noitems.setVisibility(View.INVISIBLE);
+
             Bundle data = intent.getExtras();
 
             GetConsultList(data.getString("PATIENT_ID"));
@@ -92,6 +100,13 @@ public class DoctorConsultationList extends AppCompatActivity {
 
     public void buildRecyclerView(final ArrayList<Consultation> list)
     {
+        if (list.isEmpty())
+        {
+            noitems.setVisibility(View.VISIBLE);
+            return;
+        }
+
+
         mRecyclerView = findViewById(R.id.recyclerView1);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(DoctorConsultationList.this);
