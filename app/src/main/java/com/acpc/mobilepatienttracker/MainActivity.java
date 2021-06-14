@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -33,15 +34,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         final String TAG = "AC/PC";
 
-     //   final TextView logbox = findViewById(R.id.logbox);
-     //   Button add = findViewById(R.id.add);
-     //   Button update = findViewById(R.id.update);
-     //   Button remove = findViewById(R.id.remove);
-     //   Button get = findViewById(R.id.get);
-     //   Button getmultiple = findViewById(R.id.getmultiple);
+        //   final TextView logbox = findViewById(R.id.logbox);
+        //   Button add = findViewById(R.id.add);
+        //   Button update = findViewById(R.id.update);
+        //   Button remove = findViewById(R.id.remove);
+        //   Button get = findViewById(R.id.get);
+        //   Button getmultiple = findViewById(R.id.getmultiple);
 
         Button registration = findViewById(R.id.registration);
-      //  Button add_doc = findViewById(R.id.add_doc);
+        //  Button add_doc = findViewById(R.id.add_doc);
         Button reg_doc = findViewById(R.id.reg_doc);
         Button logout_btn = findViewById(R.id.btn_logout);
 
@@ -629,7 +630,7 @@ class Consultation implements Comparable<Consultation>{
 
 
     public Consultation(String pcase,String psymptoms, String pdiagnosis, String pdate, String ppatientID,String pdoctorID){
-       this.pcase=pcase;
+        this.pcase=pcase;
         this.psymptoms=psymptoms;
         this.pdiagnosis=pdiagnosis;
         this.pdate=pdate;
@@ -801,6 +802,34 @@ class LoadingDialog {
 
 
     LoadingDialog(Activity myActivity){
+        activity = myActivity;
+
+
+    }
+
+    public void startLoading(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+
+        LayoutInflater inflater = activity.getLayoutInflater();
+        builder.setView(inflater.inflate(R.layout.custom_dialog,null));
+        builder.setCancelable(false);
+
+        dialog = builder.create();
+        dialog.show();
+    }
+
+    public void dismiss(){
+        dialog.dismiss();
+    }
+}
+
+class Loading { //fragment
+
+    private FragmentActivity activity;
+    private AlertDialog dialog;
+
+
+    Loading(FragmentActivity myActivity){
         activity = myActivity;
 
 

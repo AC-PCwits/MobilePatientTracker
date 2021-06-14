@@ -1,6 +1,7 @@
 package com.acpc.mobilepatienttracker;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -100,6 +101,18 @@ public class PHomePage extends Fragment {
 
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.activity_p_home_page, container, false);
+
+        final Loading loadingDialog = new Loading (getActivity());
+
+        loadingDialog.startLoading();
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                loadingDialog.dismiss();
+            }
+        }, 5000);
 
         final ExpandableListView listView = rootView.findViewById(R.id.listView);
 
@@ -258,6 +271,8 @@ public class PHomePage extends Fragment {
             }
         });
 
+        //   loadingDialog.dismiss();
+
         return rootView;
 
     }
@@ -349,7 +364,7 @@ public class PHomePage extends Fragment {
                                     callBack.onResponse(acceptRejects);
                                 }
                             }
-                           
+
                         });
                     }
                 }
