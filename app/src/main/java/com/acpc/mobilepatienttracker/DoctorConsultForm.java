@@ -144,6 +144,7 @@ public class DoctorConsultForm extends AppCompatActivity {
 
                     Consultation consultation = new Consultation(psymptoms, pdiagnosis, pcase,pdate,ppatientid,pdoctorid);
 
+                    AddtoPast(consultation);
                     AddForm(consultation);
                 }
 
@@ -186,6 +187,38 @@ public class DoctorConsultForm extends AppCompatActivity {
                         makeText(DoctorConsultForm.this, "Data was unable added", LENGTH_LONG).show();
                     }
                 });
+    }
+
+    public void AddtoPast(Consultation consultation){
+
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+
+        String [] d = consultation.pdate.split(" ");
+
+        AccOrRej a = new AccOrRej(pname.getText().toString(),consultation.ppatientID,d[0],d[1]+" "+d[2],consultation.pdoctorID,"Accepted","Walk In");
+
+        database.collection("booking-history-data") // data gets added to a collection called patient-data
+                .add(a)
+                // Add a success listener so we can be notified if the operation was successfuly.
+
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        // If we are here, the app successfully connected to Firestore and added a new entry
+                        makeText(DoctorConsultForm.this, "DONE", LENGTH_LONG).show();
+                       // Intent start = new Intent(DoctorConsultForm.this, DoctorFragActivity.class);
+                       // startActivity(start);
+                    }
+                })
+                // Add a failure listener so we can be notified if something does wrong
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // If we are here, the entry could not be added for some reason (e.g no internet connection)
+                      //  makeText(DoctorConsultForm.this, "Data was unable added", LENGTH_LONG).show();
+                    }
+                });
+
     }
 
     public void getDocDet()

@@ -6,8 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -46,12 +50,15 @@ public class ConsultationDetails extends AppCompatActivity {
 
     String Acute,Chronic,Existing,Injury;
 
+    ImageButton back;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.check);
 
         RadioGroup1 = (RadioGroup) findViewById(R.id.radioGroup4);
+        back = findViewById(R.id.backButton);
 
         radio0 = (RadioButton) findViewById(R.id.radioButton);
         radio1 = (RadioButton) findViewById(R.id.radioButton2);
@@ -73,6 +80,14 @@ public class ConsultationDetails extends AppCompatActivity {
         final LoadingDialog loadingDialog = new LoadingDialog(ConsultationDetails.this);
 
         loadingDialog.startLoading();
+
+         Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                loadingDialog.dismiss();
+            }
+        }, 5000);
 
 
         txtPFirstName = findViewById(R.id.txtPFirstname);
@@ -108,6 +123,13 @@ public class ConsultationDetails extends AppCompatActivity {
         }
 
         //  loadingDialog.dismiss();
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
     }
 
@@ -161,7 +183,7 @@ public class ConsultationDetails extends AppCompatActivity {
                                                 radio3.setChecked(true);
 
                                             }
-                                            loadingDialog.dismiss();
+                                           // loadingDialog.dismiss();
 
 
                                         } else {

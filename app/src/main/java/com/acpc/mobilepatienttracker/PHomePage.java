@@ -106,13 +106,13 @@ public class PHomePage extends Fragment {
 
         loadingDialog.startLoading();
 
-        Handler handler = new Handler();
+     /*   Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 loadingDialog.dismiss();
             }
-        }, 5000);
+        }, 5000);*/
 
         final ExpandableListView listView = rootView.findViewById(R.id.listView);
 
@@ -266,6 +266,7 @@ public class PHomePage extends Fragment {
                             groups.append(0, group);
                         }
                         buildList(groups, listView);
+                        loadingDialog.dismiss();
                     }
                 });
             }

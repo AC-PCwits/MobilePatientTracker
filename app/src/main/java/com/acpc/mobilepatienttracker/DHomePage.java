@@ -126,13 +126,13 @@ public class DHomePage extends Fragment  {
 
         loadingDialog.startLoading();
 
-        Handler handler = new Handler();
+      /*  Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 loadingDialog.dismiss();
             }
-        }, 5000);
+        }, 5000);*/
 
         final ExpandableListView listView = rootView.findViewById(R.id.listView);
         groups.clear();
@@ -298,6 +298,7 @@ public class DHomePage extends Fragment  {
                     groups.append(0, group);
                 }
                 buildList(groups, listView);
+                loadingDialog.dismiss();
 
             }
         });
@@ -374,9 +375,6 @@ public class DHomePage extends Fragment  {
                     String [] id = group.children.get(2).toString().split(" ");
                     final String [] date = group.children.get(0).toString().split(" ");
                     final String [] time = group.children.get(1).toString().split(" ");
-
-//                Toast.makeText(getContext(), id[2], Toast.LENGTH_LONG).show();
-
 
 
                     FirebasePatient firebasePatient = new FirebasePatient(group.children.get(2));

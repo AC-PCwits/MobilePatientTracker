@@ -172,15 +172,20 @@ public class PendingBookings extends Fragment {
             }
         });
 
+    /*    if (mBookingsList.isEmpty())
+        {
+            noitems.setVisibility(View.VISIBLE);
+            return;
+        }*/
+    }
+
+    public void buildRecyclerView(View rootView)
+    {
         if (mBookingsList.isEmpty())
         {
             noitems.setVisibility(View.VISIBLE);
             return;
         }
-    }
-
-    public void buildRecyclerView(View rootView)
-    {
 
         mRecyclerView = rootView.findViewById(R.id.recyclerView);
         /*
