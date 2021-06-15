@@ -67,6 +67,7 @@ public class DoctorDetails extends Fragment {
     private TextView specText;
 
     private DetailView  NameText;
+    private DetailView SurnameText;
     private DetailView  IdText;
     private DetailView DobText;
     private DetailView CellText;
@@ -176,6 +177,7 @@ public class DoctorDetails extends Fragment {
         save = rootView.findViewById(R.id.dd_save);
 
         NameText = new DetailView(DoctorField.FIRST_NAME, context);
+        SurnameText = new DetailView(DoctorField.LAST_NAME, context);
         IdText= new DetailView(DoctorField.ID,context);
         DobText = new DetailView(DoctorField.DOB_TEXT, context);
         CellText = new DetailView(DoctorField.CELL_TEXT, context);
@@ -190,6 +192,7 @@ public class DoctorDetails extends Fragment {
 
         allDetails = new ArrayList<DetailView>();
         allDetails.add(NameText);
+        allDetails.add(SurnameText);
         allDetails.add(DobText);
         allDetails.add(IdText);
         allDetails.add(CellText);
@@ -297,6 +300,13 @@ public class DoctorDetails extends Fragment {
                     NameText.edit.setVisibility(View.VISIBLE);
                     NameText.originalText = NameText.content.getText().toString();
 
+                    background = (LinearLayout) getView().findViewById(R.id.sur_backround);
+                    background.addView(SurnameText);
+                    SurnameText.content.setTextSize(20);
+                    SurnameText.content.setText(doc.lname);
+                    SurnameText.edit.setVisibility(View.VISIBLE);
+                    SurnameText.originalText = SurnameText.content.getText().toString();
+
                     background = (LinearLayout) getView().findViewById(R.id.Iden);
                     background.addView(IdText);
                     IdText.content.setText(doc.ID);
@@ -389,15 +399,14 @@ public class DoctorDetails extends Fragment {
 
 
             content.setTextSize(24);
-            content.setTextColor(Color.parseColor("#565c5c"));
             final Drawable originalContentBackground = content.getBackground();
             content.setBackgroundColor(Color.TRANSPARENT);
+            content.setTextColor(Color.rgb(0,0,0));
             content.setEnabled(false);
             //content.setText("...");
 
             edit.setImageResource(R.drawable.ic_baseline_edit_24);
             edit.setBackgroundColor(Color.TRANSPARENT);
-            edit.setColorFilter(Color.parseColor("#9eaeb0"));
             edit.setVisibility(View.INVISIBLE);
 
             content.setLayoutParams(new LinearLayout.LayoutParams(

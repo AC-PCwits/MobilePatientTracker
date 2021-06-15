@@ -218,6 +218,13 @@ public class PatientDetails extends Fragment {
                     firstname.edit.setVisibility(View.VISIBLE);
                     firstname.originalText = firstname.content.getText().toString();
 
+                    background = (LinearLayout) getView().findViewById(R.id.sur_backround);
+                    background.addView(lastname);
+                    lastname.content.setText(activeUser.fsurname);
+                    lastname.content.setTextSize(20);
+                    lastname.edit.setVisibility(View.VISIBLE);
+                    lastname.originalText = lastname.content.getText().toString();
+
                     background =(LinearLayout) getView().findViewById(R.id.Iden);
                     background.addView(id);
                     id.content.setText(activeUser.idno);
@@ -340,15 +347,14 @@ public class PatientDetails extends Fragment {
 
 
             content.setTextSize(20);
-            content.setTextColor(Color.parseColor("#565c5c"));
             final Drawable originalContentBackground = content.getBackground();
             content.setBackgroundColor(Color.TRANSPARENT);
+            content.setTextColor(Color.rgb(0,0,0));
             content.setEnabled(false);
             content.setText("...");
 
             edit.setImageResource(R.drawable.ic_baseline_edit_24);
             edit.setBackgroundColor(Color.TRANSPARENT);
-            edit.setColorFilter(Color.parseColor("#9eaeb0"));
             edit.setVisibility(View.INVISIBLE);
 
 
