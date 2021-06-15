@@ -1,5 +1,6 @@
 package com.acpc.mobilepatienttracker;
 
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +35,7 @@ public class DocInfoAdapter extends RecyclerView.Adapter<DocInfoAdapter.DInfoLis
           OnItemClickListener is added to the parameters as a way to reference mListener from inside a static class
          */
 
-        public DInfoListViewHolder(@NonNull View itemView, final DocInfoAdapter.OnItemClickListener listener) {
+        public DInfoListViewHolder(@NonNull final View itemView, final DocInfoAdapter.OnItemClickListener listener) {
             super(itemView);
             nameText = itemView.findViewById(R.id.dateText);
             ExperienceText = itemView.findViewById(R.id.statusText);
@@ -82,7 +83,7 @@ public class DocInfoAdapter extends RecyclerView.Adapter<DocInfoAdapter.DInfoLis
         //The holder variable allows the values of view to be set by Patient objects
         holder.nameText.setText("Dr " +currentItem.fname+" "+ currentItem.sname);
 
-        holder.ExperienceText.setText("Experience: " + currentItem.exp);
+        holder.ExperienceText.setText("Experience: " + currentItem.exp + " Years");
     }
 
     //This function defines how many items are in the list

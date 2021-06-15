@@ -12,8 +12,11 @@ public class AppointmentTest {
     private String doc_id = "1234567";
     private String docName = "Joe";
     private String status = "Accept";
+    private String doc_type = "Oncologist";
+    private String cell = "1";
+    private String email = "a@g.com";
 
-    private Appointment testApp = new Appointment (pname,id,bookingdate,time,doc_id,docName,status);
+    private Appointment testApp = new Appointment (pname,id,bookingdate,time,doc_id,docName,status,doc_type,cell,email);
 
     @Test
     public void testAppointmentObject()
@@ -25,7 +28,19 @@ public class AppointmentTest {
         assertEquals(doc_id, testApp.doc_id);
         assertEquals(docName,testApp.docName);
         assertEquals(status,testApp.status);
+        assertEquals(doc_type,testApp.doc_type);
+        assertEquals(cell,testApp.cell);
+        assertEquals(email,testApp.email);
         assertNotNull(new Appointment());
     }
+
+
+    @Test
+    public void getBookingDate(){
+    String bdate = "2021/05/04";
+    assertEquals(bdate,testApp.getBookingDate());
+
+    }
+
 
 }

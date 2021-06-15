@@ -1,14 +1,18 @@
 package com.acpc.mobilepatienttracker;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -30,15 +34,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         final String TAG = "AC/PC";
 
-        final TextView logbox = findViewById(R.id.logbox);
-        Button add = findViewById(R.id.add);
-        Button update = findViewById(R.id.update);
-        Button remove = findViewById(R.id.remove);
-        Button get = findViewById(R.id.get);
-        Button getmultiple = findViewById(R.id.getmultiple);
+        //   final TextView logbox = findViewById(R.id.logbox);
+        //   Button add = findViewById(R.id.add);
+        //   Button update = findViewById(R.id.update);
+        //   Button remove = findViewById(R.id.remove);
+        //   Button get = findViewById(R.id.get);
+        //   Button getmultiple = findViewById(R.id.getmultiple);
 
         Button registration = findViewById(R.id.registration);
-        Button add_doc = findViewById(R.id.add_doc);
+        //  Button add_doc = findViewById(R.id.add_doc);
         Button reg_doc = findViewById(R.id.reg_doc);
         Button logout_btn = findViewById(R.id.btn_logout);
 
@@ -318,7 +322,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 }
-class Consult {
+/*class Consult {
     public String illness;
 
     //TODO: Add lastVisited to DB once logic for retrieving info has been completed
@@ -331,7 +335,7 @@ class Consult {
         this.lastVisited=  lastVisited;
 
     }
-}
+}*/
 
 
 
@@ -616,7 +620,7 @@ class Bookings {
     }
 }
 
-class Consultation{
+class Consultation implements Comparable<Consultation>{
     public String pcase;
     public String psymptoms;
     public String pdiagnosis;
@@ -624,8 +628,9 @@ class Consultation{
     public String ppatientID;
     public String pdoctorID;
 
+
     public Consultation(String pcase,String psymptoms, String pdiagnosis, String pdate, String ppatientID,String pdoctorID){
-       this.pcase=pcase;
+        this.pcase=pcase;
         this.psymptoms=psymptoms;
         this.pdiagnosis=pdiagnosis;
         this.pdate=pdate;
@@ -635,6 +640,20 @@ class Consultation{
 
     public Consultation (){
 
+    }
+
+    @Override
+    public int compareTo(Consultation consultation) {
+        try {
+            Date thisDate = new SimpleDateFormat("yyyy/MM/dd").parse(this.pdate);
+            Date otherDate = new SimpleDateFormat("yyyy/MM/dd").parse(consultation.pdate);
+
+            return otherDate.compareTo(thisDate);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 }
 
@@ -697,14 +716,16 @@ class AccOrRej{
     public String id; //need this for linking to patient
     public String doc_id;
     public String accOrRej;
+    public String status;
 
-    public AccOrRej(String pname, String id, String bookingdate, String time, String doc_id, String accOrRej){
+    public AccOrRej(String pname, String id, String bookingdate, String time, String doc_id, String accOrRej,String status){
         this.pname = pname;
         this.bookingdate = bookingdate;
         this.id = id;
         this.doc_id = doc_id;
         this.time = time;
         this.accOrRej = accOrRej;
+        this.status = status;
     }
 
     public AccOrRej(){
@@ -723,9 +744,12 @@ class Appointment implements Comparable<Appointment>{
     public String id; //need this for linking to patient
     public String doc_id;
     public String status;
+    public String doc_type;
+    public String cell;
+    public String email;
 
 
-    public Appointment(String pname, String id, String bookingdate, String time, String doc_id,String docName, String status) {
+    public Appointment(String pname, String id, String bookingdate, String time, String doc_id,String docName, String status, String doctType, String cell, String email) {
         this.docName = docName;
         this.bookingdate = bookingdate;
         this.time = time;
@@ -736,9 +760,15 @@ class Appointment implements Comparable<Appointment>{
         this.doc_id = doc_id;
         this.time = time;
         this.status = status;
+        this.doc_type=doctType;
+        this.cell=cell;
+        this.email=email;
     }
 
-    public Appointment(){}
+    public Appointment(){
+
+    }
+
 
 
     public void  setBookingdate(){
@@ -763,4 +793,60 @@ class Appointment implements Comparable<Appointment>{
         }
     }
 
+}
+
+class LoadingDialog {
+
+    private Activity activity;
+    private AlertDialog dialog;
+
+
+    LoadingDialog(Activity myActivity){
+        activity = myActivity;
+
+
+    }
+
+    public void startLoading(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+
+        LayoutInflater inflater = activity.getLayoutInflater();
+        builder.setView(inflater.inflate(R.layout.custom_dialog,null));
+        builder.setCancelable(false);
+
+        dialog = builder.create();
+        dialog.show();
+    }
+
+    public void dismiss(){
+        dialog.dismiss();
+    }
+}
+
+class Loading { //fragment
+
+    private FragmentActivity activity;
+    private AlertDialog dialog;
+
+
+    Loading(FragmentActivity myActivity){
+        activity = myActivity;
+
+
+    }
+
+    public void startLoading(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+
+        LayoutInflater inflater = activity.getLayoutInflater();
+        builder.setView(inflater.inflate(R.layout.custom_dialog,null));
+        builder.setCancelable(false);
+
+        dialog = builder.create();
+        dialog.show();
+    }
+
+    public void dismiss(){
+        dialog.dismiss();
+    }
 }

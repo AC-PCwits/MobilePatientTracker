@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -39,8 +40,8 @@ public class DoctorConsultForm extends AppCompatActivity {
     private RadioButton case_button;
     private EditText symptoms, diagnosis, patientid,doctorid,date,dname,dsurname,pname,pcell,psurname,dtype;
     private Button save;
-    private FirebaseFirestore database = FirebaseFirestore.getInstance();
     private Doctor doc = new Doctor();
+    String status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +75,11 @@ public class DoctorConsultForm extends AppCompatActivity {
             pcell.setText(intent.getExtras().getString("PATIENT_Cell"));
             patientid.setText(intent.getExtras().getString("PATIENT_ID"));
             String d = intent.getExtras().getString("DATE");
-            String t = intent.getExtras().getString("TIME");
+            String t = "";
+            t = intent.getExtras().getString("TIME");
+            status = intent.getExtras().getString("STATUS");
+
+
             date.setText(d + " " + t);
         }
        // else{
@@ -96,6 +101,12 @@ public class DoctorConsultForm extends AppCompatActivity {
 
         getDocDet();
 
+        //AddForm(new Consultation("test entry pls delete later", "covid", "covid","2021/06/19","12345678901","1234567"));
+
+ //       if(pname.getText().toString().isEmpty()){
+
+   //     }
+
         save.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
@@ -114,6 +125,9 @@ public class DoctorConsultForm extends AppCompatActivity {
                     diagnosis.setError("Diagnosis is empty");
                     return;
                 }
+                else if(selected_case==-1){
+                    Toast.makeText(DoctorConsultForm.this,"Please select a case", LENGTH_LONG).show();
+                }
                 else {
 
                     Bundle extras = getIntent().getExtras();
@@ -126,30 +140,11 @@ public class DoctorConsultForm extends AppCompatActivity {
                     final String pcase = getCase(v);
 
                     UpdateLastVisited(ppatientid);
+                    UpdateBStatus(pdate,ppatientid,pdoctorid);
 
                     Consultation consultation = new Consultation(psymptoms, pdiagnosis, pcase,pdate,ppatientid,pdoctorid);
 
-                    database.collection("consultation-data") // data gets added to a collection called patient-data
-                            .add(consultation)
-                            // Add a success listener so we can be notified if the operation was successfuly.
-
-                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                @Override
-                                public void onSuccess(DocumentReference documentReference) {
-                                    // If we are here, the app successfully connected to Firestore and added a new entry
-                                    makeText(DoctorConsultForm.this, "Data successfully added", LENGTH_LONG).show();
-                                    Intent start = new Intent(DoctorConsultForm.this, DoctorFragActivity.class);
-                                    startActivity(start);
-                                }
-                            })
-                            // Add a failure listener so we can be notified if something does wrong
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    // If we are here, the entry could not be added for some reason (e.g no internet connection)
-                                    makeText(DoctorConsultForm.this, "Data was unable added", LENGTH_LONG).show();
-                                }
-                            });
+                    AddForm(consultation);
                 }
 
             }
@@ -164,11 +159,39 @@ public class DoctorConsultForm extends AppCompatActivity {
         RadioButton singleButton = (RadioButton) findViewById(radioID);
         String out = singleButton.getText().toString();
         return out;
+    }
 
+    public void AddForm(Consultation consultation)
+    {
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+
+        database.collection("consultation-data") // data gets added to a collection called patient-data
+                .add(consultation)
+                // Add a success listener so we can be notified if the operation was successfuly.
+
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        // If we are here, the app successfully connected to Firestore and added a new entry
+                        makeText(DoctorConsultForm.this, "Data successfully added", LENGTH_LONG).show();
+                        Intent start = new Intent(DoctorConsultForm.this, DoctorFragActivity.class);
+                        startActivity(start);
+                    }
+                })
+                // Add a failure listener so we can be notified if something does wrong
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // If we are here, the entry could not be added for some reason (e.g no internet connection)
+                        makeText(DoctorConsultForm.this, "Data was unable added", LENGTH_LONG).show();
+                    }
+                });
     }
 
     public void getDocDet()
     {
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         database.collection("doctor-data").whereEqualTo("email", user.getEmail())
@@ -196,14 +219,15 @@ public class DoctorConsultForm extends AppCompatActivity {
                     dname.setText(doc.fname);
                     dsurname.setText(doc.lname);
                     dtype.setText(doc.doc_type);
-
-
                 }
             }
         });
     }
 
     public void UpdateLastVisited(final String ppatientid) {
+
+        final FirebaseFirestore database = FirebaseFirestore.getInstance();
+
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         Date currentdate = new Date();
         final String lastVisited = formatter.format(currentdate);
@@ -248,5 +272,53 @@ public class DoctorConsultForm extends AppCompatActivity {
                     }
                 });
 
+    }
+
+    public void UpdateBStatus(String date, String p_id, String doc_id){
+
+        final FirebaseFirestore database = FirebaseFirestore.getInstance();
+
+        String [] arr = date.split(" ");
+        database.collection("acc-rej-data").whereEqualTo("id",p_id).whereEqualTo("doc_id",doc_id).whereEqualTo("bookingdate",arr[0]).whereEqualTo("time",arr[1]+" "+arr[2])
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                if (task.isSuccessful()) {
+                    //   ArrayList<String> patIDs = new ArrayList<>();
+
+                    String documentID = "";
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        documentID = document.getId();
+                    }
+                    if(documentID != ""){
+                        final DocumentReference Ref = database.collection("acc-rej-data").document(documentID);
+
+                        Ref.update("status", "Completed" )
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d("PD", "SUCCESS: Updated field: ");
+                                        //Toast.makeText(DBookingDetails.this, "Could not save: failed to update details", Toast.LENGTH_LONG).show();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        // failed to update the given field for some reason
+                                        Log.w("PD", "ERROR: Could not update field: ", e);
+                                        // Toast.makeText(DBookingDetails.this, "Could not save: failed to update details", Toast.LENGTH_LONG).show();
+                                    }
+                                });
+
+                    }
+
+                    //  }
+
+                }
+
+
+            }
+        });
     }
 }

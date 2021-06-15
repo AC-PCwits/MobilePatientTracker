@@ -4,34 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DoctorConsultationList">
+    tools:context=".DoctorConsultationList"
+
+    >
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/titleText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Past Consults"
-            android:textStyle="bold"
-            android:textAlignment="center"
-            android:gravity="center_horizontal"
-            android:textSize="36dp"
-            android:textColor="@android:color/black"/>
+        android:layout_height="match_parent"
+        >
 
 
         <!-- Recycler view Object, this will allow for the user to scroll through a list of items -->
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="2dp"
-            android:layout_below="@+id/titleText"
             android:background="@drawable/border_set_patient_list"
+            android:padding="2dp"
             android:scrollbars="vertical" />
 
+        <TextView
+            android:id="@+id/dcl_noitems"
+            android:layout_width="match_parent"
+            android:layout_height="106dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="50dp"
+            android:gravity="center"
+            android:paddingLeft="50dp"
+            android:paddingRight="50dp"
+            android:text="You have no past consults with this patient."
+            android:textSize="26sp"
+            android:textColor="#000000"/>
 
 
     </RelativeLayout>

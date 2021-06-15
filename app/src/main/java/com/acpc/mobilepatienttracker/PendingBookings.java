@@ -43,6 +43,7 @@ public class PendingBookings extends Fragment {
 
     private ArrayList<Bookings> mBookingsList;
 
+    private TextView noitems;
 
     private FirebaseFirestore database = FirebaseFirestore.getInstance();
     private TextView testView;
@@ -94,7 +95,11 @@ public class PendingBookings extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+
         rootView = inflater.inflate(R.layout.activity_pending_bookings, container, false);
+
+        noitems = rootView.findViewById(R.id.dcl_noitems);
+        noitems.setVisibility(View.INVISIBLE);
 
         testView = (TextView) rootView.findViewById(R.id.testView);
 
@@ -166,10 +171,17 @@ public class PendingBookings extends Fragment {
                 }
             }
         });
+
+        if (mBookingsList.isEmpty())
+        {
+            noitems.setVisibility(View.VISIBLE);
+            return;
+        }
     }
 
     public void buildRecyclerView(View rootView)
     {
+
         mRecyclerView = rootView.findViewById(R.id.recyclerView);
         /*
         This makes sure that the recycler view will not change size no matter how many items are in the list, which

@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class LoginDoctor extends AppCompatActivity {
 
     EditText email , password;
-    Button btnLogin;
+    TextView btnLogin;
     TextView d_signup , textViewReset;
     FirebaseAuth mAuth;
     EditText inputEmail;
@@ -35,7 +35,7 @@ public class LoginDoctor extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         email = findViewById(R.id.editTextDocEmail);
         password = findViewById(R.id.editTextDocPassword);
-        btnLogin = findViewById(R.id.btnDocLogin);
+        btnLogin = findViewById(R.id.btn_login);
         d_signup = findViewById(R.id.textViewDocSignUp);
         textViewReset = findViewById(R.id.textViewResetDocPass);
 

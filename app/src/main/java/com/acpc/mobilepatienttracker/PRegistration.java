@@ -9,13 +9,14 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class PRegistration extends AppCompatActivity implements View.OnClickListener{
 
     private EditText inname, inemail, inpassword, in_id;
-    private Button reg;
+    public TextView reg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +27,7 @@ public class PRegistration extends AppCompatActivity implements View.OnClickList
         inemail= findViewById(R.id.inemail);
         inpassword= findViewById(R.id.inpassword);
         in_id = findViewById(R.id.inid);
-        reg = findViewById(R.id.reg);
+        reg = findViewById(R.id.register_p);
         reg.setOnClickListener(this);
 
         in_id.setFilters(new InputFilter[]{new InputFilter.LengthFilter(13)});
@@ -35,7 +36,7 @@ public class PRegistration extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.reg:
+            case R.id.register_p:
                 registerUser();
                 break;
         }

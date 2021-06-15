@@ -12,6 +12,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -106,6 +107,7 @@ public class DHomePage extends Fragment  {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        getActivity().setTitle("Calendar");
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -120,11 +122,24 @@ public class DHomePage extends Fragment  {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.activity_d_home_page, container, false);
 
+        final Loading loadingDialog = new Loading(getActivity());
+
+        loadingDialog.startLoading();
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                loadingDialog.dismiss();
+            }
+        }, 5000);
+
         final ExpandableListView listView = rootView.findViewById(R.id.listView);
         groups.clear();
 
         newCForm = rootView.findViewById(R.id.newCForm);
         newCForm.setVisibility(View.INVISIBLE);
+
 
         newCForm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,14 +177,30 @@ public class DHomePage extends Fragment  {
                         ArrayList<String[]> strings = new ArrayList<>();
                         for(AccOrRej acceptReject : list)
                         {
+                            boolean TimeAlreadyExists = false;
+
+                            for (int j = 0; j < strings.size(); j++)
+                            {
+                                if (acceptReject.time.equals(strings.get(j)[1]))
+                                {
+                                    TimeAlreadyExists = true;
+                                    break;
+                                }
+                            }
+
+                            if (TimeAlreadyExists)
+                            {
+                                continue;
+                            }
                             if(acceptReject.bookingdate.equals(formdate))
                             {
-                                String [] str = new String[4];
+                                String [] str = new String[5];
 
                                 str[0] = acceptReject.bookingdate;
                                 str[1] = acceptReject.time;
                                 str[2] = acceptReject.id;
                                 str[3] = acceptReject.pname;
+                                str[4] = acceptReject.status;
 
                                 strings.add(str);
                             }
@@ -188,6 +219,7 @@ public class DHomePage extends Fragment  {
                                 group.children.add("Time: " + sortedList.get(i)[1]);
                                 group.children.add("Patient ID: " + sortedList.get(i)[2]);
                                 group.children.add("Patient: " + sortedList.get(i)[3]);
+                                group.children.add("Status: " + sortedList.get(i)[4]);
 
                                 groups.append(i, group);
                             }
@@ -212,14 +244,30 @@ public class DHomePage extends Fragment  {
                 ArrayList<String[]> strings = new ArrayList<>();
                 for(AccOrRej acceptReject : list)
                 {
+                    boolean TimeAlreadyExists = false;
+
+                    for (int j = 0; j < strings.size(); j++)
+                    {
+                        if (acceptReject.time.equals(strings.get(j)[1]))
+                        {
+                            TimeAlreadyExists = true;
+                            break;
+                        }
+                    }
+
+                    if (TimeAlreadyExists)
+                    {
+                        continue;
+                    }
                     if(acceptReject.bookingdate.equals(formatter.format(date)))
                     {
-                        String [] str = new String[4];
+                        String [] str = new String[5];
 
                         str[0] = acceptReject.bookingdate;
                         str[1] = acceptReject.time;
                         str[2] = acceptReject.id;
                         str[3] = acceptReject.pname;
+                        str[4] = acceptReject.status;
 
                         strings.add(str);
                     }
@@ -238,6 +286,7 @@ public class DHomePage extends Fragment  {
                         group.children.add("Time: " + sortedList.get(i)[1]);
                         group.children.add("Patient ID: " + sortedList.get(i)[2]);
                         group.children.add("Patient: " + sortedList.get(i)[3]);
+                        group.children.add("Status: " + sortedList.get(i)[4]);
 
                         groups.append(i, group);
                     }
@@ -318,36 +367,46 @@ public class DHomePage extends Fragment  {
             @Override
             public void onItemClick(Group group) {
 
-                Bundle bundle = new Bundle();
+                if(group.children.get(4).toString().equals("Incomplete")){
 
-                String [] id = group.children.get(2).toString().split(" ");
-               final String [] date = group.children.get(0).toString().split(" ");
-               final String [] time = group.children.get(1).toString().split(" ");
+                    Bundle bundle = new Bundle();
+
+                    String [] id = group.children.get(2).toString().split(" ");
+                    final String [] date = group.children.get(0).toString().split(" ");
+                    final String [] time = group.children.get(1).toString().split(" ");
 
 //                Toast.makeText(getContext(), id[2], Toast.LENGTH_LONG).show();
 
 
 
-                FirebasePatient firebasePatient = new FirebasePatient(group.children.get(2));
-                firebasePatient.getUserData(new FirebasePatient.FirebaseCallback() {
-                    @Override
-                    public void onResponse(ArrayList<Patient> patients)
-                    {
+                    FirebasePatient firebasePatient = new FirebasePatient(group.children.get(2));
+                    firebasePatient.getUserData(new FirebasePatient.FirebaseCallback() {
+                        @Override
+                        public void onResponse(ArrayList<Patient> patients)
+                        {
 
-                        Bundle bundle = new Bundle();
+                            Bundle bundle = new Bundle();
 
-                        bundle.putString("PATIENT_ID", patients.get(0).idno);
-                        bundle.putString("PATIENT_FName", patients.get(0).fname);
-                        bundle.putString("PATIENT_LName", patients.get(0).fsurname);
-                        bundle.putString("PATIENT_Cell", patients.get(0).cellno);
-                        bundle.putString("DATE", date[1]);
-                        bundle.putString("TIME", time[1] + " " + time[2]);
+                            bundle.putString("PATIENT_ID", patients.get(0).idno);
+                            bundle.putString("PATIENT_FName", patients.get(0).fname);
+                            bundle.putString("PATIENT_LName", patients.get(0).fsurname);
+                            bundle.putString("PATIENT_Cell", patients.get(0).cellno);
+                            bundle.putString("DATE", date[1]);
+                            bundle.putString("TIME", time[1] + " " + time[2]);
+                            bundle.putString("STATUS", "Completed");
 
 
-                        goToConsult(bundle);
+                            goToConsult(bundle);
 
-                    }
-                },id[2]);
+                        }
+                    },id[2]);
+
+
+                }
+                else{
+                    Toast.makeText(getContext(),"Consultation Completed",Toast.LENGTH_SHORT).show();
+                }
+
 
 
 
@@ -416,4 +475,6 @@ public class DHomePage extends Fragment  {
         intent.putExtras(bundle);
         startActivity(intent);
     }
+
+
 }

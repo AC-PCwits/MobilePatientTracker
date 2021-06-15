@@ -80,6 +80,7 @@ public class PatientConsultationHistory extends Fragment {
 
     private TextView testView;
     private ArrayList<Appointment> mAppointmentList;
+    private ArrayList<Appointment> mAppointmentList2;
     private ArrayList<Doctor> d;
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -148,6 +149,7 @@ public class PatientConsultationHistory extends Fragment {
         testView = (TextView) rootView.findViewById(R.id.testView111);
 
         mAppointmentList = new ArrayList<>();
+        mAppointmentList2 = new ArrayList<>();
         d = new ArrayList<>();
 
 
@@ -174,9 +176,11 @@ public class PatientConsultationHistory extends Fragment {
                                             {
                                                 if(doc.p_no.equals(accOrRej.doc_id))
                                                 {
-                                                    mAppointmentList.add(new Appointment(accOrRej.pname, accOrRej.id, accOrRej.bookingdate, accOrRej.time, accOrRej.doc_id,
-                                                            doc.fname + " " + doc.lname, accOrRej.accOrRej));
+                                                    mAppointmentList.add(new Appointment(accOrRej.pname,accOrRej.id, accOrRej.bookingdate, accOrRej.time, accOrRej.doc_id,
+                                                            doc.fname + " " + doc.lname, accOrRej.accOrRej, doc.doc_type,doc.cell_no,doc.email));
+
                                                 }
+
                                             }
                                         }
 
@@ -187,7 +191,7 @@ public class PatientConsultationHistory extends Fragment {
                                                 if(doc.p_no.equals(booking.doc_id))
                                                 {
                                                     mAppointmentList.add(new Appointment(booking.pname, booking.id, booking.bookingdate, booking.time, booking.doc_id,
-                                                            doc.fname + " " + doc.lname, "Pending"));
+                                                            doc.fname + " " + doc.lname, "Pending",doc.doc_type,doc.cell_no,doc.email));
                                                 }
                                             }
                                         }
@@ -201,7 +205,7 @@ public class PatientConsultationHistory extends Fragment {
                                                 if(doc.p_no.equals(accOrRej.doc_id))
                                                 {
                                                     pastList.add(new Appointment(accOrRej.pname, accOrRej.id, accOrRej.bookingdate, accOrRej.time, accOrRej.doc_id,
-                                                            doc.fname + " " + doc.lname, "Past"));
+                                                            doc.fname + " " + doc.lname, "Past",doc.doc_type,doc.cell_no,doc.email));
                                                 }
                                             }
                                         }
@@ -334,8 +338,10 @@ public class PatientConsultationHistory extends Fragment {
                                         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                                         try {
                                             Date bookingDate = format.parse(date);
+                                            Log.d("ACC-REJ METHOD", "Date:" + bookingDate);
                                             Date today = new Date();
-                                            if (today.equals(bookingDate) || today.after(bookingDate))
+                                            Log.d("ACC-REJ METHOD", "Today:" + today);
+                                            if ((today.equals(bookingDate) || today.after(bookingDate)) && accRej.accOrRej.equals("Accepted"))
                                             {
                                                 database.collection("booking-history-data") // specify the collection name here
                                                         .add(accRej)
@@ -430,7 +436,6 @@ public class PatientConsultationHistory extends Fragment {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     if (dataSnapshot.child("email").getValue().toString().equalsIgnoreCase(user.getEmail())) {
                         final String ID = dataSnapshot.child("id").getValue().toString();
-
 
                         database.collection("acc-rej-data").whereEqualTo("id", ID)
                                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -578,7 +583,7 @@ public class PatientConsultationHistory extends Fragment {
 
     }
 
-    public void getPastBookings(final PastCallback callback){
+    public void getPastBookings(final PastCallback callback){ //has a consult form
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         final FirebaseFirestore database = FirebaseFirestore.getInstance();
 
@@ -591,7 +596,7 @@ public class PatientConsultationHistory extends Fragment {
                         final String ID = dataSnapshot.child("id").getValue().toString();
 
 
-                        database.collection("booking-history-data").whereEqualTo("id", ID)
+                        database.collection("booking-history-data").whereEqualTo("id", ID).whereEqualTo("status","Completed")
                                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -687,7 +692,9 @@ public class PatientConsultationHistory extends Fragment {
                     bundle.putString("time", mAppointmentList.get(position).time);
                     bundle.putString("status", mAppointmentList.get(position).status);
                     bundle.putString("doc_id", mAppointmentList.get(position).doc_id);
-
+                    bundle.putString("doc_type", mAppointmentList.get(position).doc_type);
+                    bundle.putString("doc_cell", mAppointmentList.get(position).cell);
+                    bundle.putString("doc_email", mAppointmentList.get(position).email);
                     intent.putExtras(bundle);
                     startActivity(intent);
                 }
@@ -705,7 +712,6 @@ public class PatientConsultationHistory extends Fragment {
 
                     i.putExtras(b);
                     startActivity(i);
-
                 }
             }
         });

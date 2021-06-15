@@ -7,11 +7,7 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.CompoundButton;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -21,7 +17,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class ConsultationDetails extends AppCompatActivity {
 
@@ -40,34 +35,13 @@ public class ConsultationDetails extends AppCompatActivity {
     private TextView txtDate;
     private TextView txtConsultationDetailsLabel;
 
-
-    RadioButton radio0, radio1, radio2, radio3;
-    RadioGroup RadioGroup1;
-
-    String Acute,Chronic,Existing,Injury;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.check);
+        setContentView(R.layout.activity_consultation_details);
 
-        RadioGroup1 = (RadioGroup) findViewById(R.id.radioGroup4);
-
-        radio0 = (RadioButton) findViewById(R.id.radioButton);
-        radio1 = (RadioButton) findViewById(R.id.radioButton2);
-        radio2 = (RadioButton) findViewById(R.id.radioButton3);
-        radio3 = (RadioButton) findViewById(R.id.radioButton4);
-
-        Acute = "Acute";
-        Chronic = "Chronic";
-        Existing = "Existing";
-        Injury = "Injury";
-
-
-
-
-        //txtConsultationDetailsLabel = findViewById(R.id.txtConsultationDetailsLabel);
-        //txtConsultationDetailsLabel.setPaintFlags(txtConsultationDetailsLabel.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);// to underline text
+        txtConsultationDetailsLabel = findViewById(R.id.txtConsultationDetailsLabel);
+        txtConsultationDetailsLabel.setPaintFlags(txtConsultationDetailsLabel.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);// to underline text
         txtPFirstName = findViewById(R.id.txtPFirstname);
         txtPSurname = findViewById(R.id.txtPSurname);
         txtPatientID = findViewById(R.id.txtID);
@@ -131,34 +105,12 @@ public class ConsultationDetails extends AppCompatActivity {
                                                  txtPatientID.setText(patient.idno);
                                                  txtPcell.setText(patient.cellno);
                                                  txtDFirstName.setText(doctor.fname);
-                        //                         txtDSurname.setText(doctor.lname);
+                                                 txtDSurname.setText(doctor.lname);
                                                  txtPracticeID.setText(doctor.p_no);
-                                                 //txtCaseInfo.setText(consultation.pcase);
+                                                 txtCaseInfo.setText(consultation.pcase);
                                                  txtSymptoms.setText(consultation.psymptoms);
                                                  txtDiagnosis.setText(consultation.pdiagnosis);
                                                  txtDate.setText(consultation.pdate);
-
-
-
-
-                                                 if(Acute .equals( consultation.pdiagnosis)) {
-                                                     radio0.setChecked(true);
-                                                 }
-                                                 else if(Chronic.equals(consultation.pdiagnosis)){
-                                                     radio1.setChecked(true);
-
-                                                 }
-                                                 else if(Existing.equals(consultation.pdiagnosis)){
-                                                     radio2.setChecked(true);
-
-                                                 }
-                                                 else if(Injury.equals(consultation.pdiagnosis)){
-                                                     radio3.setChecked(true);
-
-                                                 }
-
-
-
                                              }
                                              else
                                              {

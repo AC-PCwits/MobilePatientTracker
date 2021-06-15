@@ -12,7 +12,8 @@ public class AccOrRejTest {
     private String date = "1";
     private String time = "2";
     private String doc_ID = "12";
-    private AccOrRej testA = new AccOrRej(pname, id, date, time, doc_ID,accOrrej);
+    private String status = "Completed";
+    private AccOrRej testA = new AccOrRej(pname, id, date, time, doc_ID,accOrrej,status);
 
     @Test
     public void testAcceptRejectObject()
@@ -23,6 +24,7 @@ public class AccOrRejTest {
         assertEquals(time, testA.time);
         assertEquals(doc_ID, testA.doc_id);
         assertEquals(accOrrej,testA.accOrRej);
+        assertEquals(status,testA.status);
 
         assertNotNull(new AccOrRej());
     }

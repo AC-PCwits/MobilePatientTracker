@@ -7,22 +7,14 @@
     tools:context=".DocTypeList">
 
     <!-- Recycler view Object, this will allow for the user to scroll through a list of items -->
-    <TextView
-        android:id="@+id/dt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:textAlignment="center"
-        android:gravity="center_horizontal"
-        android:textSize="36dp"
-        android:textColor="@android:color/black"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+
+        android:background="#FFFFFF"
         android:padding="2dp"
-        android:layout_below="@+id/dt"
         android:scrollbars="vertical" />
 
     <TextView
@@ -31,5 +23,25 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/recyclerView"
         android:textSize="16sp"/>
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="439dp"
+        android:layout_height="403dp"
+        android:layout_above="@+id/testView"
+
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="-13dp"
+        android:layout_marginLeft="-13dp"
+        android:layout_marginTop="202dp"
+        android:layout_marginEnd="-14dp"
+        android:layout_marginRight="-14dp"
+        android:layout_marginBottom="78dp"
+        android:contentDescription="TODO"
+        app:srcCompat="@drawable/ic_doctor_icon__1_"
+        tools:ignore="VectorDrawableCompat" />
 
 </RelativeLayout>

@@ -2,9 +2,11 @@ package com.acpc.mobilepatienttracker;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -157,6 +159,18 @@ public class DoctorDetails extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.activity_doctor_details, container, false);
 
+       /* final Loading loadingDialog = new Loading(getActivity());
+
+        loadingDialog.startLoading();
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                loadingDialog.dismiss();
+            }
+        }, 2000); */
+
         context = getContext();
 
         save = rootView.findViewById(R.id.dd_save);
@@ -278,6 +292,7 @@ public class DoctorDetails extends Fragment {
 
                     background =(LinearLayout) getView().findViewById(R.id.dd_backround);
                     background.addView(NameText);
+                    NameText.content.setTextSize(20);
                     NameText.content.setText(doc.fname);
                     NameText.edit.setVisibility(View.VISIBLE);
                     NameText.originalText = NameText.content.getText().toString();
@@ -285,54 +300,63 @@ public class DoctorDetails extends Fragment {
                     background = (LinearLayout) getView().findViewById(R.id.Iden);
                     background.addView(IdText);
                     IdText.content.setText(doc.ID);
+                    IdText.content.setTextSize(20);
                     IdText.edit.setVisibility(View.VISIBLE);
                     IdText.originalText = IdText.content.getText().toString();
 
                     background = (LinearLayout) getView().findViewById(R.id.birth);
                     background.addView(DobText);
                     DobText.content.setText(doc.dob);
+                    DobText.content.setTextSize(20);
                     DobText.edit.setVisibility(View.VISIBLE);
                     DobText.originalText = DobText.content.getText().toString();
 
                     background =(LinearLayout) getView().findViewById(R.id.gen);
                     background.addView(GenderText);
                     GenderText.content.setText(doc.gender);
+                    GenderText.content.setTextSize(20);
                     GenderText.edit.setVisibility(View.VISIBLE);
                     GenderText.originalText = GenderText.content.getText().toString();
 
                     background =(LinearLayout)  getView().findViewById(R.id.em);
                     background.addView(EmailText);
                     EmailText.content.setText(doc.email);
+                    EmailText.content.setTextSize(20);
                     EmailText.edit.setVisibility(View.VISIBLE);
                     EmailText.originalText = EmailText.content.getText().toString();
 
                     background = (LinearLayout) getView().findViewById(R.id.cell);
                     background.addView(CellText);
                     CellText.content.setText(doc.cell_no);
+                    CellText.content.setTextSize(20);
                     CellText.edit.setVisibility(View.VISIBLE);
                     CellText.originalText = CellText.content.getText().toString();
 
                     background = (LinearLayout) getView().findViewById(R.id.pnum);
                     background.addView(PracNumText);
                     PracNumText.content.setText(doc.p_no);
+                    PracNumText.content.setTextSize(20);
                     PracNumText.edit.setVisibility(View.INVISIBLE);
                     //PracNumText.originalText = PracNumText.content.getText().toString();
 
                     background = (LinearLayout) getView().findViewById(R.id.lenp);
                     background.addView(PracLengthText);
                     PracLengthText.content.setText(doc.p_length);
+                    PracLengthText.content.setTextSize(20);
                     PracLengthText.edit.setVisibility(View.VISIBLE);
                     PracLengthText.originalText = PracLengthText.content.getText().toString();
 
                     background =(LinearLayout) getView().findViewById(R.id.uni);
                     background.addView(UniText);
                     UniText.content.setText(doc.uni_name);
+                    UniText.content.setTextSize(20);
                     UniText.edit.setVisibility(View.VISIBLE);
                     UniText.originalText = UniText.content.getText().toString();
 
                     background = (LinearLayout) getView().findViewById(R.id.spec);
                     background.addView(SpecText);
                     SpecText.content.setText(doc.doc_type);
+                    SpecText.content.setTextSize(20);
                     SpecText.edit.setVisibility(View.VISIBLE);
                     SpecText.originalText = SpecText.content.getText().toString();
 

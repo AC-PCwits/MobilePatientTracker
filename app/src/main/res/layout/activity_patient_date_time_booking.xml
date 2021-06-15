@@ -9,9 +9,82 @@
     tools:context=".PatientDateTimeBooking">
 
     <TextView
+        android:id="@+id/textView11"
+        android:layout_width="315dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="Booking Request"
+        android:textColor="@color/colorPrimary"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="200dp"
+        android:layout_height="32dp"
+        android:text="Qualification: "
+        android:textColor="@color/gradStop"
+        android:textSize="24sp"
+        android:textStyle="normal|bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.075"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/exp" />
+
+    <TextView
+        android:id="@+id/nameTitleText"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Doctor: "
+        android:textColor="@color/gradStop"
+        android:textSize="24sp"
+        android:textStyle="normal|bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.075"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+    <TextView
+        android:id="@+id/tv_timer1"
+        android:layout_width="148dp"
+        android:layout_height="153dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:background="@android:drawable/editbox_background"
+        android:drawableTop="@drawable/ic_time"
+        android:gravity="center"
+        android:hint="Select Time"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/date_of_birth"
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+    <Button
+        android:id="@+id/checkbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/rounded_redfill"
+        android:ems="12"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:text="Check Availability"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/date_of_birth" />
+
+    <TextView
         android:id="@+id/date_of_birth"
         android:layout_width="166dp"
         android:layout_height="155dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginLeft="28dp"
         android:background="@android:drawable/editbox_background"
         android:drawableTop="@drawable/ic_calendar"
         android:editable="false"
@@ -19,154 +92,63 @@
         android:focusable="false"
         android:gravity="center"
         android:hint="Select Date"
+
         android:inputType="none"
         android:textColor="#000000"
 
         android:textColorHint="@color/cardview_shadow_start_color"
         android:textSize="18sp"
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.065"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.793"
+        app:layout_constraintTop_toBottomOf="@+id/textView10"
         tools:targetApi="o" />
 
     <TextView
-        android:id="@+id/tv_timer1"
-        android:layout_width="148dp"
-        android:layout_height="153dp"
-        android:background="@android:drawable/editbox_background"
-        android:drawableTop="@drawable/ic_time"
-        android:gravity="center"
-        android:hint="Select Time"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.889"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.794" />
-
-    <TextView
-        android:id="@+id/textView11"
-        android:layout_width="318dp"
-        android:layout_height="114dp"
-        android:gravity="center"
-        android:text="Booking Request"
-        android:textColor="#000000"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.376"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.009" />
-
-    <TextView
-        android:id="@+id/nameTitleText"
-        android:layout_width="wrap_content"
+        android:id="@+id/headingexp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="Dr "
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Experience:  "
+        android:textColor="@color/gradStop"
+        android:textSize="24sp"
+        android:textStyle="normal|bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.076"
+        app:layout_constraintHorizontal_bias="0.075"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.216" />
-
-    <TextView
-        android:id="@+id/name"
-        android:layout_width="227dp"
-        android:layout_height="59dp"
-        android:text="Doctor Name"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.815"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.227" />
+        app:layout_constraintTop_toBottomOf="@+id/name" />
 
     <TextView
         android:id="@+id/exp"
         android:layout_width="232dp"
-        android:layout_height="54dp"
-        android:text="Experience"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="50dp"
+        android:text="..."
+        android:textColor="@color/gradStop"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.854"
+        app:layout_constraintHorizontal_bias="0.279"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.358" />
+        app:layout_constraintTop_toBottomOf="@+id/headingexp" />
 
     <TextView
-        android:id="@+id/headingexp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Experience: "
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/name"
+        android:layout_width="226dp"
+        android:layout_height="50dp"
+        android:text="..."
+        android:textColor="@color/gradStop"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.015"
+        app:layout_constraintHorizontal_bias="0.271"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.349" />
-
-    <Button
-        android:id="@+id/confirmbtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Confirm"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.863"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.948" />
-
-    <Button
-        android:id="@+id/checkbtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Check Availability"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.172"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.948" />
-
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="106dp"
-        android:layout_height="60dp"
-        android:text="Qualification"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:textSize="17sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.009"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499" />
+        app:layout_constraintTop_toBottomOf="@+id/nameTitleText" />
 
     <TextView
         android:id="@+id/textView10"
-        android:layout_width="232dp"
-        android:layout_height="54dp"
-        android:text="Qualification"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="233dp"
+        android:layout_height="50dp"
+        android:text="..."
+        android:textColor="@color/gradStop"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.899"
+        app:layout_constraintHorizontal_bias="0.28"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499" />
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

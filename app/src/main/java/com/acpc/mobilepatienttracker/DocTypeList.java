@@ -68,7 +68,7 @@ public class DocTypeList extends AppCompatActivity {
 //        buildExampleList();
 //        buildRecyclerView();
 
-        dt=findViewById(R.id.dt);
+       // dt=findViewById(R.id.dt);
         Intent intent = getIntent();
 
         if(intent.getExtras() != null) {
@@ -82,7 +82,7 @@ public class DocTypeList extends AppCompatActivity {
             buildRecyclerView();
         }
         else {
-            dt.setText(t);
+          //  dt.setText(t);
             getDocData(t);
         }
     }
@@ -164,9 +164,21 @@ public class DocTypeList extends AppCompatActivity {
 
                 intent.putExtras(bundle);
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
             }
         });
     }
 
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
 }

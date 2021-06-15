@@ -20,10 +20,11 @@ import com.google.firebase.auth.FirebaseUser;
 public class LoginPatient extends AppCompatActivity {
 
     EditText email , password;
-    Button btnLogin;
+    TextView btnLogin;
     TextView p_signup , btnReset;
     FirebaseAuth mAuth;
     EditText inputEmail;
+
 
 
     private FirebaseAuth.AuthStateListener mAuthStateListener;
@@ -34,11 +35,11 @@ public class LoginPatient extends AppCompatActivity {
         setContentView(R.layout.acitivity_plogin);
 
         mAuth = FirebaseAuth.getInstance();
-        email = findViewById(R.id.editTextEmail);
-        password = findViewById(R.id.editTextPassword);
+        email = findViewById(R.id.editTextPEmail);
+        password = findViewById(R.id.editTextPPassword);
         btnLogin = findViewById(R.id.btn_login);
-        p_signup = findViewById(R.id.textView_signup);
-        btnReset = findViewById(R.id.btn_reset_password);
+        p_signup = findViewById(R.id.textViewPSignUp);
+        btnReset = findViewById(R.id.textViewResetPPass);
 
 
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
@@ -109,8 +110,8 @@ public class LoginPatient extends AppCompatActivity {
             }
         });
 
-        inputEmail = (EditText) findViewById(R.id.editTextEmail);
-        btnReset = (TextView)findViewById(R.id.btn_reset_password);
+        inputEmail = (EditText) findViewById(R.id.editTextPEmail);
+        btnReset = (TextView)findViewById(R.id.textViewResetPPass);
         mAuth = FirebaseAuth.getInstance();
         btnReset.setOnClickListener(new View.OnClickListener() {
             @Override
