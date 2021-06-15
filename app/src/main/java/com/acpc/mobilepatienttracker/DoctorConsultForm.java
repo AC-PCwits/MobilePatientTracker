@@ -77,10 +77,11 @@ public class DoctorConsultForm extends AppCompatActivity {
             String d = intent.getExtras().getString("DATE");
             String t = "";
             t = intent.getExtras().getString("TIME");
+
             status = intent.getExtras().getString("STATUS");
 
+                date.setText(d + " " + t);
 
-            date.setText(d + " " + t);
         }
        // else{
        //     date.setText(formatter.format(currentdate));
@@ -195,7 +196,7 @@ public class DoctorConsultForm extends AppCompatActivity {
 
         String [] d = consultation.pdate.split(" ");
 
-        AccOrRej a = new AccOrRej(pname.getText().toString(),consultation.ppatientID,d[0],d[1]+" "+d[2],consultation.pdoctorID,"Accepted","Walk In");
+        AccOrRej a = new AccOrRej(pname.getText().toString()+" "+psurname.getText().toString(),consultation.ppatientID,d[0],d[1]+" "+d[2],consultation.pdoctorID,"Accepted","Completed");
 
         database.collection("booking-history-data") // data gets added to a collection called patient-data
                 .add(a)
