@@ -11,39 +11,31 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ConsultationHistoryDetailed"
-            android:label="Appointment Details"></activity>
+        <activity android:name=".ConsultationHistoryDetailed"></activity>
         <activity
             android:name=".PatientDateTimeBooking"
             android:label="Select Date and Time of Appointment" />
-        <activity android:name=".DocTypeList"
-            android:label="Create a Booking : Select a Doctor"/>
+        <activity android:name=".DocTypeList" />
         <activity android:name=".PatientFragActivity" />
         <activity android:name=".DoctorFragActivity" />
-        <activity android:name=".DoctorConsultForm"
-            android:label="Input Consultation Details"/>
-        <activity android:name=".DoctorForm"
-            android:label="Please Input Personal Details"/>
-        <activity android:name=".DoctorConsultationList"
-            android:label="Patient Medical History"/>
-        <activity android:name=".ConsultationDetails"
-            android:label="Consultation Details"/>
+        <activity android:name=".DoctorConsultForm" />
+        <activity android:name=".DoctorForm" />
+        <activity android:name=".DoctorConsultationList" />
+        <activity android:name=".ConsultationDetails" />
         <activity
             android:name=".DRegistration"
             android:label="Registration : Doctor" />
         <activity
             android:name=".LoginPatient"
-            android:label="Patient : Login" />
+            android:label="Patient Login" />
         <activity
             android:name=".LoginDoctor"
-            android:label="Doctor : Login" />
-        <activity android:name=".PatientForm"
-            android:label="Please Input Personal Details"/>
+            android:label="Doctor Login" />
+        <activity android:name=".PatientForm" />
         <activity
             android:name=".DoctorOrPatient"
             android:label="Welcome to Redbox" />
-        <activity android:name=".DPatientDetails"
-            android:label="Patient Personal Information"/>
+        <activity android:name=".DPatientDetails" />
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -61,12 +53,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DBookingDetails"
-            android:label="Booking Request Details"/>
-
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
+        <activity android:name=".DBookingDetails" />
     </application>
 
 </manifest>
