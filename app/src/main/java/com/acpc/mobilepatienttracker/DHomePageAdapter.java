@@ -70,8 +70,8 @@ public class DHomePageAdapter extends BaseExpandableListAdapter
         convertView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(activity, groups.get(groupPosition).children.get(3),
-                        Toast.LENGTH_SHORT).show();
+//                Toast.makeText(activity, groups.get(groupPosition).children.get(3),
+//                        Toast.LENGTH_SHORT).show();
                 mListener.onItemClick(groups.get(groupPosition));
             }
         });
