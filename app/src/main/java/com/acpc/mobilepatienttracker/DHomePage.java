@@ -367,7 +367,8 @@ public class DHomePage extends Fragment  {
             @Override
             public void onItemClick(Group group) {
 
-                if(group.children.get(4).toString().equals("Incomplete")){
+                if(group.children.get(4).toString().equals("Status: Incomplete"))
+                {
 
                     Bundle bundle = new Bundle();
 
@@ -375,7 +376,7 @@ public class DHomePage extends Fragment  {
                     final String [] date = group.children.get(0).toString().split(" ");
                     final String [] time = group.children.get(1).toString().split(" ");
 
-//                Toast.makeText(getContext(), id[2], Toast.LENGTH_LONG).show();
+
 
 
 
