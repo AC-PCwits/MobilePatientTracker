@@ -21,7 +21,10 @@
         <activity android:name=".DoctorConsultForm" />
         <activity android:name=".DoctorForm" />
         <activity android:name=".DoctorConsultationList" />
-        <activity android:name=".ConsultationDetails" />
+        <activity
+            android:name=".ConsultationDetails"
+            />
+
         <activity
             android:name=".DRegistration"
             android:label="Registration : Doctor" />
