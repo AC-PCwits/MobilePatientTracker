@@ -58,7 +58,6 @@ public class ConsultationDetails extends AppCompatActivity {
         setContentView(R.layout.check);
 
         RadioGroup1 = (RadioGroup) findViewById(R.id.radioGroup4);
-        back = findViewById(R.id.backButton);
 
         radio0 = (RadioButton) findViewById(R.id.radioButton);
         radio1 = (RadioButton) findViewById(R.id.radioButton2);
@@ -123,13 +122,6 @@ public class ConsultationDetails extends AppCompatActivity {
         }
 
         //  loadingDialog.dismiss();
-
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
 
     }
 
