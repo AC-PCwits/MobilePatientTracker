@@ -153,7 +153,7 @@ public class FirebasePatient
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         // If we are here, the app successfully connected to Firestore and added a new entry
-                        makeText(context, "Data successfully added", LENGTH_LONG).show();
+                        makeText(context, "Data successfully added to your profile", LENGTH_LONG).show();
                         Intent start = new Intent(context, PatientFragActivity.class);
                         context.startActivity(start);
                     }

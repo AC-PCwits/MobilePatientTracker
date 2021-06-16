@@ -732,6 +732,10 @@ public class PatientConsultationHistory extends Fragment {
                     i.putExtras(b);
                     startActivity(i);
                 }
+
+                if(mAppointmentList.get(position).status.equals("Rejected")){
+                    Toast.makeText(getContext(),"Booking request rejected. Please reschedule.",Toast.LENGTH_LONG).show();
+                }
             }
         });
     }

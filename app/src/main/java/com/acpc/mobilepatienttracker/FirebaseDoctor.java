@@ -116,7 +116,7 @@ public class FirebaseDoctor
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         // If we are here, the app successfully connected to Firestore and added a new entry
-                        Toast.makeText(context, "Data successfully added", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "Data successfully added to your profile", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(context, DoctorFragActivity.class);
                         context.startActivity(intent);
                     }
