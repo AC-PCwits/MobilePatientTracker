@@ -45,7 +45,7 @@ public class DoctorPatientList extends Fragment
     private Doctor doc = new Doctor();
     private TextView testView;
 
-    private TextView searchBar;
+    private TextView searchBar, noitems;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -95,6 +95,8 @@ public class DoctorPatientList extends Fragment
         View rootView = inflater.inflate(R.layout.activity_d_patient_list, container, false);
 
         testView = (TextView) rootView.findViewById(R.id.testView);
+        noitems = rootView.findViewById(R.id.dcl_noitems);
+        noitems.setVisibility(View.INVISIBLE);
 
 
         searchBar = rootView.findViewById(R.id.pdl_searchbar);
@@ -188,6 +190,12 @@ public class DoctorPatientList extends Fragment
     //This function will populate the patient list from the database
     public void buildPatientList(final ArrayList<String> pIDs)
     {
+        if (pIDs.isEmpty())
+        {
+            noitems.setVisibility(View.VISIBLE);
+            return;
+        }
+
         database.collection("patient-data")
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
