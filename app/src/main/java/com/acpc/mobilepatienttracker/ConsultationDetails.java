@@ -6,8 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -46,6 +50,8 @@ public class ConsultationDetails extends AppCompatActivity {
 
     String Acute,Chronic,Existing,Injury;
 
+    ImageButton back;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +79,14 @@ public class ConsultationDetails extends AppCompatActivity {
         final LoadingDialog loadingDialog = new LoadingDialog(ConsultationDetails.this);
 
         loadingDialog.startLoading();
+
+         Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                loadingDialog.dismiss();
+            }
+        }, 5000);
 
 
         txtPFirstName = findViewById(R.id.txtPFirstname);
@@ -161,7 +175,7 @@ public class ConsultationDetails extends AppCompatActivity {
                                                 radio3.setChecked(true);
 
                                             }
-                                            loadingDialog.dismiss();
+                                           // loadingDialog.dismiss();
 
 
                                         } else {

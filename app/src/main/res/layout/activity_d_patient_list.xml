@@ -59,5 +59,22 @@
             android:layout_below="@+id/recyclerView"
             android:textSize="16sp" />
 
+        <TextView
+            android:id="@+id/dcl_noitems"
+            android:layout_width="match_parent"
+            android:layout_height="106dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="50dp"
+            android:gravity="center"
+            android:paddingLeft="50dp"
+            android:paddingRight="50dp"
+            android:text="You have no linked patients yet."
+            android:textColor="#000000"
+            android:textSize="26sp" />
+
     </RelativeLayout>
 </FrameLayout>

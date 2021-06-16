@@ -170,6 +170,7 @@ public class PatientConsultationHistory extends Fragment {
                                     @Override
                                     public void onResponse(ArrayList<AccOrRej> past) {
 
+
                                         for(AccOrRej accOrRej : accOrRejs)
                                         {
                                             for(Doctor doc: doctors)
@@ -612,41 +613,11 @@ public class PatientConsultationHistory extends Fragment {
 
                                     callback.onResponse(ar1);
 
-//                                    for(final AccOrRej ar2: ar1)
-//                                    {  // String docName= "Eric";
-//                                        database.collection("doctor-data").whereEqualTo("p_no", ar2.doc_id)
-//                                                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                                            @Override
-//                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                                                if(task.isSuccessful())
-//
-//                                                    //  ArrayList<Doctor> d = new ArrayList<>();
-//
-//                                                    for (QueryDocumentSnapshot doc : task.getResult()) {
-//                                                        d.add(doc.toObject(Doctor.class) );
-//                                                    }
-//                                                for (Doctor dt : d) {
-//                                                    if (dt.p_no.equals(ar2.doc_id)) {
-//                                                        String docName = dt.lname;
-//                                                        mAppointmentList.add(new Appointment(ar2.pname, ar2.id, ar2.bookingdate, ar2.time, ar2.doc_id, docName, "Past"));
-//
-//                                                    }
-//                                                    buildRecyclerView(view);
-//                                                }
-//
-//                                            }
-//                                        });
-//
-//                                        //  mAppointmentList.add(new Appointment(ar2.pname, ar2.id, ar2.bookingdate, ar2.time, ar2.doc_id, docName, "Pending"));
-//                                        //  Toast.makeText(getContext(), "Added", Toast.LENGTH_LONG).show();
-//                                    }
-
-                                    //   buildRecyclerView(view);
-
-
                                 }
                             }
                         });
+
+
 
                     }
                 }
@@ -658,6 +629,54 @@ public class PatientConsultationHistory extends Fragment {
             }
         });
     }
+
+/*    public void addPastConsults (final PastCallback callback){ //has a consult form
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        final FirebaseFirestore database = FirebaseFirestore.getInstance();
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Patient");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    if (dataSnapshot.child("email").getValue().toString().equalsIgnoreCase(user.getEmail())) {
+                        final String ID = dataSnapshot.child("id").getValue().toString();
+
+
+                        database.collection("booking-history-data").whereEqualTo("id", ID).whereEqualTo("status","Walk in")
+                                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if(task.isSuccessful())
+                                {
+
+                                    ArrayList<AccOrRej> ar1 = new ArrayList<>();
+
+                                    for(QueryDocumentSnapshot doc : task.getResult())
+                                    {
+                                        ar1.add(doc.toObject(AccOrRej.class));
+                                    }
+
+                                    callback.onResponse(ar1);
+
+                                }
+                            }
+                        });
+
+
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }*/
+
+
 
     public void buildRecyclerView(View rootView) {
         mRecyclerView = rootView.findViewById(R.id.recyclerView);

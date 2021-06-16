@@ -11,17 +11,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ConsultationHistoryDetailed"></activity>
+        <activity android:name=".ConsultationHistoryDetailed"
+            android:label="Booking Details"
+            ></activity>
         <activity
             android:name=".PatientDateTimeBooking"
             android:label="Select Date and Time of Appointment" />
         <activity android:name=".DocTypeList" />
         <activity android:name=".PatientFragActivity" />
         <activity android:name=".DoctorFragActivity" />
-        <activity android:name=".DoctorConsultForm" />
-        <activity android:name=".DoctorForm" />
-        <activity android:name=".DoctorConsultationList" />
-        <activity android:name=".ConsultationDetails" />
+        <activity android:name=".DoctorConsultForm"
+            android:label = "Input Consultation Details"/>
+        <activity android:name=".DoctorForm"
+            android:label="Input Personal Details"/>
+        <activity android:name=".DoctorConsultationList"
+            android:label="Patient Medical History"/>
+        <activity android:name=".ConsultationDetails"
+            android:label="Consultation Details"/>
         <activity
             android:name=".DRegistration"
             android:label="Registration : Doctor" />
@@ -31,12 +37,15 @@
         <activity
             android:name=".LoginDoctor"
             android:label="Doctor Login" />
-        <activity android:name=".PatientForm" />
+        <activity android:name=".PatientForm"
+            android:label="Input Personal Details"/>
         <activity
             android:name=".DoctorOrPatient"
             android:label="Welcome to Redbox" />
-        <activity android:name=".DPatientDetails" />
-        <activity android:name=".SplashActivity">
+        <activity android:name=".DPatientDetails"
+            android:label="Patient Medical Information"/>
+        <activity android:name=".SplashActivity"
+            android:label="Welcome to Redbox">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
