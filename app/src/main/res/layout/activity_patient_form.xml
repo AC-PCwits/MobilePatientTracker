@@ -133,10 +133,10 @@
                 android:layout_height="38dp"
                 android:layout_below="@+id/thirdLayout"
                 android:layout_marginLeft="12dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginRight="12dp"
                 android:hint="Address"
-                android:inputType="textPersonName" />
+                android:inputType="text|textMultiLine" />
 
             <TextView
                 android:id="@+id/pemcontact"
@@ -372,7 +372,7 @@
                         android:layout_marginRight="12dp"
                         android:layout_weight="1"
                         android:hint="Allergies"
-                        android:inputType="textPersonName" />
+                        android:inputType="text|textMultiLine" />
 
                     <Button
                         android:id="@+id/submit"
